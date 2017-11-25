@@ -17,6 +17,35 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>前端大纲</title>
+    <link href="http://janebt.github.io/2017/10/01/%E5%89%8D%E7%AB%AF%E5%A4%A7%E7%BA%B2/"/>
+    <id>http://janebt.github.io/2017/10/01/前端大纲/</id>
+    <published>2017-10-01T03:33:34.000Z</published>
+    <updated>2017-10-01T07:25:00.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>这篇文章是为了时刻提醒自己，还有哪些坑要填。</p><p>[^插入图片标题]: thumbnail: /img/random/material-6.jpg</p><a id="more"></a><h1 id="结构层-HTML"><a href="#结构层-HTML" class="headerlink" title="结构层(HTML)"></a>结构层(HTML)</h1><p>对WEB标准的理解</p><p>浏览器内核差异</p><p>HTML5新特性及应用</p><h1 id="表示层-CSS"><a href="#表示层-CSS" class="headerlink" title="表示层(CSS)"></a>表示层(CSS)</h1><p>布局</p><p>盒子模型</p><p>选择器优先级及使用</p><p>CSS3新特性及应用</p><p>兼容性</p><p>Hack</p><p>移动端适应</p><h1 id="行为层-JavaScript"><a href="#行为层-JavaScript" class="headerlink" title="行为层(JavaScript)"></a>行为层(JavaScript)</h1><p>数据类型</p><p>面向对象</p><p>作用域</p><p>原型链</p><p>继承、封装、多态</p><p>闭包</p><p>插件</p><p>跨域</p><p>模块化</p><p>事件机制</p><p>自定义事件</p><p>内存泄漏</p><p>异步装载回调</p><p>模版引擎</p><p>Ajax</p><p>Jquery</p><p>JSON</p><p>Nodejs</p><h1 id="进阶"><a href="#进阶" class="headerlink" title="进阶"></a>进阶</h1><p>优化</p><p>交互</p><p>响应式</p><p>HTTP</p><p>WEB安全</p><p>重构</p><p>SEO</p><p>UED</p><p>架构</p><p>后端</p><p>移动端</p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;这篇文章是为了时刻提醒自己，还有哪些坑要填。&lt;/p&gt;
+&lt;p&gt;[^插入图片标题]: thumbnail: /img/random/material-6.jpg&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="技术栈" scheme="http://janebt.github.io/categories/%E6%8A%80%E6%9C%AF%E6%A0%88/"/>
+    
+    
+      <category term="前端" scheme="http://janebt.github.io/tags/%E5%89%8D%E7%AB%AF/"/>
+    
+      <category term="JavaScript" scheme="http://janebt.github.io/tags/JavaScript/"/>
+    
+      <category term="HTML" scheme="http://janebt.github.io/tags/HTML/"/>
+    
+      <category term="CSS" scheme="http://janebt.github.io/tags/CSS/"/>
+    
+  </entry>
+  
+  <entry>
     <title>快速搭建Hexo</title>
     <link href="http://janebt.github.io/2016/10/01/Hexo%E6%90%AD%E5%BB%BA/"/>
     <id>http://janebt.github.io/2016/10/01/Hexo搭建/</id>
