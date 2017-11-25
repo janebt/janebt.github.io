@@ -37,7 +37,7 @@
     
     <title>
         
-            快速搭建Hexo | 
+            前端大纲 | 
         
         Jane&#39;s blog
     </title>
@@ -48,8 +48,8 @@
     <meta name="format-detection" content="telephone=no"/>
     <meta name="theme-color" content="#0097A7">
     <meta name="author" content="jane">
-    <meta name="description" itemprop="description" content="这篇文章主要是提醒自己半年更一次博客忘了要怎么做。当然如果想迅速建站，可是可以参考的。">
-    <meta name="keywords" content="jane, blog, hexo, Web, 博客,Hexo,博客">
+    <meta name="description" itemprop="description" content="这篇文章是为了时刻提醒自己，还有哪些坑要填。">
+    <meta name="keywords" content="jane, blog, hexo, Web, 博客,前端,HTML,JavaScript,CSS">
 
     <!-- Import lsloader -->
     <script>(function(){window.lsloader={jsRunSequence:[],jsnamemap:{},cssnamemap:{}};lsloader.removeLS=function(key){try{localStorage.removeItem(key)}catch(e){}};lsloader.setLS=function(key,val){try{localStorage.setItem(key,val)}catch(e){}};lsloader.getLS=function(key){var val="";try{val=localStorage.getItem(key)}catch(e){val=""}return val};versionString="/*"+(window.materialVersion||"unknownVersion")+"*/";lsloader.clean=function(){try{var keys=[];for(var i=0;i<localStorage.length;i++){keys.push(localStorage.key(i))}keys.forEach(function(key){var data=lsloader.getLS(key);if(window.oldVersion){var remove=window.oldVersion.reduce(function(p,c){return p||data.indexOf("/*"+c+"*/")!==-1},false);if(remove){lsloader.removeLS(key)}}})}catch(e){}};lsloader.clean();lsloader.load=function(jsname,jspath,cssonload,isJs){if(typeof cssonload==="boolean"){isJs=cssonload;cssonload=undefined}isJs=isJs||false;cssonload=cssonload||function(){};var code;code=this.getLS(jsname);if(code&&code.indexOf(versionString)===-1){this.removeLS(jsname);this.requestResource(jsname,jspath,cssonload,isJs);return}if(code){var versionNumber=code.split(versionString)[0];if(versionNumber!=jspath){console.log("reload:"+jspath);this.removeLS(jsname);this.requestResource(jsname,jspath,cssonload,isJs);return}code=code.split(versionString)[1];if(isJs){this.jsRunSequence.push({name:jsname,code:code});this.runjs(jspath,jsname,code)}else{document.getElementById(jsname).appendChild(document.createTextNode(code));cssonload()}}else{this.requestResource(jsname,jspath,cssonload,isJs)}};lsloader.requestResource=function(name,path,cssonload,isJs){var that=this;if(isJs){this.iojs(path,name,function(path,name,code){that.setLS(name,path+versionString+code);that.runjs(path,name,code)})}else{this.iocss(path,name,function(code){document.getElementById(name).appendChild(document.createTextNode(code));that.setLS(name,path+versionString+code)},cssonload)}};lsloader.iojs=function(path,jsname,callback){var that=this;that.jsRunSequence.push({name:jsname,code:""});try{var xhr=new XMLHttpRequest;xhr.open("get",path,true);xhr.onreadystatechange=function(){if(xhr.readyState==4){if(xhr.status>=200&&xhr.status<300||xhr.status==304){if(xhr.response!=""){callback(path,jsname,xhr.response);return}}that.jsfallback(path,jsname)}};xhr.send(null)}catch(e){that.jsfallback(path,jsname)}};lsloader.iocss=function(path,jsname,callback,cssonload){var that=this;try{var xhr=new XMLHttpRequest;xhr.open("get",path,true);xhr.onreadystatechange=function(){if(xhr.readyState==4){if(xhr.status>=200&&xhr.status<300||xhr.status==304){if(xhr.response!=""){callback(xhr.response);cssonload();return}}that.cssfallback(path,jsname,cssonload)}};xhr.send(null)}catch(e){that.cssfallback(path,jsname,cssonload)}};lsloader.iofonts=function(path,jsname,callback,cssonload){var that=this;try{var xhr=new XMLHttpRequest;xhr.open("get",path,true);xhr.onreadystatechange=function(){if(xhr.readyState==4){if(xhr.status>=200&&xhr.status<300||xhr.status==304){if(xhr.response!=""){callback(xhr.response);cssonload();return}}that.cssfallback(path,jsname,cssonload)}};xhr.send(null)}catch(e){that.cssfallback(path,jsname,cssonload)}};lsloader.runjs=function(path,name,code){if(!!name&&!!code){for(var k in this.jsRunSequence){if(this.jsRunSequence[k].name==name){this.jsRunSequence[k].code=code}}}if(!!this.jsRunSequence[0]&&!!this.jsRunSequence[0].code&&this.jsRunSequence[0].status!="failed"){var script=document.createElement("script");script.appendChild(document.createTextNode(this.jsRunSequence[0].code));script.type="text/javascript";document.getElementsByTagName("head")[0].appendChild(script);this.jsRunSequence.shift();if(this.jsRunSequence.length>0){this.runjs()}}else if(!!this.jsRunSequence[0]&&this.jsRunSequence[0].status=="failed"){var that=this;var script=document.createElement("script");script.src=this.jsRunSequence[0].path;script.type="text/javascript";this.jsRunSequence[0].status="loading";script.onload=function(){that.jsRunSequence.shift();if(that.jsRunSequence.length>0){that.runjs()}};document.body.appendChild(script)}};lsloader.tagLoad=function(path,name){this.jsRunSequence.push({name:name,code:"",path:path,status:"failed"});this.runjs()};lsloader.jsfallback=function(path,name){if(!!this.jsnamemap[name]){return}else{this.jsnamemap[name]=name}for(var k in this.jsRunSequence){if(this.jsRunSequence[k].name==name){this.jsRunSequence[k].code="";this.jsRunSequence[k].status="failed";this.jsRunSequence[k].path=path}}this.runjs()};lsloader.cssfallback=function(path,name,cssonload){if(!!this.cssnamemap[name]){return}else{this.cssnamemap[name]=1}var link=document.createElement("link");link.type="text/css";link.href=path;link.rel="stylesheet";link.onload=link.onerror=cssonload;var root=document.getElementsByTagName("script")[0];root.parentNode.insertBefore(link,root)};lsloader.runInlineScript=function(scriptId,codeId){var code=document.getElementById(codeId).innerText;this.jsRunSequence.push({name:scriptId,code:code});this.runjs()};lsloader.loadCombo=function(jslist){var updateList="";var requestingModules={};for(var k in jslist){var LS=this.getLS(jslist[k].name);if(!!LS){var version=LS.split(versionString)[0];var code=LS.split(versionString)[1]}else{var version=""}if(version==jslist[k].path){this.jsRunSequence.push({name:jslist[k].name,code:code,path:jslist[k].path})}else{this.jsRunSequence.push({name:jslist[k].name,code:null,path:jslist[k].path,status:"comboloading"});requestingModules[jslist[k].name]=true;updateList+=(updateList==""?"":";")+jslist[k].path}}var that=this;if(!!updateList){var xhr=new XMLHttpRequest;xhr.open("get",combo+updateList,true);xhr.onreadystatechange=function(){if(xhr.readyState==4){if(xhr.status>=200&&xhr.status<300||xhr.status==304){if(xhr.response!=""){that.runCombo(xhr.response,requestingModules);return}}else{for(var i in that.jsRunSequence){if(requestingModules[that.jsRunSequence[i].name]){that.jsRunSequence[i].status="failed"}}that.runjs()}}};xhr.send(null)}this.runjs()};lsloader.runCombo=function(comboCode,requestingModules){comboCode=comboCode.split("/*combojs*/");comboCode.shift();for(var k in this.jsRunSequence){if(!!requestingModules[this.jsRunSequence[k].name]&&!!comboCode[0]){this.jsRunSequence[k].status="comboJS";this.jsRunSequence[k].code=comboCode[0];this.setLS(this.jsRunSequence[k].name,this.jsRunSequence[k].path+versionString+comboCode[0]);comboCode.shift()}}this.runjs()}})();</script>
@@ -281,26 +281,26 @@
     <!-- The Open Graph protocol -->
     <meta property="og:url" content="http://janebt.github.io">
     <meta property="og:type" content="blog">
-    <meta property="og:title" content="快速搭建Hexo | Jane&#39;s blog">
+    <meta property="og:title" content="前端大纲 | Jane&#39;s blog">
     <meta property="og:image" content="http://janebt.github.io/img/favicon.jpeg" />
-    <meta property="og:description" content="这篇文章主要是提醒自己半年更一次博客忘了要怎么做。当然如果想迅速建站，可是可以参考的。">
-    <meta property="og:article:tag" content="Hexo"> <meta property="og:article:tag" content="博客"> 
+    <meta property="og:description" content="这篇文章是为了时刻提醒自己，还有哪些坑要填。">
+    <meta property="og:article:tag" content="前端"> <meta property="og:article:tag" content="HTML"> <meta property="og:article:tag" content="JavaScript"> <meta property="og:article:tag" content="CSS"> 
 
     
-        <meta property="article:published_time" content="Sat Oct 01 2016 11:33:34 GMT+0800" />
-        <meta property="article:modified_time" content="Sun Oct 01 2017 15:25:00 GMT+0800" />
+        <meta property="article:published_time" content="Wed Nov 01 2017 11:33:34 GMT+0800" />
+        <meta property="article:modified_time" content="Fri Dec 01 2017 15:25:00 GMT+0800" />
     
 
     <!-- The Twitter Card protocol -->
-    <meta name="twitter:title" content="快速搭建Hexo | Jane&#39;s blog">
-    <meta name="twitter:description" content="这篇文章主要是提醒自己半年更一次博客忘了要怎么做。当然如果想迅速建站，可是可以参考的。">
+    <meta name="twitter:title" content="前端大纲 | Jane&#39;s blog">
+    <meta name="twitter:description" content="这篇文章是为了时刻提醒自己，还有哪些坑要填。">
     <meta name="twitter:image" content="http://janebt.github.io/img/favicon.jpeg">
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:url" content="http://janebt.github.io" />
 
     <!-- Add canonical link for SEO -->
     
-        <link rel="canonical" href="http://janebt.github.io/2016/10/01/Hexo搭建/index.html" />
+        <link rel="canonical" href="http://janebt.github.io/2017/11/01/前端大纲/index.html" />
     
 
     <!-- Structured-data for SEO -->
@@ -312,10 +312,10 @@
 {
     "@context": "https://schema.org",
     "@type": "BlogPosting",
-    "mainEntityOfPage": "http://janebt.github.io/2016/10/01/Hexo搭建/index.html",
-    "headline": "快速搭建Hexo",
-    "datePublished": "Sat Oct 01 2016 11:33:34 GMT+0800",
-    "dateModified": "Sun Oct 01 2017 15:25:00 GMT+0800",
+    "mainEntityOfPage": "http://janebt.github.io/2017/11/01/前端大纲/index.html",
+    "headline": "前端大纲",
+    "datePublished": "Wed Nov 01 2017 11:33:34 GMT+0800",
+    "dateModified": "Fri Dec 01 2017 15:25:00 GMT+0800",
     "author": {
         "@type": "Person",
         "name": "jane",
@@ -333,8 +333,8 @@
             "url": "/img/favicon.jpeg"
         }
     },
-    "keywords": ",Hexo,博客jane, blog, hexo, Web, 博客",
-    "description": "这篇文章主要是提醒自己半年更一次博客忘了要怎么做。当然如果想迅速建站，可是可以参考的。",
+    "keywords": ",前端,HTML,JavaScript,CSSjane, blog, hexo, Web, 博客",
+    "description": "这篇文章是为了时刻提醒自己，还有哪些坑要填。",
 }
 </script>
 
@@ -399,7 +399,7 @@
     </button>
 
     <ul class="post-toc-wrap mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect" for="post-toc-trigger-btn" style="max-height:80vh; overflow-y:scroll;">
-        <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#搭建hexo"><span class="post-toc-number">1.</span> <span class="post-toc-text">搭建hexo</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#安装Hexo"><span class="post-toc-number">1.1.</span> <span class="post-toc-text">安装Hexo</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#后期部署"><span class="post-toc-number">1.2.</span> <span class="post-toc-text">后期部署</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#hexo配置"><span class="post-toc-number">1.3.</span> <span class="post-toc-text">hexo配置</span></a></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#主题配置"><span class="post-toc-number">2.</span> <span class="post-toc-text">主题配置</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#启用主题"><span class="post-toc-number">2.1.</span> <span class="post-toc-text">启用主题</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#主题配置-1"><span class="post-toc-number">2.2.</span> <span class="post-toc-text">主题配置</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#头像等信息"><span class="post-toc-number">2.2.1.</span> <span class="post-toc-text">头像等信息</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#添加分类"><span class="post-toc-number">2.2.2.</span> <span class="post-toc-text">添加分类</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#设置favicon"><span class="post-toc-number">2.2.3.</span> <span class="post-toc-text">设置favicon</span></a></li></ol></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#插件第三方"><span class="post-toc-number">3.</span> <span class="post-toc-text">插件第三方</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#添加版权声明"><span class="post-toc-number">3.1.</span> <span class="post-toc-text">添加版权声明</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#添加canvas-nest特效"><span class="post-toc-number">3.2.</span> <span class="post-toc-text">添加canvas_nest特效</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#algolia搜索"><span class="post-toc-number">3.3.</span> <span class="post-toc-text">algolia搜索</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#添加文章阅读量"><span class="post-toc-number">3.4.</span> <span class="post-toc-text">添加文章阅读量</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#打赏功能"><span class="post-toc-number">3.5.</span> <span class="post-toc-text">打赏功能</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#音乐外链"><span class="post-toc-number">3.6.</span> <span class="post-toc-text">音乐外链</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#网易云跟帖"><span class="post-toc-number">3.7.</span> <span class="post-toc-text">网易云跟帖</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#首页文章以摘要形式显示"><span class="post-toc-number">3.8.</span> <span class="post-toc-text">首页文章以摘要形式显示</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#设置首页文章显示篇数"><span class="post-toc-number">3.9.</span> <span class="post-toc-text">设置首页文章显示篇数</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#安装插件"><span class="post-toc-number">3.9.1.</span> <span class="post-toc-text">安装插件</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#修改站点配置文件"><span class="post-toc-number">3.9.2.</span> <span class="post-toc-text">修改站点配置文件</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#设置404公益页面"><span class="post-toc-number">3.10.</span> <span class="post-toc-text">设置404公益页面</span></a></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#常见问题"><span class="post-toc-number">4.</span> <span class="post-toc-text">常见问题</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#github-clone速度慢"><span class="post-toc-number">4.1.</span> <span class="post-toc-text">github clone速度慢</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Hexo-Next的文章目录形式异常"><span class="post-toc-number">4.2.</span> <span class="post-toc-text">Hexo Next的文章目录形式异常</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#反引号问题"><span class="post-toc-number">4.2.1.</span> <span class="post-toc-text">反引号问题</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Head错位"><span class="post-toc-number">4.2.2.</span> <span class="post-toc-text">Head错位</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Hexo-Next的文章不显示内容"><span class="post-toc-number">4.3.</span> <span class="post-toc-text">Hexo Next的文章不显示内容</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Hexo-g-无法生成html"><span class="post-toc-number">4.4.</span> <span class="post-toc-text">Hexo g 无法生成html</span></a></li></ol></li></ol>
+        <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#结构层-HTML"><span class="post-toc-number">1.</span> <span class="post-toc-text">结构层(HTML)</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#表示层-CSS"><span class="post-toc-number">2.</span> <span class="post-toc-text">表示层(CSS)</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#行为层-JavaScript"><span class="post-toc-number">3.</span> <span class="post-toc-text">行为层(JavaScript)</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#进阶"><span class="post-toc-number">4.</span> <span class="post-toc-text">进阶</span></a></li></ol>
     </ul>
     
 
@@ -431,7 +431,7 @@
         
     
             <p class="article-headline-p">
-                快速搭建Hexo
+                前端大纲
             </p>
         </div>
 
@@ -450,7 +450,7 @@
     <!-- Author Name & Date -->
     <div>
         <strong>jane</strong>
-        <span>10月 01, 2016</span>
+        <span>11月 01, 2017</span>
     </div>
 
     <div class="section-spacer"></div>
@@ -472,7 +472,7 @@
 <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-functions-qrcode-button">
     <li class="mdl-menu__item">在其它设备中阅读本文章</li>
     
-        <img src="https://pan.baidu.com/share/qrcode?w=246&h=246&url=http://janebt.github.io/2016/10/01/Hexo搭建/">
+        <img src="https://pan.baidu.com/share/qrcode?w=246&h=246&url=http://janebt.github.io/2017/11/01/前端大纲/">
     
 </ul>
 
@@ -486,7 +486,7 @@
     </button>
     <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-functions-viewtags-button">
         <li class="mdl-menu__item">
-        <a class="post_tag-link" href="/tags/Hexo/">Hexo</a></li><li class="mdl-menu__item"><a class="post_tag-link" href="/tags/博客/">博客</a>
+        <a class="post_tag-link" href="/tags/CSS/">CSS</a></li><li class="mdl-menu__item"><a class="post_tag-link" href="/tags/HTML/">HTML</a></li><li class="mdl-menu__item"><a class="post_tag-link" href="/tags/JavaScript/">JavaScript</a></li><li class="mdl-menu__item"><a class="post_tag-link" href="/tags/前端/">前端</a>
     </ul>
     
 
@@ -502,7 +502,7 @@
 
     <!-- Share Weibo -->
     
-        <a class="post_share-link" href="http://service.weibo.com/share/share.php?appkey=&title=快速搭建Hexo&url=http://janebt.github.io/2016/10/01/Hexo搭建/index.html&pic=http://janebt.github.io/img/favicon.jpeg&searchPic=false&style=simple" target="_blank">
+        <a class="post_share-link" href="http://service.weibo.com/share/share.php?appkey=&title=前端大纲&url=http://janebt.github.io/2017/11/01/前端大纲/index.html&pic=http://janebt.github.io/img/favicon.jpeg&searchPic=false&style=simple" target="_blank">
             <li class="mdl-menu__item">
                 分享到微博
             </li>
@@ -511,7 +511,7 @@
 
     <!-- Share Twitter -->
     
-        <a class="post_share-link" href="https://twitter.com/intent/tweet?text=快速搭建Hexo&url=http://janebt.github.io/2016/10/01/Hexo搭建/index.html&via=jane" target="_blank">
+        <a class="post_share-link" href="https://twitter.com/intent/tweet?text=前端大纲&url=http://janebt.github.io/2017/11/01/前端大纲/index.html&via=jane" target="_blank">
             <li class="mdl-menu__item">
                 分享到 Twitter
             </li>
@@ -520,7 +520,7 @@
 
     <!-- Share Facebook -->
     
-        <a class="post_share-link" href="https://www.facebook.com/sharer/sharer.php?u=http://janebt.github.io/2016/10/01/Hexo搭建/index.html" target="_blank">
+        <a class="post_share-link" href="https://www.facebook.com/sharer/sharer.php?u=http://janebt.github.io/2017/11/01/前端大纲/index.html" target="_blank">
             <li class="mdl-menu__item">
                 分享到 Facebook
             </li>
@@ -529,7 +529,7 @@
 
     <!-- Share Google+ -->
     
-        <a class="post_share-link" href="https://plus.google.com/share?url=http://janebt.github.io/2016/10/01/Hexo搭建/index.html" target="_blank">
+        <a class="post_share-link" href="https://plus.google.com/share?url=http://janebt.github.io/2017/11/01/前端大纲/index.html" target="_blank">
             <li class="mdl-menu__item">
                 分享到 Google+
             </li>
@@ -553,118 +553,47 @@
                 <!-- Post Content -->
                 <div id="post-content" class="mdl-color-text--grey-700 mdl-card__supporting-text fade out">
     
-        <p>这篇文章主要是提醒自己半年更一次博客忘了要怎么做。当然如果想<strong>迅速</strong>建站，可是可以参考的。</p>
+        <p>这篇文章是为了时刻提醒自己，还有哪些坑要填。</p>
 <a id="more"></a>
-<h1 id="搭建hexo"><a href="#搭建hexo" class="headerlink" title="搭建hexo"></a>搭建hexo</h1><p>首先需要搭建hexo，包括：</p>
-<ul>
-<li>安装node.js</li>
-<li>安装Hexo</li>
-<li>后期部署</li>
-<li>hexo配置</li>
-</ul>
-<h2 id="安装Hexo"><a href="#安装Hexo" class="headerlink" title="安装Hexo"></a>安装Hexo</h2><pre><code class="shell">npm install -g hexo-cli --no-optional
-npm install hexo-deployer-git --save
-cd ~/Document/hexo
-hexo init
-npm install
-</code></pre>
-<h2 id="后期部署"><a href="#后期部署" class="headerlink" title="后期部署"></a>后期部署</h2><pre><code>hexo new &quot;blogName&quot;        //添加文章
-hexo new page &quot;pageName&quot; #新建页面
-hexo clean
-hexo algolia    //algolia搜索
-hexo 
-
-hexo generate    //生成静态页面
-hexo sever        //本地启动
-hexo deploy        //同步到github
-</code></pre><h2 id="hexo配置"><a href="#hexo配置" class="headerlink" title="hexo配置"></a>hexo配置</h2><p>主要是配置下github账户信息：</p>
-<pre><code>deploy: 
-     type: git 
-     repo: https://github.com/用户名/用户名.github.io.git 
-     branch: master
-</code></pre><p>其他配置信息可以参考各个主题文档</p>
-<h1 id="主题配置"><a href="#主题配置" class="headerlink" title="主题配置"></a>主题配置</h1><p>用过material、yilla、next等，也用过自定义的主题，其实内容都是大同小异，主要就是_config.yml修改，插入图片，配置rss、评论、搜索、统计等信息。详细见各个主题Doc。</p>
-<p>我最近使用的是material( <a href="https://mt.viosey.com/docs/#/" target="_blank" rel="external">Material Theme Doc</a> )，也是我推荐的。它的主题是简洁，看着很干净。</p>
-<p>具体流程：</p>
-<ul>
-<li>安装主题</li>
-<li>启用主题</li>
-<li>主题配置</li>
-</ul>
-<h2 id="启用主题"><a href="#启用主题" class="headerlink" title="启用主题"></a>启用主题</h2><p>在站点 _config.yml 中设置theme</p>
-<h2 id="主题配置-1"><a href="#主题配置-1" class="headerlink" title="主题配置"></a>主题配置</h2><h3 id="头像等信息"><a href="#头像等信息" class="headerlink" title="头像等信息"></a>头像等信息</h3><h3 id="添加分类"><a href="#添加分类" class="headerlink" title="添加分类"></a>添加分类</h3><p>这块也是因主题而异。material主题只需要在post的md中首行添加</p>
-<pre><code>categories:
-  - 博客栈
-</code></pre><h3 id="设置favicon"><a href="#设置favicon" class="headerlink" title="设置favicon"></a>设置favicon</h3><p>选择一个favicon制作网站完成制作，例如<a href="http://www.bitbug.net/" target="_blank" rel="external">比特虫</a>是一个免费的在线制作ico图标网站。</p>
-<h1 id="插件第三方"><a href="#插件第三方" class="headerlink" title="插件第三方"></a>插件第三方</h1><h2 id="添加版权声明"><a href="#添加版权声明" class="headerlink" title="添加版权声明"></a>添加版权声明</h2><ul>
-<li><a href="http://www.tuicool.com/articles/m6bIJfq" target="_blank" rel="external">为Hexo博客添加版权说明和打赏功能</a> </li>
-</ul>
-<h2 id="添加canvas-nest特效"><a href="#添加canvas-nest特效" class="headerlink" title="添加canvas_nest特效"></a>添加canvas_nest特效</h2><ul>
-<li><a href="http://tc9011.com/2017/02/02/hexo%E6%96%87%E7%AB%A0%E6%B7%BB%E5%8A%A0%E7%89%88%E6%9D%83%E5%A3%B0%E6%98%8E%E5%8F%8A%E4%B8%80%E4%BA%9B%E7%89%B9%E6%95%88/" target="_blank" rel="external">hexo文章添加版权声明及一些特效</a> </li>
-</ul>
-<h2 id="algolia搜索"><a href="#algolia搜索" class="headerlink" title="algolia搜索"></a>algolia搜索</h2><ul>
-<li><a href="http://www.jianshu.com/p/fa2354d61e37" target="_blank" rel="external">hexo+next添加algolia搜索</a></li>
-<li>修改文章需要执行：<pre><code>hexo algolia
-</code></pre></li>
-</ul>
-<h2 id="添加文章阅读量"><a href="#添加文章阅读量" class="headerlink" title="添加文章阅读量"></a>添加文章阅读量</h2><ul>
-<li><a href="http://www.joryhe.com/2016-05-29-how_to_create_leancloud_read_Counter.html" target="_blank" rel="external">leanCloud,实现文章阅读量统计</a> </li>
-</ul>
-<h2 id="打赏功能"><a href="#打赏功能" class="headerlink" title="打赏功能"></a>打赏功能</h2><ul>
-<li><a href="https://segmentfault.com/q/1010000008403584" target="_blank" rel="external">hexo主题下的开启打赏功能具体是怎么实现的呀？</a> </li>
-</ul>
-<h2 id="音乐外链"><a href="#音乐外链" class="headerlink" title="音乐外链"></a>音乐外链</h2><ul>
-<li><a href="http://weqeo.com/2016/10/11/Hexo%E4%B8%AD%E6%92%AD%E6%94%BE%E7%BD%91%E6%98%93%E4%BA%91%E9%9F%B3%E4%B9%90%E7%9A%84%E5%AE%9E%E8%B7%B5/" target="_blank" rel="external">Hexo中播放网易云音乐的实践</a> </li>
-</ul>
-<h2 id="网易云跟帖"><a href="#网易云跟帖" class="headerlink" title="网易云跟帖"></a>网易云跟帖</h2><ul>
-<li><a href="http://blog.csdn.net/yingpaixiaochuan/article/details/68954103" target="_blank" rel="external">Hexo博客（Next主题）放弃多说，接入网易云跟贴</a></li>
-</ul>
-<h2 id="首页文章以摘要形式显示"><a href="#首页文章以摘要形式显示" class="headerlink" title="首页文章以摘要形式显示"></a>首页文章以摘要形式显示</h2><ul>
-<li>打开<strong>主题配置文件</strong>，找到如下位置，其中<code>length</code>代表显示摘要的截取字符长度。修改<pre><code>auto_excerpt:
-  enable: true
-length: 150
-</code></pre></li>
-</ul>
-<h2 id="设置首页文章显示篇数"><a href="#设置首页文章显示篇数" class="headerlink" title="设置首页文章显示篇数"></a>设置首页文章显示篇数</h2><h3 id="安装插件"><a href="#安装插件" class="headerlink" title="安装插件"></a>安装插件</h3><pre><code>  npm install --save hexo-generator-index
-  npm install --save hexo-generator-archive
-  npm install --save hexo-generator-tag
-</code></pre><h3 id="修改站点配置文件"><a href="#修改站点配置文件" class="headerlink" title="修改站点配置文件"></a>修改站点配置文件</h3><pre><code>index_generator:
-  per_page: 5
-
-archive_generator:
-  per_page: 20
-  yearly: true
-  monthly: true
-
-tag_generator:
-  per_page: 10
-</code></pre><h2 id="设置404公益页面"><a href="#设置404公益页面" class="headerlink" title="设置404公益页面"></a>设置404公益页面</h2><p>在<strong>站点目录</strong>的source文件夹下，新建<code>404.html</code>文件，将下面的代码复制进去保存即可。</p>
-<pre><code class="html">&lt;!DOCTYPE HTML&gt;
-&lt;html&gt;
-&lt;head&gt;
-    &lt;title&gt;404 - arao&#39;blog&lt;/title&gt;
-    &lt;meta name=&quot;description&quot; content=&quot;404错误，页面不存在！&quot;&gt;
-    &lt;meta http-equiv=&quot;content-type&quot; content=&quot;text/html;charset=utf-8;&quot;/&gt;
-    &lt;meta http-equiv=&quot;X-UA-Compatible&quot; content=&quot;IE=edge,chrome=1&quot; /&gt;
-    &lt;meta name=&quot;robots&quot; content=&quot;all&quot; /&gt;
-    &lt;meta name=&quot;robots&quot; content=&quot;index,follow&quot;/&gt;
-&lt;/head&gt;
-&lt;body&gt;
-    &lt;script type=&quot;text/javascript&quot; src=&quot;http://qzonestyle.gtimg.cn/qzone_v6/lostchild/search_children.js&quot; charset=&quot;utf-8&quot;&gt;&lt;/script&gt;
-&lt;/body&gt;
-&lt;/html&gt;
-</code></pre>
-<h1 id="常见问题"><a href="#常见问题" class="headerlink" title="常见问题"></a>常见问题</h1><h2 id="github-clone速度慢"><a href="#github-clone速度慢" class="headerlink" title="github clone速度慢"></a>github clone速度慢</h2><pre><code class="shell">git config --global http.postBuffer 524288000
-</code></pre>
-<h2 id="Hexo-Next的文章目录形式异常"><a href="#Hexo-Next的文章目录形式异常" class="headerlink" title="Hexo Next的文章目录形式异常"></a>Hexo Next的文章目录形式异常</h2><h3 id="反引号问题"><a href="#反引号问题" class="headerlink" title="反引号问题"></a>反引号问题</h3><p>用typora生成文章并传给next，中间需要注意的是代码注释段(反引号)，typora和next解析逻辑不一样，注意去掉反引号前面的空格,可以使toc匹配<br>如果去除反引号和上面的空行，可以使代码段格式和上面内容对齐</p>
-<h3 id="Head错位"><a href="#Head错位" class="headerlink" title="Head错位"></a>Head错位</h3><p>比如上一层是H2，内部是H4，就会出现错位。</p>
-<h2 id="Hexo-Next的文章不显示内容"><a href="#Hexo-Next的文章不显示内容" class="headerlink" title="Hexo Next的文章不显示内容"></a>Hexo Next的文章不显示内容</h2><p>引用中设置字体，会导致整个文档无法解析。</p>
-<h2 id="Hexo-g-无法生成html"><a href="#Hexo-g-无法生成html" class="headerlink" title="Hexo g 无法生成html"></a>Hexo g 无法生成html</h2><p>排查发现对以下解析问题：</p>
-<pre><code>`{{{ xxx }}}`
-`{{* foo }}`
-`{{ }}`
-</code></pre><hr>
-<p>基本这就是搭建一个github blog需要包括的内容了。当然，最快的方式也许是找一个官方demo直接clone修改配置。</p>
+<h1 id="结构层-HTML"><a href="#结构层-HTML" class="headerlink" title="结构层(HTML)"></a>结构层(HTML)</h1><p>对WEB标准的理解</p>
+<p>浏览器内核差异</p>
+<p><a href="https://janebt.github.io/2017/11/01/HTML5%E6%80%BB%E7%BB%93/">HTML5新特性及应用</a></p>
+<h1 id="表示层-CSS"><a href="#表示层-CSS" class="headerlink" title="表示层(CSS)"></a>表示层(CSS)</h1><p>布局</p>
+<p>盒子模型</p>
+<p>选择器优先级及使用</p>
+<p>CSS3新特性及应用</p>
+<p>兼容性</p>
+<p>Hack</p>
+<p>移动端适应</p>
+<h1 id="行为层-JavaScript"><a href="#行为层-JavaScript" class="headerlink" title="行为层(JavaScript)"></a>行为层(JavaScript)</h1><p>数据类型</p>
+<p>面向对象</p>
+<p>作用域</p>
+<p>原型链</p>
+<p>继承、封装、多态</p>
+<p>闭包</p>
+<p>插件</p>
+<p>跨域</p>
+<p>模块化</p>
+<p>事件机制</p>
+<p>自定义事件</p>
+<p>内存泄漏</p>
+<p>异步装载回调</p>
+<p>模版引擎</p>
+<p>Ajax</p>
+<p>Jquery</p>
+<p>JSON</p>
+<p>Nodejs</p>
+<h1 id="进阶"><a href="#进阶" class="headerlink" title="进阶"></a>进阶</h1><p>优化</p>
+<p>交互</p>
+<p>响应式</p>
+<p>HTTP</p>
+<p>WEB安全</p>
+<p>重构</p>
+<p>SEO</p>
+<p>UED</p>
+<p>架构</p>
+<p>后端</p>
+<p>移动端</p>
 
         
                 <blockquote style="margin: 2em 0 0;padding: 0.5em 1em;border-left: 3px solid #F44336;background-color: #F5F5F5;list-style: none;">
@@ -673,7 +602,7 @@ tag_generator:
                             本文采用 <a rel='nofollow noopener' href='https://creativecommons.org/licenses/by-nc-sa/3.0/deed.zh' target='_blank'>CC BY-NC-SA 3.0 Unported</a> 协议进行许可，阅读 <a href='/creativecommons.html' target='_blank'>相关说明</a>
                         </strong>
                         <br>
-                        <strong>本文链接：</strong><a href="http://janebt.github.io/2016/10/01/Hexo搭建/">http://janebt.github.io/2016/10/01/Hexo搭建/</a>
+                        <strong>本文链接：</strong><a href="http://janebt.github.io/2017/11/01/前端大纲/">http://janebt.github.io/2017/11/01/前端大纲/</a>
                     </p>
                 </blockquote>
         
@@ -728,8 +657,8 @@ tag_generator:
 
 <script type="text/javascript">
     var disqus_config = function () {
-        this.page.url = 'http://janebt.github.io/2016/10/01/Hexo搭建/';  // Replace PAGE_URL with your page's canonical URL variable
-        this.page.identifier = 'http://janebt.github.io/2016/10/01/Hexo搭建/'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+        this.page.url = 'http://janebt.github.io/2017/11/01/前端大纲/';  // Replace PAGE_URL with your page's canonical URL variable
+        this.page.identifier = 'http://janebt.github.io/2017/11/01/前端大纲/'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
     };
 </script>
 
@@ -778,7 +707,7 @@ tag_generator:
             <nav class="material-nav mdl-color-text--grey-50 mdl-cell mdl-cell--12-col">
     <!-- Prev Nav -->
     
-        <a href="/2017/11/01/前端大纲/" id="post_nav-newer" class="prev-content">
+        <a href="/2017/11/01/HTML5总结/" id="post_nav-newer" class="prev-content">
             <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
                 <i class="material-icons">arrow_back</i>
             </button>
@@ -791,6 +720,14 @@ tag_generator:
     <div class="section-spacer"></div>
 
     <!-- Next Nav -->
+    
+        <a href="/2016/10/01/Hexo搭建/" id="post_nav-older" class="next-content">
+            旧篇
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
+                <i class="material-icons">arrow_forward</i>
+            </button>
+        </a>
     
 </nav>
 

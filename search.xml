@@ -608,12 +608,12 @@ Response.Flush()
     
     <entry>
       <title><![CDATA[前端大纲]]></title>
-      <url>/2017/10/01/%E5%89%8D%E7%AB%AF%E5%A4%A7%E7%BA%B2/</url>
+      <url>/2017/11/01/%E5%89%8D%E7%AB%AF%E5%A4%A7%E7%BA%B2/</url>
       <content type="html"><![CDATA[<p>这篇文章是为了时刻提醒自己，还有哪些坑要填。</p>
 <a id="more"></a>
 <h1 id="结构层-HTML"><a href="#结构层-HTML" class="headerlink" title="结构层(HTML)"></a>结构层(HTML)</h1><p>对WEB标准的理解</p>
 <p>浏览器内核差异</p>
-<p><a href="https://janebt.github.io/2017/10/01/%E5%89%8D%E7%AB%AF%E5%A4%A7%E7%BA%B2/">HTML5新特性及应用</a></p>
+<p><a href="https://janebt.github.io/2017/11/01/HTML5%E6%80%BB%E7%BB%93/">HTML5新特性及应用</a></p>
 <h1 id="表示层-CSS"><a href="#表示层-CSS" class="headerlink" title="表示层(CSS)"></a>表示层(CSS)</h1><p>布局</p>
 <p>盒子模型</p>
 <p>选择器优先级及使用</p>
