@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://janebt.github.io/"/>
-  <updated>2017-11-01T07:25:00.000Z</updated>
+  <updated>2017-11-21T06:54:04.000Z</updated>
   <id>http://janebt.github.io/</id>
   
   <author>
@@ -15,6 +15,57 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title></title>
+    <link href="http://janebt.github.io/2017/11/21/%E5%8E%9F%E5%9E%8B%E9%93%BE/"/>
+    <id>http://janebt.github.io/2017/11/21/原型链/</id>
+    <published>2017-11-21T02:43:47.000Z</published>
+    <updated>2017-11-21T06:54:04.000Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="原型链"><a href="#原型链" class="headerlink" title="原型链"></a>原型链</h1><p>Case1</p><pre><code>var obj = { name: &#39;obj&#39; }</code></pre><p>我们可以对 obj 进行一些操作，包括</p><ul><li>「读」属性</li><li>「新增」属性</li><li>「更新」属性</li><li>「删除」属性</li></ul><p><strong>valueOf / toString / constructor 是怎么来？</strong></p><p>\1. obj 本身有一个属性 name（这是我们给它加的）</p><p>\2. obj 还有一个属性叫做 <strong>proto</strong>（它是一个对象）</p><p>\3. obj.<strong>proto</strong> 有很多属性，包括 valueOf、toString、constructor 等</p><p>\4. obj.<strong>proto</strong> 其实也有一个叫做 <strong>proto</strong> 的属性（console.log 没有显示），值为 null</p><p><strong>「读取」 obj.toString 时，JS 引擎会做下面的事情</strong></p><p>\1. 看看 obj 对象本身有没有 toString 属性。没有就走到下一步。</p><p>\2. 看看 obj.<strong>proto</strong> 对象有没有 toString 属性，发现 obj.<strong>proto</strong> 有 toString 属性，于是找到了</p><p>而这个「搜索过程」，是连着由 <strong>proto</strong> 组成的链子一直走的。<strong>这个链子，就叫做「原型链」。</strong></p><p><strong>共享原型链</strong></p><p>如果我们改写 obj2.<strong>proto</strong>.toString，那么 obj.toString 其实也会变！</p><p><strong>差异化</strong></p><p>如果我们想让 obj.toString 和 obj2.toString 的行为不同怎么做呢？</p><p>直接赋值就好了：</p><pre><code>obj.toString = function(){ return &#39;新的 toString 方法&#39; }</code></pre><p>「读」属性时会<strong>沿着原型链搜索</strong>。</p><p>「新增」属性时<strong>不会</strong>去看原型链（但是如果你给这个属性加了一些配置，则不一样，以后讲）。</p><p>Case2</p><p><code>_proto_</code>:任何一个对象Object都有<em>proto</em>，它是每一个对象的私有属性，是天生自带的。<br><code>prototype</code>:不是任何对象都有prototype，只有构造函数有prototype，是后天赋予的。</p><p>其实只需要记住一句话：<strong>调用一个对象的属性或方法，一但这个对象中没有，就去这个对象的<em>proto</em>中查找。这个对象的<em>proto</em>指向自己构造函数的prototype属性</strong></p><p>对象也有区别，大致可以分为两类，即：普通对象（Object）和函数对象（Function）。一般而言，通过new Function产生的对象是函数对象，其他对象都是普通对象。</p><p>总结：</p><p>函数对象 有 prototype和<strong>proto</strong></p><p>原型链的形成真正是靠<strong>proto</strong> 而非prototype,当JS引擎执行对象的方法时，先查找对象本身是否存在该方法，如果不存在，会在原型链上查找，但不会查找自身的prototype。</p><p>一个对象的<strong>proto</strong>记录着自己的原型链，决定了自身的数据类型，改变<strong>proto</strong>就等于改变对象的数据类型。</p><p>函数的prototype不属于自身的原型链，它是子类创建的核心，决定了子类的数据类型，是连接子类原型链的桥梁。</p><p>在原型对象上定义方法和属性的目的是为了被子类继承和使用。</p><p>JS在通过new 表达式创建一个对象的时候，通常会把父类的prototype赋值给新对象的<strong>proto</strong>属性</p><p>Array是函数对象，是Function的实例对象，Array是通过newFunction创建出来的。因为Array是Function的实例，所以Array.<strong>proto</strong> ===  Function.prototype</p><p>原型对象属于普通对象。Function.prototype是个例外，它是原型对象，却又是函数对象，作为一个函数对象，它又没有prototype属性。</p><p><a href="http://blog.csdn.net/sinat_21274091/article/details/52741788" target="_blank" rel="external">http://blog.csdn.net/sinat_21274091/article/details/52741788</a> 图</p><ol><li>获取对象的原型  </li><li>dog1.<strong>proto</strong>  //不推荐  </li><li>Object.getPrototypeOf(dog1) === Dog.prototype   //推荐  </li></ol><p>prototype的属性，这个属性指向函数的原型对象。<strong>这个对象的用途就是包含所有实例共享的属性和方法（我们把这个对象叫做原型对象）</strong></p><p>隐式原型指向<strong>创建</strong>这个对象的函数(constructor)的prototype,  <strong>指向构造函数的原型对象</strong></p><p>显式原型的作用：用来实现基于原型的继承与属性的共享。</p><p>隐式原型的作用：构成原型链，同样用于实现基于原型的继承。</p><p>由 Object.create() 创建出来的对象没有构造函数</p><p><strong>关于Function，Object</strong></p><p>题目：<a href="https://segmentfault.com/q/1010000002736664" target="_blank" rel="external">https://segmentfault.com/q/1010000002736664</a></p><p>图：<a href="http://blog.csdn.net/m0_37667797/article/details/78360810" target="_blank" rel="external">http://blog.csdn.net/m0_37667797/article/details/78360810</a></p><ol><li>实例对象的原型(我们以<strong>proto</strong>来表示)会指向其构造函数的prototype属性, 因此 Object.<strong>proto</strong> === Function.prototype, Function.<strong>proto</strong> === Function.prototype, Function.prototype.<strong>proto</strong> === Object.prototype</li></ol><p><code>Object</code>是<code>Function</code>的实例对象, <code>Function.prototype</code>是<code>Object</code>的实例对象。</p><pre><code>Array.prototype.__proto__ == Object.prototype</code></pre><h1 id="继承"><a href="#继承" class="headerlink" title="继承"></a>继承</h1><p><a href="https://segmentfault.com/a/1190000006639939" target="_blank" rel="external">https://segmentfault.com/a/1190000006639939</a></p><h4 id="纯原型链继承"><a href="#纯原型链继承" class="headerlink" title="纯原型链继承"></a>纯原型链继承</h4><p>纯原型链的继承方式，其实说白了就是把继承的对象的<code>prototype</code>等于继承自构造函数的实例。<br>但是这样的方式有问题。</p><p>看出问题了吧，zhangsan直接修改了其构造函数的likeFood，导致我们再实例的对象也收到了修改的影响，<strong>因此这种继承方式有缺陷</strong></p><h4 id="借用构造函数继承"><a href="#借用构造函数继承" class="headerlink" title="借用构造函数继承"></a>借用构造函数继承</h4><pre><code>function Father(name) {    this.name = name;    this.sayName = function () {        console.log(this.name);    }}function Son(name, age) {    Father.call(this, name);    this.age = age;}var zhangsan = new Son(&#39;zhangsan&#39;, 17);</code></pre><p>这种继承方式并没有利用到原型以及原型链的概念，它主要利用call的特性，call的第一个参数传入this，后面的参数传入函数所需的参数。</p><p>这种方式归根结底其实就是在实例一个对象的时候，向这个对象的上面添加所需的属性和方法。</p><p>按照这种方式，每次<code>new</code>一个对象，就是实例化一个对象，都会向这个对象身上添加一堆属性和方法。<br>添加属性是没问题的，但是每次在对象身上添加的方法，这个函数就要重写一次。<strong>函数不能进行复用，这就是最大的问题！</strong></p><h4 id="组合继承"><a href="#组合继承" class="headerlink" title="组合继承"></a>组合继承</h4><p>组合继承其实分别是拥有以上两种方法的优点，同时也规避了以上两种方法的缺点。</p><pre><code>function Father(name) {    this.name = name;}Farther.prototype.sayName = function () {    console.log(this.name);}function Son(name, age) {    Farther.call(this, name);    this.age = age;}Son.prototype = new Father();Son.constructor = Son;Son.prototype.sayage = function () {    console.log(this.age);}var zhangsan = new Son();</code></pre><h2 id="好文"><a href="#好文" class="headerlink" title="好文"></a>好文</h2><p><a href="https://segmentfault.com/a/1190000005363885" target="_blank" rel="external">https://segmentfault.com/a/1190000005363885</a></p><h1 id="call及apply"><a href="#call及apply" class="headerlink" title="call及apply"></a>call及apply</h1><p>A</p><p>所以，可以看出call和apply是为了动态改变this而出现的，当一个object没有某个方法，但是其他的有，我们可以借助call或apply用其它对象的方法来操作。</p><p>用的比较多的，通过document.getElementsByTagName选择的dom 节点是一种类似array的array。它不能应用Array下的push,pop等方法。我们可以通过：<br>var domNodes =  Array.prototype.slice.call(document.getElementsByTagName(“*”));<br>这样domNodes就可以应用Array下的所有方法了。</p><p>B</p><p>call 和 apply 都是为了改变某个函数运行时的 context 即上下文而存在的，换句话说，就是为了改变函数体内部 this 的指向。因为 JavaScript 的函数存在「定义时上下文」和「运行时上下文」以及「上下文是可以改变的」这样的概念。</p><blockquote><p>var func1 = function(arg1, arg2) {};</p></blockquote><p>就可以通过 func1.call(this, arg1, arg2); 或者 func1.apply(this, [arg1, arg2]); 来调用。其中 this 是你想指定的上下文，他可以任何一个 JavaScript 对象(JavaScript 中一切皆对象)，call 需要把参数按顺序传递进去，而 apply 则是把参数放在数组里。</p><p>JavaScript 中，某个函数的参数数量是不固定的，因此要说适用条件的话，当你的参数是明确知道数量时，用 call，而不确定的时候，用 apply，然后把参数 push 进数组传递进去。当参数数量不确定时，函数内部也可以通过 arguments 这个数组来便利所有的参数。</p><p>C</p><pre><code>obj.call(thisObj, arg1, arg2, ...);obj.apply(thisObj, [arg1, arg2, ...]);</code></pre><p>两者作用一致，都是把obj(即this)绑定到thisObj，这时候thisObj具备了obj的属性和方法。或者说thisObj『继承』了obj的属性和方法。</p><p>唯一区别是apply接受的是数组参数，call接受的是连续参数。</p><p>call是apply的语法糖。</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h1 id=&quot;原型链&quot;&gt;&lt;a href=&quot;#原型链&quot; class=&quot;headerlink&quot; title=&quot;原型链&quot;&gt;&lt;/a&gt;原型链&lt;/h1&gt;&lt;p&gt;Case1&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;var obj = { name: &amp;#39;obj&amp;#39; }
+&lt;/code&gt;&lt;/pr
+      
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>前端大纲</title>
+    <link href="http://janebt.github.io/2017/11/01/%E5%89%8D%E7%AB%AF%E5%A4%A7%E7%BA%B2/"/>
+    <id>http://janebt.github.io/2017/11/01/前端大纲/</id>
+    <published>2017-11-01T03:33:34.000Z</published>
+    <updated>2017-12-01T07:25:00.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>这篇文章是为了时刻提醒自己，还有哪些坑要填。</p><a id="more"></a><h1 id="结构层-HTML"><a href="#结构层-HTML" class="headerlink" title="结构层(HTML)"></a>结构层(HTML)</h1><p>对WEB标准的理解</p><p>浏览器内核差异</p><p><a href="https://janebt.github.io/2017/11/01/HTML5%E6%80%BB%E7%BB%93/">HTML5新特性及应用</a></p><h1 id="表示层-CSS"><a href="#表示层-CSS" class="headerlink" title="表示层(CSS)"></a>表示层(CSS)</h1><p>布局</p><p>盒子模型</p><p>选择器优先级及使用</p><p>CSS3新特性及应用</p><p>兼容性</p><p>Hack</p><p>移动端适应</p><h1 id="行为层-JavaScript"><a href="#行为层-JavaScript" class="headerlink" title="行为层(JavaScript)"></a>行为层(JavaScript)</h1><p>数据类型</p><p>面向对象</p><p>作用域</p><p>原型链</p><p>继承、封装、多态</p><p>闭包</p><p>插件</p><p>跨域</p><p>模块化</p><p>事件机制</p><p>自定义事件</p><p>内存泄漏</p><p>异步装载回调</p><p>模版引擎</p><p>Ajax</p><p>Jquery</p><p>JSON</p><p>Nodejs</p><h1 id="进阶"><a href="#进阶" class="headerlink" title="进阶"></a>进阶</h1><p>优化</p><p>交互</p><p>响应式</p><p>HTTP</p><p>WEB安全</p><p>重构</p><p>SEO</p><p>UED</p><p>架构</p><p>后端</p><p>移动端</p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;这篇文章是为了时刻提醒自己，还有哪些坑要填。&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="技术栈" scheme="http://janebt.github.io/categories/%E6%8A%80%E6%9C%AF%E6%A0%88/"/>
+    
+    
+      <category term="前端" scheme="http://janebt.github.io/tags/%E5%89%8D%E7%AB%AF/"/>
+    
+      <category term="JavaScript" scheme="http://janebt.github.io/tags/JavaScript/"/>
+    
+      <category term="HTML" scheme="http://janebt.github.io/tags/HTML/"/>
+    
+      <category term="CSS" scheme="http://janebt.github.io/tags/CSS/"/>
+    
+  </entry>
   
   <entry>
     <title>HTML5总结</title>
@@ -40,34 +91,6 @@
       <category term="HTML" scheme="http://janebt.github.io/tags/HTML/"/>
     
       <category term="HTML5" scheme="http://janebt.github.io/tags/HTML5/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>前端大纲</title>
-    <link href="http://janebt.github.io/2017/11/01/%E5%89%8D%E7%AB%AF%E5%A4%A7%E7%BA%B2/"/>
-    <id>http://janebt.github.io/2017/11/01/前端大纲/</id>
-    <published>2017-11-01T03:33:34.000Z</published>
-    <updated>2017-12-01T07:25:00.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>这篇文章是为了时刻提醒自己，还有哪些坑要填。</p><a id="more"></a><h1 id="结构层-HTML"><a href="#结构层-HTML" class="headerlink" title="结构层(HTML)"></a>结构层(HTML)</h1><p>对WEB标准的理解</p><p>浏览器内核差异</p><p><a href="https://janebt.github.io/2017/11/01/HTML5%E6%80%BB%E7%BB%93/">HTML5新特性及应用</a></p><h1 id="表示层-CSS"><a href="#表示层-CSS" class="headerlink" title="表示层(CSS)"></a>表示层(CSS)</h1><p>布局</p><p>盒子模型</p><p>选择器优先级及使用</p><p>CSS3新特性及应用</p><p>兼容性</p><p>Hack</p><p>移动端适应</p><h1 id="行为层-JavaScript"><a href="#行为层-JavaScript" class="headerlink" title="行为层(JavaScript)"></a>行为层(JavaScript)</h1><p>数据类型</p><p>面向对象</p><p>作用域</p><p>原型链</p><p>继承、封装、多态</p><p>闭包</p><p>插件</p><p>跨域</p><p>模块化</p><p>事件机制</p><p>自定义事件</p><p>内存泄漏</p><p>异步装载回调</p><p>模版引擎</p><p>Ajax</p><p>Jquery</p><p>JSON</p><p>Nodejs</p><h1 id="进阶"><a href="#进阶" class="headerlink" title="进阶"></a>进阶</h1><p>优化</p><p>交互</p><p>响应式</p><p>HTTP</p><p>WEB安全</p><p>重构</p><p>SEO</p><p>UED</p><p>架构</p><p>后端</p><p>移动端</p>]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;这篇文章是为了时刻提醒自己，还有哪些坑要填。&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="技术栈" scheme="http://janebt.github.io/categories/%E6%8A%80%E6%9C%AF%E6%A0%88/"/>
-    
-    
-      <category term="前端" scheme="http://janebt.github.io/tags/%E5%89%8D%E7%AB%AF/"/>
-    
-      <category term="HTML" scheme="http://janebt.github.io/tags/HTML/"/>
-    
-      <category term="JavaScript" scheme="http://janebt.github.io/tags/JavaScript/"/>
-    
-      <category term="CSS" scheme="http://janebt.github.io/tags/CSS/"/>
     
   </entry>
   

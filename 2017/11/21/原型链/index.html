@@ -37,8 +37,6 @@
     
     <title>
         
-            标签: JavaScript | 
-        
         Jane&#39;s blog
     </title>
 
@@ -285,15 +283,18 @@
     <!-- The Open Graph protocol -->
     <meta property="og:url" content="http://janebt.github.io">
     <meta property="og:type" content="blog">
-    <meta property="og:title" content="标签: JavaScript | Jane&#39;s blog">
+    <meta property="og:title" content="Jane&#39;s blog">
     <meta property="og:image" content="http://janebt.github.io/img/favicon.jpeg" />
     <meta property="og:description" content="我想在跑车里 想要一辆法拉利 想要钱 Money Money 一切的一切都得靠你自己">
     
 
     
+        <meta property="article:published_time" content="Tue Nov 21 2017 10:43:47 GMT+0800" />
+        <meta property="article:modified_time" content="Tue Nov 21 2017 14:54:04 GMT+0800" />
+    
 
     <!-- The Twitter Card protocol -->
-    <meta name="twitter:title" content="标签: JavaScript | Jane&#39;s blog">
+    <meta name="twitter:title" content="Jane&#39;s blog">
     <meta name="twitter:description" content="我想在跑车里 想要一辆法拉利 想要钱 Money Money 一切的一切都得靠你自己">
     <meta name="twitter:image" content="http://janebt.github.io/img/favicon.jpeg">
     <meta name="twitter:card" content="summary_large_image" />
@@ -301,13 +302,43 @@
 
     <!-- Add canonical link for SEO -->
     
-        <link rel="canonical" href="http://janebt.github.io/tags/JavaScript/index.html" />
+        <link rel="canonical" href="http://janebt.github.io/2017/11/21/原型链/index.html" />
     
 
     <!-- Structured-data for SEO -->
     
         
 
+
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "mainEntityOfPage": "http://janebt.github.io/2017/11/21/原型链/index.html",
+    "headline": "",
+    "datePublished": "Tue Nov 21 2017 10:43:47 GMT+0800",
+    "dateModified": "Tue Nov 21 2017 14:54:04 GMT+0800",
+    "author": {
+        "@type": "Person",
+        "name": "jane",
+        "image": {
+            "@type": "ImageObject",
+            "url": "/img/avatar.jpg"
+        },
+        "description": "目标:做一名优秀的前端工程师"
+    },
+    "publisher": {
+        "@type": "Organization",
+        "name": "Jane&#39;s blog",
+        "logo": {
+            "@type":"ImageObject",
+            "url": "/img/favicon.jpeg"
+        }
+    },
+    "keywords": "jane, blog, hexo, Web, 博客",
+    "description": "我想在跑车里 想要一辆法拉利 想要钱 Money Money 一切的一切都得靠你自己",
+}
+</script>
 
 
     
@@ -471,25 +502,29 @@
 
                     
 
-                    <!-- Index Module -->
-<div class="material-index mdl-grid">
-    
-    <div class="locate-thumbnail-symbol"></div>
+                    <!-- Post TOC -->
 
-    <!-- Pin on top -->
     
 
-    <!-- Normal Post -->
-    
-        
-            
-            
-                <!-- Isolation Thumbnail -->
-                <div class="post_entry-module mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col fade out">
-    <!-- Post_entry Header -->
+
+
+<!-- Layouts -->
+
+    <!-- Post Module -->
+    <div class="material-post_container">
+
+        <div class="material-post mdl-grid">
+            <div class="mdl-card mdl-shadow--4dp mdl-cell mdl-cell--12-col">
+
+                <!-- Post Header(Thumbnail & Title) -->
+                
+
+
+    <!-- Isolation Post Header -->
+    <!-- Post thumbnail -->
     
         <!-- Post Header Info -->
-        <div class="post_entry-header_info without-thumbnail">
+        <div class="post-header_info without-thumbnail">
             <!-- Author Avatar & Name -->
             <img src="/img/avatar.jpg" class="avatar-img" width="44px" height="44px" alt="jane's avatar">
             <span class="name-span">jane</span>
@@ -500,51 +535,267 @@
     
         </div>
 
-    <!-- Post_entry Content -->
-    <div class="post_entry-content mdl-color-text--grey-600 mdl-card__supporting-text">
-        <!-- Post Title -->
-        <p class="post_entry-title">
-            <a href="/2017/11/01/前端大纲/">前端大纲</a>
-        </p>
 
-        <!-- Post Excerpt -->
-        <p class="post_entry-excerpt">
-            
-                这篇文章是为了时刻提醒自己，还有哪些坑要填。
-            
-            &nbsp;&nbsp;&nbsp;
-            <span>
-                <a href="/2017/11/01/前端大纲/" target="_self">阅读全文</a>
-            </span>
-        </p>
 
-        <!-- Post Tags -->
-        <ul class="post_entry-tags-list"><li class="post_entry-tags-list-item"><a class="post_entry-tags-list-link" href="/tags/CSS/">CSS</a></li><li class="post_entry-tags-list-item"><a class="post_entry-tags-list-link" href="/tags/HTML/">HTML</a></li><li class="post_entry-tags-list-item"><a class="post_entry-tags-list-link" href="/tags/JavaScript/">JavaScript</a></li><li class="post_entry-tags-list-item"><a class="post_entry-tags-list-link" href="/tags/前端/">前端</a></li></ul>
-    </div>
-
-    <!-- Post_entry Footer -->
-    <div class="post_entry-footer">
-        <div class="post_entry-footer-border"></div>
-        <div class="post_entry-footer-info">
-            <div class="post_entry-footer-date">
-                11月 01, 2017
-            </div>
-            <div class="post_entry-footer-comment">
                 
+
+                <!-- Post Content -->
+                <div id="post-content" class="mdl-color-text--grey-700 mdl-card__supporting-text fade out">
+    
+
+    
+        <div class="post-content_wrapper">
+            <p class="post-title">
+                
+            </p>
+            <h1 id="原型链"><a href="#原型链" class="headerlink" title="原型链"></a>原型链</h1><p>Case1</p>
+<pre><code>var obj = { name: &#39;obj&#39; }
+</code></pre><p>我们可以对 obj 进行一些操作，包括</p>
+<ul>
+<li>「读」属性</li>
+<li>「新增」属性</li>
+<li>「更新」属性</li>
+<li>「删除」属性</li>
+</ul>
+<p><strong>valueOf / toString / constructor 是怎么来？</strong></p>
+<p>\1. obj 本身有一个属性 name（这是我们给它加的）</p>
+<p>\2. obj 还有一个属性叫做 <strong>proto</strong>（它是一个对象）</p>
+<p>\3. obj.<strong>proto</strong> 有很多属性，包括 valueOf、toString、constructor 等</p>
+<p>\4. obj.<strong>proto</strong> 其实也有一个叫做 <strong>proto</strong> 的属性（console.log 没有显示），值为 null</p>
+<p><strong>「读取」 obj.toString 时，JS 引擎会做下面的事情</strong></p>
+<p>\1. 看看 obj 对象本身有没有 toString 属性。没有就走到下一步。</p>
+<p>\2. 看看 obj.<strong>proto</strong> 对象有没有 toString 属性，发现 obj.<strong>proto</strong> 有 toString 属性，于是找到了</p>
+<p>而这个「搜索过程」，是连着由 <strong>proto</strong> 组成的链子一直走的。<strong>这个链子，就叫做「原型链」。</strong></p>
+<p><strong>共享原型链</strong></p>
+<p>如果我们改写 obj2.<strong>proto</strong>.toString，那么 obj.toString 其实也会变！</p>
+<p><strong>差异化</strong></p>
+<p>如果我们想让 obj.toString 和 obj2.toString 的行为不同怎么做呢？</p>
+<p>直接赋值就好了：</p>
+<pre><code>obj.toString = function(){ return &#39;新的 toString 方法&#39; }
+</code></pre><p>「读」属性时会<strong>沿着原型链搜索</strong>。</p>
+<p>「新增」属性时<strong>不会</strong>去看原型链（但是如果你给这个属性加了一些配置，则不一样，以后讲）。</p>
+<p>Case2</p>
+<p><code>_proto_</code>:任何一个对象Object都有<em>proto</em>，它是每一个对象的私有属性，是天生自带的。<br><code>prototype</code>:不是任何对象都有prototype，只有构造函数有prototype，是后天赋予的。</p>
+<p>其实只需要记住一句话：<strong>调用一个对象的属性或方法，一但这个对象中没有，就去这个对象的<em>proto</em>中查找。这个对象的<em>proto</em>指向自己构造函数的prototype属性</strong></p>
+<p>对象也有区别，大致可以分为两类，即：普通对象（Object）和函数对象（Function）。一般而言，通过new Function产生的对象是函数对象，其他对象都是普通对象。</p>
+<p>总结：</p>
+<p>函数对象 有 prototype和<strong>proto</strong></p>
+<p>原型链的形成真正是靠<strong>proto</strong> 而非prototype,当JS引擎执行对象的方法时，先查找对象本身是否存在该方法，如果不存在，会在原型链上查找，但不会查找自身的prototype。</p>
+<p>一个对象的<strong>proto</strong>记录着自己的原型链，决定了自身的数据类型，改变<strong>proto</strong>就等于改变对象的数据类型。</p>
+<p>函数的prototype不属于自身的原型链，它是子类创建的核心，决定了子类的数据类型，是连接子类原型链的桥梁。</p>
+<p>在原型对象上定义方法和属性的目的是为了被子类继承和使用。</p>
+<p>JS在通过new 表达式创建一个对象的时候，通常会把父类的prototype赋值给新对象的<strong>proto</strong>属性</p>
+<p>Array是函数对象，是Function的实例对象，Array是通过newFunction创建出来的。因为Array是Function的实例，所以Array.<strong>proto</strong> ===  Function.prototype</p>
+<p>原型对象属于普通对象。Function.prototype是个例外，它是原型对象，却又是函数对象，作为一个函数对象，它又没有prototype属性。</p>
+<p><a href="http://blog.csdn.net/sinat_21274091/article/details/52741788" target="_blank" rel="external">http://blog.csdn.net/sinat_21274091/article/details/52741788</a> 图</p>
+<ol>
+<li>获取对象的原型  </li>
+<li>dog1.<strong>proto</strong>  //不推荐  </li>
+<li>Object.getPrototypeOf(dog1) === Dog.prototype   //推荐  </li>
+</ol>
+<p>prototype的属性，这个属性指向函数的原型对象。<strong>这个对象的用途就是包含所有实例共享的属性和方法（我们把这个对象叫做原型对象）</strong></p>
+<p>隐式原型指向<strong>创建</strong>这个对象的函数(constructor)的prototype,  <strong>指向构造函数的原型对象</strong></p>
+<p>显式原型的作用：用来实现基于原型的继承与属性的共享。</p>
+<p>隐式原型的作用：构成原型链，同样用于实现基于原型的继承。</p>
+<p>由 Object.create() 创建出来的对象没有构造函数</p>
+<p><strong>关于Function，Object</strong></p>
+<p>题目：<a href="https://segmentfault.com/q/1010000002736664" target="_blank" rel="external">https://segmentfault.com/q/1010000002736664</a></p>
+<p>图：<a href="http://blog.csdn.net/m0_37667797/article/details/78360810" target="_blank" rel="external">http://blog.csdn.net/m0_37667797/article/details/78360810</a></p>
+<ol>
+<li>实例对象的原型(我们以<strong>proto</strong>来表示)会指向其构造函数的prototype属性, 因此 Object.<strong>proto</strong> === Function.prototype, Function.<strong>proto</strong> === Function.prototype, Function.prototype.<strong>proto</strong> === Object.prototype</li>
+</ol>
+<p><code>Object</code>是<code>Function</code>的实例对象, <code>Function.prototype</code>是<code>Object</code>的实例对象。</p>
+<pre><code>Array.prototype.__proto__ == Object.prototype
+</code></pre><h1 id="继承"><a href="#继承" class="headerlink" title="继承"></a>继承</h1><p><a href="https://segmentfault.com/a/1190000006639939" target="_blank" rel="external">https://segmentfault.com/a/1190000006639939</a></p>
+<h4 id="纯原型链继承"><a href="#纯原型链继承" class="headerlink" title="纯原型链继承"></a>纯原型链继承</h4><p>纯原型链的继承方式，其实说白了就是把继承的对象的<code>prototype</code>等于继承自构造函数的实例。<br>但是这样的方式有问题。</p>
+<p>看出问题了吧，zhangsan直接修改了其构造函数的likeFood，导致我们再实例的对象也收到了修改的影响，<strong>因此这种继承方式有缺陷</strong></p>
+<h4 id="借用构造函数继承"><a href="#借用构造函数继承" class="headerlink" title="借用构造函数继承"></a>借用构造函数继承</h4><pre><code>function Father(name) {
+    this.name = name;
+    this.sayName = function () {
+        console.log(this.name);
+    }
+}
+
+function Son(name, age) {
+    Father.call(this, name);
+    this.age = age;
+}
+
+var zhangsan = new Son(&#39;zhangsan&#39;, 17);
+</code></pre><p>这种继承方式并没有利用到原型以及原型链的概念，它主要利用call的特性，call的第一个参数传入this，后面的参数传入函数所需的参数。</p>
+<p>这种方式归根结底其实就是在实例一个对象的时候，向这个对象的上面添加所需的属性和方法。</p>
+<p>按照这种方式，每次<code>new</code>一个对象，就是实例化一个对象，都会向这个对象身上添加一堆属性和方法。<br>添加属性是没问题的，但是每次在对象身上添加的方法，这个函数就要重写一次。<strong>函数不能进行复用，这就是最大的问题！</strong></p>
+<h4 id="组合继承"><a href="#组合继承" class="headerlink" title="组合继承"></a>组合继承</h4><p>组合继承其实分别是拥有以上两种方法的优点，同时也规避了以上两种方法的缺点。</p>
+<pre><code>function Father(name) {
+    this.name = name;
+}
+Farther.prototype.sayName = function () {
+    console.log(this.name);
+}
+
+function Son(name, age) {
+    Farther.call(this, name);
+    this.age = age;
+}
+
+Son.prototype = new Father();
+Son.constructor = Son;
+Son.prototype.sayage = function () {
+    console.log(this.age);
+}
+
+var zhangsan = new Son();
+</code></pre><h2 id="好文"><a href="#好文" class="headerlink" title="好文"></a>好文</h2><p><a href="https://segmentfault.com/a/1190000005363885" target="_blank" rel="external">https://segmentfault.com/a/1190000005363885</a></p>
+<h1 id="call及apply"><a href="#call及apply" class="headerlink" title="call及apply"></a>call及apply</h1><p>A</p>
+<p>所以，可以看出call和apply是为了动态改变this而出现的，当一个object没有某个方法，但是其他的有，我们可以借助call或apply用其它对象的方法来操作。</p>
+<p>用的比较多的，通过document.getElementsByTagName选择的dom 节点是一种类似array的array。它不能应用Array下的push,pop等方法。我们可以通过：<br>var domNodes =  Array.prototype.slice.call(document.getElementsByTagName(“*”));<br>这样domNodes就可以应用Array下的所有方法了。</p>
+<p>B</p>
+<p>call 和 apply 都是为了改变某个函数运行时的 context 即上下文而存在的，换句话说，就是为了改变函数体内部 this 的指向。因为 JavaScript 的函数存在「定义时上下文」和「运行时上下文」以及「上下文是可以改变的」这样的概念。</p>
+<blockquote>
+<p>var func1 = function(arg1, arg2) {};</p>
+</blockquote>
+<p>就可以通过 func1.call(this, arg1, arg2); 或者 func1.apply(this, [arg1, arg2]); 来调用。其中 this 是你想指定的上下文，他可以任何一个 JavaScript 对象(JavaScript 中一切皆对象)，call 需要把参数按顺序传递进去，而 apply 则是把参数放在数组里。</p>
+<p>JavaScript 中，某个函数的参数数量是不固定的，因此要说适用条件的话，当你的参数是明确知道数量时，用 call，而不确定的时候，用 apply，然后把参数 push 进数组传递进去。当参数数量不确定时，函数内部也可以通过 arguments 这个数组来便利所有的参数。</p>
+<p>C</p>
+<pre><code>obj.call(thisObj, arg1, arg2, ...);
+obj.apply(thisObj, [arg1, arg2, ...]);
+</code></pre><p>两者作用一致，都是把obj(即this)绑定到thisObj，这时候thisObj具备了obj的属性和方法。或者说thisObj『继承』了obj的属性和方法。</p>
+<p>唯一区别是apply接受的是数组参数，call接受的是连续参数。</p>
+<p>call是apply的语法糖。</p>
+
+            
+                <blockquote>
+                    <p>
+                         
+                            本文采用 <a rel='nofollow noopener' href='https://creativecommons.org/licenses/by-nc-sa/3.0/deed.zh' target='_blank'>CC BY-NC-SA 3.0 Unported</a> 协议进行许可，阅读 <a href='/creativecommons.html' target='_blank'>相关说明</a>
+                        
+                        <br>
+                        本文链接： http://janebt.github.io/2017/11/21/原型链/
+                    </p>
+                </blockquote>
+            
+        </div>
+    
+</div>
+
+
+                
+                    <!-- Paradox Post Info -->
+                    
+                
+
+                <!-- Post Comments -->
+                
+                    
+    <!-- 使用 DISQUS_CLICK -->
+<div id="disqus-comment">
+    <div id="disqus_thread"></div>
+
+<!-- add animation -->
+<style>
+	.disqus_click_btn {
+            line-height: 30px;
+            margin: 0;
+            min-width: 50px;
+            padding: 0 14px;
+            display: inline-block;
+            font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+            font-size: 14px;
+            font-weight: 400;
+            text-transform: uppercase;
+            letter-spacing: 0;
+            overflow: hidden;
+            will-change: box-shadow;
+            transition: box-shadow .2s cubic-bezier(.4, 0, 1, 1), background-color .2s cubic-bezier(.4, 0, .2, 1), color .2s cubic-bezier(.4, 0, .2, 1);
+            outline: 0;
+            cursor: pointer;
+            text-decoration: none;
+            text-align: center;
+            vertical-align: middle;
+            border: 0;
+            background: rgba(158, 158, 158, .2);
+            box-shadow: 0 2px 2px 0 rgba(0, 0, 0, .14), 0 3px 1px -2px rgba(0, 0, 0, .2), 0 1px 5px 0 rgba(0, 0, 0, .12);
+            color: #fff;
+            background-color: #757575;
+            text-shadow: 0
+        }
+</style>
+	
+<div class="btn_click_load"> 
+    <button class="disqus_click_btn" style="display: none">阅读评论（请确保 disqus 可以正常加载）</button>
+</div>
+
+<script type="text/javascript">
+    var disqus_config = function () {
+        this.page.url = 'http://janebt.github.io/2017/11/21/原型链/';  // Replace PAGE_URL with your page's canonical URL variable
+        this.page.identifier = 'http://janebt.github.io/2017/11/21/原型链/'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+    };
+</script>
+
+<script type="text/ls-javascript" id="disqus-lazy-load-script">
+    $.ajax({
+        url: 'https://disqus.com/next/config.json',
+        timeout: 4000,
+        type: 'GET',
+        success: (function() {
+            var d = document;
+            var s = d.createElement('script');
+            s.src = '//https-janebt-github-io.disqus.com/embed.js';
+            s.setAttribute('data-timestamp', + new Date());
+            (d.head || d.body).appendChild(s);
+            $('.btn_click_load').css('display','none');
+        })(),
+        error: function() {
+          $('.btn_click_load').css('display','block');
+        }
+    });
+    $('.btn_click_load').click(function() {  //click to load comments
+        (function() { // DON'T EDIT BELOW THIS LINE
+            var d = document;
+            var s = d.createElement('script');
+            s.src = '//https-janebt-github-io.disqus.com/embed.js';
+            s.setAttribute('data-timestamp', + new Date());
+            (d.head || d.body).appendChild(s);
+        })();
+        $('.btn_click_load').css('display','none');
+    });
+</script>
+  	
+
+</div>
+<style>
+    #disqus-comment{
+        background-color: #eee;
+        padding: 2pc;
+    }
+</style>
+
                 
             </div>
+
+            <!-- Post Prev & Next Nav -->
+            <nav class="material-nav mdl-color-text--grey-50 mdl-cell mdl-cell--12-col">
+    <!-- Prev Nav -->
+    
+
+    <!-- Section Spacer -->
+    <div class="section-spacer"></div>
+
+    <!-- Next Nav -->
+    
+        <a href="/2017/11/01/前端大纲/" id="post_nav-older" class="next-content">
+            旧篇
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
+                <i class="material-icons">arrow_forward</i>
+            </button>
+        </a>
+    
+</nav>
+
         </div>
     </div>
-</div>
 
-            
-        
-    
-
-    
-
-    
-</div>
 
 
                     
