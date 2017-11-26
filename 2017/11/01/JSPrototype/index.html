@@ -37,7 +37,7 @@
     
     <title>
         
-            快速搭建Hexo | 
+            原型与原型链 | 
         
         Jane&#39;s blog
     </title>
@@ -48,8 +48,8 @@
     <meta name="format-detection" content="telephone=no"/>
     <meta name="theme-color" content="#0097A7">
     <meta name="author" content="jane">
-    <meta name="description" itemprop="description" content="这篇文章主要是提醒自己半年更一次博客忘了要怎么做。当然如果想迅速建站，可是可以参考的。">
-    <meta name="keywords" content="jane, blog, hexo, Web, 博客,Hexo,博客">
+    <meta name="description" itemprop="description" content="本文介绍原型和原型链的概念，参考多篇热门博客，持续总结和更新思想。">
+    <meta name="keywords" content="jane, blog, hexo, Web, 博客,JavaScript">
 
     <!-- Import lsloader -->
     <script>(function(){window.lsloader={jsRunSequence:[],jsnamemap:{},cssnamemap:{}};lsloader.removeLS=function(key){try{localStorage.removeItem(key)}catch(e){}};lsloader.setLS=function(key,val){try{localStorage.setItem(key,val)}catch(e){}};lsloader.getLS=function(key){var val="";try{val=localStorage.getItem(key)}catch(e){val=""}return val};versionString="/*"+(window.materialVersion||"unknownVersion")+"*/";lsloader.clean=function(){try{var keys=[];for(var i=0;i<localStorage.length;i++){keys.push(localStorage.key(i))}keys.forEach(function(key){var data=lsloader.getLS(key);if(window.oldVersion){var remove=window.oldVersion.reduce(function(p,c){return p||data.indexOf("/*"+c+"*/")!==-1},false);if(remove){lsloader.removeLS(key)}}})}catch(e){}};lsloader.clean();lsloader.load=function(jsname,jspath,cssonload,isJs){if(typeof cssonload==="boolean"){isJs=cssonload;cssonload=undefined}isJs=isJs||false;cssonload=cssonload||function(){};var code;code=this.getLS(jsname);if(code&&code.indexOf(versionString)===-1){this.removeLS(jsname);this.requestResource(jsname,jspath,cssonload,isJs);return}if(code){var versionNumber=code.split(versionString)[0];if(versionNumber!=jspath){console.log("reload:"+jspath);this.removeLS(jsname);this.requestResource(jsname,jspath,cssonload,isJs);return}code=code.split(versionString)[1];if(isJs){this.jsRunSequence.push({name:jsname,code:code});this.runjs(jspath,jsname,code)}else{document.getElementById(jsname).appendChild(document.createTextNode(code));cssonload()}}else{this.requestResource(jsname,jspath,cssonload,isJs)}};lsloader.requestResource=function(name,path,cssonload,isJs){var that=this;if(isJs){this.iojs(path,name,function(path,name,code){that.setLS(name,path+versionString+code);that.runjs(path,name,code)})}else{this.iocss(path,name,function(code){document.getElementById(name).appendChild(document.createTextNode(code));that.setLS(name,path+versionString+code)},cssonload)}};lsloader.iojs=function(path,jsname,callback){var that=this;that.jsRunSequence.push({name:jsname,code:""});try{var xhr=new XMLHttpRequest;xhr.open("get",path,true);xhr.onreadystatechange=function(){if(xhr.readyState==4){if(xhr.status>=200&&xhr.status<300||xhr.status==304){if(xhr.response!=""){callback(path,jsname,xhr.response);return}}that.jsfallback(path,jsname)}};xhr.send(null)}catch(e){that.jsfallback(path,jsname)}};lsloader.iocss=function(path,jsname,callback,cssonload){var that=this;try{var xhr=new XMLHttpRequest;xhr.open("get",path,true);xhr.onreadystatechange=function(){if(xhr.readyState==4){if(xhr.status>=200&&xhr.status<300||xhr.status==304){if(xhr.response!=""){callback(xhr.response);cssonload();return}}that.cssfallback(path,jsname,cssonload)}};xhr.send(null)}catch(e){that.cssfallback(path,jsname,cssonload)}};lsloader.iofonts=function(path,jsname,callback,cssonload){var that=this;try{var xhr=new XMLHttpRequest;xhr.open("get",path,true);xhr.onreadystatechange=function(){if(xhr.readyState==4){if(xhr.status>=200&&xhr.status<300||xhr.status==304){if(xhr.response!=""){callback(xhr.response);cssonload();return}}that.cssfallback(path,jsname,cssonload)}};xhr.send(null)}catch(e){that.cssfallback(path,jsname,cssonload)}};lsloader.runjs=function(path,name,code){if(!!name&&!!code){for(var k in this.jsRunSequence){if(this.jsRunSequence[k].name==name){this.jsRunSequence[k].code=code}}}if(!!this.jsRunSequence[0]&&!!this.jsRunSequence[0].code&&this.jsRunSequence[0].status!="failed"){var script=document.createElement("script");script.appendChild(document.createTextNode(this.jsRunSequence[0].code));script.type="text/javascript";document.getElementsByTagName("head")[0].appendChild(script);this.jsRunSequence.shift();if(this.jsRunSequence.length>0){this.runjs()}}else if(!!this.jsRunSequence[0]&&this.jsRunSequence[0].status=="failed"){var that=this;var script=document.createElement("script");script.src=this.jsRunSequence[0].path;script.type="text/javascript";this.jsRunSequence[0].status="loading";script.onload=function(){that.jsRunSequence.shift();if(that.jsRunSequence.length>0){that.runjs()}};document.body.appendChild(script)}};lsloader.tagLoad=function(path,name){this.jsRunSequence.push({name:name,code:"",path:path,status:"failed"});this.runjs()};lsloader.jsfallback=function(path,name){if(!!this.jsnamemap[name]){return}else{this.jsnamemap[name]=name}for(var k in this.jsRunSequence){if(this.jsRunSequence[k].name==name){this.jsRunSequence[k].code="";this.jsRunSequence[k].status="failed";this.jsRunSequence[k].path=path}}this.runjs()};lsloader.cssfallback=function(path,name,cssonload){if(!!this.cssnamemap[name]){return}else{this.cssnamemap[name]=1}var link=document.createElement("link");link.type="text/css";link.href=path;link.rel="stylesheet";link.onload=link.onerror=cssonload;var root=document.getElementsByTagName("script")[0];root.parentNode.insertBefore(link,root)};lsloader.runInlineScript=function(scriptId,codeId){var code=document.getElementById(codeId).innerText;this.jsRunSequence.push({name:scriptId,code:code});this.runjs()};lsloader.loadCombo=function(jslist){var updateList="";var requestingModules={};for(var k in jslist){var LS=this.getLS(jslist[k].name);if(!!LS){var version=LS.split(versionString)[0];var code=LS.split(versionString)[1]}else{var version=""}if(version==jslist[k].path){this.jsRunSequence.push({name:jslist[k].name,code:code,path:jslist[k].path})}else{this.jsRunSequence.push({name:jslist[k].name,code:null,path:jslist[k].path,status:"comboloading"});requestingModules[jslist[k].name]=true;updateList+=(updateList==""?"":";")+jslist[k].path}}var that=this;if(!!updateList){var xhr=new XMLHttpRequest;xhr.open("get",combo+updateList,true);xhr.onreadystatechange=function(){if(xhr.readyState==4){if(xhr.status>=200&&xhr.status<300||xhr.status==304){if(xhr.response!=""){that.runCombo(xhr.response,requestingModules);return}}else{for(var i in that.jsRunSequence){if(requestingModules[that.jsRunSequence[i].name]){that.jsRunSequence[i].status="failed"}}that.runjs()}}};xhr.send(null)}this.runjs()};lsloader.runCombo=function(comboCode,requestingModules){comboCode=comboCode.split("/*combojs*/");comboCode.shift();for(var k in this.jsRunSequence){if(!!requestingModules[this.jsRunSequence[k].name]&&!!comboCode[0]){this.jsRunSequence[k].status="comboJS";this.jsRunSequence[k].code=comboCode[0];this.setLS(this.jsRunSequence[k].name,this.jsRunSequence[k].path+versionString+comboCode[0]);comboCode.shift()}}this.runjs()}})();</script>
@@ -285,26 +285,26 @@
     <!-- The Open Graph protocol -->
     <meta property="og:url" content="http://janebt.github.io">
     <meta property="og:type" content="blog">
-    <meta property="og:title" content="快速搭建Hexo | Jane&#39;s blog">
+    <meta property="og:title" content="原型与原型链 | Jane&#39;s blog">
     <meta property="og:image" content="http://janebt.github.io/img/favicon.jpeg" />
-    <meta property="og:description" content="这篇文章主要是提醒自己半年更一次博客忘了要怎么做。当然如果想迅速建站，可是可以参考的。">
-    <meta property="og:article:tag" content="Hexo"> <meta property="og:article:tag" content="博客"> 
+    <meta property="og:description" content="本文介绍原型和原型链的概念，参考多篇热门博客，持续总结和更新思想。">
+    <meta property="og:article:tag" content="JavaScript"> 
 
     
-        <meta property="article:published_time" content="Sat Oct 01 2016 11:33:34 GMT+0800" />
-        <meta property="article:modified_time" content="Sun Oct 01 2017 15:25:00 GMT+0800" />
+        <meta property="article:published_time" content="Wed Nov 01 2017 11:33:34 GMT+0800" />
+        <meta property="article:modified_time" content="Wed Nov 01 2017 15:25:00 GMT+0800" />
     
 
     <!-- The Twitter Card protocol -->
-    <meta name="twitter:title" content="快速搭建Hexo | Jane&#39;s blog">
-    <meta name="twitter:description" content="这篇文章主要是提醒自己半年更一次博客忘了要怎么做。当然如果想迅速建站，可是可以参考的。">
+    <meta name="twitter:title" content="原型与原型链 | Jane&#39;s blog">
+    <meta name="twitter:description" content="本文介绍原型和原型链的概念，参考多篇热门博客，持续总结和更新思想。">
     <meta name="twitter:image" content="http://janebt.github.io/img/favicon.jpeg">
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:url" content="http://janebt.github.io" />
 
     <!-- Add canonical link for SEO -->
     
-        <link rel="canonical" href="http://janebt.github.io/2016/10/01/Hexo/index.html" />
+        <link rel="canonical" href="http://janebt.github.io/2017/11/01/JSPrototype/index.html" />
     
 
     <!-- Structured-data for SEO -->
@@ -316,10 +316,10 @@
 {
     "@context": "https://schema.org",
     "@type": "BlogPosting",
-    "mainEntityOfPage": "http://janebt.github.io/2016/10/01/Hexo/index.html",
-    "headline": "快速搭建Hexo",
-    "datePublished": "Sat Oct 01 2016 11:33:34 GMT+0800",
-    "dateModified": "Sun Oct 01 2017 15:25:00 GMT+0800",
+    "mainEntityOfPage": "http://janebt.github.io/2017/11/01/JSPrototype/index.html",
+    "headline": "原型与原型链",
+    "datePublished": "Wed Nov 01 2017 11:33:34 GMT+0800",
+    "dateModified": "Wed Nov 01 2017 15:25:00 GMT+0800",
     "author": {
         "@type": "Person",
         "name": "jane",
@@ -337,8 +337,8 @@
             "url": "/img/favicon.jpeg"
         }
     },
-    "keywords": ",Hexo,博客jane, blog, hexo, Web, 博客",
-    "description": "这篇文章主要是提醒自己半年更一次博客忘了要怎么做。当然如果想迅速建站，可是可以参考的。",
+    "keywords": ",JavaScriptjane, blog, hexo, Web, 博客",
+    "description": "本文介绍原型和原型链的概念，参考多篇热门博客，持续总结和更新思想。",
 }
 </script>
 
@@ -548,120 +548,142 @@
     
         <div class="post-content_wrapper">
             <p class="post-title">
-                快速搭建Hexo
+                原型与原型链
             </p>
-            <p>这篇文章主要是提醒自己半年更一次博客忘了要怎么做。当然如果想<strong>迅速</strong>建站，可是可以参考的。</p>
+            <p>本文介绍原型和原型链的概念，参考多篇热门博客，持续总结和更新思想。</p>
 <a id="more"></a>
-<h1 id="搭建hexo"><a href="#搭建hexo" class="headerlink" title="搭建hexo"></a>搭建hexo</h1><p>首先需要搭建hexo，包括：</p>
-<ul>
-<li>安装node.js</li>
-<li>安装Hexo</li>
-<li>后期部署</li>
-<li>hexo配置</li>
-</ul>
-<h2 id="安装Hexo"><a href="#安装Hexo" class="headerlink" title="安装Hexo"></a>安装Hexo</h2><pre><code class="shell">npm install -g hexo-cli --no-optional
-npm install hexo-deployer-git --save
-cd ~/Document/hexo
-hexo init
-npm install
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><h2 id="proto"><a href="#proto" class="headerlink" title="_proto_"></a><code>_proto_</code></h2><p>任何一个对象Object都有<em>proto</em>，它是每一个对象的私有属性，是天生自带的。</p>
+<p>又叫做隐式原型</p>
+<p>JavaScript中任意对象都有一个内置属性[[prototype]]，在ES5之前没有标准的方法访问这个内置属性，但是大多数浏览器都支持通过<code>__proto__</code>来访问。ES5中有了对于这个内置属性标准的Get方法Object.getPrototypeOf().</p>
+<p>Note: Object.prototype 这个对象是个例外，它的<code>__proto__</code>值为null </p>
+<p>隐式原型指向<strong>创建</strong>这个对象的函数(constructor)的prototype</p>
+<p>一个对象的<strong>proto</strong>记录着自己的原型链，决定了自身的数据类型，改变<strong>proto</strong>就等于改变对象的数据类型。</p>
+<p>隐式原型的作用：构成原型链，同样用于实现基于原型的继承。</p>
+<h2 id="prototype"><a href="#prototype" class="headerlink" title="prototype"></a><code>prototype</code></h2><p><strong>原型对象</strong>。不是任何对象都有prototype，只有构造函数有prototype，是后天赋予的。</p>
+<p>每创建一个函数都会有一个prototype属性，这个属性是一个指针，<strong>指向一个对象（通过该构造函数创建实例对象的原型对象）</strong>。</p>
+<p>原型对象是包含特定类型的所有实例共享的属性和方法。原型对象的好处是，可以让所有实例对象共享它所包含的属性和方法。</p>
+<p>原型对象属于普通对象。</p>
+<p>又叫做显式原型。</p>
+<p><strong>Note</strong>：通过Function.prototype.bind方法构造出来的函数是个例外，它没有prototype属性</p>
+<p>函数的prototype不属于自身的原型链，它是子类创建的核心，决定了子类的数据类型，是连接子类原型链的桥梁。</p>
+<p>在原型对象上定义方法和属性的目的是为了被子类继承和使用。</p>
+<p>显式原型的作用：用来实现基于原型的继承与属性的共享。</p>
+<h2 id="获取对象的原型"><a href="#获取对象的原型" class="headerlink" title="获取对象的原型"></a>获取对象的原型</h2><pre><code class="javascript">dog1.__proto__  //不推荐  
+Object.getPrototypeOf(dog1) === Dog.prototype   //推荐
 </code></pre>
-<h2 id="后期部署"><a href="#后期部署" class="headerlink" title="后期部署"></a>后期部署</h2><pre><code>hexo new &quot;blogName&quot;        //添加文章
-hexo new page &quot;pageName&quot; #新建页面
-hexo clean
-hexo algolia    //algolia搜索
-hexo 
-
-hexo generate    //生成静态页面
-hexo sever        //本地启动
-hexo deploy        //同步到github
-</code></pre><h2 id="hexo配置"><a href="#hexo配置" class="headerlink" title="hexo配置"></a>hexo配置</h2><p>主要是配置下github账户信息：</p>
-<pre><code>deploy: 
-     type: git 
-     repo: https://github.com/用户名/用户名.github.io.git 
-     branch: master
-</code></pre><p>其他配置信息可以参考各个主题文档</p>
-<h1 id="主题配置"><a href="#主题配置" class="headerlink" title="主题配置"></a>主题配置</h1><p>用过material、yilla、next等，也用过自定义的主题，其实内容都是大同小异，主要就是_config.yml修改，插入图片，配置rss、评论、搜索、统计等信息。详细见各个主题Doc。</p>
-<p>我最近使用的是material( <a href="https://mt.viosey.com/docs/#/" target="_blank" rel="external">Material Theme Doc</a> )，也是我推荐的。它的主题是简洁，看着很干净。</p>
-<p>具体流程：</p>
-<ul>
-<li>安装主题</li>
-<li>启用主题</li>
-<li>主题配置</li>
-</ul>
-<h2 id="启用主题"><a href="#启用主题" class="headerlink" title="启用主题"></a>启用主题</h2><p>在站点 _config.yml 中设置theme</p>
-<h2 id="主题配置-1"><a href="#主题配置-1" class="headerlink" title="主题配置"></a>主题配置</h2><h3 id="头像等信息"><a href="#头像等信息" class="headerlink" title="头像等信息"></a>头像等信息</h3><h3 id="添加分类"><a href="#添加分类" class="headerlink" title="添加分类"></a>添加分类</h3><p>这块也是因主题而异。material主题只需要在post的md中首行添加</p>
-<pre><code>categories:
-  - 博客栈
-</code></pre><h3 id="设置favicon"><a href="#设置favicon" class="headerlink" title="设置favicon"></a>设置favicon</h3><p>选择一个favicon制作网站完成制作，例如<a href="http://www.bitbug.net/" target="_blank" rel="external">比特虫</a>是一个免费的在线制作ico图标网站。</p>
-<h1 id="插件第三方"><a href="#插件第三方" class="headerlink" title="插件第三方"></a>插件第三方</h1><h2 id="添加版权声明"><a href="#添加版权声明" class="headerlink" title="添加版权声明"></a>添加版权声明</h2><ul>
-<li><a href="http://www.tuicool.com/articles/m6bIJfq" target="_blank" rel="external">为Hexo博客添加版权说明和打赏功能</a> </li>
-</ul>
-<h2 id="添加canvas-nest特效"><a href="#添加canvas-nest特效" class="headerlink" title="添加canvas_nest特效"></a>添加canvas_nest特效</h2><ul>
-<li><a href="http://tc9011.com/2017/02/02/hexo%E6%96%87%E7%AB%A0%E6%B7%BB%E5%8A%A0%E7%89%88%E6%9D%83%E5%A3%B0%E6%98%8E%E5%8F%8A%E4%B8%80%E4%BA%9B%E7%89%B9%E6%95%88/" target="_blank" rel="external">hexo文章添加版权声明及一些特效</a> </li>
-</ul>
-<h2 id="algolia搜索"><a href="#algolia搜索" class="headerlink" title="algolia搜索"></a>algolia搜索</h2><ul>
-<li><a href="http://www.jianshu.com/p/fa2354d61e37" target="_blank" rel="external">hexo+next添加algolia搜索</a></li>
-<li>修改文章需要执行：<pre><code>hexo algolia
-</code></pre></li>
-</ul>
-<h2 id="添加文章阅读量"><a href="#添加文章阅读量" class="headerlink" title="添加文章阅读量"></a>添加文章阅读量</h2><ul>
-<li><a href="http://www.joryhe.com/2016-05-29-how_to_create_leancloud_read_Counter.html" target="_blank" rel="external">leanCloud,实现文章阅读量统计</a> </li>
-</ul>
-<h2 id="打赏功能"><a href="#打赏功能" class="headerlink" title="打赏功能"></a>打赏功能</h2><ul>
-<li><a href="https://segmentfault.com/q/1010000008403584" target="_blank" rel="external">hexo主题下的开启打赏功能具体是怎么实现的呀？</a> </li>
-</ul>
-<h2 id="音乐外链"><a href="#音乐外链" class="headerlink" title="音乐外链"></a>音乐外链</h2><ul>
-<li><a href="http://weqeo.com/2016/10/11/Hexo%E4%B8%AD%E6%92%AD%E6%94%BE%E7%BD%91%E6%98%93%E4%BA%91%E9%9F%B3%E4%B9%90%E7%9A%84%E5%AE%9E%E8%B7%B5/" target="_blank" rel="external">Hexo中播放网易云音乐的实践</a> </li>
-</ul>
-<h2 id="网易云跟帖"><a href="#网易云跟帖" class="headerlink" title="网易云跟帖"></a>网易云跟帖</h2><ul>
-<li><a href="http://blog.csdn.net/yingpaixiaochuan/article/details/68954103" target="_blank" rel="external">Hexo博客（Next主题）放弃多说，接入网易云跟贴</a></li>
-</ul>
-<h2 id="首页文章以摘要形式显示"><a href="#首页文章以摘要形式显示" class="headerlink" title="首页文章以摘要形式显示"></a>首页文章以摘要形式显示</h2><ul>
-<li>打开<strong>主题配置文件</strong>，找到如下位置，其中<code>length</code>代表显示摘要的截取字符长度。修改<pre><code>auto_excerpt:
-  enable: true
-length: 150
-</code></pre></li>
-</ul>
-<h2 id="设置首页文章显示篇数"><a href="#设置首页文章显示篇数" class="headerlink" title="设置首页文章显示篇数"></a>设置首页文章显示篇数</h2><h3 id="安装插件"><a href="#安装插件" class="headerlink" title="安装插件"></a>安装插件</h3><pre><code>  npm install --save hexo-generator-index
-  npm install --save hexo-generator-archive
-  npm install --save hexo-generator-tag
-</code></pre><h3 id="修改站点配置文件"><a href="#修改站点配置文件" class="headerlink" title="修改站点配置文件"></a>修改站点配置文件</h3><pre><code>index_generator:
-  per_page: 5
-
-archive_generator:
-  per_page: 20
-  yearly: true
-  monthly: true
-
-tag_generator:
-  per_page: 10
-</code></pre><h2 id="设置404公益页面"><a href="#设置404公益页面" class="headerlink" title="设置404公益页面"></a>设置404公益页面</h2><p>在<strong>站点目录</strong>的source文件夹下，新建<code>404.html</code>文件，将下面的代码复制进去保存即可。</p>
-<pre><code class="html">&lt;!DOCTYPE HTML&gt;
-&lt;html&gt;
-&lt;head&gt;
-    &lt;title&gt;404 - arao&#39;blog&lt;/title&gt;
-    &lt;meta name=&quot;description&quot; content=&quot;404错误，页面不存在！&quot;&gt;
-    &lt;meta http-equiv=&quot;content-type&quot; content=&quot;text/html;charset=utf-8;&quot;/&gt;
-    &lt;meta http-equiv=&quot;X-UA-Compatible&quot; content=&quot;IE=edge,chrome=1&quot; /&gt;
-    &lt;meta name=&quot;robots&quot; content=&quot;all&quot; /&gt;
-    &lt;meta name=&quot;robots&quot; content=&quot;index,follow&quot;/&gt;
-&lt;/head&gt;
-&lt;body&gt;
-    &lt;script type=&quot;text/javascript&quot; src=&quot;http://qzonestyle.gtimg.cn/qzone_v6/lostchild/search_children.js&quot; charset=&quot;utf-8&quot;&gt;&lt;/script&gt;
-&lt;/body&gt;
-&lt;/html&gt;
+<h2 id="原型链"><a href="#原型链" class="headerlink" title="原型链"></a>原型链</h2><p>原型链的存在，主要是为了实现对象的<code>继承</code>。</p>
+<p>原型链基本思路（图解）：</p>
+<p><img src="http://img.blog.csdn.net/20161006191631510?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQv/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt=""></p>
+<h2 id="原型链查找"><a href="#原型链查找" class="headerlink" title="原型链查找"></a>原型链查找</h2><p><strong>调用一个对象的属性或方法，一但这个对象中没有，就去这个对象的<em>proto</em>中查找。这个对象的<em>proto</em>指向自己构造函数的prototype属性</strong></p>
+<p>关键的点在于找到创建这个对象的构造函数，本质上只有一种方式，也就是通过new来创建。</p>
+<p>由Object.create(o)创建出来的对象它的隐式原型指向o。</p>
+<h2 id="new"><a href="#new" class="headerlink" title="new"></a>new</h2><p>JS在通过new 表达式创建一个对象的时候，通常会把父类的prototype赋值给新对象的<strong>proto</strong>属性</p>
+<p>当使用<code>new</code>去调用构造函数时，相当于执行了</p>
+<pre><code class="javascript">var o = {};
+o.__proto__ = F.prototype;
+F.call(o);
 </code></pre>
-<h1 id="常见问题"><a href="#常见问题" class="headerlink" title="常见问题"></a>常见问题</h1><h2 id="github-clone速度慢"><a href="#github-clone速度慢" class="headerlink" title="github clone速度慢"></a>github clone速度慢</h2><pre><code class="shell">git config --global http.postBuffer 524288000
+<h2 id="constructor-NaN"><a href="#constructor-NaN" class="headerlink" title="constructor"></a>constructor</h2><p>原型对象prototype上都有个预定义的<code>constructor</code>属性，用来引用它的函数对象。这是一种循环引用。</p>
+<pre><code class="javascript">function F(){};
+F.prototype.constructor === F;
 </code></pre>
-<h2 id="Hexo-Next的文章目录形式异常"><a href="#Hexo-Next的文章目录形式异常" class="headerlink" title="Hexo Next的文章目录形式异常"></a>Hexo Next的文章目录形式异常</h2><h3 id="反引号问题"><a href="#反引号问题" class="headerlink" title="反引号问题"></a>反引号问题</h3><p>用typora生成文章并传给next，中间需要注意的是代码注释段(反引号)，typora和next解析逻辑不一样，注意去掉反引号前面的空格,可以使toc匹配<br>如果去除反引号和上面的空行，可以使代码段格式和上面内容对齐</p>
-<h3 id="Head错位"><a href="#Head错位" class="headerlink" title="Head错位"></a>Head错位</h3><p>比如上一层是H2，内部是H4，就会出现错位。</p>
-<h2 id="Hexo-Next的文章不显示内容"><a href="#Hexo-Next的文章不显示内容" class="headerlink" title="Hexo Next的文章不显示内容"></a>Hexo Next的文章不显示内容</h2><p>引用中设置字体，会导致整个文档无法解析。</p>
-<h2 id="Hexo-g-无法生成html"><a href="#Hexo-g-无法生成html" class="headerlink" title="Hexo g 无法生成html"></a>Hexo g 无法生成html</h2><p>排查发现对以下解析问题：</p>
-<pre><code>`{{{ xxx }}}`
-`{{* foo }}`
-`{{ }}`
-</code></pre><hr>
-<p>基本这就是搭建一个github blog需要包括的内容了。当然，最快的方式也许是找一个官方demo直接clone修改配置。</p>
+<p>在实际运用中，经常会有下列的写法</p>
+<pre><code class="javascript">function F(){};
+F.prototype = {
+    constructor : F,
+    doSomething : function(){}
+}
+</code></pre>
+<p>这里要加<code>constructor</code>是因为重写了原型对象，constructor属性就消失了，需要自己手动补上。</p>
+<p>实例对象的constructor属性指向其构造函数, 因此</p>
+<pre><code class="javascript">Object.constructor === Function;
+Function.constructor === Function;
+</code></pre>
+<p>由 Object.create() 创建出来的对象没有构造函数</p>
+<h1 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h1><h2 id="Case1-Function-prototype没有prototype属性"><a href="#Case1-Function-prototype没有prototype属性" class="headerlink" title="Case1.Function.prototype没有prototype属性"></a>Case1.Function.prototype没有prototype属性</h2><p><strong>原型对象属于普通对象。</strong>Function.prototype是个例外，它是原型对象，却又是函数对象，作为一个函数对象，它又没有prototype属性。</p>
+<pre><code class="javascript">function person(){};  
+
+console.log(typeof person.prototype) //Object  
+console.log(typeof Object.prototype) // Object  
+console.log(typeof Function.prototype) // 特殊 Function  
+console.log(typeof Function.prototype.prototype) //undefined 函数对象却没有prototype属性
+</code></pre>
+<h2 id="Case2-构造函数的显示原型的隐式原型"><a href="#Case2-构造函数的显示原型的隐式原型" class="headerlink" title="Case2.构造函数的显示原型的隐式原型"></a>Case2.构造函数的显示原型的隐式原型</h2><p>内建对象(built-in object)比如Array()，Array.prototype.<strong>proto</strong>指向什么？</p>
+<p>Array.prototype.<strong>proto</strong> === Object.prototype，或者也可以这么理解，所有的内建对象都是由Object()创建而来。</p>
+<p>Array是函数对象，是Function的实例对象，Array是通过new Function创建出来的。因为Array是Function的实例，所以Array.<strong>proto</strong> ===  Function.prototype</p>
+<h2 id="Case3-instanceof"><a href="#Case3-instanceof" class="headerlink" title="Case3.instanceof"></a>Case3.instanceof</h2><h3 id="解释1"><a href="#解释1" class="headerlink" title="解释1"></a>解释1</h3><p>instanceof 操作符的内部实现机制和隐式原型、显式原型有直接的关系。instanceof的左值一般是一个对象，右值一般是一个构造函数，用来判断左值是否是右值的实例。</p>
+<p>内部实现原理：</p>
+<pre><code class="javascript">//设 L instanceof R 
+//通过判断
+ L.__proto__.__proto__ ..... === R.prototype ？
+//最终返回true or false
+</code></pre>
+<h3 id="解释2"><a href="#解释2" class="headerlink" title="解释2"></a>解释2</h3><p><code>A instanceof B</code> 是在 A 的原型链里查找 B 的 constructor，找到返回 true，找不到返回 false。</p>
+<pre><code class="javascript">Function instanceof Object === true
+Object instanceof Function === true
+
+Object.__proto__ === Function.prototype; // true
+Object.__proto__ == Object.prototype; // false
+Function.prototype.__proto__ === Object.prototype; // true
+</code></pre>
+<h2 id="Case4-Function、Object关系"><a href="#Case4-Function、Object关系" class="headerlink" title="Case4.Function、Object关系"></a>Case4.Function、Object关系</h2><p><code>Object.prototype</code>是所有对象的根源<br><code>Object.prototype</code>只是挂载在<code>Object</code>函数对象上<br><code>Function.prototype</code>构造自<code>Object.prototype</code><br><code>Function.prototype</code> 只是挂载在<code>Function</code>函数对象上<br><code>Object</code>函数和<code>Function</code>函数构造自<code>Function.prototype</code><br><code>Object</code>字面量对象{}构造自<code>Object.prototype</code><br><code>Object</code>字面量对象<code>{}.__proto__</code>（原构造对象） === <code>Object.prototype</code><br><code>Function</code>函数 和 自定义函数 都继承（构造而成）自<code>Function.prototype</code><br><code>Function.prototype</code> 和 <code>Function.__proto__</code>（原构造对象）相同<br>所以，是先有的<code>Object.prototype</code>,再有的<code>Function.prototype</code>，再有的<code>Function</code>和<code>Object</code>函数对象</p>
+<h2 id="Case5-Function、Object、Prototype、proto内存关系图"><a href="#Case5-Function、Object、Prototype、proto内存关系图" class="headerlink" title="Case5.Function、Object、Prototype、proto内存关系图"></a>Case5.Function、Object、Prototype、<strong>proto</strong>内存关系图</h2><ol>
+<li>所有对象所有对象，包括函数对象的原型链最终都指向了Object.prototype，而Object.prototype.<strong>proto</strong>===null，原型链至此结束。</li>
+<li>Animal.prototype是一个普通对象。</li>
+<li>Object是一个函数对象，也是Function构造的，Object.prototype是一个普通对象。</li>
+<li>Object.prototype.<strong>type</strong>指向null。</li>
+<li>Function.prototype是一个函数对象，前面说函数对象都有一个显示的prototype属性，但是Function.prototype却没有prototype属性，即Function.prototype.prototype===undefined，所有Function.prototype函数对象是一个特例，没有prototype属性。</li>
+<li>Object虽是Function构造的一个函数对象，但是Object.prototype没有指向Function.prototype，即Object.prototype!==Function.prototype。</li>
+</ol>
+<p><img src="http://images.blogjava.net/blogjava_net/heavensay/web-front/8199006.png" alt=""></p>
+<h2 id="Case6-经典原型链"><a href="#Case6-经典原型链" class="headerlink" title="Case6.经典原型链"></a>Case6.经典原型链</h2><p><img src="https://pic2.zhimg.com/50/e83bca5f1d1e6bf359d1f75727968c11_hd.jpg" alt=""></p>
+<h2 id="Case7-《JavaScript-世界万物诞生记》"><a href="#Case7-《JavaScript-世界万物诞生记》" class="headerlink" title="Case7.《JavaScript 世界万物诞生记》"></a>Case7.《JavaScript 世界万物诞生记》</h2><p>Object作为一个机器可以看做是有由Function制造出来的，而Function作为一个对象可以看做是由Object制造出来的。</p>
+<p><img src="https://pic2.zhimg.com/v2-52726a7f86690c0663452112d66836c5_r.png" alt=""></p>
+<h2 id="Case8-《什么是-JS-原型链？》"><a href="#Case8-《什么是-JS-原型链？》" class="headerlink" title="Case8.《什么是 JS 原型链？》"></a>Case8.《什么是 JS 原型链？》</h2><blockquote>
+<p>这篇流程讲的很清晰</p>
+</blockquote>
+<pre><code class="javascript">var obj = { name: &#39;obj&#39; }
+</code></pre>
+<h3 id="valueOf-toString-constructor-是怎么来？"><a href="#valueOf-toString-constructor-是怎么来？" class="headerlink" title="valueOf / toString / constructor 是怎么来？"></a>valueOf / toString / constructor 是怎么来？</h3><ol>
+<li>obj.<strong>proto</strong> 有很多属性，包括 valueOf、toString、constructor 等</li>
+<li>obj.<strong>proto</strong> 其实也有一个叫做 <strong>proto</strong> 的属性，值为 null</li>
+</ol>
+<h3 id="共享原型链"><a href="#共享原型链" class="headerlink" title="共享原型链"></a>共享原型链</h3><p>如果我们改写 obj2.<strong>proto</strong>.toString，那么 obj.toString 其实也会变！</p>
+<h3 id="差异化"><a href="#差异化" class="headerlink" title="差异化"></a>差异化</h3><p>如果我们想让 obj.toString 和 obj2.toString 的行为不同怎么做呢？</p>
+<p>直接赋值就好了：</p>
+<pre><code class="javascript">obj.toString = function(){ return &#39;新的 toString 方法&#39; }
+</code></pre>
+<h3 id="总结-1"><a href="#总结-1" class="headerlink" title="总结"></a>总结</h3><p>「读」属性时会<strong>沿着原型链搜索</strong>。</p>
+<p>「新增」属性时<strong>不会</strong>去看原型链（但是如果你给这个属性加了一些配置，则不一样）。</p>
+<h2 id="Case9-《最详尽的-JS-原型与原型链终极详解》"><a href="#Case9-《最详尽的-JS-原型与原型链终极详解》" class="headerlink" title="Case9 《最详尽的 JS 原型与原型链终极详解》"></a>Case9 《最详尽的 JS 原型与原型链终极详解》</h2><h3 id="一-普通对象与函数对象"><a href="#一-普通对象与函数对象" class="headerlink" title="一. 普通对象与函数对象"></a>一. 普通对象与函数对象</h3><p>对象也有区别，大致可以分为两类，即：普通对象（Object）和函数对象（Function）。<strong>凡是通过 new Function() 创建的对象都是函数对象，其他的都是普通对象。f1,f2,归根结底都是通过 new Function()的方式进行创建的。Function Object 也都是通过 New Function()创建的</strong>。</p>
+<h3 id="二-构造函数"><a href="#二-构造函数" class="headerlink" title="二. 构造函数"></a>二. 构造函数</h3><p><strong>实例的构造函数属性（constructor）指向构造函数。</strong></p>
+<h3 id="三-原型对象"><a href="#三-原型对象" class="headerlink" title="三. 原型对象"></a>三. 原型对象</h3><p>在默认情况下，所有的<strong>原型对象</strong>都会<strong>自动获得</strong>一个 <code>constructor</code>（构造函数）属性，这个属性（是一个指针）指向 <code>prototype</code> 属性所在的函数,即：<code>Person.prototype.constructor == Person</code></p>
+<p><strong>结论：原型对象（Person.prototype）是 构造函数（Person）的一个实例。</strong></p>
+<p><code>Function.prototype</code> 为什么是函数对象呢？</p>
+<pre><code class="javascript"> var A = new Function ();
+ Function.prototype = A;
+</code></pre>
+<p><strong>凡是通过 new Function( ) 产生的对象都是函数对象</strong>。因为 A 是函数对象，所以<code>Function.prototype</code> 是函数对象。</p>
+<h3 id="六-原型链"><a href="#六-原型链" class="headerlink" title="六. 原型链"></a>六. 原型链</h3><p>Person.prototype.<strong>proto</strong> 是什么？</p>
+<p><code>Person.prototype</code> 是一个普通对象，我们无需关注它有哪些属性，只要记住它是一个普通对象。所以 <code>Person.prototype.__proto__ === Object.prototype</code></p>
+<h3 id="七-函数对象"><a href="#七-函数对象" class="headerlink" title="七. 函数对象"></a>七. 函数对象</h3><h5 id="所有函数对象的proto都指向Function-prototype，它是一个空函数"><a href="#所有函数对象的proto都指向Function-prototype，它是一个空函数" class="headerlink" title="所有函数对象的proto都指向Function.prototype，它是一个空函数"></a>所有<em>函数对象</em>的<strong>proto</strong>都指向Function.prototype，它是一个空函数</h5><p><strong>所有的构造器都来自于 Function.prototype，甚至包括根构造器Object及Function自身。所有构造器都继承了·Function.prototype·的属性及方法。如length、call、apply、bind</strong></p>
+<p><code>Function.prototype</code>也是唯一一个<code>typeof XXX.prototype</code>为 <code>function</code>的<code>prototype</code>。其它的构造器的<code>prototype</code>都是一个对象</p>
+<p><code>Function.prototype</code>的<code>__proto__</code>是谁呢？</p>
+<pre><code class="javascript">Function.prototype.__proto__ === Object.prototype
+</code></pre>
+<p>这说明所有的构造器也都是一个普通 JS 对象，可以给构造器添加/删除属性等。同时它也继承了Object.prototype上的所有方法：toString、valueOf、hasOwnProperty等。</p>
+<h3 id="八-Prototype"><a href="#八-Prototype" class="headerlink" title="八. Prototype"></a>八. Prototype</h3><p>可以用一个 ES5 提供的新方法：<code>Object.getOwnPropertyNames</code>获取所有（<strong>包括不可枚举的属性</strong>）的属性名<strong>不包括 prototy 中的属性</strong>，返回一个数组</p>
+<h1 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h1><ul>
+<li><a href="http://blog.csdn.net/sinat_21274091/article/details/52741788" target="_blank" rel="external">JS重点整理之JS原型链彻底搞清楚</a></li>
+<li><a href="http://www.blogjava.net/heavensay/archive/2013/10/20/405440.html" target="_blank" rel="external">Js中Prototype、<strong>proto</strong>、Constructor、Object、Function关系介绍</a></li>
+<li><a href="https://www.zhihu.com/question/34183746" target="_blank" rel="external">js中<strong>proto</strong>和prototype的区别和关系？</a></li>
+<li><a href="https://segmentfault.com/a/1190000005363885" target="_blank" rel="external">JavaScript之原型链</a></li>
+<li><a href="https://segmentfault.com/q/1010000000249140" target="_blank" rel="external">Function为何是Object的实例呢</a></li>
+<li><a href="https://segmentfault.com/q/1010000002736664" target="_blank" rel="external">js 原型的问题 Object 和 Function 到底是什么关系？</a></li>
+<li><a href="https://zhuanlan.zhihu.com/p/22989691" target="_blank" rel="external">JavaScript 世界万物诞生记</a></li>
+<li><a href="https://zhuanlan.zhihu.com/p/23090041?refer=study-fe" target="_blank" rel="external">「每日一题」什么是 JS 原型链？</a></li>
+<li><a href="http://www.jianshu.com/p/dee9f8b14771" target="_blank" rel="external">最详尽的 JS 原型与原型链终极详解，没有「可能是」</a></li>
+</ul>
 
             
                 <blockquote>
@@ -670,7 +692,7 @@ tag_generator:
                             本文采用 <a rel='nofollow noopener' href='https://creativecommons.org/licenses/by-nc-sa/3.0/deed.zh' target='_blank'>CC BY-NC-SA 3.0 Unported</a> 协议进行许可，阅读 <a href='/creativecommons.html' target='_blank'>相关说明</a>
                         
                         <br>
-                        本文链接： http://janebt.github.io/2016/10/01/Hexo/
+                        本文链接： http://janebt.github.io/2017/11/01/JSPrototype/
                     </p>
                 </blockquote>
             
@@ -727,8 +749,8 @@ tag_generator:
 
 <script type="text/javascript">
     var disqus_config = function () {
-        this.page.url = 'http://janebt.github.io/2016/10/01/Hexo/';  // Replace PAGE_URL with your page's canonical URL variable
-        this.page.identifier = 'http://janebt.github.io/2016/10/01/Hexo/'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+        this.page.url = 'http://janebt.github.io/2017/11/01/JSPrototype/';  // Replace PAGE_URL with your page's canonical URL variable
+        this.page.identifier = 'http://janebt.github.io/2017/11/01/JSPrototype/'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
     };
 </script>
 
@@ -777,7 +799,7 @@ tag_generator:
             <nav class="material-nav mdl-color-text--grey-50 mdl-cell mdl-cell--12-col">
     <!-- Prev Nav -->
     
-        <a href="/2017/11/01/JSPrototype/" id="post_nav-newer" class="prev-content">
+        <a href="/2017/11/01/前端大纲/" id="post_nav-newer" class="prev-content">
             <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
                 <i class="material-icons">arrow_back</i>
             </button>
@@ -790,6 +812,14 @@ tag_generator:
     <div class="section-spacer"></div>
 
     <!-- Next Nav -->
+    
+        <a href="/2016/10/01/Hexo/" id="post_nav-older" class="next-content">
+            旧篇
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
+                <i class="material-icons">arrow_forward</i>
+            </button>
+        </a>
     
 </nav>
 
