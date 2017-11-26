@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://janebt.github.io/"/>
-  <updated>2017-11-25T14:20:34.000Z</updated>
+  <updated>2017-11-26T01:21:34.000Z</updated>
   <id>http://janebt.github.io/</id>
   
   <author>
@@ -15,6 +15,28 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Apply, call and bind</title>
+    <link href="http://janebt.github.io/2017/11/26/Apply,%20call%20and%20bind/"/>
+    <id>http://janebt.github.io/2017/11/26/Apply, call and bind/</id>
+    <published>2017-11-26T01:21:34.000Z</published>
+    <updated>2017-11-26T01:21:34.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>这篇文章介绍Apply, call and bind的概念和考察方法。</p><a id="more"></a><h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><h2 id="this"><a href="#this" class="headerlink" title="this"></a>this</h2><p><code>this</code>的指向就是我们这里所说的执行上下文（执行环境）</p><p><code>this</code>指向的永远是调用该方法的对象</p><h2 id="call"><a href="#call" class="headerlink" title="call"></a>call</h2><p><strong>改变对象的执行上下文</strong></p><h2 id="apply"><a href="#apply" class="headerlink" title="apply"></a>apply</h2><p><strong>改变对象的执行上下文</strong></p><h2 id="bind"><a href="#bind" class="headerlink" title="bind"></a>bind</h2><h1 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h1><p>Case1.</p><p>A</p><p>所以，可以看出call和apply是为了动态改变this而出现的，当一个object没有某个方法，但是其他的有，我们可以借助call或apply用其它对象的方法来操作。</p><p>用的比较多的，通过document.getElementsByTagName选择的dom 节点是一种类似array的array。它不能应用Array下的push,pop等方法。我们可以通过：<br>var domNodes =  Array.prototype.slice.call(document.getElementsByTagName(“*”));<br>这样domNodes就可以应用Array下的所有方法了。</p><p>B</p><p>call 和 apply 都是为了改变某个函数运行时的 context 即上下文而存在的，换句话说，就是为了改变函数体内部 this 的指向。因为 JavaScript 的函数存在「定义时上下文」和「运行时上下文」以及「上下文是可以改变的」这样的概念。</p><blockquote><p>var func1 = function(arg1, arg2) {};</p></blockquote><p>就可以通过 func1.call(this, arg1, arg2); 或者 func1.apply(this, [arg1, arg2]); 来调用。其中 this 是你想指定的上下文，他可以任何一个 JavaScript 对象(JavaScript 中一切皆对象)，call 需要把参数按顺序传递进去，而 apply 则是把参数放在数组里。</p><p>JavaScript 中，某个函数的参数数量是不固定的，因此要说适用条件的话，当你的参数是明确知道数量时，用 call，而不确定的时候，用 apply，然后把参数 push 进数组传递进去。当参数数量不确定时，函数内部也可以通过 arguments 这个数组来便利所有的参数。</p><p>C</p><pre><code>obj.call(thisObj, arg1, arg2, ...);obj.apply(thisObj, [arg1, arg2, ...]);</code></pre><p>两者作用一致，都是把obj(即this)绑定到thisObj，这时候thisObj具备了obj的属性和方法。或者说thisObj『继承』了obj的属性和方法。</p><p>唯一区别是apply接受的是数组参数，call接受的是连续参数。</p><p>call是apply的语法糖。</p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;这篇文章介绍Apply, call and bind的概念和考察方法。&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="技术栈" scheme="http://janebt.github.io/categories/%E6%8A%80%E6%9C%AF%E6%A0%88/"/>
+    
+    
+      <category term="JavaScript" scheme="http://janebt.github.io/tags/JavaScript/"/>
+    
+  </entry>
   
   <entry>
     <title>继承、封装、多态</title>
@@ -35,56 +57,6 @@
     
     
       <category term="JavaScript" scheme="http://janebt.github.io/tags/JavaScript/"/>
-    
-  </entry>
-  
-  <entry>
-    <title></title>
-    <link href="http://janebt.github.io/2017/11/25/Apply,%20call,%20and%20bind/"/>
-    <id>http://janebt.github.io/2017/11/25/Apply, call, and bind/</id>
-    <published>2017-11-25T10:24:35.117Z</published>
-    <updated>2017-11-25T14:42:05.996Z</updated>
-    
-    <content type="html"><![CDATA[<h1 id="call及apply"><a href="#call及apply" class="headerlink" title="call及apply"></a>call及apply</h1><p>A</p><p>所以，可以看出call和apply是为了动态改变this而出现的，当一个object没有某个方法，但是其他的有，我们可以借助call或apply用其它对象的方法来操作。</p><p>用的比较多的，通过document.getElementsByTagName选择的dom 节点是一种类似array的array。它不能应用Array下的push,pop等方法。我们可以通过：<br>var domNodes =  Array.prototype.slice.call(document.getElementsByTagName(“*”));<br>这样domNodes就可以应用Array下的所有方法了。</p><p>B</p><p>call 和 apply 都是为了改变某个函数运行时的 context 即上下文而存在的，换句话说，就是为了改变函数体内部 this 的指向。因为 JavaScript 的函数存在「定义时上下文」和「运行时上下文」以及「上下文是可以改变的」这样的概念。</p><blockquote><p>var func1 = function(arg1, arg2) {};</p></blockquote><p>就可以通过 func1.call(this, arg1, arg2); 或者 func1.apply(this, [arg1, arg2]); 来调用。其中 this 是你想指定的上下文，他可以任何一个 JavaScript 对象(JavaScript 中一切皆对象)，call 需要把参数按顺序传递进去，而 apply 则是把参数放在数组里。</p><p>JavaScript 中，某个函数的参数数量是不固定的，因此要说适用条件的话，当你的参数是明确知道数量时，用 call，而不确定的时候，用 apply，然后把参数 push 进数组传递进去。当参数数量不确定时，函数内部也可以通过 arguments 这个数组来便利所有的参数。</p><p>C</p><pre><code>obj.call(thisObj, arg1, arg2, ...);obj.apply(thisObj, [arg1, arg2, ...]);</code></pre><p>两者作用一致，都是把obj(即this)绑定到thisObj，这时候thisObj具备了obj的属性和方法。或者说thisObj『继承』了obj的属性和方法。</p><p>唯一区别是apply接受的是数组参数，call接受的是连续参数。</p><p>call是apply的语法糖。</p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;h1 id=&quot;call及apply&quot;&gt;&lt;a href=&quot;#call及apply&quot; class=&quot;headerlink&quot; title=&quot;call及apply&quot;&gt;&lt;/a&gt;call及apply&lt;/h1&gt;&lt;p&gt;A&lt;/p&gt;
-&lt;p&gt;所以，可以看出call和apply是为了动态改变this而
-      
-    
-    </summary>
-    
-    
-  </entry>
-  
-  <entry>
-    <title>前端大纲</title>
-    <link href="http://janebt.github.io/2017/11/01/%E5%89%8D%E7%AB%AF%E5%A4%A7%E7%BA%B2/"/>
-    <id>http://janebt.github.io/2017/11/01/前端大纲/</id>
-    <published>2017-11-01T03:33:34.000Z</published>
-    <updated>2017-12-01T07:25:00.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>这篇文章是为了时刻提醒自己，还有哪些坑要填。</p><a id="more"></a><h1 id="结构层-HTML"><a href="#结构层-HTML" class="headerlink" title="结构层(HTML)"></a>结构层(HTML)</h1><p>对WEB标准的理解</p><p>浏览器内核差异</p><p><a href="https://janebt.github.io/2017/11/01/HTML5/">HTML5新特性及应用</a></p><h1 id="表示层-CSS"><a href="#表示层-CSS" class="headerlink" title="表示层(CSS)"></a>表示层(CSS)</h1><p>布局</p><p>盒子模型</p><p>选择器优先级及使用</p><p>CSS3新特性及应用</p><p>兼容性</p><p>Hack</p><p>移动端适应</p><h1 id="行为层-JavaScript"><a href="#行为层-JavaScript" class="headerlink" title="行为层(JavaScript)"></a>行为层(JavaScript)</h1><p>数据类型</p><p>面向对象</p><p>作用域</p><p><a href="https://janebt.github.io/2017/11/01/Prototype/">原型链</a></p><p><a href="https://janebt.github.io/2017/11/25/Inheritance/">继承、封装、多态</a></p><p><a href="https://janebt.github.io/2017/11/25/Apply, call, and bind/">Apply, call, and bind</a></p><p>闭包</p><p>插件</p><p>跨域</p><p>模块化</p><p>事件机制</p><p>自定义事件</p><p>内存泄漏</p><p>异步装载回调</p><p>模版引擎</p><p>Ajax</p><p>Jquery</p><p>JSON</p><p>Nodejs</p><h1 id="进阶"><a href="#进阶" class="headerlink" title="进阶"></a>进阶</h1><p>优化</p><p>交互</p><p>响应式</p><p>HTTP</p><p>WEB安全</p><p>重构</p><p>SEO</p><p>UED</p><p>架构</p><p>后端</p><p>移动端</p>]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;这篇文章是为了时刻提醒自己，还有哪些坑要填。&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="技术栈" scheme="http://janebt.github.io/categories/%E6%8A%80%E6%9C%AF%E6%A0%88/"/>
-    
-    
-      <category term="前端" scheme="http://janebt.github.io/tags/%E5%89%8D%E7%AB%AF/"/>
-    
-      <category term="HTML" scheme="http://janebt.github.io/tags/HTML/"/>
-    
-      <category term="JavaScript" scheme="http://janebt.github.io/tags/JavaScript/"/>
-    
-      <category term="CSS" scheme="http://janebt.github.io/tags/CSS/"/>
     
   </entry>
   
@@ -134,6 +106,34 @@
     
     
       <category term="JavaScript" scheme="http://janebt.github.io/tags/JavaScript/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>前端大纲</title>
+    <link href="http://janebt.github.io/2017/11/01/%E5%89%8D%E7%AB%AF%E5%A4%A7%E7%BA%B2/"/>
+    <id>http://janebt.github.io/2017/11/01/前端大纲/</id>
+    <published>2017-11-01T03:33:34.000Z</published>
+    <updated>2017-12-01T07:25:00.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>这篇文章是为了时刻提醒自己，还有哪些坑要填。</p><a id="more"></a><h1 id="结构层-HTML"><a href="#结构层-HTML" class="headerlink" title="结构层(HTML)"></a>结构层(HTML)</h1><p>对WEB标准的理解</p><p>浏览器内核差异</p><p><a href="https://janebt.github.io/2017/11/01/HTML5/">HTML5新特性及应用</a></p><h1 id="表示层-CSS"><a href="#表示层-CSS" class="headerlink" title="表示层(CSS)"></a>表示层(CSS)</h1><p>布局</p><p>盒子模型</p><p>选择器优先级及使用</p><p>CSS3新特性及应用</p><p>兼容性</p><p>Hack</p><p>移动端适应</p><h1 id="行为层-JavaScript"><a href="#行为层-JavaScript" class="headerlink" title="行为层(JavaScript)"></a>行为层(JavaScript)</h1><p>数据类型</p><p>面向对象</p><p>作用域</p><p><a href="https://janebt.github.io/2017/11/01/Prototype/">原型链</a></p><p><a href="https://janebt.github.io/2017/11/25/Inheritance/">继承、封装、多态</a></p><p><a href="https://janebt.github.io/2017/11/26/Apply, call and bind/">Apply, call and bind</a></p><p>闭包</p><p>插件</p><p>跨域</p><p>模块化</p><p>事件机制</p><p>自定义事件</p><p>内存泄漏</p><p>异步装载回调</p><p>模版引擎</p><p>Ajax</p><p>Jquery</p><p>JSON</p><p>Nodejs</p><h1 id="进阶"><a href="#进阶" class="headerlink" title="进阶"></a>进阶</h1><p>优化</p><p>交互</p><p>响应式</p><p>HTTP</p><p>WEB安全</p><p>重构</p><p>SEO</p><p>UED</p><p>架构</p><p>后端</p><p>移动端</p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;这篇文章是为了时刻提醒自己，还有哪些坑要填。&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="技术栈" scheme="http://janebt.github.io/categories/%E6%8A%80%E6%9C%AF%E6%A0%88/"/>
+    
+    
+      <category term="JavaScript" scheme="http://janebt.github.io/tags/JavaScript/"/>
+    
+      <category term="前端" scheme="http://janebt.github.io/tags/%E5%89%8D%E7%AB%AF/"/>
+    
+      <category term="HTML" scheme="http://janebt.github.io/tags/HTML/"/>
+    
+      <category term="CSS" scheme="http://janebt.github.io/tags/CSS/"/>
     
   </entry>
   
