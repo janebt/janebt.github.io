@@ -4,7 +4,7 @@
     
     <entry>
       <title><![CDATA[继承、封装、多态]]></title>
-      <url>/2017/11/25/%E7%BB%A7%E6%89%BF/</url>
+      <url>/2017/11/25/Inheritance/</url>
       <content type="html"><![CDATA[<p>本文介绍继承的写法，参考《JS高程》。<br>封装、多态待补。</p>
 <a id="more"></a>
 <h1 id="继承"><a href="#继承" class="headerlink" title="继承"></a>继承</h1><h2 id="借用构造函数继承"><a href="#借用构造函数继承" class="headerlink" title="借用构造函数继承"></a>借用构造函数继承</h2><pre><code class="javascript">function Parent0(){
@@ -169,8 +169,100 @@ class Child1 extends Parent {
     </entry>
     
     <entry>
+      <title></title>
+      <url>/2017/11/25/Apply,%20call,%20and%20bind/</url>
+      <content type="html"><![CDATA[<h1 id="call及apply"><a href="#call及apply" class="headerlink" title="call及apply"></a>call及apply</h1><p>A</p>
+<p>所以，可以看出call和apply是为了动态改变this而出现的，当一个object没有某个方法，但是其他的有，我们可以借助call或apply用其它对象的方法来操作。</p>
+<p>用的比较多的，通过document.getElementsByTagName选择的dom 节点是一种类似array的array。它不能应用Array下的push,pop等方法。我们可以通过：<br>var domNodes =  Array.prototype.slice.call(document.getElementsByTagName(“*”));<br>这样domNodes就可以应用Array下的所有方法了。</p>
+<p>B</p>
+<p>call 和 apply 都是为了改变某个函数运行时的 context 即上下文而存在的，换句话说，就是为了改变函数体内部 this 的指向。因为 JavaScript 的函数存在「定义时上下文」和「运行时上下文」以及「上下文是可以改变的」这样的概念。</p>
+<blockquote>
+<p>var func1 = function(arg1, arg2) {};</p>
+</blockquote>
+<p>就可以通过 func1.call(this, arg1, arg2); 或者 func1.apply(this, [arg1, arg2]); 来调用。其中 this 是你想指定的上下文，他可以任何一个 JavaScript 对象(JavaScript 中一切皆对象)，call 需要把参数按顺序传递进去，而 apply 则是把参数放在数组里。</p>
+<p>JavaScript 中，某个函数的参数数量是不固定的，因此要说适用条件的话，当你的参数是明确知道数量时，用 call，而不确定的时候，用 apply，然后把参数 push 进数组传递进去。当参数数量不确定时，函数内部也可以通过 arguments 这个数组来便利所有的参数。</p>
+<p>C</p>
+<pre><code>obj.call(thisObj, arg1, arg2, ...);
+obj.apply(thisObj, [arg1, arg2, ...]);
+</code></pre><p>两者作用一致，都是把obj(即this)绑定到thisObj，这时候thisObj具备了obj的属性和方法。或者说thisObj『继承』了obj的属性和方法。</p>
+<p>唯一区别是apply接受的是数组参数，call接受的是连续参数。</p>
+<p>call是apply的语法糖。</p>
+]]></content>
+      
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[前端大纲]]></title>
+      <url>/2017/11/01/%E5%89%8D%E7%AB%AF%E5%A4%A7%E7%BA%B2/</url>
+      <content type="html"><![CDATA[<p>这篇文章是为了时刻提醒自己，还有哪些坑要填。</p>
+<a id="more"></a>
+<h1 id="结构层-HTML"><a href="#结构层-HTML" class="headerlink" title="结构层(HTML)"></a>结构层(HTML)</h1><p>对WEB标准的理解</p>
+<p>浏览器内核差异</p>
+<p><a href="https://janebt.github.io/2017/11/01/HTML5/">HTML5新特性及应用</a></p>
+<h1 id="表示层-CSS"><a href="#表示层-CSS" class="headerlink" title="表示层(CSS)"></a>表示层(CSS)</h1><p>布局</p>
+<p>盒子模型</p>
+<p>选择器优先级及使用</p>
+<p>CSS3新特性及应用</p>
+<p>兼容性</p>
+<p>Hack</p>
+<p>移动端适应</p>
+<h1 id="行为层-JavaScript"><a href="#行为层-JavaScript" class="headerlink" title="行为层(JavaScript)"></a>行为层(JavaScript)</h1><p>数据类型</p>
+<p>面向对象</p>
+<p>作用域</p>
+<p><a href="https://janebt.github.io/2017/11/01/Prototype/">原型链</a></p>
+<p><a href="https://janebt.github.io/2017/11/25/Inheritance/">继承、封装、多态</a></p>
+<p><a href="https://janebt.github.io/2017/11/25/Apply, call, and bind/">Apply, call, and bind</a></p>
+<p>闭包</p>
+<p>插件</p>
+<p>跨域</p>
+<p>模块化</p>
+<p>事件机制</p>
+<p>自定义事件</p>
+<p>内存泄漏</p>
+<p>异步装载回调</p>
+<p>模版引擎</p>
+<p>Ajax</p>
+<p>Jquery</p>
+<p>JSON</p>
+<p>Nodejs</p>
+<h1 id="进阶"><a href="#进阶" class="headerlink" title="进阶"></a>进阶</h1><p>优化</p>
+<p>交互</p>
+<p>响应式</p>
+<p>HTTP</p>
+<p>WEB安全</p>
+<p>重构</p>
+<p>SEO</p>
+<p>UED</p>
+<p>架构</p>
+<p>后端</p>
+<p>移动端</p>
+]]></content>
+      
+        <categories>
+            
+            <category> 技术栈 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> 前端 </tag>
+            
+            <tag> HTML </tag>
+            
+            <tag> JavaScript </tag>
+            
+            <tag> CSS </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[HTML5总结]]></title>
-      <url>/2017/11/01/HTML5%E6%80%BB%E7%BB%93/</url>
+      <url>/2017/11/01/HTML5/</url>
       <content type="html"><![CDATA[<p>这篇文章介绍H5的概念和考察方法。</p>
 <p>后续补上demo。</p>
 <a id="more"></a>
@@ -774,7 +866,7 @@ Response.Flush()
     
     <entry>
       <title><![CDATA[原型与原型链]]></title>
-      <url>/2017/11/01/%E5%8E%9F%E5%9E%8B%E9%93%BE/</url>
+      <url>/2017/11/01/Prototype/</url>
       <content type="html"><![CDATA[<p>本文介绍原型和原型链的概念，参考多篇热门博客，持续总结和更新思想。</p>
 <a id="more"></a>
 <h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><h2 id="proto"><a href="#proto" class="headerlink" title="_proto_"></a><code>_proto_</code></h2><p>任何一个对象Object都有<em>proto</em>，它是每一个对象的私有属性，是天生自带的。</p>
@@ -927,75 +1019,8 @@ Function.prototype.__proto__ === Object.prototype; // true
     </entry>
     
     <entry>
-      <title><![CDATA[前端大纲]]></title>
-      <url>/2017/11/01/%E5%89%8D%E7%AB%AF%E5%A4%A7%E7%BA%B2/</url>
-      <content type="html"><![CDATA[<p>这篇文章是为了时刻提醒自己，还有哪些坑要填。</p>
-<a id="more"></a>
-<h1 id="结构层-HTML"><a href="#结构层-HTML" class="headerlink" title="结构层(HTML)"></a>结构层(HTML)</h1><p>对WEB标准的理解</p>
-<p>浏览器内核差异</p>
-<p><a href="https://janebt.github.io/2017/11/01/HTML5%E6%80%BB%E7%BB%93/">HTML5新特性及应用</a></p>
-<h1 id="表示层-CSS"><a href="#表示层-CSS" class="headerlink" title="表示层(CSS)"></a>表示层(CSS)</h1><p>布局</p>
-<p>盒子模型</p>
-<p>选择器优先级及使用</p>
-<p>CSS3新特性及应用</p>
-<p>兼容性</p>
-<p>Hack</p>
-<p>移动端适应</p>
-<h1 id="行为层-JavaScript"><a href="#行为层-JavaScript" class="headerlink" title="行为层(JavaScript)"></a>行为层(JavaScript)</h1><p>数据类型</p>
-<p>面向对象</p>
-<p>作用域</p>
-<p><a href="https://janebt.github.io/2017/11/01/%E5%8E%9F%E5%9E%8B%E9%93%BE/">原型链</a></p>
-<p>继承、封装、多态</p>
-<p>闭包</p>
-<p>插件</p>
-<p>跨域</p>
-<p>模块化</p>
-<p>事件机制</p>
-<p>自定义事件</p>
-<p>内存泄漏</p>
-<p>异步装载回调</p>
-<p>模版引擎</p>
-<p>Ajax</p>
-<p>Jquery</p>
-<p>JSON</p>
-<p>Nodejs</p>
-<h1 id="进阶"><a href="#进阶" class="headerlink" title="进阶"></a>进阶</h1><p>优化</p>
-<p>交互</p>
-<p>响应式</p>
-<p>HTTP</p>
-<p>WEB安全</p>
-<p>重构</p>
-<p>SEO</p>
-<p>UED</p>
-<p>架构</p>
-<p>后端</p>
-<p>移动端</p>
-]]></content>
-      
-        <categories>
-            
-            <category> 技术栈 </category>
-            
-        </categories>
-        
-        
-        <tags>
-            
-            <tag> 前端 </tag>
-            
-            <tag> HTML </tag>
-            
-            <tag> JavaScript </tag>
-            
-            <tag> CSS </tag>
-            
-        </tags>
-        
-    </entry>
-    
-    <entry>
       <title><![CDATA[快速搭建Hexo]]></title>
-      <url>/2016/10/01/Hexo%E6%90%AD%E5%BB%BA/</url>
+      <url>/2016/10/01/Hexo/</url>
       <content type="html"><![CDATA[<p>这篇文章主要是提醒自己半年更一次博客忘了要怎么做。当然如果想<strong>迅速</strong>建站，可是可以参考的。</p>
 <a id="more"></a>
 <h1 id="搭建hexo"><a href="#搭建hexo" class="headerlink" title="搭建hexo"></a>搭建hexo</h1><p>首先需要搭建hexo，包括：</p>
