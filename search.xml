@@ -4,8 +4,9 @@
     
     <entry>
       <title><![CDATA[表达式与运算符]]></title>
-      <url>/2017/11/26/2017-11-26-%E8%A1%A8%E8%BE%BE%E5%BC%8F%E4%B8%8E%E8%BF%90%E7%AE%97%E7%AC%A6/</url>
-      <content type="html"><![CDATA[<p>这篇文章整理一些数据类型的点和坑。</p>
+      <url>/2017/11/26/2017-11-26-22/</url>
+      <content type="html"><![CDATA[<p>这篇文章整理一些表达式和运算符的点和坑。</p>
+<p>工作和面试中总会碰到相关问题，但如果不进行分类总结，可能还会探雷。</p>
 <a id="more"></a>
 <h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><h2 id="表达式"><a href="#表达式" class="headerlink" title="表达式"></a>表达式</h2><h3 id="表达式形式"><a href="#表达式形式" class="headerlink" title="表达式形式"></a>表达式形式</h3><ol>
 <li><p>原始表达式</p>
@@ -271,19 +272,21 @@ new Test2() instanceof Test2;//true，竟然是true
 </table>
 <p>有几个我们需要注意的地方</p>
 <ul>
-<li><p>typeof的优先级相当的高，比加减乘除神马的都高，所以虽然是操作符，在在复杂表达式的时候我们还是习惯家括号，看个例子</p>
-<pre><code class="javascript">typeof 2*3;//NaN
-typeof (2*3);//&quot;number&quot;
-typeof 2+3;// &quot;number3&quot;
+<li>typeof的优先级相当的高，比加减乘除神马的都高，所以虽然是操作符，在在复杂表达式的时候我们还是习惯家括号，看个例子</li>
+</ul>
+<pre><code class="javascript">  typeof 2*3;//NaN
+  typeof (2*3);//&quot;number&quot;
+  typeof 2+3;// &quot;number3&quot;
 </code></pre>
-</li>
-<li><p>++、–是右结合的操作符（优先级最高的几个都是右结合），而且比加减乘除优先级高。同时自增、自减运算符的运算数得是左值（可以放在赋值符号左边的值），而不能是常数</p>
-<pre><code class="javascript">var a=0,b=0;
-a+++b;//0
-a;//1，++优先级比+高，所以相当于(a++)+b
-b;//0
+<ul>
+<li>++、–是右结合的操作符（优先级最高的几个都是右结合），而且比加减乘除优先级高。同时自增、自减运算符的运算数得是左值（可以放在赋值符号左边的值），而不能是常数</li>
+</ul>
+<pre><code class="javascript">  var a=0,b=0;
+  a+++b;//0
+  a;//1，++优先级比+高，所以相当于(a++)+b
+  b;//0
 </code></pre>
-</li>
+<ul>
 <li><p>赋值运算符的优先级相当的低</p>
 </li>
 <li><p>逻辑非!也在优先级队列的前端，比加减乘除高，但逻辑与、逻辑或优先级很低，不如加减乘除</p>
@@ -1762,80 +1765,11 @@ Response.Flush()
         
         <tags>
             
-            <tag> HTML </tag>
-            
             <tag> 前端 </tag>
+            
+            <tag> HTML </tag>
             
             <tag> HTML5 </tag>
-            
-        </tags>
-        
-    </entry>
-    
-    <entry>
-      <title><![CDATA[前端大纲]]></title>
-      <url>/2017/11/01/%E5%89%8D%E7%AB%AF%E5%A4%A7%E7%BA%B2/</url>
-      <content type="html"><![CDATA[<p>这篇文章是为了时刻提醒自己，还有哪些坑要填。</p>
-<a id="more"></a>
-<h1 id="结构层-HTML"><a href="#结构层-HTML" class="headerlink" title="结构层(HTML)"></a>结构层(HTML)</h1><p><a href="https://janebt.github.io/2017/11/26/HTML_Foundation/">对WEB标准的理解</a></p>
-<p><a href="https://janebt.github.io/2017/11/26/HTML_Foundation/">浏览器内核差异</a></p>
-<p><a href="https://janebt.github.io/2017/11/01/HTML5/">HTML5新特性及应用</a></p>
-<h1 id="表示层-CSS"><a href="#表示层-CSS" class="headerlink" title="表示层(CSS)"></a>表示层(CSS)</h1><p>布局</p>
-<p>盒子模型</p>
-<p>选择器优先级及使用</p>
-<p>CSS3新特性及应用</p>
-<p>兼容性</p>
-<p>Hack</p>
-<p>移动端适应</p>
-<h1 id="行为层-JavaScript"><a href="#行为层-JavaScript" class="headerlink" title="行为层(JavaScript)"></a>行为层(JavaScript)</h1><p><a href="https://janebt.github.io/2017/11/25/JsDataType/">数据类型</a></p>
-<p><a href="https://janebt.github.io/2017/11/25/JsDataType/">表达式与运算符</a></p>
-<p>面向对象</p>
-<p>作用域</p>
-<p><a href="https://janebt.github.io/2017/11/01/JSPrototype/">原型链</a></p>
-<p><a href="https://janebt.github.io/2017/11/25/JSInheritance/">继承、封装、多态</a></p>
-<p><a href="https://janebt.github.io/2017/11/26/Apply,%20call%20and%20bind/">Apply, call and bind</a></p>
-<p>闭包</p>
-<p>插件</p>
-<p>跨域</p>
-<p>模块化</p>
-<p>事件机制</p>
-<p>自定义事件</p>
-<p>内存泄漏</p>
-<p>异步装载回调</p>
-<p>模版引擎</p>
-<p>Ajax</p>
-<p>Jquery</p>
-<p>JSON</p>
-<p>Nodejs</p>
-<h1 id="进阶"><a href="#进阶" class="headerlink" title="进阶"></a>进阶</h1><p>优化</p>
-<p>交互</p>
-<p>响应式</p>
-<p>HTTP</p>
-<p>WEB安全</p>
-<p>重构</p>
-<p>SEO</p>
-<p>UED</p>
-<p>架构</p>
-<p>后端</p>
-<p>移动端</p>
-]]></content>
-      
-        <categories>
-            
-            <category> 技术栈 </category>
-            
-        </categories>
-        
-        
-        <tags>
-            
-            <tag> JavaScript </tag>
-            
-            <tag> HTML </tag>
-            
-            <tag> 前端 </tag>
-            
-            <tag> CSS </tag>
             
         </tags>
         
@@ -1990,6 +1924,75 @@ Function.prototype.__proto__ === Object.prototype; // true
         <tags>
             
             <tag> JavaScript </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[前端大纲]]></title>
+      <url>/2017/11/01/%E5%89%8D%E7%AB%AF%E5%A4%A7%E7%BA%B2/</url>
+      <content type="html"><![CDATA[<p>这篇文章是为了时刻提醒自己，还有哪些坑要填。</p>
+<a id="more"></a>
+<h1 id="结构层-HTML"><a href="#结构层-HTML" class="headerlink" title="结构层(HTML)"></a>结构层(HTML)</h1><p><a href="https://janebt.github.io/2017/11/26/HTML_Foundation/">对WEB标准的理解</a></p>
+<p><a href="https://janebt.github.io/2017/11/26/HTML_Foundation/">浏览器内核差异</a></p>
+<p><a href="https://janebt.github.io/2017/11/01/HTML5/">HTML5新特性及应用</a></p>
+<h1 id="表示层-CSS"><a href="#表示层-CSS" class="headerlink" title="表示层(CSS)"></a>表示层(CSS)</h1><p>布局</p>
+<p>盒子模型</p>
+<p>选择器优先级及使用</p>
+<p>CSS3新特性及应用</p>
+<p>兼容性</p>
+<p>Hack</p>
+<p>移动端适应</p>
+<h1 id="行为层-JavaScript"><a href="#行为层-JavaScript" class="headerlink" title="行为层(JavaScript)"></a>行为层(JavaScript)</h1><p><a href="https://janebt.github.io/2017/11/25/JsDataType/">数据类型</a></p>
+<p><a href="https://janebt.github.io/2017/11/2017-11-26-22/">表达式与运算符</a></p>
+<p>面向对象</p>
+<p>作用域</p>
+<p><a href="https://janebt.github.io/2017/11/01/JSPrototype/">原型链</a></p>
+<p><a href="https://janebt.github.io/2017/11/25/JSInheritance/">继承、封装、多态</a></p>
+<p><a href="https://janebt.github.io/2017/11/26/Apply,%20call%20and%20bind/">Apply, call and bind</a></p>
+<p>闭包</p>
+<p>插件</p>
+<p>跨域</p>
+<p>模块化</p>
+<p>事件机制</p>
+<p>自定义事件</p>
+<p>内存泄漏</p>
+<p>异步装载回调</p>
+<p>模版引擎</p>
+<p>Ajax</p>
+<p>Jquery</p>
+<p>JSON</p>
+<p>Nodejs</p>
+<h1 id="进阶"><a href="#进阶" class="headerlink" title="进阶"></a>进阶</h1><p>优化</p>
+<p>交互</p>
+<p>响应式</p>
+<p>HTTP</p>
+<p>WEB安全</p>
+<p>重构</p>
+<p>SEO</p>
+<p>UED</p>
+<p>架构</p>
+<p>后端</p>
+<p>移动端</p>
+]]></content>
+      
+        <categories>
+            
+            <category> 技术栈 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> JavaScript </tag>
+            
+            <tag> 前端 </tag>
+            
+            <tag> HTML </tag>
+            
+            <tag> CSS </tag>
             
         </tags>
         
