@@ -5,29 +5,336 @@
     <entry>
       <title><![CDATA[Apply, call and bind]]></title>
       <url>/2017/11/26/Apply,%20call%20and%20bind/</url>
-      <content type="html"><![CDATA[<p>这篇文章介绍Apply, call and bind的概念和考察方法。</p>
+      <content type="html"><![CDATA[<p>这篇文章介绍Apply, call and bind的概念和常用方法。</p>
 <a id="more"></a>
-<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><h2 id="this"><a href="#this" class="headerlink" title="this"></a>this</h2><p><code>this</code>的指向就是我们这里所说的执行上下文（执行环境）</p>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><h2 id="this"><a href="#this" class="headerlink" title="this"></a>this</h2><h3 id="this指向"><a href="#this指向" class="headerlink" title="this指向"></a>this指向</h3><p><code>this</code>的指向就是我们这里所说的<strong>执行上下文（执行环境）</strong></p>
 <p><code>this</code>指向的永远是调用该方法的对象</p>
-<h2 id="call"><a href="#call" class="headerlink" title="call"></a>call</h2><p><strong>改变对象的执行上下文</strong></p>
-<h2 id="apply"><a href="#apply" class="headerlink" title="apply"></a>apply</h2><p><strong>改变对象的执行上下文</strong></p>
-<h2 id="bind"><a href="#bind" class="headerlink" title="bind"></a>bind</h2><h1 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h1><p>Case1.</p>
-<p>A</p>
-<p>所以，可以看出call和apply是为了动态改变this而出现的，当一个object没有某个方法，但是其他的有，我们可以借助call或apply用其它对象的方法来操作。</p>
-<p>用的比较多的，通过document.getElementsByTagName选择的dom 节点是一种类似array的array。它不能应用Array下的push,pop等方法。我们可以通过：<br>var domNodes =  Array.prototype.slice.call(document.getElementsByTagName(“*”));<br>这样domNodes就可以应用Array下的所有方法了。</p>
-<p>B</p>
-<p>call 和 apply 都是为了改变某个函数运行时的 context 即上下文而存在的，换句话说，就是为了改变函数体内部 this 的指向。因为 JavaScript 的函数存在「定义时上下文」和「运行时上下文」以及「上下文是可以改变的」这样的概念。</p>
-<blockquote>
-<p>var func1 = function(arg1, arg2) {};</p>
-</blockquote>
-<p>就可以通过 func1.call(this, arg1, arg2); 或者 func1.apply(this, [arg1, arg2]); 来调用。其中 this 是你想指定的上下文，他可以任何一个 JavaScript 对象(JavaScript 中一切皆对象)，call 需要把参数按顺序传递进去，而 apply 则是把参数放在数组里。</p>
-<p>JavaScript 中，某个函数的参数数量是不固定的，因此要说适用条件的话，当你的参数是明确知道数量时，用 call，而不确定的时候，用 apply，然后把参数 push 进数组传递进去。当参数数量不确定时，函数内部也可以通过 arguments 这个数组来便利所有的参数。</p>
-<p>C</p>
-<pre><code>obj.call(thisObj, arg1, arg2, ...);
-obj.apply(thisObj, [arg1, arg2, ...]);
-</code></pre><p>两者作用一致，都是把obj(即this)绑定到thisObj，这时候thisObj具备了obj的属性和方法。或者说thisObj『继承』了obj的属性和方法。</p>
-<p>唯一区别是apply接受的是数组参数，call接受的是连续参数。</p>
+<p>在 ES5 中，其实 this 的指向，始终坚持一个原理：<strong>this 永远指向最后调用它的那个对象</strong></p>
+<h3 id="怎么改变-this-的指向"><a href="#怎么改变-this-的指向" class="headerlink" title="怎么改变 this 的指向"></a>怎么改变 this 的指向</h3><h4 id="使用-ES6-的箭头函数"><a href="#使用-ES6-的箭头函数" class="headerlink" title="使用 ES6 的箭头函数"></a>使用 ES6 的箭头函数</h4><p>箭头函数的 this 始终指向函数定义时的 this，而非执行时。</p>
+<p><strong>箭头函数中没有 this 绑定，必须通过查找作用域链来决定其值，如果箭头函数被非箭头函数包含，则 this 绑定的是最近一层非箭头函数的 this，否则，this 为 undefined</strong></p>
+<h4 id="使用-apply、call、bind"><a href="#使用-apply、call、bind" class="headerlink" title="使用 apply、call、bind"></a>使用 apply、call、bind</h4><h2 id="call"><a href="#call" class="headerlink" title="call"></a>call</h2><p>基本作用: <strong>改变对象的执行上下文</strong></p>
+<p>call 的语法为：<code>fun.call(thisArg[, arg1[, arg2[, ...]]])</code></p>
+<p>如果这个函数处于非严格模式下，则指定为 null 或 undefined 时会自动指向全局对象（浏览器中就是window对象），同时值为原始值（数字，字符串，布尔值）的 thisArg 会指向该原始值的自动包装对象。</p>
 <p>call是apply的语法糖。</p>
+<h2 id="apply"><a href="#apply" class="headerlink" title="apply"></a>apply</h2><p>基本作用: <strong>改变对象的执行上下文</strong></p>
+<p>语法：<code>fun.apply(thisArg, [argsArray])</code></p>
+<p>Note: argsArray从ECMAScript 5 开始可以使用类数组对象。</p>
+<p>当参数数量不确定时，函数内部也可以通过 arguments 这个数组来便利所有的参数。</p>
+<h2 id="bind"><a href="#bind" class="headerlink" title="bind"></a>bind</h2><p><code>bind</code>是在EcmaScript5中扩展的方法（IE6,7,8不支持）</p>
+<p>MDN的解释是：<code>bind()</code>方法会创建一个新函数，称为绑定函数，当调用这个绑定函数时，绑定函数会以创建它时传入 <code>bind()</code>方法的第一个参数作为 <code>this</code>，传入 <code>bind()</code> 方法的第二个以及以后的参数加上绑定函数运行时本身的参数按照顺序作为原函数的参数来调用原函数。</p>
+<p>注意：<code>bind</code>方法的返回值是函数。所以，bind 是创建一个新的函数，要手动去调用</p>
+<p><code>bind()</code>最简单的用法是创建一个函数，使这个函数不论怎么调用都有同样的this值。常见的错误，将方法从对象中拿出来，然后调用，并且希望this指向原来的对象。如果不做特殊处理，一般会丢失原来的对象。</p>
+<h1 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h1><h2 id="Case1-执行上下文"><a href="#Case1-执行上下文" class="headerlink" title="Case1.执行上下文"></a>Case1.执行上下文</h2><pre><code class="javascript">function func () {
+    this.a = 1;
+    console.log(this.a);
+}
+func();  // 1
+a或window.a; //1
+</code></pre>
+<p>由于<code>func</code>是全局对象<code>window</code>下的一个方法，那么调用该方法的对象就应该是全局对象<code>window</code>，所以<code>this</code>理论上指向的对象就应该是<code>window</code></p>
+<h2 id="Case2-为什么需要改变执行上下文"><a href="#Case2-为什么需要改变执行上下文" class="headerlink" title="Case2.为什么需要改变执行上下文"></a>Case2.为什么需要改变执行上下文</h2><p>A对象有一个方法，而B对象因为某种不可言说的情况也需要用到一样的方法，那么这时候我们是单独为B扩展个方法呢，还是借用一下A的方法呢？当然是借用A的啦，既完成了需求，又减少了内存的占用</p>
+<h2 id="Case3-call-与-apply-异同"><a href="#Case3-call-与-apply-异同" class="headerlink" title="Case3.call 与 apply 异同"></a>Case3.call 与 apply 异同</h2><h3 id="相同点"><a href="#相同点" class="headerlink" title="相同点"></a>相同点</h3><p>都能够改变方法的执行上下文（执行环境），将一个对象的方法交给另一个对象来执行，并且是立即执行</p>
+<p>都用来改变当前函数调用的对象。</p>
+<h3 id="不同点"><a href="#不同点" class="headerlink" title="不同点"></a>不同点</h3><p><code>call</code>方法从第二个参数开始可以接收任意个参数，每个参数会映射到相应位置的func的参数上，可以通过参数名调用，但是如果将所有的参数作为数组传入，它们会作为一个整体映射到func对应的第一个参数上，之后参数都为空</p>
+<p><code>apply</code>方法最多只有两个参数，第二个参数接收数组或者类数组，但是都会被转换成类数组传入func中，并且会被映射到func对应的参数上</p>
+<p><code>foo.call(this,arg1,arg2) == foo.apply(this, arguments)==this.foo(arg1, arg2)</code></p>
+<h2 id="Case4-bind-和-apply、call-区别"><a href="#Case4-bind-和-apply、call-区别" class="headerlink" title="Case4.bind 和 apply、call 区别"></a>Case4.bind 和 apply、call 区别</h2><p><code>bind</code> 是返回对应函数，便于稍后调用；<code>apply</code> 、<code>call</code> 则是立即调用 。</p>
+<pre><code class="javascript">var a ={
+ name : &quot;Cherry&quot;,
+ fn : function (a,b) {
+  console.log( a + b)
+ }
+}
+var b = a.fn;
+b.bind(a,1,2)    //没有输出
+</code></pre>
+<p>bind 是创建一个新的函数，我们必须要手动去调用：</p>
+<pre><code class="javascript">var a ={
+  name : &quot;Cherry&quot;,
+  fn : function (a,b) {
+   console.log( a + b)
+  }
+ }
+ var b = a.fn;
+ b.bind(a,1,2)()   // 3
+</code></pre>
+<h2 id="Case5-选择-dom-节点"><a href="#Case5-选择-dom-节点" class="headerlink" title="Case5.选择 dom 节点"></a>Case5.选择 dom 节点</h2><p>用的比较多的，通过document.getElementsByTagName选择的dom 节点是一种类似array的array。它不能应用Array下的push,pop等方法。我们可以通过：<br><code>var domNodes =  Array.prototype.slice.call(document.getElementsByTagName(&quot;*&quot;));</code><br>这样domNodes可以应用Array下的所有方法了。</p>
+<h2 id="Case6-this-的指向"><a href="#Case6-this-的指向" class="headerlink" title="Case6.this 的指向"></a>Case6.this 的指向</h2><p>e.g.1</p>
+<pre><code class="javascript">var name = &quot;windowsName&quot;;
+function a() {
+ var name = &quot;Cherry&quot;;
+ console.log(this.name);   // windowsName
+ console.log(&quot;inner:&quot; + this); // inner: Window
+}
+a();
+console.log(&quot;outer:&quot; + this)   // outer: Window
+</code></pre>
+<p>e.g.2</p>
+<pre><code class="javascript">var name = &quot;windowsName&quot;;
+ var a = {
+  name: &quot;Cherry&quot;,
+  fn : function () {
+   console.log(this.name);  // Cherry
+  }
+ }
+ a.fn();
+</code></pre>
+<p>e.g.3</p>
+<pre><code class="javascript">var name = &quot;windowsName&quot;;
+ var a = {
+  name: &quot;Cherry&quot;,
+  fn : function () {
+   console.log(this.name);  // Cherry
+  }
+ }
+ window.a.fn();
+</code></pre>
+<p>e.g.4</p>
+<pre><code class="javascript">var name = &quot;windowsName&quot;;
+var a = {
+ // name: &quot;Cherry&quot;,
+ fn : function () {
+  console.log(this.name);  // undefined
+ }
+}
+window.a.fn();
+</code></pre>
+<p>e.g.5</p>
+<pre><code class="javascript">var name = &quot;windowsName&quot;;
+var a = {
+ name : null,
+ // name: &quot;Cherry&quot;,
+ fn : function () {
+  console.log(this.name);  // windowsName
+ }
+}
+var f = a.fn;
+f();
+</code></pre>
+<p>e.g.6</p>
+<pre><code class="javascript">var name = &quot;windowsName&quot;;
+function fn() {
+ var name = &#39;Cherry&#39;;
+ innerFunction();
+ function innerFunction() {
+  console.log(this.name);  // windowsName
+ }
+}
+fn()
+</code></pre>
+<h2 id="Case7-箭头函数this"><a href="#Case7-箭头函数this" class="headerlink" title="Case7.箭头函数this"></a>Case7.箭头函数this</h2><pre><code class="javascript">var name = &quot;windowsName&quot;;
+var a = {
+ name : &quot;Cherry&quot;,
+ func1: function () {
+  console.log(this.name)  
+ },
+ func2: function () {
+  setTimeout( () =&gt; {
+   this.func1()
+  },100);
+ }
+};
+a.func2()  // Cherry
+</code></pre>
+<p>替代方法：在函数内部使用 _this = this</p>
+<pre><code class="javascript">var name = &quot;windowsName&quot;;
+var a = {
+ name : &quot;Cherry&quot;,
+ func1: function () {
+  console.log(this.name)  
+ },
+ func2: function () {
+  var _this = this;
+  setTimeout( function() {
+   _this.func1()
+  },100);
+ }
+};
+a.func2()  // Cherry
+</code></pre>
+<h2 id="Case8-call和apply常用用法"><a href="#Case8-call和apply常用用法" class="headerlink" title="Case8.call和apply常用用法"></a>Case8.call和apply常用用法</h2><h3 id="1-数组之间追加"><a href="#1-数组之间追加" class="headerlink" title="1.数组之间追加"></a>1.数组之间追加</h3><pre><code class="javascript">var array1 = [12 , &quot;foo&quot; , {name &quot;Joe&quot;} , -2458]; 
+var array2 = [&quot;Doe&quot; , 555 , 100]; 
+Array.prototype.push.apply(array1, array2); 
+/* array1 值为  [12 , &quot;foo&quot; , {name &quot;Joe&quot;} , -2458 , &quot;Doe&quot; , 555 , 100] */
+</code></pre>
+<h3 id="2-获取数组中的最大值和最小值"><a href="#2-获取数组中的最大值和最小值" class="headerlink" title="2. 获取数组中的最大值和最小值"></a>2. 获取数组中的最大值和最小值</h3><pre><code class="javascript">var  numbers = [5, 458 , 120 , -215 ]; 
+var maxInNumbers = Math.max.apply(Math, numbers),   //458
+    maxInNumbers = Math.max.call(Math,5, 458 , 120 , -215); //458
+</code></pre>
+<h3 id="3-验证是否是数组（前提是toString-方法没有被重写过）"><a href="#3-验证是否是数组（前提是toString-方法没有被重写过）" class="headerlink" title="3.验证是否是数组（前提是toString()方法没有被重写过）"></a>3.验证是否是数组（前提是toString()方法没有被重写过）</h3><pre><code class="javascript">functionisArray(obj){ 
+    return Object.prototype.toString.call(obj) === &#39;[object Array]&#39; ;
+}
+</code></pre>
+<h3 id="4-类（伪）数组使用数组方法"><a href="#4-类（伪）数组使用数组方法" class="headerlink" title="4.类（伪）数组使用数组方法"></a>4.类（伪）数组使用数组方法</h3><pre><code class="javascript">var domNodes = Array.prototype.slice.call(document.getElementsByTagName(&quot;*&quot;));
+</code></pre>
+<h3 id="5-给每一个-log-消息添加一个”-app-”的前辍"><a href="#5-给每一个-log-消息添加一个”-app-”的前辍" class="headerlink" title="5. 给每一个 log 消息添加一个”(app)”的前辍"></a>5. 给每一个 log 消息添加一个”(app)”的前辍</h3><pre><code class="javascript">function log(){
+  var args = Array.prototype.slice.call(arguments);
+  args.unshift(&#39;(app)&#39;);
+  console.log.apply(console, args);
+};
+</code></pre>
+<h2 id="Case9-如果连续-bind-多次输出的值是什么"><a href="#Case9-如果连续-bind-多次输出的值是什么" class="headerlink" title="Case9.如果连续 bind() 多次输出的值是什么"></a>Case9.如果连续 bind() 多次输出的值是什么</h2><pre><code class="javascript">var bar = function(){
+    console.log(this.x);
+}
+var foo = {
+    x:3
+}
+var sed = {
+    x:4
+}
+var func = bar.bind(foo).bind(sed);
+func(); //3
+
+var fiv = {
+    x:5
+}
+var func = bar.bind(foo).bind(sed).bind(fiv);
+func(); //3
+</code></pre>
+<p>原因是，在Javascript中，多次 bind() 是无效的。更深层次的原因， bind() 的实现，相当于使用函数在内部包了一个 call / apply ，第二次 bind() 相当于再包住第一次 bind() ,故第二次以后的 bind 是无法生效的。</p>
+<h2 id="Case10-bind使用"><a href="#Case10-bind使用" class="headerlink" title="Case10.bind使用"></a>Case10.bind使用</h2><h3 id="绑定函数"><a href="#绑定函数" class="headerlink" title="绑定函数"></a>绑定函数</h3><pre><code class="javascript">var foo = {
+    bar : 1,
+    eventBind: function(){
+        $(&#39;.someClass&#39;).on(&#39;click&#39;,function(event) {
+            /* Act on the event */
+            console.log(this.bar);      //1
+        }.bind(this));
+    }
+}
+</code></pre>
+<h3 id="偏函数（Partial-Functions）"><a href="#偏函数（Partial-Functions）" class="headerlink" title="偏函数（Partial Functions）"></a>偏函数（Partial Functions）</h3><p>这是一个很好的特性，使用<code>bind()</code>我们设定函数的预定义参数，然后调用的时候传入其他参数即可：</p>
+<pre><code class="javascript">function list() {
+  return Array.prototype.slice.call(arguments);
+}
+
+var list1 = list(1, 2, 3); // [1, 2, 3]
+
+// 预定义参数37
+var leadingThirtysevenList = list.bind(undefined, 37);
+
+var list2 = leadingThirtysevenList(); // [37]
+var list3 = leadingThirtysevenList(1, 2, 3); // [37, 1, 2, 3]
+</code></pre>
+<h3 id="和setTimeout一起使用"><a href="#和setTimeout一起使用" class="headerlink" title="和setTimeout一起使用"></a>和setTimeout一起使用</h3><p>一般情况下<code>setTimeout()</code>的this指向window或global对象。当使用类的方法时需要this指向类实例，就可以使用<code>bind()</code>将this绑定到回调函数来管理实例。</p>
+<p><strong>注意：对于事件处理函数和setInterval方法也可以使用上面的方法</strong></p>
+<pre><code class="javascript">function Bloomer() {
+  this.petalCount = Math.ceil(Math.random() * 12) + 1;
+}
+
+// 1秒后调用declare函数
+Bloomer.prototype.bloom = function() {
+  window.setTimeout(this.declare.bind(this), 1000);
+};
+
+Bloomer.prototype.declare = function() {
+  console.log(&#39;我有 &#39; + this.petalCount + &#39; 朵花瓣!&#39;);
+};
+</code></pre>
+<h3 id="绑定函数作为构造函数"><a href="#绑定函数作为构造函数" class="headerlink" title="绑定函数作为构造函数"></a>绑定函数作为构造函数</h3><p>绑定函数也适用于使用new操作符来构造目标函数的实例。当使用绑定函数来构造实例，<strong>注意：this会被忽略</strong>，但是传入的参数仍然可用。</p>
+<pre><code class="javascript">function Point(x, y) {
+  this.x = x;
+  this.y = y;
+}
+
+Point.prototype.toString = function() { 
+  return this.x + &#39;,&#39; + this.y; 
+};
+
+var p = new Point(1, 2);
+p.toString(); // &#39;1,2&#39;
+
+
+var emptyObj = {};
+var YAxisPoint = Point.bind(emptyObj, 0/*x*/);
+// 实现中的例子不支持,
+// 原生bind支持:
+var YAxisPoint = Point.bind(null, 0/*x*/);
+
+var axisPoint = new YAxisPoint(5);
+axisPoint.toString(); // &#39;0,5&#39;
+
+axisPoint instanceof Point; // true
+axisPoint instanceof YAxisPoint; // true
+new Point(17, 42) instanceof YAxisPoint; // true
+</code></pre>
+<p>Point和YAxisPoint共享原型，因此使用<code>instanceof</code>运算符判断时为true。</p>
+<h3 id="捷径"><a href="#捷径" class="headerlink" title="捷径"></a>捷径</h3><p><code>bind()</code>也可以为需要特定this值的函数创造捷径。</p>
+<pre><code class="javascript">var slice = Array.prototype.slice;
+
+// ...
+
+slice.call(arguments);
+</code></pre>
+<p>如果使用<code>bind()</code>的话，情况变得更简单：</p>
+<pre><code class="javascript">var unboundSlice = Array.prototype.slice;
+var slice = Function.prototype.call.bind(unboundSlice);
+
+// ...
+
+slice(arguments);
+</code></pre>
+<h2 id="Case11-bind-实现"><a href="#Case11-bind-实现" class="headerlink" title="Case11.bind()实现"></a>Case11.bind()实现</h2><p>通过给目标函数指定作用域来简单实现:</p>
+<pre><code class="javascript">Function.prototype.bind = function(context){
+  self = this;  //保存this，即调用bind方法的目标函数
+  return function(){
+      return self.apply(context,arguments);
+  };
+};
+</code></pre>
+<p>考虑到<a href="http://blog.jobbole.com/77956/" target="_blank" rel="external">函数柯里化</a>的情况，我们可以构建一个更加健壮的<code>bind()</code>：</p>
+<pre><code class="javascript">Function.prototype.bind = function(context){
+  var args = Array.prototype.slice.call(arguments, 1),
+  self = this;
+  return function(){
+      var innerArgs = Array.prototype.slice.call(arguments);
+      var finalArgs = args.concat(innerArgs);
+      return self.apply(context,finalArgs);
+  };
+};
+</code></pre>
+<p>这次的<code>bind()</code>方法可以绑定对象，也支持在绑定的时候传参。</p>
+<p>Javascript的函数还可以作为构造函数，那么绑定后的函数用这种方式调用时，情况就比较微妙了，需要涉及到原型链的传递：</p>
+<pre><code class="javascript">Function.prototype.bind = function(context){
+  var args = Array.prototype.slice(arguments, 1),
+  F = function(){},
+  self = this,
+  bound = function(){
+      var innerArgs = Array.prototype.slice.call(arguments);
+      var finalArgs = args.concat(innerArgs);
+      return self.apply((this instanceof F ? this : context), finalArgs);
+  };
+
+  F.prototype = self.prototype;
+  bound.prototype = new F();
+  retrun bound;
+};
+</code></pre>
+<p>这是《JavaScript Web Application》一书中对<code>bind()</code>的实现：通过设置一个中转构造函数F，使绑定后的函数与调用<code>bind()</code>的函数处于同一原型链上，用new操作符调用绑定后的函数，返回的对象也能正常使用instanceof，因此这是最严谨的<code>bind()</code>实现。</p>
+<p>对于为了在浏览器中能支持<code>bind()</code>函数，只需要对上述函数稍微修改即可：</p>
+<pre><code class="javascript">Function.prototype.bind = function (oThis) {
+    if (typeof this !== &quot;function&quot;) {
+      throw new TypeError(&quot;Function.prototype.bind - what is trying to be bound is not callable&quot;);
+    }
+
+    var aArgs = Array.prototype.slice.call(arguments, 1), 
+        fToBind = this, 
+        fNOP = function () {},
+        fBound = function () {
+          return fToBind.apply(
+              this instanceof fNOP &amp;&amp; oThis ? this : oThis || window,
+              aArgs.concat(Array.prototype.slice.call(arguments))
+          );
+        };
+
+    fNOP.prototype = this.prototype;
+    fBound.prototype = new fNOP();
+
+    return fBound;
+  };
+</code></pre>
+<h1 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h1><ul>
+<li><a href="https://segmentfault.com/a/1190000002662251" target="_blank" rel="external">Javascript中bind()方法的使用与实现</a></li>
+</ul>
 ]]></content>
       
         <categories>
@@ -195,6 +502,160 @@ class Child1 extends Parent {
 <p>ES5 的继承，实质是先创造子类的实例对象this，然后再将父类的方法添加到<code>this</code>上面（<code>Parent.apply(this)</code>）。ES6 的继承机制完全不同，实质是先创造父类的实例对象<code>this</code>（所以必须先调用<code>super</code>方法），然后再用子类的构造函数修改<code>this</code>。</p>
 <p>另一个需要注意的地方是， 在子类的构造函数中， 只有调用super之后， 才可以使用this关键字， 否则会报错。 这是因为子类实例的构建， 是基于对父类实例加工， 只有super方法才能返回父类实例。</p>
 <h1 id="封装"><a href="#封装" class="headerlink" title="封装"></a>封装</h1><h1 id="多态"><a href="#多态" class="headerlink" title="多态"></a>多态</h1>]]></content>
+      
+        <categories>
+            
+            <category> 技术栈 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> JavaScript </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[原型与原型链]]></title>
+      <url>/2017/11/01/Prototype/</url>
+      <content type="html"><![CDATA[<p>本文介绍原型和原型链的概念，参考多篇热门博客，持续总结和更新思想。</p>
+<a id="more"></a>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><h2 id="proto"><a href="#proto" class="headerlink" title="_proto_"></a><code>_proto_</code></h2><p>任何一个对象Object都有<em>proto</em>，它是每一个对象的私有属性，是天生自带的。</p>
+<p>又叫做隐式原型</p>
+<p>JavaScript中任意对象都有一个内置属性[[prototype]]，在ES5之前没有标准的方法访问这个内置属性，但是大多数浏览器都支持通过<code>__proto__</code>来访问。ES5中有了对于这个内置属性标准的Get方法Object.getPrototypeOf().</p>
+<p>Note: Object.prototype 这个对象是个例外，它的<code>__proto__</code>值为null </p>
+<p>隐式原型指向<strong>创建</strong>这个对象的函数(constructor)的prototype</p>
+<p>一个对象的<strong>proto</strong>记录着自己的原型链，决定了自身的数据类型，改变<strong>proto</strong>就等于改变对象的数据类型。</p>
+<p>隐式原型的作用：构成原型链，同样用于实现基于原型的继承。</p>
+<h2 id="prototype"><a href="#prototype" class="headerlink" title="prototype"></a><code>prototype</code></h2><p><strong>原型对象</strong>。不是任何对象都有prototype，只有构造函数有prototype，是后天赋予的。</p>
+<p>每创建一个函数都会有一个prototype属性，这个属性是一个指针，<strong>指向一个对象（通过该构造函数创建实例对象的原型对象）</strong>。</p>
+<p>原型对象是包含特定类型的所有实例共享的属性和方法。原型对象的好处是，可以让所有实例对象共享它所包含的属性和方法。</p>
+<p>原型对象属于普通对象。</p>
+<p>又叫做显式原型。</p>
+<p><strong>Note</strong>：通过Function.prototype.bind方法构造出来的函数是个例外，它没有prototype属性</p>
+<p>函数的prototype不属于自身的原型链，它是子类创建的核心，决定了子类的数据类型，是连接子类原型链的桥梁。</p>
+<p>在原型对象上定义方法和属性的目的是为了被子类继承和使用。</p>
+<p>显式原型的作用：用来实现基于原型的继承与属性的共享。</p>
+<h2 id="获取对象的原型"><a href="#获取对象的原型" class="headerlink" title="获取对象的原型"></a>获取对象的原型</h2><pre><code class="javascript">dog1.__proto__  //不推荐  
+Object.getPrototypeOf(dog1) === Dog.prototype   //推荐
+</code></pre>
+<h2 id="原型链"><a href="#原型链" class="headerlink" title="原型链"></a>原型链</h2><p>原型链的存在，主要是为了实现对象的<code>继承</code>。</p>
+<p>原型链基本思路（图解）：</p>
+<p><img src="http://img.blog.csdn.net/20161006191631510?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQv/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt=""></p>
+<h2 id="原型链查找"><a href="#原型链查找" class="headerlink" title="原型链查找"></a>原型链查找</h2><p><strong>调用一个对象的属性或方法，一但这个对象中没有，就去这个对象的<em>proto</em>中查找。这个对象的<em>proto</em>指向自己构造函数的prototype属性</strong></p>
+<p>关键的点在于找到创建这个对象的构造函数，本质上只有一种方式，也就是通过new来创建。</p>
+<p>由Object.create(o)创建出来的对象它的隐式原型指向o。</p>
+<h2 id="new"><a href="#new" class="headerlink" title="new"></a>new</h2><p>JS在通过new 表达式创建一个对象的时候，通常会把父类的prototype赋值给新对象的<strong>proto</strong>属性</p>
+<p>当使用<code>new</code>去调用构造函数时，相当于执行了</p>
+<pre><code class="javascript">var o = {};
+o.__proto__ = F.prototype;
+F.call(o);
+</code></pre>
+<h2 id="constructor-NaN"><a href="#constructor-NaN" class="headerlink" title="constructor"></a>constructor</h2><p>原型对象prototype上都有个预定义的<code>constructor</code>属性，用来引用它的函数对象。这是一种循环引用。</p>
+<pre><code class="javascript">function F(){};
+F.prototype.constructor === F;
+</code></pre>
+<p>在实际运用中，经常会有下列的写法</p>
+<pre><code class="javascript">function F(){};
+F.prototype = {
+    constructor : F,
+    doSomething : function(){}
+}
+</code></pre>
+<p>这里要加<code>constructor</code>是因为重写了原型对象，constructor属性就消失了，需要自己手动补上。</p>
+<p>实例对象的constructor属性指向其构造函数, 因此</p>
+<pre><code class="javascript">Object.constructor === Function;
+Function.constructor === Function;
+</code></pre>
+<p>由 Object.create() 创建出来的对象没有构造函数</p>
+<h1 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h1><h2 id="Case1-Function-prototype没有prototype属性"><a href="#Case1-Function-prototype没有prototype属性" class="headerlink" title="Case1.Function.prototype没有prototype属性"></a>Case1.Function.prototype没有prototype属性</h2><p><strong>原型对象属于普通对象。</strong>Function.prototype是个例外，它是原型对象，却又是函数对象，作为一个函数对象，它又没有prototype属性。</p>
+<pre><code class="javascript">function person(){};  
+
+console.log(typeof person.prototype) //Object  
+console.log(typeof Object.prototype) // Object  
+console.log(typeof Function.prototype) // 特殊 Function  
+console.log(typeof Function.prototype.prototype) //undefined 函数对象却没有prototype属性
+</code></pre>
+<h2 id="Case2-构造函数的显示原型的隐式原型"><a href="#Case2-构造函数的显示原型的隐式原型" class="headerlink" title="Case2.构造函数的显示原型的隐式原型"></a>Case2.构造函数的显示原型的隐式原型</h2><p>内建对象(built-in object)比如Array()，Array.prototype.<strong>proto</strong>指向什么？</p>
+<p>Array.prototype.<strong>proto</strong> === Object.prototype，或者也可以这么理解，所有的内建对象都是由Object()创建而来。</p>
+<p>Array是函数对象，是Function的实例对象，Array是通过new Function创建出来的。因为Array是Function的实例，所以Array.<strong>proto</strong> ===  Function.prototype</p>
+<h2 id="Case3-instanceof"><a href="#Case3-instanceof" class="headerlink" title="Case3.instanceof"></a>Case3.instanceof</h2><h3 id="解释1"><a href="#解释1" class="headerlink" title="解释1"></a>解释1</h3><p>instanceof 操作符的内部实现机制和隐式原型、显式原型有直接的关系。instanceof的左值一般是一个对象，右值一般是一个构造函数，用来判断左值是否是右值的实例。</p>
+<p>内部实现原理：</p>
+<pre><code class="javascript">//设 L instanceof R 
+//通过判断
+ L.__proto__.__proto__ ..... === R.prototype ？
+//最终返回true or false
+</code></pre>
+<h3 id="解释2"><a href="#解释2" class="headerlink" title="解释2"></a>解释2</h3><p><code>A instanceof B</code> 是在 A 的原型链里查找 B 的 constructor，找到返回 true，找不到返回 false。</p>
+<pre><code class="javascript">Function instanceof Object === true
+Object instanceof Function === true
+
+Object.__proto__ === Function.prototype; // true
+Object.__proto__ == Object.prototype; // false
+Function.prototype.__proto__ === Object.prototype; // true
+</code></pre>
+<h2 id="Case4-Function、Object关系"><a href="#Case4-Function、Object关系" class="headerlink" title="Case4.Function、Object关系"></a>Case4.Function、Object关系</h2><p><code>Object.prototype</code>是所有对象的根源<br><code>Object.prototype</code>只是挂载在<code>Object</code>函数对象上<br><code>Function.prototype</code>构造自<code>Object.prototype</code><br><code>Function.prototype</code> 只是挂载在<code>Function</code>函数对象上<br><code>Object</code>函数和<code>Function</code>函数构造自<code>Function.prototype</code><br><code>Object</code>字面量对象{}构造自<code>Object.prototype</code><br><code>Object</code>字面量对象<code>{}.__proto__</code>（原构造对象） === <code>Object.prototype</code><br><code>Function</code>函数 和 自定义函数 都继承（构造而成）自<code>Function.prototype</code><br><code>Function.prototype</code> 和 <code>Function.__proto__</code>（原构造对象）相同<br>所以，是先有的<code>Object.prototype</code>,再有的<code>Function.prototype</code>，再有的<code>Function</code>和<code>Object</code>函数对象</p>
+<h2 id="Case5-Function、Object、Prototype、proto内存关系图"><a href="#Case5-Function、Object、Prototype、proto内存关系图" class="headerlink" title="Case5.Function、Object、Prototype、proto内存关系图"></a>Case5.Function、Object、Prototype、<strong>proto</strong>内存关系图</h2><ol>
+<li>所有对象所有对象，包括函数对象的原型链最终都指向了Object.prototype，而Object.prototype.<strong>proto</strong>===null，原型链至此结束。</li>
+<li>Animal.prototype是一个普通对象。</li>
+<li>Object是一个函数对象，也是Function构造的，Object.prototype是一个普通对象。</li>
+<li>Object.prototype.<strong>type</strong>指向null。</li>
+<li>Function.prototype是一个函数对象，前面说函数对象都有一个显示的prototype属性，但是Function.prototype却没有prototype属性，即Function.prototype.prototype===undefined，所有Function.prototype函数对象是一个特例，没有prototype属性。</li>
+<li>Object虽是Function构造的一个函数对象，但是Object.prototype没有指向Function.prototype，即Object.prototype!==Function.prototype。</li>
+</ol>
+<p><img src="http://images.blogjava.net/blogjava_net/heavensay/web-front/8199006.png" alt=""></p>
+<h2 id="Case6-经典原型链"><a href="#Case6-经典原型链" class="headerlink" title="Case6.经典原型链"></a>Case6.经典原型链</h2><p><img src="https://pic2.zhimg.com/50/e83bca5f1d1e6bf359d1f75727968c11_hd.jpg" alt=""></p>
+<h2 id="Case7-《JavaScript-世界万物诞生记》"><a href="#Case7-《JavaScript-世界万物诞生记》" class="headerlink" title="Case7.《JavaScript 世界万物诞生记》"></a>Case7.《JavaScript 世界万物诞生记》</h2><p>Object作为一个机器可以看做是有由Function制造出来的，而Function作为一个对象可以看做是由Object制造出来的。</p>
+<p><img src="https://pic2.zhimg.com/v2-52726a7f86690c0663452112d66836c5_r.png" alt=""></p>
+<h2 id="Case8-《什么是-JS-原型链？》"><a href="#Case8-《什么是-JS-原型链？》" class="headerlink" title="Case8.《什么是 JS 原型链？》"></a>Case8.《什么是 JS 原型链？》</h2><blockquote>
+<p>这篇流程讲的很清晰</p>
+</blockquote>
+<pre><code class="javascript">var obj = { name: &#39;obj&#39; }
+</code></pre>
+<h3 id="valueOf-toString-constructor-是怎么来？"><a href="#valueOf-toString-constructor-是怎么来？" class="headerlink" title="valueOf / toString / constructor 是怎么来？"></a>valueOf / toString / constructor 是怎么来？</h3><ol>
+<li>obj.<strong>proto</strong> 有很多属性，包括 valueOf、toString、constructor 等</li>
+<li>obj.<strong>proto</strong> 其实也有一个叫做 <strong>proto</strong> 的属性，值为 null</li>
+</ol>
+<h3 id="共享原型链"><a href="#共享原型链" class="headerlink" title="共享原型链"></a>共享原型链</h3><p>如果我们改写 obj2.<strong>proto</strong>.toString，那么 obj.toString 其实也会变！</p>
+<h3 id="差异化"><a href="#差异化" class="headerlink" title="差异化"></a>差异化</h3><p>如果我们想让 obj.toString 和 obj2.toString 的行为不同怎么做呢？</p>
+<p>直接赋值就好了：</p>
+<pre><code class="javascript">obj.toString = function(){ return &#39;新的 toString 方法&#39; }
+</code></pre>
+<h3 id="总结-1"><a href="#总结-1" class="headerlink" title="总结"></a>总结</h3><p>「读」属性时会<strong>沿着原型链搜索</strong>。</p>
+<p>「新增」属性时<strong>不会</strong>去看原型链（但是如果你给这个属性加了一些配置，则不一样）。</p>
+<h2 id="Case9-《最详尽的-JS-原型与原型链终极详解》"><a href="#Case9-《最详尽的-JS-原型与原型链终极详解》" class="headerlink" title="Case9 《最详尽的 JS 原型与原型链终极详解》"></a>Case9 《最详尽的 JS 原型与原型链终极详解》</h2><h3 id="一-普通对象与函数对象"><a href="#一-普通对象与函数对象" class="headerlink" title="一. 普通对象与函数对象"></a>一. 普通对象与函数对象</h3><p>对象也有区别，大致可以分为两类，即：普通对象（Object）和函数对象（Function）。<strong>凡是通过 new Function() 创建的对象都是函数对象，其他的都是普通对象。f1,f2,归根结底都是通过 new Function()的方式进行创建的。Function Object 也都是通过 New Function()创建的</strong>。</p>
+<h3 id="二-构造函数"><a href="#二-构造函数" class="headerlink" title="二. 构造函数"></a>二. 构造函数</h3><p><strong>实例的构造函数属性（constructor）指向构造函数。</strong></p>
+<h3 id="三-原型对象"><a href="#三-原型对象" class="headerlink" title="三. 原型对象"></a>三. 原型对象</h3><p>在默认情况下，所有的<strong>原型对象</strong>都会<strong>自动获得</strong>一个 <code>constructor</code>（构造函数）属性，这个属性（是一个指针）指向 <code>prototype</code> 属性所在的函数,即：<code>Person.prototype.constructor == Person</code></p>
+<p><strong>结论：原型对象（Person.prototype）是 构造函数（Person）的一个实例。</strong></p>
+<p><code>Function.prototype</code> 为什么是函数对象呢？</p>
+<pre><code class="javascript"> var A = new Function ();
+ Function.prototype = A;
+</code></pre>
+<p><strong>凡是通过 new Function( ) 产生的对象都是函数对象</strong>。因为 A 是函数对象，所以<code>Function.prototype</code> 是函数对象。</p>
+<h3 id="六-原型链"><a href="#六-原型链" class="headerlink" title="六. 原型链"></a>六. 原型链</h3><p>Person.prototype.<strong>proto</strong> 是什么？</p>
+<p><code>Person.prototype</code> 是一个普通对象，我们无需关注它有哪些属性，只要记住它是一个普通对象。所以 <code>Person.prototype.__proto__ === Object.prototype</code></p>
+<h3 id="七-函数对象"><a href="#七-函数对象" class="headerlink" title="七. 函数对象"></a>七. 函数对象</h3><h5 id="所有函数对象的proto都指向Function-prototype，它是一个空函数"><a href="#所有函数对象的proto都指向Function-prototype，它是一个空函数" class="headerlink" title="所有函数对象的proto都指向Function.prototype，它是一个空函数"></a>所有<em>函数对象</em>的<strong>proto</strong>都指向Function.prototype，它是一个空函数</h5><p><strong>所有的构造器都来自于 Function.prototype，甚至包括根构造器Object及Function自身。所有构造器都继承了·Function.prototype·的属性及方法。如length、call、apply、bind</strong></p>
+<p><code>Function.prototype</code>也是唯一一个<code>typeof XXX.prototype</code>为 <code>function</code>的<code>prototype</code>。其它的构造器的<code>prototype</code>都是一个对象</p>
+<p><code>Function.prototype</code>的<code>__proto__</code>是谁呢？</p>
+<pre><code class="javascript">Function.prototype.__proto__ === Object.prototype
+</code></pre>
+<p>这说明所有的构造器也都是一个普通 JS 对象，可以给构造器添加/删除属性等。同时它也继承了Object.prototype上的所有方法：toString、valueOf、hasOwnProperty等。</p>
+<h3 id="八-Prototype"><a href="#八-Prototype" class="headerlink" title="八. Prototype"></a>八. Prototype</h3><p>可以用一个 ES5 提供的新方法：<code>Object.getOwnPropertyNames</code>获取所有（<strong>包括不可枚举的属性</strong>）的属性名<strong>不包括 prototy 中的属性</strong>，返回一个数组</p>
+<h1 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h1><ul>
+<li><a href="http://blog.csdn.net/sinat_21274091/article/details/52741788" target="_blank" rel="external">JS重点整理之JS原型链彻底搞清楚</a></li>
+<li><a href="http://www.blogjava.net/heavensay/archive/2013/10/20/405440.html" target="_blank" rel="external">Js中Prototype、<strong>proto</strong>、Constructor、Object、Function关系介绍</a></li>
+<li><a href="https://www.zhihu.com/question/34183746" target="_blank" rel="external">js中<strong>proto</strong>和prototype的区别和关系？</a></li>
+<li><a href="https://segmentfault.com/a/1190000005363885" target="_blank" rel="external">JavaScript之原型链</a></li>
+<li><a href="https://segmentfault.com/q/1010000000249140" target="_blank" rel="external">Function为何是Object的实例呢</a></li>
+<li><a href="https://segmentfault.com/q/1010000002736664" target="_blank" rel="external">js 原型的问题 Object 和 Function 到底是什么关系？</a></li>
+<li><a href="https://zhuanlan.zhihu.com/p/22989691" target="_blank" rel="external">JavaScript 世界万物诞生记</a></li>
+<li><a href="https://zhuanlan.zhihu.com/p/23090041?refer=study-fe" target="_blank" rel="external">「每日一题」什么是 JS 原型链？</a></li>
+<li><a href="http://www.jianshu.com/p/dee9f8b14771" target="_blank" rel="external">最详尽的 JS 原型与原型链终极详解，没有「可能是」</a></li>
+</ul>
+]]></content>
       
         <categories>
             
@@ -810,160 +1271,6 @@ Response.Flush()
             <tag> HTML </tag>
             
             <tag> HTML5 </tag>
-            
-        </tags>
-        
-    </entry>
-    
-    <entry>
-      <title><![CDATA[原型与原型链]]></title>
-      <url>/2017/11/01/Prototype/</url>
-      <content type="html"><![CDATA[<p>本文介绍原型和原型链的概念，参考多篇热门博客，持续总结和更新思想。</p>
-<a id="more"></a>
-<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><h2 id="proto"><a href="#proto" class="headerlink" title="_proto_"></a><code>_proto_</code></h2><p>任何一个对象Object都有<em>proto</em>，它是每一个对象的私有属性，是天生自带的。</p>
-<p>又叫做隐式原型</p>
-<p>JavaScript中任意对象都有一个内置属性[[prototype]]，在ES5之前没有标准的方法访问这个内置属性，但是大多数浏览器都支持通过<code>__proto__</code>来访问。ES5中有了对于这个内置属性标准的Get方法Object.getPrototypeOf().</p>
-<p>Note: Object.prototype 这个对象是个例外，它的<code>__proto__</code>值为null </p>
-<p>隐式原型指向<strong>创建</strong>这个对象的函数(constructor)的prototype</p>
-<p>一个对象的<strong>proto</strong>记录着自己的原型链，决定了自身的数据类型，改变<strong>proto</strong>就等于改变对象的数据类型。</p>
-<p>隐式原型的作用：构成原型链，同样用于实现基于原型的继承。</p>
-<h2 id="prototype"><a href="#prototype" class="headerlink" title="prototype"></a><code>prototype</code></h2><p><strong>原型对象</strong>。不是任何对象都有prototype，只有构造函数有prototype，是后天赋予的。</p>
-<p>每创建一个函数都会有一个prototype属性，这个属性是一个指针，<strong>指向一个对象（通过该构造函数创建实例对象的原型对象）</strong>。</p>
-<p>原型对象是包含特定类型的所有实例共享的属性和方法。原型对象的好处是，可以让所有实例对象共享它所包含的属性和方法。</p>
-<p>原型对象属于普通对象。</p>
-<p>又叫做显式原型。</p>
-<p><strong>Note</strong>：通过Function.prototype.bind方法构造出来的函数是个例外，它没有prototype属性</p>
-<p>函数的prototype不属于自身的原型链，它是子类创建的核心，决定了子类的数据类型，是连接子类原型链的桥梁。</p>
-<p>在原型对象上定义方法和属性的目的是为了被子类继承和使用。</p>
-<p>显式原型的作用：用来实现基于原型的继承与属性的共享。</p>
-<h2 id="获取对象的原型"><a href="#获取对象的原型" class="headerlink" title="获取对象的原型"></a>获取对象的原型</h2><pre><code class="javascript">dog1.__proto__  //不推荐  
-Object.getPrototypeOf(dog1) === Dog.prototype   //推荐
-</code></pre>
-<h2 id="原型链"><a href="#原型链" class="headerlink" title="原型链"></a>原型链</h2><p>原型链的存在，主要是为了实现对象的<code>继承</code>。</p>
-<p>原型链基本思路（图解）：</p>
-<p><img src="http://img.blog.csdn.net/20161006191631510?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQv/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt=""></p>
-<h2 id="原型链查找"><a href="#原型链查找" class="headerlink" title="原型链查找"></a>原型链查找</h2><p><strong>调用一个对象的属性或方法，一但这个对象中没有，就去这个对象的<em>proto</em>中查找。这个对象的<em>proto</em>指向自己构造函数的prototype属性</strong></p>
-<p>关键的点在于找到创建这个对象的构造函数，本质上只有一种方式，也就是通过new来创建。</p>
-<p>由Object.create(o)创建出来的对象它的隐式原型指向o。</p>
-<h2 id="new"><a href="#new" class="headerlink" title="new"></a>new</h2><p>JS在通过new 表达式创建一个对象的时候，通常会把父类的prototype赋值给新对象的<strong>proto</strong>属性</p>
-<p>当使用<code>new</code>去调用构造函数时，相当于执行了</p>
-<pre><code class="javascript">var o = {};
-o.__proto__ = F.prototype;
-F.call(o);
-</code></pre>
-<h2 id="constructor-NaN"><a href="#constructor-NaN" class="headerlink" title="constructor"></a>constructor</h2><p>原型对象prototype上都有个预定义的<code>constructor</code>属性，用来引用它的函数对象。这是一种循环引用。</p>
-<pre><code class="javascript">function F(){};
-F.prototype.constructor === F;
-</code></pre>
-<p>在实际运用中，经常会有下列的写法</p>
-<pre><code class="javascript">function F(){};
-F.prototype = {
-    constructor : F,
-    doSomething : function(){}
-}
-</code></pre>
-<p>这里要加<code>constructor</code>是因为重写了原型对象，constructor属性就消失了，需要自己手动补上。</p>
-<p>实例对象的constructor属性指向其构造函数, 因此</p>
-<pre><code class="javascript">Object.constructor === Function;
-Function.constructor === Function;
-</code></pre>
-<p>由 Object.create() 创建出来的对象没有构造函数</p>
-<h1 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h1><h2 id="Case1-Function-prototype没有prototype属性"><a href="#Case1-Function-prototype没有prototype属性" class="headerlink" title="Case1.Function.prototype没有prototype属性"></a>Case1.Function.prototype没有prototype属性</h2><p><strong>原型对象属于普通对象。</strong>Function.prototype是个例外，它是原型对象，却又是函数对象，作为一个函数对象，它又没有prototype属性。</p>
-<pre><code class="javascript">function person(){};  
-
-console.log(typeof person.prototype) //Object  
-console.log(typeof Object.prototype) // Object  
-console.log(typeof Function.prototype) // 特殊 Function  
-console.log(typeof Function.prototype.prototype) //undefined 函数对象却没有prototype属性
-</code></pre>
-<h2 id="Case2-构造函数的显示原型的隐式原型"><a href="#Case2-构造函数的显示原型的隐式原型" class="headerlink" title="Case2.构造函数的显示原型的隐式原型"></a>Case2.构造函数的显示原型的隐式原型</h2><p>内建对象(built-in object)比如Array()，Array.prototype.<strong>proto</strong>指向什么？</p>
-<p>Array.prototype.<strong>proto</strong> === Object.prototype，或者也可以这么理解，所有的内建对象都是由Object()创建而来。</p>
-<p>Array是函数对象，是Function的实例对象，Array是通过new Function创建出来的。因为Array是Function的实例，所以Array.<strong>proto</strong> ===  Function.prototype</p>
-<h2 id="Case3-instanceof"><a href="#Case3-instanceof" class="headerlink" title="Case3.instanceof"></a>Case3.instanceof</h2><h3 id="解释1"><a href="#解释1" class="headerlink" title="解释1"></a>解释1</h3><p>instanceof 操作符的内部实现机制和隐式原型、显式原型有直接的关系。instanceof的左值一般是一个对象，右值一般是一个构造函数，用来判断左值是否是右值的实例。</p>
-<p>内部实现原理：</p>
-<pre><code class="javascript">//设 L instanceof R 
-//通过判断
- L.__proto__.__proto__ ..... === R.prototype ？
-//最终返回true or false
-</code></pre>
-<h3 id="解释2"><a href="#解释2" class="headerlink" title="解释2"></a>解释2</h3><p><code>A instanceof B</code> 是在 A 的原型链里查找 B 的 constructor，找到返回 true，找不到返回 false。</p>
-<pre><code class="javascript">Function instanceof Object === true
-Object instanceof Function === true
-
-Object.__proto__ === Function.prototype; // true
-Object.__proto__ == Object.prototype; // false
-Function.prototype.__proto__ === Object.prototype; // true
-</code></pre>
-<h2 id="Case4-Function、Object关系"><a href="#Case4-Function、Object关系" class="headerlink" title="Case4.Function、Object关系"></a>Case4.Function、Object关系</h2><p><code>Object.prototype</code>是所有对象的根源<br><code>Object.prototype</code>只是挂载在<code>Object</code>函数对象上<br><code>Function.prototype</code>构造自<code>Object.prototype</code><br><code>Function.prototype</code> 只是挂载在<code>Function</code>函数对象上<br><code>Object</code>函数和<code>Function</code>函数构造自<code>Function.prototype</code><br><code>Object</code>字面量对象{}构造自<code>Object.prototype</code><br><code>Object</code>字面量对象<code>{}.__proto__</code>（原构造对象） === <code>Object.prototype</code><br><code>Function</code>函数 和 自定义函数 都继承（构造而成）自<code>Function.prototype</code><br><code>Function.prototype</code> 和 <code>Function.__proto__</code>（原构造对象）相同<br>所以，是先有的<code>Object.prototype</code>,再有的<code>Function.prototype</code>，再有的<code>Function</code>和<code>Object</code>函数对象</p>
-<h2 id="Case5-Function、Object、Prototype、proto内存关系图"><a href="#Case5-Function、Object、Prototype、proto内存关系图" class="headerlink" title="Case5.Function、Object、Prototype、proto内存关系图"></a>Case5.Function、Object、Prototype、<strong>proto</strong>内存关系图</h2><ol>
-<li>所有对象所有对象，包括函数对象的原型链最终都指向了Object.prototype，而Object.prototype.<strong>proto</strong>===null，原型链至此结束。</li>
-<li>Animal.prototype是一个普通对象。</li>
-<li>Object是一个函数对象，也是Function构造的，Object.prototype是一个普通对象。</li>
-<li>Object.prototype.<strong>type</strong>指向null。</li>
-<li>Function.prototype是一个函数对象，前面说函数对象都有一个显示的prototype属性，但是Function.prototype却没有prototype属性，即Function.prototype.prototype===undefined，所有Function.prototype函数对象是一个特例，没有prototype属性。</li>
-<li>Object虽是Function构造的一个函数对象，但是Object.prototype没有指向Function.prototype，即Object.prototype!==Function.prototype。</li>
-</ol>
-<p><img src="http://images.blogjava.net/blogjava_net/heavensay/web-front/8199006.png" alt=""></p>
-<h2 id="Case6-经典原型链"><a href="#Case6-经典原型链" class="headerlink" title="Case6.经典原型链"></a>Case6.经典原型链</h2><p><img src="https://pic2.zhimg.com/50/e83bca5f1d1e6bf359d1f75727968c11_hd.jpg" alt=""></p>
-<h2 id="Case7-《JavaScript-世界万物诞生记》"><a href="#Case7-《JavaScript-世界万物诞生记》" class="headerlink" title="Case7.《JavaScript 世界万物诞生记》"></a>Case7.《JavaScript 世界万物诞生记》</h2><p>Object作为一个机器可以看做是有由Function制造出来的，而Function作为一个对象可以看做是由Object制造出来的。</p>
-<p><img src="https://pic2.zhimg.com/v2-52726a7f86690c0663452112d66836c5_r.png" alt=""></p>
-<h2 id="Case8-《什么是-JS-原型链？》"><a href="#Case8-《什么是-JS-原型链？》" class="headerlink" title="Case8.《什么是 JS 原型链？》"></a>Case8.《什么是 JS 原型链？》</h2><blockquote>
-<p>这篇流程讲的很清晰</p>
-</blockquote>
-<pre><code class="javascript">var obj = { name: &#39;obj&#39; }
-</code></pre>
-<h3 id="valueOf-toString-constructor-是怎么来？"><a href="#valueOf-toString-constructor-是怎么来？" class="headerlink" title="valueOf / toString / constructor 是怎么来？"></a>valueOf / toString / constructor 是怎么来？</h3><ol>
-<li>obj.<strong>proto</strong> 有很多属性，包括 valueOf、toString、constructor 等</li>
-<li>obj.<strong>proto</strong> 其实也有一个叫做 <strong>proto</strong> 的属性，值为 null</li>
-</ol>
-<h3 id="共享原型链"><a href="#共享原型链" class="headerlink" title="共享原型链"></a>共享原型链</h3><p>如果我们改写 obj2.<strong>proto</strong>.toString，那么 obj.toString 其实也会变！</p>
-<h3 id="差异化"><a href="#差异化" class="headerlink" title="差异化"></a>差异化</h3><p>如果我们想让 obj.toString 和 obj2.toString 的行为不同怎么做呢？</p>
-<p>直接赋值就好了：</p>
-<pre><code class="javascript">obj.toString = function(){ return &#39;新的 toString 方法&#39; }
-</code></pre>
-<h3 id="总结-1"><a href="#总结-1" class="headerlink" title="总结"></a>总结</h3><p>「读」属性时会<strong>沿着原型链搜索</strong>。</p>
-<p>「新增」属性时<strong>不会</strong>去看原型链（但是如果你给这个属性加了一些配置，则不一样）。</p>
-<h2 id="Case9-《最详尽的-JS-原型与原型链终极详解》"><a href="#Case9-《最详尽的-JS-原型与原型链终极详解》" class="headerlink" title="Case9 《最详尽的 JS 原型与原型链终极详解》"></a>Case9 《最详尽的 JS 原型与原型链终极详解》</h2><h3 id="一-普通对象与函数对象"><a href="#一-普通对象与函数对象" class="headerlink" title="一. 普通对象与函数对象"></a>一. 普通对象与函数对象</h3><p>对象也有区别，大致可以分为两类，即：普通对象（Object）和函数对象（Function）。<strong>凡是通过 new Function() 创建的对象都是函数对象，其他的都是普通对象。f1,f2,归根结底都是通过 new Function()的方式进行创建的。Function Object 也都是通过 New Function()创建的</strong>。</p>
-<h3 id="二-构造函数"><a href="#二-构造函数" class="headerlink" title="二. 构造函数"></a>二. 构造函数</h3><p><strong>实例的构造函数属性（constructor）指向构造函数。</strong></p>
-<h3 id="三-原型对象"><a href="#三-原型对象" class="headerlink" title="三. 原型对象"></a>三. 原型对象</h3><p>在默认情况下，所有的<strong>原型对象</strong>都会<strong>自动获得</strong>一个 <code>constructor</code>（构造函数）属性，这个属性（是一个指针）指向 <code>prototype</code> 属性所在的函数,即：<code>Person.prototype.constructor == Person</code></p>
-<p><strong>结论：原型对象（Person.prototype）是 构造函数（Person）的一个实例。</strong></p>
-<p><code>Function.prototype</code> 为什么是函数对象呢？</p>
-<pre><code class="javascript"> var A = new Function ();
- Function.prototype = A;
-</code></pre>
-<p><strong>凡是通过 new Function( ) 产生的对象都是函数对象</strong>。因为 A 是函数对象，所以<code>Function.prototype</code> 是函数对象。</p>
-<h3 id="六-原型链"><a href="#六-原型链" class="headerlink" title="六. 原型链"></a>六. 原型链</h3><p>Person.prototype.<strong>proto</strong> 是什么？</p>
-<p><code>Person.prototype</code> 是一个普通对象，我们无需关注它有哪些属性，只要记住它是一个普通对象。所以 <code>Person.prototype.__proto__ === Object.prototype</code></p>
-<h3 id="七-函数对象"><a href="#七-函数对象" class="headerlink" title="七. 函数对象"></a>七. 函数对象</h3><h5 id="所有函数对象的proto都指向Function-prototype，它是一个空函数"><a href="#所有函数对象的proto都指向Function-prototype，它是一个空函数" class="headerlink" title="所有函数对象的proto都指向Function.prototype，它是一个空函数"></a>所有<em>函数对象</em>的<strong>proto</strong>都指向Function.prototype，它是一个空函数</h5><p><strong>所有的构造器都来自于 Function.prototype，甚至包括根构造器Object及Function自身。所有构造器都继承了·Function.prototype·的属性及方法。如length、call、apply、bind</strong></p>
-<p><code>Function.prototype</code>也是唯一一个<code>typeof XXX.prototype</code>为 <code>function</code>的<code>prototype</code>。其它的构造器的<code>prototype</code>都是一个对象</p>
-<p><code>Function.prototype</code>的<code>__proto__</code>是谁呢？</p>
-<pre><code class="javascript">Function.prototype.__proto__ === Object.prototype
-</code></pre>
-<p>这说明所有的构造器也都是一个普通 JS 对象，可以给构造器添加/删除属性等。同时它也继承了Object.prototype上的所有方法：toString、valueOf、hasOwnProperty等。</p>
-<h3 id="八-Prototype"><a href="#八-Prototype" class="headerlink" title="八. Prototype"></a>八. Prototype</h3><p>可以用一个 ES5 提供的新方法：<code>Object.getOwnPropertyNames</code>获取所有（<strong>包括不可枚举的属性</strong>）的属性名<strong>不包括 prototy 中的属性</strong>，返回一个数组</p>
-<h1 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h1><ul>
-<li><a href="http://blog.csdn.net/sinat_21274091/article/details/52741788" target="_blank" rel="external">JS重点整理之JS原型链彻底搞清楚</a></li>
-<li><a href="http://www.blogjava.net/heavensay/archive/2013/10/20/405440.html" target="_blank" rel="external">Js中Prototype、<strong>proto</strong>、Constructor、Object、Function关系介绍</a></li>
-<li><a href="https://www.zhihu.com/question/34183746" target="_blank" rel="external">js中<strong>proto</strong>和prototype的区别和关系？</a></li>
-<li><a href="https://segmentfault.com/a/1190000005363885" target="_blank" rel="external">JavaScript之原型链</a></li>
-<li><a href="https://segmentfault.com/q/1010000000249140" target="_blank" rel="external">Function为何是Object的实例呢</a></li>
-<li><a href="https://segmentfault.com/q/1010000002736664" target="_blank" rel="external">js 原型的问题 Object 和 Function 到底是什么关系？</a></li>
-<li><a href="https://zhuanlan.zhihu.com/p/22989691" target="_blank" rel="external">JavaScript 世界万物诞生记</a></li>
-<li><a href="https://zhuanlan.zhihu.com/p/23090041?refer=study-fe" target="_blank" rel="external">「每日一题」什么是 JS 原型链？</a></li>
-<li><a href="http://www.jianshu.com/p/dee9f8b14771" target="_blank" rel="external">最详尽的 JS 原型与原型链终极详解，没有「可能是」</a></li>
-</ul>
-]]></content>
-      
-        <categories>
-            
-            <category> 技术栈 </category>
-            
-        </categories>
-        
-        
-        <tags>
-            
-            <tag> JavaScript </tag>
             
         </tags>
         
