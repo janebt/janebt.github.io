@@ -1866,9 +1866,9 @@ Response.Flush()
         
         <tags>
             
-            <tag> HTML </tag>
-            
             <tag> 前端 </tag>
+            
+            <tag> HTML </tag>
             
             <tag> HTML5 </tag>
             
@@ -2088,11 +2088,11 @@ Function.prototype.__proto__ === Object.prototype; // true
         
         <tags>
             
-            <tag> JavaScript </tag>
+            <tag> 前端 </tag>
             
             <tag> HTML </tag>
             
-            <tag> 前端 </tag>
+            <tag> JavaScript </tag>
             
             <tag> CSS </tag>
             
