@@ -1866,9 +1866,9 @@ Response.Flush()
         
         <tags>
             
-            <tag> HTML </tag>
-            
             <tag> 前端 </tag>
+            
+            <tag> HTML </tag>
             
             <tag> HTML5 </tag>
             
@@ -2046,7 +2046,7 @@ Function.prototype.__proto__ === Object.prototype; // true
 <p>Hack</p>
 <p>移动端适应</p>
 <h1 id="行为层-JavaScript"><a href="#行为层-JavaScript" class="headerlink" title="行为层(JavaScript)"></a>行为层(JavaScript)</h1><p><a href="https://janebt.github.io/2017/11/25/JsDataType/">数据类型</a></p>
-<p>面向对象</p>
+<p><a href="">面向对象</a></p>
 <p>作用域</p>
 <p><a href="https://janebt.github.io/2017/11/01/JSPrototype/">原型链</a></p>
 <p><a href="https://janebt.github.io/2017/11/25/JSInheritance/">继承、封装、多态</a></p>
@@ -2090,9 +2090,9 @@ Function.prototype.__proto__ === Object.prototype; // true
             
             <tag> JavaScript </tag>
             
-            <tag> HTML </tag>
-            
             <tag> 前端 </tag>
+            
+            <tag> HTML </tag>
             
             <tag> CSS </tag>
             
