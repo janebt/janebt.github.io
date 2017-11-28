@@ -37,7 +37,7 @@
     
     <title>
         
-            原型与原型链 | 
+            闭包 | 
         
         Jane&#39;s blog
     </title>
@@ -48,7 +48,7 @@
     <meta name="format-detection" content="telephone=no"/>
     <meta name="theme-color" content="#0097A7">
     <meta name="author" content="jane">
-    <meta name="description" itemprop="description" content="本文介绍原型和原型链的概念，参考多篇热门博客，持续总结和更新思想。">
+    <meta name="description" itemprop="description" content="本文介绍面向对象的">
     <meta name="keywords" content="jane, blog, hexo, Web, 博客,JavaScript">
 
     <!-- Import lsloader -->
@@ -290,26 +290,26 @@
     <!-- The Open Graph protocol -->
     <meta property="og:url" content="http://janebt.github.io">
     <meta property="og:type" content="blog">
-    <meta property="og:title" content="原型与原型链 | Jane&#39;s blog">
+    <meta property="og:title" content="闭包 | Jane&#39;s blog">
     <meta property="og:image" content="http://janebt.github.io/img/favicon.jpeg" />
-    <meta property="og:description" content="本文介绍原型和原型链的概念，参考多篇热门博客，持续总结和更新思想。">
+    <meta property="og:description" content="本文介绍面向对象的">
     <meta property="og:article:tag" content="JavaScript"> 
 
     
-        <meta property="article:published_time" content="Wed Nov 01 2017 11:33:34 GMT+0800" />
-        <meta property="article:modified_time" content="Wed Nov 01 2017 15:25:00 GMT+0800" />
+        <meta property="article:published_time" content="Tue Nov 28 2017 21:16:34 GMT+0800" />
+        <meta property="article:modified_time" content="Tue Nov 28 2017 21:16:34 GMT+0800" />
     
 
     <!-- The Twitter Card protocol -->
-    <meta name="twitter:title" content="原型与原型链 | Jane&#39;s blog">
-    <meta name="twitter:description" content="本文介绍原型和原型链的概念，参考多篇热门博客，持续总结和更新思想。">
+    <meta name="twitter:title" content="闭包 | Jane&#39;s blog">
+    <meta name="twitter:description" content="本文介绍面向对象的">
     <meta name="twitter:image" content="http://janebt.github.io/img/favicon.jpeg">
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:url" content="http://janebt.github.io" />
 
     <!-- Add canonical link for SEO -->
     
-        <link rel="canonical" href="http://janebt.github.io/2017/11/01/JSPrototype/index.html" />
+        <link rel="canonical" href="http://janebt.github.io/2017/11/28/闭包/index.html" />
     
 
     <!-- Structured-data for SEO -->
@@ -321,10 +321,10 @@
 {
     "@context": "https://schema.org",
     "@type": "BlogPosting",
-    "mainEntityOfPage": "http://janebt.github.io/2017/11/01/JSPrototype/index.html",
-    "headline": "原型与原型链",
-    "datePublished": "Wed Nov 01 2017 11:33:34 GMT+0800",
-    "dateModified": "Wed Nov 01 2017 15:25:00 GMT+0800",
+    "mainEntityOfPage": "http://janebt.github.io/2017/11/28/闭包/index.html",
+    "headline": "闭包",
+    "datePublished": "Tue Nov 28 2017 21:16:34 GMT+0800",
+    "dateModified": "Tue Nov 28 2017 21:16:34 GMT+0800",
     "author": {
         "@type": "Person",
         "name": "jane",
@@ -343,7 +343,7 @@
         }
     },
     "keywords": ",JavaScriptjane, blog, hexo, Web, 博客",
-    "description": "本文介绍原型和原型链的概念，参考多篇热门博客，持续总结和更新思想。",
+    "description": "本文介绍面向对象的",
 }
 </script>
 
@@ -553,141 +553,412 @@
     
         <div class="post-content_wrapper">
             <p class="post-title">
-                原型与原型链
+                闭包
             </p>
-            <p>本文介绍原型和原型链的概念，参考多篇热门博客，持续总结和更新思想。</p>
+            <p>本文介绍面向对象的</p>
 <a id="more"></a>
-<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><h2 id="proto"><a href="#proto" class="headerlink" title="_proto_"></a><code>_proto_</code></h2><p>任何一个对象Object都有<em>proto</em>，它是每一个对象的私有属性，是天生自带的。</p>
-<p>又叫做隐式原型</p>
-<p>JavaScript中任意对象都有一个内置属性[[prototype]]，在ES5之前没有标准的方法访问这个内置属性，但是大多数浏览器都支持通过<code>__proto__</code>来访问。ES5中有了对于这个内置属性标准的Get方法Object.getPrototypeOf().</p>
-<p>Note: Object.prototype 这个对象是个例外，它的<code>__proto__</code>值为null </p>
-<p>隐式原型指向<strong>创建</strong>这个对象的函数(constructor)的prototype</p>
-<p>一个对象的<strong>proto</strong>记录着自己的原型链，决定了自身的数据类型，改变<strong>proto</strong>就等于改变对象的数据类型。</p>
-<p>隐式原型的作用：构成原型链，同样用于实现基于原型的继承。</p>
-<h2 id="prototype"><a href="#prototype" class="headerlink" title="prototype"></a><code>prototype</code></h2><p><strong>原型对象</strong>。不是任何对象都有prototype，只有构造函数有prototype，是后天赋予的。</p>
-<p>每创建一个函数都会有一个prototype属性，这个属性是一个指针，<strong>指向一个对象（通过该构造函数创建实例对象的原型对象）</strong>。</p>
-<p>原型对象是包含特定类型的所有实例共享的属性和方法。原型对象的好处是，可以让所有实例对象共享它所包含的属性和方法。</p>
-<p>原型对象属于普通对象。</p>
-<p>又叫做显式原型。</p>
-<p><strong>Note</strong>：通过Function.prototype.bind方法构造出来的函数是个例外，它没有prototype属性</p>
-<p>函数的prototype不属于自身的原型链，它是子类创建的核心，决定了子类的数据类型，是连接子类原型链的桥梁。</p>
-<p>在原型对象上定义方法和属性的目的是为了被子类继承和使用。</p>
-<p>显式原型的作用：用来实现基于原型的继承与属性的共享。</p>
-<h2 id="获取对象的原型"><a href="#获取对象的原型" class="headerlink" title="获取对象的原型"></a>获取对象的原型</h2><pre><code class="javascript">dog1.__proto__  //不推荐  
-Object.getPrototypeOf(dog1) === Dog.prototype   //推荐
+<h1 id="闭包"><a href="#闭包" class="headerlink" title="闭包"></a>闭包</h1><h2 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h2><h3 id="闭包是什么？"><a href="#闭包是什么？" class="headerlink" title="闭包是什么？"></a>闭包是什么？</h3><p><strong>解释1</strong></p>
+<p><strong>闭包</strong>是有权限访问其他函数作用域内的变量的一个函数。——《JavaScript高级程序设计》</p>
+<p>这句话几个深入的问题：</p>
+<ul>
+<li>为什么其他非闭包的函数没有权限访问另一个函数的内部作用域</li>
+<li>为什么闭包有这个权限</li>
+<li>什么是函数作用域</li>
+</ul>
+<p>全面的回答：</p>
+<p>由于在JS中，变量的作用域属于函数作用域，在函数执行后作用域就会被清理、内存也随之回收，但是由于闭包是建立在一个函数内部的子函数，由于其可访问上级作用域的原因，即使上级函数执行完，作用域也不会随之销毁，这时的子函数——也就是闭包，便拥有了访问上级作用域中的变量的权限，即使上级函数执行完后作用域内的值也不会被销毁。</p>
+<p><strong>解释2</strong></p>
+<p><strong>要点</strong></p>
+<ul>
+<li><p>闭包就是函数的局部变量集合，只是这些局部变量在函数返回后会继续存在。</p>
+</li>
+<li><p>闭包就是就是函数的“堆栈”在函数返回后并不释放，我们也可以理解为这些函数堆栈并不在栈上分配而是在堆上分配</p>
+</li>
+<li>当在一个函数内定义另外一个函数就会产生闭包</li>
+</ul>
+<p><strong>解释3</strong></p>
+<p>官方对闭包的解释是：一个拥有许多变量和绑定了这些变量的环境的表达式（通常是一个函数），因而这些变量也是该表达式的一部分。</p>
+<p><strong>解释4</strong></p>
+<p><strong>「函数」和「函数内部能访问到的变量」（也叫环境）的总和，就是一个闭包。</strong></p>
+<h3 id="闭包解决了什么？"><a href="#闭包解决了什么？" class="headerlink" title="闭包解决了什么？"></a>闭包解决了什么？</h3><p>在本质上，闭包就是将函数内部和函数外部连接起来的一座桥梁。——阮一峰的博客《学习Javascript闭包（Closure）》</p>
+<p>由于闭包可以缓存上级作用域，那么就使得函数外部打破了“函数作用域”的束缚，可以访问函数内部的变量。以平时使用的Ajax成功回调为例，这里其实就是个闭包，由于上述的特性，回调就拥有了整个上级作用域的访问和操作能力，提高了极大的便利。开发者不用去写钩子函数来操作上级函数作用域内部的变量了。</p>
+<p>总结：</p>
+<ul>
+<li>使用闭包可以访问函数中的变量。</li>
+<li>可以使变量长期保存在内存中，生命周期比较长。</li>
+</ul>
+<h3 id="闭包有哪些应用场景"><a href="#闭包有哪些应用场景" class="headerlink" title="闭包有哪些应用场景"></a>闭包有哪些应用场景</h3><h4 id="Ans1"><a href="#Ans1" class="headerlink" title="Ans1"></a>Ans1</h4><p>闭包随处可见，一个Ajax请求的成功回调，一个事件绑定的回调方法，一个setTimeout的延时回调，或者一个函数内部返回另一个匿名函数，这些都是闭包。简而言之，无论使用何种方式对函数类型的值进行传递，当函数在别处被调用时都有闭包的身影。</p>
+<h4 id="Ans2"><a href="#Ans2" class="headerlink" title="Ans2"></a>Ans2</h4><p>比如模拟面向对象的代码风格；更优雅，更简洁的表达出代码；在某些方面提升代码的执行效率。</p>
+<h5 id="1-匿名自执行函数"><a href="#1-匿名自执行函数" class="headerlink" title="1.匿名自执行函数"></a>1.匿名自执行函数</h5><pre><code class="javascript">(function( window, undefined ) {
+    // code
+})(window);
 </code></pre>
-<h2 id="原型链"><a href="#原型链" class="headerlink" title="原型链"></a>原型链</h2><p>原型链的存在，主要是为了实现对象的<code>继承</code>。</p>
-<p>原型链基本思路（图解）：</p>
-<p><img src="http://img.blog.csdn.net/20161006191631510?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQv/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt=""></p>
-<h2 id="原型链查找"><a href="#原型链查找" class="headerlink" title="原型链查找"></a>原型链查找</h2><p><strong>调用一个对象的属性或方法，一但这个对象中没有，就去这个对象的<em>proto</em>中查找。这个对象的<em>proto</em>指向自己构造函数的prototype属性</strong></p>
-<p>关键的点在于找到创建这个对象的构造函数，本质上只有一种方式，也就是通过new来创建。</p>
-<p>由Object.create(o)创建出来的对象它的隐式原型指向o。</p>
-<h2 id="new"><a href="#new" class="headerlink" title="new"></a>new</h2><p>JS在通过new 表达式创建一个对象的时候，通常会把父类的prototype赋值给新对象的<strong>proto</strong>属性</p>
-<p>当使用<code>new</code>去调用构造函数时，相当于执行了</p>
-<pre><code class="javascript">var o = {};
-o.__proto__ = F.prototype;
-F.call(o);
+<p><strong>为何要传入window？</strong></p>
+<p>这样传入window可将其从全局变量变为局部变量，在函数作用域内可以直接访问到window，就不用将作用域链退回到顶层作用域了。</p>
+<p>在压缩代码时，可以对window进行优化。</p>
+<p><strong>增加参数undefined？</strong></p>
+<p>由于undefined在一些情况下有可能会被重写，为确保在自执行匿名函数里的undefined是”真的undefined”，就需要增加参数undefined。</p>
+<h5 id="2-结果缓存"><a href="#2-结果缓存" class="headerlink" title="2.结果缓存"></a>2.结果缓存</h5><p>需要将计算出来的值存储起来，当调用这个函数的时候，首先在缓存中查找，如果找不到，则进行计算，然后更新缓存并返回值，如果找到了，直接返回查找到的值即可。</p>
+<pre><code class="javascript">var CachedSearchBox = (function(){    
+    var cache = {},    
+       count = [];    
+    return {    
+       attachSearchBox : function(dsid){    
+           if(dsid in cache){//如果结果在缓存中    
+              return cache[dsid];//直接返回缓存中的对象    
+           }    
+           var fsb = new uikit.webctrl.SearchBox(dsid);//新建    
+           cache[dsid] = fsb;//更新缓存    
+           if(count.length &gt; 100){//保正缓存的大小&lt;=100    
+              delete cache[count.shift()];    
+           }    
+           return fsb;          
+       },    
+
+       clearSearchBox : function(dsid){    
+           if(dsid in cache){    
+              cache[dsid].clearSelection();      
+           }    
+       }    
+    };    
+})();    
+
+CachedSearchBox.attachSearchBox(&quot;input&quot;);
 </code></pre>
-<h2 id="constructor-NaN"><a href="#constructor-NaN" class="headerlink" title="constructor"></a>constructor</h2><p>原型对象prototype上都有个预定义的<code>constructor</code>属性，用来引用它的函数对象。这是一种循环引用。</p>
-<pre><code class="javascript">function F(){};
-F.prototype.constructor === F;
+<h5 id="3-封装"><a href="#3-封装" class="headerlink" title="3.封装"></a>3.封装</h5><pre><code class="javascript">var person = function(){    
+    //变量作用域为函数内部，外部无法访问    
+    var name = &quot;default&quot;;       
+
+    return {    
+       getName : function(){    
+           return name;    
+       },    
+       setName : function(newName){    
+           name = newName;    
+       }    
+    }    
+}();    
+
+print(person.name);//直接访问，结果为undefined    
+print(person.getName());    
+person.setName(&quot;abruzzi&quot;);    
+print(person.getName());    
+
+得到结果如下：  
+
+undefined  
+default  
+abruzzi
 </code></pre>
-<p>在实际运用中，经常会有下列的写法</p>
-<pre><code class="javascript">function F(){};
-F.prototype = {
-    constructor : F,
-    doSomething : function(){}
+<h5 id="4-实现类和继承"><a href="#4-实现类和继承" class="headerlink" title="4.实现类和继承"></a>4.实现类和继承</h5><pre><code class="javascript">function Person(){    
+    var name = &quot;default&quot;;       
+
+    return {    
+       getName : function(){    
+           return name;    
+       },    
+       setName : function(newName){    
+           name = newName;    
+       }    
+    }    
+};   
+
+var p = new Person();
+p.setName(&quot;Tom&quot;);
+alert(p.getName());
+
+var Jack = function(){};
+//继承自Person
+Jack.prototype = new Person();
+//添加私有方法
+Jack.prototype.Say = function(){
+    alert(&quot;Hello,my name is Jack&quot;);
+};
+var j = new Jack();
+j.setName(&quot;Jack&quot;);
+j.Say();
+alert(j.getName());
+</code></pre>
+<h4 id="Ans3"><a href="#Ans3" class="headerlink" title="Ans3"></a>Ans3</h4><p><strong>Singleton 单件：</strong></p>
+<pre><code class="javascript">var singleton = function () {
+    var privateVariable;
+    function privateFunction(x) {
+        ...privateVariable...
+    }
+
+    return {
+        firstMethod: function (a, b) {
+            ...privateVariable...
+        },
+        secondMethod: function (c) {
+            ...privateFunction()...
+        }
+    };
+}();
+</code></pre>
+<p>这个单件通过闭包来实现。通过闭包完成了私有的成员和方法的封装。匿名主函数返回一个对象。对象包含了两个方法，方法1可以方法私有变量，方法2访问内部私有函数。需要注意的地方是匿名主函数结束的地方的’()’，如果没有这个’()’就不能产生单件。因为匿名函数只能返回了唯一的对象，而且不能被其他地方调用。这个就是利用闭包产生单件的方法。</p>
+<h3 id="闭包有哪些问题"><a href="#闭包有哪些问题" class="headerlink" title="闭包有哪些问题"></a>闭包有哪些问题</h3><p><strong>原理比较深奥：</strong>要想完全掌握闭包，一定要清楚函数作用域、内存回收机制、作用域继承等，然而闭包是随处可见的，很可能开发者在不经意间就写出了一个闭包，理解不够深入的话很可能造成运行结果与预期不符。</p>
+<p><strong>代码难以维护：</strong>闭包内部是可以缓存上级作用域，而如果闭包又是异步执行的话，一定要清楚上级作用域都发生了什么，而这样就需要对代码的运行逻辑和JS运行机制相当了解才能弄明白究竟发生了什么。</p>
+<p><strong>内存泄露</strong>：闭包使用完了后，要立即释放资源，将引用变量指向null。</p>
+<p>注：闭包并不会引起内存泄漏，只是由于IE9之前的版本对JScript对象和COM对象使用不同的垃圾收集，从而导致内存无法进行回收，这是IE的问题。</p>
+<h2 id="理解"><a href="#理解" class="headerlink" title="理解"></a>理解</h2><h3 id="闭包理解"><a href="#闭包理解" class="headerlink" title="闭包理解"></a>闭包理解</h3><p><strong>Case</strong></p>
+<pre><code class="javascript">function f1(){
+　　　　var n=999;
+　　　　nAdd=function(){n+=1}
+　　　　function f2(){
+　　　　　　alert(n);
+　　　　}
+　　　　return f2;
+　　}
+　　var result=f1();
+　　result(); // 999
+　　nAdd();
+　　result(); // 1000
+</code></pre>
+<p>闭包是functional language里面的核心概念。</p>
+<p>当出现高阶嵌套函数的时候，编译器会做<code>closure convention闭包变换</code>，核心就是变量不在分配在stack上，而是分配在heap上。</p>
+<p>高阶嵌套函数：</p>
+<ul>
+<li>函数里面有定义的函数，这是嵌套</li>
+<li>高阶的原因是，函数可以所谓参数传递和返回，像我们熟悉的C语言。</li>
+</ul>
+<p>最后一点，n在堆上如何被销毁，这个工作是垃圾收集器负责。当n不在被任何闭包的env引用的时候，会被回收。</p>
+<h3 id="ECMAScript闭包模型"><a href="#ECMAScript闭包模型" class="headerlink" title="ECMAScript闭包模型"></a>ECMAScript闭包模型</h3><p>在ECMAscript的脚本的函数运行时，每个函数关联都有一个执行上下文场景(Execution Context) ，这个执行上下文场景中包含三个部分</p>
+<ul>
+<li>文法环境（The LexicalEnvironment）</li>
+<li>变量环境（The VariableEnvironment）</li>
+<li>this绑定</li>
+</ul>
+<p>文法环境中用于解析函数执行过程使用到的变量标识符。我们可以将文法环境想象成一个对象，该对象包含了两个重要组件，环境记录(Enviroment Recode)，和外部引用(指针)。环境记录包含包含了函数内部声明的局部变量和参数变量，外部引用指向了外部函数对象的上下文执行场景。全局的上下文场景中此引用值为NULL。这样的数据结构就构成了一个单向的链表，每个引用都指向外层的上下文场景。</p>
+<p><img src="https://coolshell.cn//wp-content/uploads/2012/03/closure.png" alt=""></p>
+<p>变量环境(The VariableEnvironment)和文法环境的作用基本相似，具体的区别请参看ECMAScript的规范文档。</p>
+<h3 id="闭包的几种写法和用法"><a href="#闭包的几种写法和用法" class="headerlink" title="闭包的几种写法和用法"></a>闭包的几种写法和用法</h3><pre><code class="javascript">//第1种写法  
+//只是给函数添加一些属性
+function Circle(r) {  
+      this.r = r;  
+}  
+Circle.PI = 3.14159;  
+Circle.prototype.area = function() {  
+  return Circle.PI * this.r * this.r;  
+}  
+
+var c = new Circle(1.0);     
+alert(c.area()); 
+
+
+//第2种写法
+//声明一个变量，将一个函数当作值赋给变量。常用
+var Circle = function() {  
+   var obj = new Object();  
+   obj.PI = 3.14159;  
+
+   obj.area = function( r ) {  
+       return this.PI * r * r;  
+   }  
+   return obj;  
+}  
+
+var c = new Circle();  
+alert( c.area( 1.0 ) );  
+
+
+//第3种写法  
+//new 一个对象，然后给对象添加属性和方法。
+var Circle = new Object();  
+Circle.PI = 3.14159;  
+Circle.Area = function( r ) {  
+       return this.PI * r * r;  
+}  
+
+alert( Circle.Area( 1.0 ) );  
+
+
+//第4种写法  
+//这种方法使用较多，也最为方便。var obj = {}就是声明一个空的对象。
+var Circle={  
+   &quot;PI&quot;:3.14159,  
+ &quot;area&quot;:function(r){  
+          return this.PI * r * r;  
+        }  
+};  
+alert( Circle.area(1.0) );  
+
+
+//第5种写法  
+var Circle = new Function(&quot;this.PI = 3.14159;this.area = function( r ) {return r*r*this.PI;}&quot;);  
+
+alert( (new Circle()).area(1.0) );
+</code></pre>
+<p>关于Prototype：</p>
+<p><strong>Case</strong></p>
+<pre><code class="javascript">var dom = function(){
+
+};
+
+dom.Show = function(){
+  alert(&quot;Show Message&quot;);
+};
+
+dom.prototype.Display = function(){
+  alert(&quot;Property Message&quot;);
+};
+
+dom.Display(); //error
+dom.Show();  
+var d = new dom();
+d.Display();
+d.Show(); //error
+</code></pre>
+<p><strong>1、不使用prototype属性定义的对象方法，是静态方法，只能直接用类名进行调用！另外，此静态方法中无法使用this变量来调用对象其他的属性！</strong><br><strong>2、使用prototype属性定义的对象方法，是非静态方法，只有在实例化后才能使用！其方法内部可以this来引用对象自身中的其他属性！</strong></p>
+<p><strong>Case</strong></p>
+<pre><code class="javascript">var html = {
+        Name:&#39;Object&#39;,
+        Success:function(){
+            this.Say = function(){
+                    alert(&quot;Hello,world&quot;);
+            };
+            alert(&quot;Obj Success&quot;);
+        }
+    };
+</code></pre>
+<p>怎么访问Success方法中的Say方法:</p>
+<pre><code class="javascript">var s = new html.Success();
+s.Say();
+
+//还可以写到外面
+html.Success.prototype.Show = function(){
+    alert(&quot;HaHa&quot;);
+};
+var s = new html.Success();
+s.Show();
+</code></pre>
+<h3 id="闭包的样列"><a href="#闭包的样列" class="headerlink" title="闭包的样列"></a>闭包的样列</h3><p><strong>Case1.闭包中局部变量是引用而非拷贝</strong></p>
+<p><strong>Case2.多个函数绑定同一个闭包，因为他们定义在同一个函数内。</strong></p>
+<pre><code class="javascript">function setupSomeGlobals() {
+    // Local variable that ends up within closure
+    var num = 666;
+    // Store some references to functions as global variables
+    gAlertNumber = function() { alert(num); }
+    gIncreaseNumber = function() { num++; }
+    gSetNumber = function(x) { num = x; }
+}
+setupSomeGlobals(); // 为三个全局变量赋值
+gAlertNumber(); //666
+gIncreaseNumber();
+gAlertNumber(); // 667
+gSetNumber(12);//
+gAlertNumber();//12
+</code></pre>
+<p><strong>Case3.当在一个循环中赋值函数时，这些函数将绑定同样的闭包</strong></p>
+<pre><code class="javascript">function buildList(list) {
+    var result = [];
+    for (var i = 0; i &lt; list.length; i++) {
+        var item = &#39;item&#39; + list[i];
+        result.push( function() {alert(item + &#39; &#39; + list[i])} );
+    }
+    return result;
+}
+
+function testList() {
+    var fnlist = buildList([1,2,3]);
+    // using j only to help prevent confusion - could use i
+    for (var j = 0; j &lt; fnlist.length; j++) {
+        fnlist[j]();
+    }
 }
 </code></pre>
-<p>这里要加<code>constructor</code>是因为重写了原型对象，constructor属性就消失了，需要自己手动补上。</p>
-<p>实例对象的constructor属性指向其构造函数, 因此</p>
-<pre><code class="javascript">Object.constructor === Function;
-Function.constructor === Function;
+<p>testList的执行结果是弹出item3 undefined窗口三次，因为这三个函数绑定了同一个闭包，而且item的值为最后计算的结果，但是当i跳出循环时i值为4，所以list[4]的结果为undefined.</p>
+<p><strong>Case4.外部函数所有局部变量都在闭包内，即使这个变量声明在内部函数定义之后。</strong></p>
+<pre><code class="javascript">function sayAlice() {
+    var sayAlert = function() { alert(alice); }
+    // Local variable that ends up within closure
+    var alice = &#39;Hello Alice&#39;;
+    return sayAlert;
+}
+var helloAlice=sayAlice();
+helloAlice();
 </code></pre>
-<p>由 Object.create() 创建出来的对象没有构造函数</p>
-<h1 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h1><h2 id="Case1-Function-prototype没有prototype属性"><a href="#Case1-Function-prototype没有prototype属性" class="headerlink" title="Case1.Function.prototype没有prototype属性"></a>Case1.Function.prototype没有prototype属性</h2><p><strong>原型对象属于普通对象。</strong>Function.prototype是个例外，它是原型对象，却又是函数对象，作为一个函数对象，它又没有prototype属性。</p>
-<pre><code class="javascript">function person(){};  
+<p><strong>Case5.每次函数调用的时候创建一个新的闭包</strong></p>
+<pre><code class="javascript">function newClosure(someNum, someRef) {
+    // Local variables that end up within closure
+    var num = someNum;
+    var anArray = [1,2,3];
+    var ref = someRef;
+    return function(x) {
+        num += x;
+        anArray.push(num);
+        alert(&#39;num: &#39; + num +
+        &#39;\nanArray &#39; + anArray.toString() +
+        &#39;\nref.someVar &#39; + ref.someVar);
+    }
+}
+closure1=newClosure(40,{someVar:&#39;closure 1&#39;});
+closure2=newClosure(1000,{someVar:&#39;closure 2&#39;});
 
-console.log(typeof person.prototype) //Object  
-console.log(typeof Object.prototype) // Object  
-console.log(typeof Function.prototype) // 特殊 Function  
-console.log(typeof Function.prototype.prototype) //undefined 函数对象却没有prototype属性
+closure1(5); // num:45 anArray[1,2,3,45] ref:&#39;someVar closure1&#39;
+closure2(-10);// num:990 anArray[1,2,3,990] ref:&#39;someVar closure2&#39;
 </code></pre>
-<h2 id="Case2-构造函数的显示原型的隐式原型"><a href="#Case2-构造函数的显示原型的隐式原型" class="headerlink" title="Case2.构造函数的显示原型的隐式原型"></a>Case2.构造函数的显示原型的隐式原型</h2><p>内建对象(built-in object)比如Array()，Array.prototype.<strong>proto</strong>指向什么？</p>
-<p>Array.prototype.<strong>proto</strong> === Object.prototype，或者也可以这么理解，所有的内建对象都是由Object()创建而来。</p>
-<p>Array是函数对象，是Function的实例对象，Array是通过new Function创建出来的。因为Array是Function的实例，所以Array.<strong>proto</strong> ===  Function.prototype</p>
-<h2 id="Case3-instanceof"><a href="#Case3-instanceof" class="headerlink" title="Case3.instanceof"></a>Case3.instanceof</h2><h3 id="解释1"><a href="#解释1" class="headerlink" title="解释1"></a>解释1</h3><p>instanceof 操作符的内部实现机制和隐式原型、显式原型有直接的关系。instanceof的左值一般是一个对象，右值一般是一个构造函数，用来判断左值是否是右值的实例。</p>
-<p>内部实现原理：</p>
-<pre><code class="javascript">//设 L instanceof R 
-//通过判断
- L.__proto__.__proto__ ..... === R.prototype ？
-//最终返回true or false
+<h1 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h1><h2 id="Case1-大部分人都会做错的经典JS闭包面试题"><a href="#Case1-大部分人都会做错的经典JS闭包面试题" class="headerlink" title="Case1.大部分人都会做错的经典JS闭包面试题"></a>Case1.<a href="http://www.cnblogs.com/xxcanghai/p/4991870.html" target="_blank" rel="external">大部分人都会做错的经典JS闭包面试题</a></h2><pre><code class="javascript">function fun(n,o) {
+  console.log(o)
+  return {
+    fun:function(m){
+      return fun(m,n);
+    }
+  };
+}
+var a = fun(0);  a.fun(1);  a.fun(2);  a.fun(3);//undefined,0,0,0
+var b = fun(0).fun(1).fun(2).fun(3);//undefined,0,1,2
+var c = fun(0).fun(1);  c.fun(2);  c.fun(3);//undefined,0,1,1
+//问:三行a,b,c的输出分别是什么？
 </code></pre>
-<h3 id="解释2"><a href="#解释2" class="headerlink" title="解释2"></a>解释2</h3><p><code>A instanceof B</code> 是在 A 的原型链里查找 B 的 constructor，找到返回 true，找不到返回 false。</p>
-<pre><code class="javascript">Function instanceof Object === true
-Object instanceof Function === true
-
-Object.__proto__ === Function.prototype; // true
-Object.__proto__ == Object.prototype; // false
-Function.prototype.__proto__ === Object.prototype; // true
+<h3 id="JS中有几种函数"><a href="#JS中有几种函数" class="headerlink" title="JS中有几种函数"></a>JS中有几种函数</h3><p>在JS中函数可以分为两种，<strong>具名函数（命名函数）</strong>和<strong>匿名函数</strong>。区分这两种函数的方法非常简单，可以通过输出 fn.name 来判断，有name的就是具名函数，没有name的就是匿名函数</p>
+<h3 id="创建函数的几种方式"><a href="#创建函数的几种方式" class="headerlink" title="创建函数的几种方式"></a>创建函数的几种方式</h3><h4 id="1-声明函数"><a href="#1-声明函数" class="headerlink" title="1.声明函数"></a>1.声明函数</h4><h4 id="2-创建匿名函数表达式"><a href="#2-创建匿名函数表达式" class="headerlink" title="2.创建匿名函数表达式"></a>2.创建匿名函数表达式</h4><pre><code class="javascript">var fn1=function (){}
 </code></pre>
-<h2 id="Case4-Function、Object关系"><a href="#Case4-Function、Object关系" class="headerlink" title="Case4.Function、Object关系"></a>Case4.Function、Object关系</h2><p><code>Object.prototype</code>是所有对象的根源<br><code>Object.prototype</code>只是挂载在<code>Object</code>函数对象上<br><code>Function.prototype</code>构造自<code>Object.prototype</code><br><code>Function.prototype</code> 只是挂载在<code>Function</code>函数对象上<br><code>Object</code>函数和<code>Function</code>函数构造自<code>Function.prototype</code><br><code>Object</code>字面量对象{}构造自<code>Object.prototype</code><br><code>Object</code>字面量对象<code>{}.__proto__</code>（原构造对象） === <code>Object.prototype</code><br><code>Function</code>函数 和 自定义函数 都继承（构造而成）自<code>Function.prototype</code><br><code>Function.prototype</code> 和 <code>Function.__proto__</code>（原构造对象）相同<br>所以，是先有的<code>Object.prototype</code>,再有的<code>Function.prototype</code>，再有的<code>Function</code>和<code>Object</code>函数对象</p>
-<h2 id="Case5-Function、Object、Prototype、proto内存关系图"><a href="#Case5-Function、Object、Prototype、proto内存关系图" class="headerlink" title="Case5.Function、Object、Prototype、proto内存关系图"></a>Case5.Function、Object、Prototype、<strong>proto</strong>内存关系图</h2><ol>
-<li>所有对象所有对象，包括函数对象的原型链最终都指向了Object.prototype，而Object.prototype.<strong>proto</strong>===null，原型链至此结束。</li>
-<li>Animal.prototype是一个普通对象。</li>
-<li>Object是一个函数对象，也是Function构造的，Object.prototype是一个普通对象。</li>
-<li>Object.prototype.<strong>type</strong>指向null。</li>
-<li>Function.prototype是一个函数对象，前面说函数对象都有一个显示的prototype属性，但是Function.prototype却没有prototype属性，即Function.prototype.prototype===undefined，所有Function.prototype函数对象是一个特例，没有prototype属性。</li>
-<li>Object虽是Function构造的一个函数对象，但是Object.prototype没有指向Function.prototype，即Object.prototype!==Function.prototype。</li>
-</ol>
-<p><img src="http://images.blogjava.net/blogjava_net/heavensay/web-front/8199006.png" alt=""></p>
-<h2 id="Case6-经典原型链"><a href="#Case6-经典原型链" class="headerlink" title="Case6.经典原型链"></a>Case6.经典原型链</h2><p><img src="https://pic2.zhimg.com/50/e83bca5f1d1e6bf359d1f75727968c11_hd.jpg" alt=""></p>
-<h2 id="Case7-《JavaScript-世界万物诞生记》"><a href="#Case7-《JavaScript-世界万物诞生记》" class="headerlink" title="Case7.《JavaScript 世界万物诞生记》"></a>Case7.《JavaScript 世界万物诞生记》</h2><p>Object作为一个机器可以看做是有由Function制造出来的，而Function作为一个对象可以看做是由Object制造出来的。</p>
-<p><img src="https://pic2.zhimg.com/v2-52726a7f86690c0663452112d66836c5_r.png" alt=""></p>
-<h2 id="Case8-《什么是-JS-原型链？》"><a href="#Case8-《什么是-JS-原型链？》" class="headerlink" title="Case8.《什么是 JS 原型链？》"></a>Case8.《什么是 JS 原型链？》</h2><blockquote>
-<p>这篇流程讲的很清晰</p>
+<h4 id="3-创建具名函数表达式"><a href="#3-创建具名函数表达式" class="headerlink" title="3.创建具名函数表达式"></a>3.创建具名函数表达式</h4><pre><code class="javascript">var fn1=function xxcanghai(){};
+</code></pre>
+<blockquote>
+<p>注意：具名函数表达式的函数名只能在创建函数内部使用(xxcanghai)</p>
+<p>注意：在对象内定义函数如var o={ fn : function (){…} }，也属于函数表达式</p>
 </blockquote>
-<pre><code class="javascript">var obj = { name: &#39;obj&#39; }
+<h4 id="4-Function构造函数"><a href="#4-Function构造函数" class="headerlink" title="4.Function构造函数"></a>4.Function构造函数</h4><p>可以给 Function 构造函数传一个函数字符串，返回包含这个字符串命令的函数，此种方法创建的是<strong>匿名函数</strong>。</p>
+<pre><code class="javascript">Function(&quot;alert(1)&quot;)
 </code></pre>
-<h3 id="valueOf-toString-constructor-是怎么来？"><a href="#valueOf-toString-constructor-是怎么来？" class="headerlink" title="valueOf / toString / constructor 是怎么来？"></a>valueOf / toString / constructor 是怎么来？</h3><ol>
-<li>obj.<strong>proto</strong> 有很多属性，包括 valueOf、toString、constructor 等</li>
-<li>obj.<strong>proto</strong> 其实也有一个叫做 <strong>proto</strong> 的属性，值为 null</li>
-</ol>
-<h3 id="共享原型链"><a href="#共享原型链" class="headerlink" title="共享原型链"></a>共享原型链</h3><p>如果我们改写 obj2.<strong>proto</strong>.toString，那么 obj.toString 其实也会变！</p>
-<h3 id="差异化"><a href="#差异化" class="headerlink" title="差异化"></a>差异化</h3><p>如果我们想让 obj.toString 和 obj2.toString 的行为不同怎么做呢？</p>
-<p>直接赋值就好了：</p>
-<pre><code class="javascript">obj.toString = function(){ return &#39;新的 toString 方法&#39; }
+<h4 id="5-自执行函数"><a href="#5-自执行函数" class="headerlink" title="5.自执行函数"></a>5.自执行函数</h4><pre><code class="javascript">(function(){alert(1);})();
+(function fn1(){alert(1);})();
 </code></pre>
-<h3 id="总结-1"><a href="#总结-1" class="headerlink" title="总结"></a>总结</h3><p>「读」属性时会<strong>沿着原型链搜索</strong>。</p>
-<p>「新增」属性时<strong>不会</strong>去看原型链（但是如果你给这个属性加了一些配置，则不一样）。</p>
-<h2 id="Case9-《最详尽的-JS-原型与原型链终极详解》"><a href="#Case9-《最详尽的-JS-原型与原型链终极详解》" class="headerlink" title="Case9 《最详尽的 JS 原型与原型链终极详解》"></a>Case9 《最详尽的 JS 原型与原型链终极详解》</h2><h3 id="一-普通对象与函数对象"><a href="#一-普通对象与函数对象" class="headerlink" title="一. 普通对象与函数对象"></a>一. 普通对象与函数对象</h3><p>对象也有区别，大致可以分为两类，即：普通对象（Object）和函数对象（Function）。<strong>凡是通过 new Function() 创建的对象都是函数对象，其他的都是普通对象。f1,f2,归根结底都是通过 new Function()的方式进行创建的。Function Object 也都是通过 New Function()创建的</strong>。</p>
-<h3 id="二-构造函数"><a href="#二-构造函数" class="headerlink" title="二. 构造函数"></a>二. 构造函数</h3><p><strong>实例的构造函数属性（constructor）指向构造函数。</strong></p>
-<h3 id="三-原型对象"><a href="#三-原型对象" class="headerlink" title="三. 原型对象"></a>三. 原型对象</h3><p>在默认情况下，所有的<strong>原型对象</strong>都会<strong>自动获得</strong>一个 <code>constructor</code>（构造函数）属性，这个属性（是一个指针）指向 <code>prototype</code> 属性所在的函数,即：<code>Person.prototype.constructor == Person</code></p>
-<p><strong>结论：原型对象（Person.prototype）是 构造函数（Person）的一个实例。</strong></p>
-<p><code>Function.prototype</code> 为什么是函数对象呢？</p>
-<pre><code class="javascript"> var A = new Function ();
- Function.prototype = A;
-</code></pre>
-<p><strong>凡是通过 new Function( ) 产生的对象都是函数对象</strong>。因为 A 是函数对象，所以<code>Function.prototype</code> 是函数对象。</p>
-<h3 id="六-原型链"><a href="#六-原型链" class="headerlink" title="六. 原型链"></a>六. 原型链</h3><p>Person.prototype.<strong>proto</strong> 是什么？</p>
-<p><code>Person.prototype</code> 是一个普通对象，我们无需关注它有哪些属性，只要记住它是一个普通对象。所以 <code>Person.prototype.__proto__ === Object.prototype</code></p>
-<h3 id="七-函数对象"><a href="#七-函数对象" class="headerlink" title="七. 函数对象"></a>七. 函数对象</h3><h5 id="所有函数对象的proto都指向Function-prototype，它是一个空函数"><a href="#所有函数对象的proto都指向Function-prototype，它是一个空函数" class="headerlink" title="所有函数对象的proto都指向Function.prototype，它是一个空函数"></a>所有<em>函数对象</em>的<strong>proto</strong>都指向Function.prototype，它是一个空函数</h5><p><strong>所有的构造器都来自于 Function.prototype，甚至包括根构造器Object及Function自身。所有构造器都继承了·Function.prototype·的属性及方法。如length、call、apply、bind</strong></p>
-<p><code>Function.prototype</code>也是唯一一个<code>typeof XXX.prototype</code>为 <code>function</code>的<code>prototype</code>。其它的构造器的<code>prototype</code>都是一个对象</p>
-<p><code>Function.prototype</code>的<code>__proto__</code>是谁呢？</p>
-<pre><code class="javascript">Function.prototype.__proto__ === Object.prototype
-</code></pre>
-<p>这说明所有的构造器也都是一个普通 JS 对象，可以给构造器添加/删除属性等。同时它也继承了Object.prototype上的所有方法：toString、valueOf、hasOwnProperty等。</p>
-<h3 id="八-Prototype"><a href="#八-Prototype" class="headerlink" title="八. Prototype"></a>八. Prototype</h3><p>可以用一个 ES5 提供的新方法：<code>Object.getOwnPropertyNames</code>获取所有（<strong>包括不可枚举的属性</strong>）的属性名<strong>不包括 prototy 中的属性</strong>，返回一个数组</p>
+<p>自执行函数属于上述的“函数表达式”，规则相同</p>
+<h4 id="6-其他创建函数的方法"><a href="#6-其他创建函数的方法" class="headerlink" title="6.其他创建函数的方法"></a>6.其他创建函数的方法</h4><p>采用 eval ， setTimeout ， setInterval 等非常用方法</p>
+<h3 id="三个fun函数的关系是什么？"><a href="#三个fun函数的关系是什么？" class="headerlink" title="三个fun函数的关系是什么？"></a>三个fun函数的关系是什么？</h3><p>第一个fun函数，属于标准具名函数声明，是<strong>新创建</strong>的函数，他的返回值是一个对象字面量表达式，属于一个新的object。</p>
+<p>fun这个属性中存放的是一个<strong>新创建</strong>匿名函数表达式。</p>
+<blockquote>
+<p>注意：所有<strong>声明的匿名函数都是一个新函数。</strong></p>
+</blockquote>
+<h3 id="函数作用域链的问题"><a href="#函数作用域链的问题" class="headerlink" title="函数作用域链的问题"></a>函数作用域链的问题</h3><p>使用var或是非对象内部的函数表达式内，可以访问到存放当前函数的变量；在对象内部的不能访问到。</p>
+<p>原因也非常简单，因为<strong>函数作用域链</strong>的问题，采用var的是在外部创建了一个fn变量，函数内部当然可以在内部寻找不到fn后向上册作用域查找fn，而在创建对象内部时，因为没有在函数作用域内创建fn，所以无法访问。</p>
+<p>所以综上所述，可以得知，<strong>最内层的return出去的fun函数不是第二层fun函数，是最外层的fun函数</strong>。</p>
+<h3 id="到底在调用哪个函数？"><a href="#到底在调用哪个函数？" class="headerlink" title="到底在调用哪个函数？"></a>到底在调用哪个函数？</h3><p><strong>1、第一行a</strong></p>
+<p>第一个fun(0)是在调用<strong>第一层fun函数</strong>。第二个fun(1)是在调用前一个fun的返回值的fun函数，所以：第后面几个fun(1),fun(2),fun(3),函数都是在调用<strong>第二层fun函数</strong>。</p>
+<p>在第一次调用fun(0)时，o为undefined；</p>
+<p>第二次调用fun(1)时m为1，此时fun闭包了外层函数的n，也就是第一次调用的n=0，即m=1，n=0，并在内部调用第一层fun函数fun(1,0);所以o为0；</p>
+<p>第三次调用fun(2)时m为2，但依然是调用a.fun，所以还是闭包了第一次调用时的n，所以内部调用第一层的fun(2,0);所以o为0</p>
+<p>第四次同理；</p>
+<p><strong>2、第二行b</strong></p>
+<p>先从fun(0)开始看，肯定是调用的第一层fun函数；而他的返回值是一个对象，所以第二个fun(1)调用的是第二层fun函数，后面几个也是调用的第二层fun函数。</p>
+<p>在第一次调用第一层fun(0)时，o为undefined；</p>
+<p>第二次调用 .fun(1)时m为1，此时fun闭包了外层函数的n，也就是第一次调用的n=0，即m=1，n=0，并在内部调用第一层fun函数fun(1,0);所以o为0；</p>
+<p>第三次调用 .fun(2)时m为2，此时当前的fun函数不是第一次执行的返回对象，而是<strong>第二次执行的返回对象</strong>。而在第二次执行第一层fun函数时时(1,0)所以n=1,o=0,返回时闭包了第二次的n，遂在第三次调用第三层fun函数时m=2,n=1，即调用第一层fun函数fun(2,1)，所以o为1；</p>
+<p>第四次调用 .fun(3)时m为3，闭包了第三次调用的n，同理，最终调用第一层fun函数为fun(3,2)；所以o为2；</p>
+<p><strong>3、第三行c</strong></p>
+<p>在第一次调用第一层fun(0)时，o为undefined；</p>
+<p>第二次调用 .fun(1)时m为1，此时fun闭包了外层函数的n，也就是第一次调用的n=0，即m=1，n=0，并在内部调用第一层fun函数fun(1,0);所以o为0；</p>
+<p>第三次调用 .fun(2)时m为2，此时fun闭包的是第二次调用的n=1，即m=2，n=1，并在内部调用第一层fun函数fun(2,1);所以o为1；</p>
+<p>第四次.fun(3)时同理，但依然是调用的第二次的返回值，遂最终调用第一层fun函数fun(3,1)，所以o还为1</p>
 <h1 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h1><ul>
-<li><a href="http://blog.csdn.net/sinat_21274091/article/details/52741788" target="_blank" rel="external">JS重点整理之JS原型链彻底搞清楚</a></li>
-<li><a href="http://www.blogjava.net/heavensay/archive/2013/10/20/405440.html" target="_blank" rel="external">Js中Prototype、<strong>proto</strong>、Constructor、Object、Function关系介绍</a></li>
-<li><a href="https://www.zhihu.com/question/34183746" target="_blank" rel="external">js中<strong>proto</strong>和prototype的区别和关系？</a></li>
-<li><a href="https://segmentfault.com/a/1190000005363885" target="_blank" rel="external">JavaScript之原型链</a></li>
-<li><a href="https://segmentfault.com/q/1010000000249140" target="_blank" rel="external">Function为何是Object的实例呢</a></li>
-<li><a href="https://segmentfault.com/q/1010000002736664" target="_blank" rel="external">js 原型的问题 Object 和 Function 到底是什么关系？</a></li>
-<li><a href="https://zhuanlan.zhihu.com/p/22989691" target="_blank" rel="external">JavaScript 世界万物诞生记</a></li>
-<li><a href="https://zhuanlan.zhihu.com/p/23090041?refer=study-fe" target="_blank" rel="external">「每日一题」什么是 JS 原型链？</a></li>
-<li><a href="http://www.jianshu.com/p/dee9f8b14771" target="_blank" rel="external">最详尽的 JS 原型与原型链终极详解，没有「可能是」</a></li>
+<li><a href="https://zhuanlan.zhihu.com/p/29157822" target="_blank" rel="external">当面试官问你闭包时，他究竟想听到些什么？</a></li>
+<li><a href="https://segmentfault.com/q/1010000002880935" target="_blank" rel="external">javascript关于闭包的面试题</a></li>
+<li><a href="http://blog.csdn.net/chelen_jak/article/details/50568911" target="_blank" rel="external">理解 Javascript 的闭包 （例子举得很好）</a></li>
+<li><a href="http://www.cnblogs.com/yunfeifei/p/4019504.html" target="_blank" rel="external">全面理解Javascript闭包和闭包的几种写法及用途</a></li>
+<li><a href="http://www.cnblogs.com/xxcanghai/p/4991870.html" target="_blank" rel="external">大部分人都会做错的经典JS闭包面试题</a></li>
 </ul>
 
             
@@ -697,7 +968,7 @@ Function.prototype.__proto__ === Object.prototype; // true
                             本文采用 <a rel='nofollow noopener' href='https://creativecommons.org/licenses/by-nc-sa/3.0/deed.zh' target='_blank'>CC BY-NC-SA 3.0 Unported</a> 协议进行许可，阅读 <a href='/creativecommons.html' target='_blank'>相关说明</a>
                         
                         <br>
-                        本文链接： http://janebt.github.io/2017/11/01/JSPrototype/
+                        本文链接： http://janebt.github.io/2017/11/28/闭包/
                     </p>
                 </blockquote>
             
@@ -719,8 +990,8 @@ Function.prototype.__proto__ === Object.prototype; // true
     <div id="disqus_thread"></div>
 <script type="text/javascript">
     var disqus_config = function () {
-        this.page.url = 'http://janebt.github.io/2017/11/01/JSPrototype/';  // Replace PAGE_URL with your page's canonical URL variable
-        this.page.identifier = 'http://janebt.github.io/2017/11/01/JSPrototype/'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+        this.page.url = 'http://janebt.github.io/2017/11/28/闭包/';  // Replace PAGE_URL with your page's canonical URL variable
+        this.page.identifier = 'http://janebt.github.io/2017/11/28/闭包/'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
     };
 </script>
 <script type="text/ls-javascript" id="disqus-thread-script">
@@ -750,21 +1021,13 @@ Function.prototype.__proto__ === Object.prototype; // true
             <nav class="material-nav mdl-color-text--grey-50 mdl-cell mdl-cell--12-col">
     <!-- Prev Nav -->
     
-        <a href="/2017/11/01/HTML5/" id="post_nav-newer" class="prev-content">
-            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
-                <i class="material-icons">arrow_back</i>
-            </button>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            新篇
-        </a>
-    
 
     <!-- Section Spacer -->
     <div class="section-spacer"></div>
 
     <!-- Next Nav -->
     
-        <a href="/2016/10/01/Hexo/" id="post_nav-older" class="next-content">
+        <a href="/2017/11/28/面向对象/" id="post_nav-older" class="next-content">
             旧篇
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
