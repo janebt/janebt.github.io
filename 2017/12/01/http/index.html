@@ -37,7 +37,7 @@
     
     <title>
         
-            原型与原型链 | 
+            http | 
         
         Jane&#39;s blog
     </title>
@@ -48,7 +48,7 @@
     <meta name="format-detection" content="telephone=no"/>
     <meta name="theme-color" content="#0097A7">
     <meta name="author" content="jane">
-    <meta name="description" itemprop="description" content="本文介绍原型和原型链的概念，参考多篇热门博客，持续总结和更新思想。">
+    <meta name="description" itemprop="description" content="本文介绍http。">
     <meta name="keywords" content="jane, blog, hexo, Web, 博客,JavaScript">
 
     <!-- Import lsloader -->
@@ -290,26 +290,26 @@
     <!-- The Open Graph protocol -->
     <meta property="og:url" content="http://janebt.github.io">
     <meta property="og:type" content="blog">
-    <meta property="og:title" content="原型与原型链 | Jane&#39;s blog">
+    <meta property="og:title" content="http | Jane&#39;s blog">
     <meta property="og:image" content="http://janebt.github.io/img/favicon.jpeg" />
-    <meta property="og:description" content="本文介绍原型和原型链的概念，参考多篇热门博客，持续总结和更新思想。">
+    <meta property="og:description" content="本文介绍http。">
     <meta property="og:article:tag" content="JavaScript"> 
 
     
-        <meta property="article:published_time" content="Wed Nov 01 2017 11:33:34 GMT+0800" />
-        <meta property="article:modified_time" content="Wed Nov 01 2017 15:25:00 GMT+0800" />
+        <meta property="article:published_time" content="Fri Dec 01 2017 20:36:34 GMT+0800" />
+        <meta property="article:modified_time" content="Fri Dec 01 2017 20:36:34 GMT+0800" />
     
 
     <!-- The Twitter Card protocol -->
-    <meta name="twitter:title" content="原型与原型链 | Jane&#39;s blog">
-    <meta name="twitter:description" content="本文介绍原型和原型链的概念，参考多篇热门博客，持续总结和更新思想。">
+    <meta name="twitter:title" content="http | Jane&#39;s blog">
+    <meta name="twitter:description" content="本文介绍http。">
     <meta name="twitter:image" content="http://janebt.github.io/img/favicon.jpeg">
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:url" content="http://janebt.github.io" />
 
     <!-- Add canonical link for SEO -->
     
-        <link rel="canonical" href="http://janebt.github.io/2017/11/01/JSPrototype/index.html" />
+        <link rel="canonical" href="http://janebt.github.io/2017/12/01/http/index.html" />
     
 
     <!-- Structured-data for SEO -->
@@ -321,10 +321,10 @@
 {
     "@context": "https://schema.org",
     "@type": "BlogPosting",
-    "mainEntityOfPage": "http://janebt.github.io/2017/11/01/JSPrototype/index.html",
-    "headline": "原型与原型链",
-    "datePublished": "Wed Nov 01 2017 11:33:34 GMT+0800",
-    "dateModified": "Wed Nov 01 2017 15:25:00 GMT+0800",
+    "mainEntityOfPage": "http://janebt.github.io/2017/12/01/http/index.html",
+    "headline": "http",
+    "datePublished": "Fri Dec 01 2017 20:36:34 GMT+0800",
+    "dateModified": "Fri Dec 01 2017 20:36:34 GMT+0800",
     "author": {
         "@type": "Person",
         "name": "jane",
@@ -343,7 +343,7 @@
         }
     },
     "keywords": ",JavaScriptjane, blog, hexo, Web, 博客",
-    "description": "本文介绍原型和原型链的概念，参考多篇热门博客，持续总结和更新思想。",
+    "description": "本文介绍http。",
 }
 </script>
 
@@ -553,141 +553,145 @@
     
         <div class="post-content_wrapper">
             <p class="post-title">
-                原型与原型链
+                http
             </p>
-            <p>本文介绍原型和原型链的概念，参考多篇热门博客，持续总结和更新思想。</p>
+            <p>本文介绍http。</p>
 <a id="more"></a>
-<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><h2 id="proto"><a href="#proto" class="headerlink" title="_proto_"></a><code>_proto_</code></h2><p>任何一个对象Object都有<em>proto</em>，它是每一个对象的私有属性，是天生自带的。</p>
-<p>又叫做隐式原型</p>
-<p>JavaScript中任意对象都有一个内置属性[[prototype]]，在ES5之前没有标准的方法访问这个内置属性，但是大多数浏览器都支持通过<code>__proto__</code>来访问。ES5中有了对于这个内置属性标准的Get方法Object.getPrototypeOf().</p>
-<p>Note: Object.prototype 这个对象是个例外，它的<code>__proto__</code>值为null </p>
-<p>隐式原型指向<strong>创建</strong>这个对象的函数(constructor)的prototype</p>
-<p>一个对象的<strong>proto</strong>记录着自己的原型链，决定了自身的数据类型，改变<strong>proto</strong>就等于改变对象的数据类型。</p>
-<p>隐式原型的作用：构成原型链，同样用于实现基于原型的继承。</p>
-<h2 id="prototype"><a href="#prototype" class="headerlink" title="prototype"></a><code>prototype</code></h2><p><strong>原型对象</strong>。不是任何对象都有prototype，只有构造函数有prototype，是后天赋予的。</p>
-<p>每创建一个函数都会有一个prototype属性，这个属性是一个指针，<strong>指向一个对象（通过该构造函数创建实例对象的原型对象）</strong>。</p>
-<p>原型对象是包含特定类型的所有实例共享的属性和方法。原型对象的好处是，可以让所有实例对象共享它所包含的属性和方法。</p>
-<p>原型对象属于普通对象。</p>
-<p>又叫做显式原型。</p>
-<p><strong>Note</strong>：通过Function.prototype.bind方法构造出来的函数是个例外，它没有prototype属性</p>
-<p>函数的prototype不属于自身的原型链，它是子类创建的核心，决定了子类的数据类型，是连接子类原型链的桥梁。</p>
-<p>在原型对象上定义方法和属性的目的是为了被子类继承和使用。</p>
-<p>显式原型的作用：用来实现基于原型的继承与属性的共享。</p>
-<h2 id="获取对象的原型"><a href="#获取对象的原型" class="headerlink" title="获取对象的原型"></a>获取对象的原型</h2><pre><code class="javascript">dog1.__proto__  //不推荐  
-Object.getPrototypeOf(dog1) === Dog.prototype   //推荐
-</code></pre>
-<h2 id="原型链"><a href="#原型链" class="headerlink" title="原型链"></a>原型链</h2><p>原型链的存在，主要是为了实现对象的<code>继承</code>。</p>
-<p>原型链基本思路（图解）：</p>
-<p><img src="http://img.blog.csdn.net/20161006191631510?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQv/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt=""></p>
-<h2 id="原型链查找"><a href="#原型链查找" class="headerlink" title="原型链查找"></a>原型链查找</h2><p><strong>调用一个对象的属性或方法，一但这个对象中没有，就去这个对象的<em>proto</em>中查找。这个对象的<em>proto</em>指向自己构造函数的prototype属性</strong></p>
-<p>关键的点在于找到创建这个对象的构造函数，本质上只有一种方式，也就是通过new来创建。</p>
-<p>由Object.create(o)创建出来的对象它的隐式原型指向o。</p>
-<h2 id="new"><a href="#new" class="headerlink" title="new"></a>new</h2><p>JS在通过new 表达式创建一个对象的时候，通常会把父类的prototype赋值给新对象的<strong>proto</strong>属性</p>
-<p>当使用<code>new</code>去调用构造函数时，相当于执行了</p>
-<pre><code class="javascript">var o = {};
-o.__proto__ = F.prototype;
-F.call(o);
-</code></pre>
-<h2 id="constructor-NaN"><a href="#constructor-NaN" class="headerlink" title="constructor"></a>constructor</h2><p>原型对象prototype上都有个预定义的<code>constructor</code>属性，用来引用它的函数对象。这是一种循环引用。</p>
-<pre><code class="javascript">function F(){};
-F.prototype.constructor === F;
-</code></pre>
-<p>在实际运用中，经常会有下列的写法</p>
-<pre><code class="javascript">function F(){};
-F.prototype = {
-    constructor : F,
-    doSomething : function(){}
-}
-</code></pre>
-<p>这里要加<code>constructor</code>是因为重写了原型对象，constructor属性就消失了，需要自己手动补上。</p>
-<p>实例对象的constructor属性指向其构造函数, 因此</p>
-<pre><code class="javascript">Object.constructor === Function;
-Function.constructor === Function;
-</code></pre>
-<p>由 Object.create() 创建出来的对象没有构造函数</p>
-<h1 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h1><h2 id="Case1-Function-prototype没有prototype属性"><a href="#Case1-Function-prototype没有prototype属性" class="headerlink" title="Case1.Function.prototype没有prototype属性"></a>Case1.Function.prototype没有prototype属性</h2><p><strong>原型对象属于普通对象。</strong>Function.prototype是个例外，它是原型对象，却又是函数对象，作为一个函数对象，它又没有prototype属性。</p>
-<pre><code class="javascript">function person(){};  
-
-console.log(typeof person.prototype) //Object  
-console.log(typeof Object.prototype) // Object  
-console.log(typeof Function.prototype) // 特殊 Function  
-console.log(typeof Function.prototype.prototype) //undefined 函数对象却没有prototype属性
-</code></pre>
-<h2 id="Case2-构造函数的显示原型的隐式原型"><a href="#Case2-构造函数的显示原型的隐式原型" class="headerlink" title="Case2.构造函数的显示原型的隐式原型"></a>Case2.构造函数的显示原型的隐式原型</h2><p>内建对象(built-in object)比如Array()，Array.prototype.<strong>proto</strong>指向什么？</p>
-<p>Array.prototype.<strong>proto</strong> === Object.prototype，或者也可以这么理解，所有的内建对象都是由Object()创建而来。</p>
-<p>Array是函数对象，是Function的实例对象，Array是通过new Function创建出来的。因为Array是Function的实例，所以Array.<strong>proto</strong> ===  Function.prototype</p>
-<h2 id="Case3-instanceof"><a href="#Case3-instanceof" class="headerlink" title="Case3.instanceof"></a>Case3.instanceof</h2><h3 id="解释1"><a href="#解释1" class="headerlink" title="解释1"></a>解释1</h3><p>instanceof 操作符的内部实现机制和隐式原型、显式原型有直接的关系。instanceof的左值一般是一个对象，右值一般是一个构造函数，用来判断左值是否是右值的实例。</p>
-<p>内部实现原理：</p>
-<pre><code class="javascript">//设 L instanceof R 
-//通过判断
- L.__proto__.__proto__ ..... === R.prototype ？
-//最终返回true or false
-</code></pre>
-<h3 id="解释2"><a href="#解释2" class="headerlink" title="解释2"></a>解释2</h3><p><code>A instanceof B</code> 是在 A 的原型链里查找 B 的 constructor，找到返回 true，找不到返回 false。</p>
-<pre><code class="javascript">Function instanceof Object === true
-Object instanceof Function === true
-
-Object.__proto__ === Function.prototype; // true
-Object.__proto__ == Object.prototype; // false
-Function.prototype.__proto__ === Object.prototype; // true
-</code></pre>
-<h2 id="Case4-Function、Object关系"><a href="#Case4-Function、Object关系" class="headerlink" title="Case4.Function、Object关系"></a>Case4.Function、Object关系</h2><p><code>Object.prototype</code>是所有对象的根源<br><code>Object.prototype</code>只是挂载在<code>Object</code>函数对象上<br><code>Function.prototype</code>构造自<code>Object.prototype</code><br><code>Function.prototype</code> 只是挂载在<code>Function</code>函数对象上<br><code>Object</code>函数和<code>Function</code>函数构造自<code>Function.prototype</code><br><code>Object</code>字面量对象{}构造自<code>Object.prototype</code><br><code>Object</code>字面量对象<code>{}.__proto__</code>（原构造对象） === <code>Object.prototype</code><br><code>Function</code>函数 和 自定义函数 都继承（构造而成）自<code>Function.prototype</code><br><code>Function.prototype</code> 和 <code>Function.__proto__</code>（原构造对象）相同<br>所以，是先有的<code>Object.prototype</code>,再有的<code>Function.prototype</code>，再有的<code>Function</code>和<code>Object</code>函数对象</p>
-<h2 id="Case5-Function、Object、Prototype、proto内存关系图"><a href="#Case5-Function、Object、Prototype、proto内存关系图" class="headerlink" title="Case5.Function、Object、Prototype、proto内存关系图"></a>Case5.Function、Object、Prototype、<strong>proto</strong>内存关系图</h2><ol>
-<li>所有对象所有对象，包括函数对象的原型链最终都指向了Object.prototype，而Object.prototype.<strong>proto</strong>===null，原型链至此结束。</li>
-<li>Animal.prototype是一个普通对象。</li>
-<li>Object是一个函数对象，也是Function构造的，Object.prototype是一个普通对象。</li>
-<li>Object.prototype.<strong>type</strong>指向null。</li>
-<li>Function.prototype是一个函数对象，前面说函数对象都有一个显示的prototype属性，但是Function.prototype却没有prototype属性，即Function.prototype.prototype===undefined，所有Function.prototype函数对象是一个特例，没有prototype属性。</li>
-<li>Object虽是Function构造的一个函数对象，但是Object.prototype没有指向Function.prototype，即Object.prototype!==Function.prototype。</li>
+<h1 id="知识点"><a href="#知识点" class="headerlink" title="知识点"></a>知识点</h1><h2 id="TCP-IP协议族"><a href="#TCP-IP协议族" class="headerlink" title="TCP/IP协议族"></a>TCP/IP协议族</h2><p>TCP/IP协议族可以分为4层，分别是应用层、传输层、网络层和链路层。</p>
+<ul>
+<li>应用层：决定了向用户提供应用服务时通信的活动。FTP（File Transfer Protocol， 文件传输协议）、DNS（Domain Name System，域名系统）和HTTP都属于该层。</li>
+<li>传输层：提供处于网络连接中的两台计算机之间的数据传输。TCP（Transmission Control Protocol，传输控制协议）和UDP（User Data Protocol，用户数据协议）都属于该层。</li>
+<li>网络层：用来处理网络上流动的数据包。数据包是网络传输的最小数据单位。该层规定了通过怎样的路径（所谓的传输路线）到达对方计算机，并把数据包传给对方。与对方计算机之间通过多台计算机或网络设备进行传输时，网络层所起的作用就是在众多的选项内选择一条传输路线。</li>
+<li>链路层：用来处理网络的硬件部分，包括操作系统、硬件的设备驱动、NIC（Network Interface Card，网卡）、光纤、诸如连接器之类的传输媒介等物理可见部分。</li>
+</ul>
+<h3 id="三次握手"><a href="#三次握手" class="headerlink" title="三次握手"></a>三次握手</h3><p>三次握手的过程使用了TCP 标志——SYN（synchronize）和ACK（acknowledgement）：</p>
+<ol>
+<li>发送端发送一个带SYN标志的数据包给对方。</li>
+<li>接收端收到后，回传一个带有SYN/ACK标志的数据包以示传达确认信息。</li>
+<li>发送端回传一个带ACK标志的数据包，表示握手结束。</li>
 </ol>
-<p><img src="http://images.blogjava.net/blogjava_net/heavensay/web-front/8199006.png" alt=""></p>
-<h2 id="Case6-经典原型链"><a href="#Case6-经典原型链" class="headerlink" title="Case6.经典原型链"></a>Case6.经典原型链</h2><p><img src="https://pic2.zhimg.com/50/e83bca5f1d1e6bf359d1f75727968c11_hd.jpg" alt=""></p>
-<h2 id="Case7-《JavaScript-世界万物诞生记》"><a href="#Case7-《JavaScript-世界万物诞生记》" class="headerlink" title="Case7.《JavaScript 世界万物诞生记》"></a>Case7.《JavaScript 世界万物诞生记》</h2><p>Object作为一个机器可以看做是有由Function制造出来的，而Function作为一个对象可以看做是由Object制造出来的。</p>
-<p><img src="https://pic2.zhimg.com/v2-52726a7f86690c0663452112d66836c5_r.png" alt=""></p>
-<h2 id="Case8-《什么是-JS-原型链？》"><a href="#Case8-《什么是-JS-原型链？》" class="headerlink" title="Case8.《什么是 JS 原型链？》"></a>Case8.《什么是 JS 原型链？》</h2><blockquote>
-<p>这篇流程讲的很清晰</p>
+<h2 id="HTTP通信"><a href="#HTTP通信" class="headerlink" title="HTTP通信"></a>HTTP通信</h2><p>利用TCP/IP协议族进行网络通信时，会通过分层顺序与对方进行通讯。以HTTP举例来说，过程是这样的：</p>
+<ol>
+<li>客户端在应用层（HTTP协议）发出一项想看某个Web页面的HTTP请求。</li>
+<li>在传输层（TCP协议）把从应用层处收到的数据（HTTP请求报文）进行分割，并在各个报文上打上标记序号及端口号后转发给网络层。</li>
+<li>在网络层（IP协议），增加作为通信目的地的MAC地址后转发给链路层。</li>
+</ol>
+<p>发送端在层与层之间传输数据时，每经过一层必定会被打上一个该层所属的<strong>首部信息</strong>；反之，接收端在层与层传输数据时，每经过一层时会把对应的首部消去。这种把数据信息包装起来的做法，也叫封装（encapsulate）。</p>
+<h2 id="HTTP请求"><a href="#HTTP请求" class="headerlink" title="HTTP请求"></a>HTTP请求</h2><p><strong>Case</strong></p>
+<blockquote>
+<p>GET /search.jsp HTTP/1.1<br>Host: g.hxgoogle.com</p>
 </blockquote>
-<pre><code class="javascript">var obj = { name: &#39;obj&#39; }
-</code></pre>
-<h3 id="valueOf-toString-constructor-是怎么来？"><a href="#valueOf-toString-constructor-是怎么来？" class="headerlink" title="valueOf / toString / constructor 是怎么来？"></a>valueOf / toString / constructor 是怎么来？</h3><ol>
-<li>obj.<strong>proto</strong> 有很多属性，包括 valueOf、toString、constructor 等</li>
-<li>obj.<strong>proto</strong> 其实也有一个叫做 <strong>proto</strong> 的属性，值为 null</li>
+<p>一个完整的请求报文由Header和Body组成，Header包括请求方法、请求URI、协议版本、可选的请求首部字段等，Body指报文主体。下面重点介绍一下请求URI和HTTP方法。</p>
+<h3 id="URI和URL"><a href="#URI和URL" class="headerlink" title="URI和URL"></a>URI和URL</h3><p>URI表示统一资源标识符，是Uniform Resource Identifier的缩写。</p>
+<p>URI就是由某个协议方案（如http、ftp）表示的资源的定位标识符。</p>
+<p><strong>Case</strong></p>
+<blockquote>
+<p>ftp://ftp.is.co.za/rfc/rfc1808.txt<br><a href="http://www.ietf.org/rfc/rfc2396.txt" target="_blank" rel="external">http://www.ietf.org/rfc/rfc2396.txt</a><br>ldap://[2001:db8::7]/c=GB?objectClass?one<br>mailto:John.Doe@example.com<br>tel:+1-816-555-1212</p>
+</blockquote>
+<p>URI用字符串标识某一互联网资源，而我们相对来说更熟悉的URL（UniformResource Locator，统一资源定位符）则是表示资源的地点。显然URL是URI的子集</p>
+<p>HTTP URL (URL是一种特殊类型的URI，包含了用于查找某个资源的足够的信息)的格式如下：<code>http://host[&quot;:&quot;port][abs_path]</code></p>
+<p>http表示要通过HTTP协议来定位网络资源；host表示合法的Internet主机域名或者IP地址；port指定一个端口号，为空则使用缺省端口80；abs_path指定请求资源的URI；如果URL中没有给出abs_path，那么当它作为请求URI时，必须以“/”的形式给出，通常这个工作浏览器自动帮我们完成。</p>
+<h3 id="HTTP方法"><a href="#HTTP方法" class="headerlink" title="HTTP方法"></a>HTTP方法</h3><p>HTTP/1.1中的方法：</p>
+<ul>
+<li>GET：请求访问已被URI识别的资源，资源经服务器端解析后返回响应内容。</li>
+<li>POST：虽然GET方法也可以在Body中包含内容进行传输，不过一般不用，而是使用POST方法。POST在RESTful架构中一般用来修改资源。</li>
+<li>PUT：用于传输资源到URI指定位置进行保存。由于PUT方法自身不带验证机制，存在安全问题，因此一般Web网站不使用该方法。若配合Web应用程序的验证机制或采用RESTful架构设计，可能会开放使用。PUT在RESTful架构中一般用来添加资源。</li>
+<li>DELETE：删除资源。与PUT情况类似，一般不开放。</li>
+<li>HEAD：获得报文首部（Header），用于确认URI的有效性及资源的更新日期等。</li>
+<li>TRACE：追踪路径。发送请求时，在请求Header中加上Max-Forwards字段，譬如Max-Forwards: 2这样，每经过一个服务器就将该数字减1，当数字为0时停止传输，最后接收到请求的服务器返回状态码200 OK响应，响应包含最初的请求内容（将HTTP请求原样返回）。</li>
+<li>CONNECT：要求在于代理服务器通信时建立隧道，用隧道协议进行TCP通信。主要使用SSL（Secure Sockets Layer， 安全套接层）和TLS（Transport Layer Security，传输层安全）协议把通信内容加密后经网络隧道传输。格式为CONNECT 代理服务器名:端口号 HTTP版本号。</li>
+</ul>
+<h2 id="HTTP响应"><a href="#HTTP响应" class="headerlink" title="HTTP响应"></a>HTTP响应</h2><p>HTTP响应同样可分为Header和Body，它一般长这样：</p>
+<blockquote>
+<p>HTTP/1.1 200 ok<br>Date: …<br>Server: ..<br>…<br>空行(CR + LF)</p>
+<html><br>…<br></html>
+
+</blockquote>
+<h3 id="状态码"><a href="#状态码" class="headerlink" title="状态码"></a>状态码</h3><p>状态码的第一位数字指定了响应类别，共可分为5类：</p>
+<ul>
+<li>1XX：Informational（信息性状态码），表明接受的请求正在处理。</li>
+<li>2XX：Success（成功状态码），表明请求正常处理完毕。</li>
+<li>3XX：Redirection（重定向状态码），表明需进行附加操作以完成请求。</li>
+<li>4XX：Client Error（客户端错误状态码），表明服务器无法处理请求。</li>
+<li>5XX：Server Error（服务器错误状态码），表明服务器处理请求出错。</li>
+</ul>
+<p>下面列举几种常见的错误码和原因短语：</p>
+<ul>
+<li>200 OK：请求正常处理。</li>
+<li>204 No Content：请求正常处理，但没有资源可返回。</li>
+<li>206 Partial Content： 客户端进行了范围请求，服务器成功执行这部分GET请求。</li>
+<li>301 Moved Permanently： 永久性重定向，表明该资源已被分配了新的URI。</li>
+<li>302 Found： 临时性重定向，表明该资源暂时被分配了新的URI。</li>
+<li>303 See Other：表明请求的资源存在另一个URI，明确要求客户端采用GET方法重定向请求资源。</li>
+<li>400 Bad Request：请求报文中存在语法错误，需修改请求内容后再次发送。</li>
+<li>401 Unauthorized*：请求需包含通过HTTP认证（BASIC认证、DIGEST认证等）的认证信息，浏览器初次接收401响应会弹出认证窗口。若之前已进行过一次请求，则表示用户认证失败。</li>
+<li>403 Forbidden：请求资源的访问被服务器拒绝。服务器端没有必要给出拒绝的详细理由，不过也可以在响应主体部分对原因进行描述。未获得文件系统的访问授权（比如在IIS上部署网站时默认不能通过浏览器访问文件）、访问权限出现问题（比如从未授权的发送源IP地址试图访问）都有可能返回403响应。</li>
+<li>404 Not Found：服务器无法找到请求的资源（也可在服务器端拒绝访问且不想说明理由时使用）。</li>
+<li>500 Internal Server Error：服务器端执行请求时发生内部错误。多为服务器端程序出现Bug。</li>
+<li>503 Service Unavailable：服务器处于超负载或正在停机维护，暂时无法处理请求。</li>
+</ul>
+<h2 id="HTTP消息报头"><a href="#HTTP消息报头" class="headerlink" title="HTTP消息报头"></a>HTTP消息报头</h2><p>HTTP消息报头包括普通报头、请求报头、响应报头、实体报头。</p>
+<h3 id="1-普通报头"><a href="#1-普通报头" class="headerlink" title="1. 普通报头"></a>1. 普通报头</h3><p>在普通报头中，有少数报头域用于所有的请求和响应消息，但并不用于被传输的实体，只用于传输的消息</p>
+<h4 id="常用的普通报头"><a href="#常用的普通报头" class="headerlink" title="常用的普通报头"></a>常用的普通报头</h4><p><strong>Cache-Control</strong><br>Cache-Control用于指定缓存指令，缓存指令是单向的（响应中出现的缓存指令在请求中未必会出现），且是独立的（一个消息的缓存指令不会影响另一个消息处理的缓存机制），HTTP1.0使用的类似的报头域为Pragma。</p>
+<p>请求时的缓存指令包括：no-cache（用于指示请求或响应消息不能缓存）、no-store、max-age、max-stale、min-fresh、only-if-cached;<br>响应时的缓存指令包括：public、private、no-cache、no-store、no-transform、must-revalidate、proxy-revalidate、max-age、s-maxage.</p>
+<p><strong>Date</strong><br>Date普通报头域表示消息产生的日期和时间</p>
+<p><strong>Connection</strong><br>Connection普通报头域允许发送指定连接的选项。例如指定连接是连续，或者指定“close”选项，通知服务器，在响应完成后，关闭连接</p>
+<h3 id="2-请求报头"><a href="#2-请求报头" class="headerlink" title="2. 请求报头"></a>2. 请求报头</h3><p>请求报头允许客户端向服务器端传递请求的附加信息以及客户端自身的信息。</p>
+<h4 id="常用的请求报头"><a href="#常用的请求报头" class="headerlink" title="常用的请求报头"></a>常用的请求报头</h4><p><strong>Accept</strong><br>Accept请求报头域用于指定客户端接受哪些类型的信息。</p>
+<p><strong>Accept-Charset</strong><br>Accept-Charset请求报头域用于指定客户端接受的字符集。</p>
+<p><strong>Accept-Encoding</strong><br>Accept-Encoding请求报头域类似于Accept，但是它是用于指定可接受的内容编码。</p>
+<p><strong>Accept-Language</strong><br>Accept-Language请求报头域类似于Accept，但是它是用于指定一种自然语言。</p>
+<p><strong>Authorization</strong><br>Authorization请求报头域主要用于证明客户端有权查看某个资源。当浏览器访问一个页面时，如果收到服务器的响应代码为401（未授权），可以发送一个包含Authorization请求报头域的请求，要求服务器对其进行验证。</p>
+<p><strong>Host</strong>（发送请求时，该报头域是必需的）<br>Host请求报头域主要用于指定被请求资源的Internet主机和端口号，它通常从HTTP URL中提取出来的</p>
+<p><strong>User-Agent</strong><br>User-Agent请求报头域允许客户端将它的操作系统、浏览器和其它属性告诉服务器。不过，这个报头域不是必需的</p>
+<h3 id="3-响应报头"><a href="#3-响应报头" class="headerlink" title="3. 响应报头"></a>3. 响应报头</h3><p>响应报头允许服务器传递不能放在状态行中的附加响应信息，以及关于服务器的信息和对Request-URI所标识的资源进行下一步访问的信息。</p>
+<h4 id="常用的响应报头"><a href="#常用的响应报头" class="headerlink" title="常用的响应报头"></a>常用的响应报头</h4><p><strong>Location</strong><br>Location响应报头域用于重定向接受者到一个新的位置。Location响应报头域常用在更换域名的时候。</p>
+<p><strong>Server</strong><br>Server响应报头域包含了服务器用来处理请求的软件信息。与User-Agent请求报头域是相对应的。</p>
+<h3 id="4-实体报头"><a href="#4-实体报头" class="headerlink" title="4. 实体报头"></a>4. 实体报头</h3><p>请求和响应消息都可以传送一个实体。一个实体由实体报头域和实体正文组成，但并不是说实体报头域和实体正文要在一起发送，可以只发送实体报头域。实体报头定义了关于实体正文和请求所标识的资源的元信息。</p>
+<h4 id="常用的实体报头"><a href="#常用的实体报头" class="headerlink" title="常用的实体报头"></a>常用的实体报头</h4><p><strong>Content-Encoding</strong><br>Content-Encoding实体报头域被用作媒体类型的修饰符，它的值指示了已经被应用到实体正文的附加内容的编码，因而要获得Content-Type报头域中所引用的媒体类型，必须采用相应的解码机制。</p>
+<p><strong>Content-Language</strong><br>Content-Language实体报头域描述了资源所用的自然语言。没有设置该域则认为实体内容将提供给所有的语言阅读者。</p>
+<p><strong>Content-Length</strong><br>Content-Length实体报头域用于指明实体正文的长度，以字节方式存储的十进制数字来表示。</p>
+<p><strong>Content-Type</strong><br>Content-Type实体报头域用语指明发送给接收者的实体正文的媒体类型。</p>
+<p><strong>Last-Modified</strong><br>Last-Modified实体报头域用于指示资源的最后修改日期和时间。</p>
+<p><strong>Expires</strong><br>Expires实体报头域给出响应过期的日期和时间。为了让代理服务器或浏览器在一段时间以后更新缓存中(再次访问曾访问过的页面时，直接从缓存中加载，缩短响应时间和降低服务器负载)的页面，我们可以使用Expires实体报头域指定页面过期的时间。</p>
+<h2 id="HTTP协议的一些特性"><a href="#HTTP协议的一些特性" class="headerlink" title="HTTP协议的一些特性"></a>HTTP协议的一些特性</h2><p>HTTP协议的初始版本中，每进行一次HTTP通信就要断开一次TCP连接。增加通信量的开销，而且频繁断开又重连会导致页面加载缓慢，影响用户体验。</p>
+<h3 id="持久连接（HTTP-Persistent-Connections）"><a href="#持久连接（HTTP-Persistent-Connections）" class="headerlink" title="持久连接（HTTP Persistent Connections）"></a>持久连接（HTTP Persistent Connections）</h3><p>HTTP/1.1和一部分HTTP/1.0开始支持持久连接。持久连接的特点是，只要任意一端没有明确提出断开连接，则保持TCP连接状态。HTTP/1.1中所有的连接默认都是持久连接。</p>
+<h3 id="管线化（pipelining）"><a href="#管线化（pipelining）" class="headerlink" title="管线化（pipelining）"></a>管线化（pipelining）</h3><p>持久连接使得多数请求以管线化方式发送成为可能。以往发送请求后需等待并收到响应后才能发送下一个请求，管线化技术出现后，无需等待亦可发送下一个请求。这就实现了多个请求的并行发送，提高了网络通信效率。</p>
+<h3 id="Cookie"><a href="#Cookie" class="headerlink" title="Cookie"></a>Cookie</h3><p>HTTP是无状态协议，它不对之前发生过的请求和响应状态进行管理。HTTP协议中引入的Cookie技术，也是为了解决状态管理问题。</p>
+<p>具体来说，Cookie技术通过在请求和响应报文中写入Cookie信息来控制客户端状态，过程如下：</p>
+<ol>
+<li><p>客户端第一次发送请求，请求报文中没有Cookie信息。</p>
+</li>
+<li><p>服务器端生成Cookie信息，在响应报文中通过Set-Cookie这个首部字段，通知客户端保存Cookie，大概长这样：</p>
+<blockquote>
+<p>HTTP/1.1 200 ok<br>…<br><set-cookie: sid="1345077140226724;path=/;expires=Fri,=">23-Oct-15 07:12:20 GMT&gt;<br>Content-Type: text/plain; charset=UTF-8</set-cookie:></p>
+</blockquote>
+</li>
+<li><p>客户端再次发送请求时，自动在请求报文中加入Cookie值后发送出去。大概长这样：</p>
+<blockquote>
+<p>GET /image/ HTTP/1.1<br>Host: github.com<br>Cookie: sid=1345077140226724</p>
+</blockquote>
+</li>
+<li><p>服务器端收到Cookie信息后，会去检查从哪个客户端发来的连接请求，然后对比服务器上的记录，得到之前的状态信息。</p>
+</li>
 </ol>
-<h3 id="共享原型链"><a href="#共享原型链" class="headerlink" title="共享原型链"></a>共享原型链</h3><p>如果我们改写 obj2.<strong>proto</strong>.toString，那么 obj.toString 其实也会变！</p>
-<h3 id="差异化"><a href="#差异化" class="headerlink" title="差异化"></a>差异化</h3><p>如果我们想让 obj.toString 和 obj2.toString 的行为不同怎么做呢？</p>
-<p>直接赋值就好了：</p>
-<pre><code class="javascript">obj.toString = function(){ return &#39;新的 toString 方法&#39; }
-</code></pre>
-<h3 id="总结-1"><a href="#总结-1" class="headerlink" title="总结"></a>总结</h3><p>「读」属性时会<strong>沿着原型链搜索</strong>。</p>
-<p>「新增」属性时<strong>不会</strong>去看原型链（但是如果你给这个属性加了一些配置，则不一样）。</p>
-<h2 id="Case9-《最详尽的-JS-原型与原型链终极详解》"><a href="#Case9-《最详尽的-JS-原型与原型链终极详解》" class="headerlink" title="Case9 《最详尽的 JS 原型与原型链终极详解》"></a>Case9 《最详尽的 JS 原型与原型链终极详解》</h2><h3 id="一-普通对象与函数对象"><a href="#一-普通对象与函数对象" class="headerlink" title="一. 普通对象与函数对象"></a>一. 普通对象与函数对象</h3><p>对象也有区别，大致可以分为两类，即：普通对象（Object）和函数对象（Function）。<strong>凡是通过 new Function() 创建的对象都是函数对象，其他的都是普通对象。f1,f2,归根结底都是通过 new Function()的方式进行创建的。Function Object 也都是通过 New Function()创建的</strong>。</p>
-<h3 id="二-构造函数"><a href="#二-构造函数" class="headerlink" title="二. 构造函数"></a>二. 构造函数</h3><p><strong>实例的构造函数属性（constructor）指向构造函数。</strong></p>
-<h3 id="三-原型对象"><a href="#三-原型对象" class="headerlink" title="三. 原型对象"></a>三. 原型对象</h3><p>在默认情况下，所有的<strong>原型对象</strong>都会<strong>自动获得</strong>一个 <code>constructor</code>（构造函数）属性，这个属性（是一个指针）指向 <code>prototype</code> 属性所在的函数,即：<code>Person.prototype.constructor == Person</code></p>
-<p><strong>结论：原型对象（Person.prototype）是 构造函数（Person）的一个实例。</strong></p>
-<p><code>Function.prototype</code> 为什么是函数对象呢？</p>
-<pre><code class="javascript"> var A = new Function ();
- Function.prototype = A;
-</code></pre>
-<p><strong>凡是通过 new Function( ) 产生的对象都是函数对象</strong>。因为 A 是函数对象，所以<code>Function.prototype</code> 是函数对象。</p>
-<h3 id="六-原型链"><a href="#六-原型链" class="headerlink" title="六. 原型链"></a>六. 原型链</h3><p>Person.prototype.<strong>proto</strong> 是什么？</p>
-<p><code>Person.prototype</code> 是一个普通对象，我们无需关注它有哪些属性，只要记住它是一个普通对象。所以 <code>Person.prototype.__proto__ === Object.prototype</code></p>
-<h3 id="七-函数对象"><a href="#七-函数对象" class="headerlink" title="七. 函数对象"></a>七. 函数对象</h3><h5 id="所有函数对象的proto都指向Function-prototype，它是一个空函数"><a href="#所有函数对象的proto都指向Function-prototype，它是一个空函数" class="headerlink" title="所有函数对象的proto都指向Function.prototype，它是一个空函数"></a>所有<em>函数对象</em>的<strong>proto</strong>都指向Function.prototype，它是一个空函数</h5><p><strong>所有的构造器都来自于 Function.prototype，甚至包括根构造器Object及Function自身。所有构造器都继承了·Function.prototype·的属性及方法。如length、call、apply、bind</strong></p>
-<p><code>Function.prototype</code>也是唯一一个<code>typeof XXX.prototype</code>为 <code>function</code>的<code>prototype</code>。其它的构造器的<code>prototype</code>都是一个对象</p>
-<p><code>Function.prototype</code>的<code>__proto__</code>是谁呢？</p>
-<pre><code class="javascript">Function.prototype.__proto__ === Object.prototype
-</code></pre>
-<p>这说明所有的构造器也都是一个普通 JS 对象，可以给构造器添加/删除属性等。同时它也继承了Object.prototype上的所有方法：toString、valueOf、hasOwnProperty等。</p>
-<h3 id="八-Prototype"><a href="#八-Prototype" class="headerlink" title="八. Prototype"></a>八. Prototype</h3><p>可以用一个 ES5 提供的新方法：<code>Object.getOwnPropertyNames</code>获取所有（<strong>包括不可枚举的属性</strong>）的属性名<strong>不包括 prototy 中的属性</strong>，返回一个数组</p>
+<h2 id="HTTP协议相关技术补充"><a href="#HTTP协议相关技术补充" class="headerlink" title="HTTP协议相关技术补充"></a>HTTP协议相关技术补充</h2><h3 id="中介"><a href="#中介" class="headerlink" title="中介"></a>中介</h3><p>中介由三种：代理(Proxy)、网关(Gateway)和通道(Tunnel)。</p>
+<h4 id="代理-Proxy"><a href="#代理-Proxy" class="headerlink" title="代理(Proxy)"></a>代理(Proxy)</h4><p>一个中间程序，它可以充当一个服务器，也可以充当一个客户机，为其它客户机建立请求。请求是通过可能的翻译在内部或经过传递到其它的 服务器中。一个代理在发送请求信息之前，必须解释并且如果可能重写它。代理经常作为通过防火墙的客户机端的门户，代理还可以作为一个帮助应用来通过协议处理没有被用户代理完成的请求。</p>
+<p>一个代理根据URI的绝对格式来接受请求，重写全部或部分消息，通过 URI的标识把已格式化过的请求发送到服务器。</p>
+<h4 id="网关-Gateway"><a href="#网关-Gateway" class="headerlink" title="网关(Gateway)"></a>网关(Gateway)</h4><p>一个作为其它服务器中间媒介的服务器。与代理不同的是，网关接受请求就好象对被请求的资源来说它就是源服务器；发出请求的客户机并没有意识到它在同网关打交道。网关经常作为通过防火墙的服务器端的门户，网关还可以作为一个协议翻译器以便存取那些存储在非HTTP系统中的资源。</p>
+<p>网关是一个接收代理，作为一些其它服务器的上层，并且如果必须的话，可以把请求翻译给下层的服务器协议。</p>
+<h4 id="通道-Tunnel"><a href="#通道-Tunnel" class="headerlink" title="通道(Tunnel)"></a>通道(Tunnel)</h4><p>是作为两个连接中继的中介程序。一旦激活，通道便被认为不属于HTTP通讯，尽管通道可能是被一个HTTP请求初始化的。当被中继的连接两端关闭时，通道便消失。当一个门户(Portal)必须存在或中介(Intermediary)不能解释中继的通讯时通道被经常使用。</p>
+<p>一个通道作为不改变消息的两个连接之间的中继点。当通讯需要通过一个中介(例如：防火墙等)或者是中介不能识别消息的内容时，通道经常被使用。</p>
+<h1 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h1><h2 id="Case1-HTTP协议的主要特点"><a href="#Case1-HTTP协议的主要特点" class="headerlink" title="Case1.HTTP协议的主要特点"></a>Case1.HTTP协议的主要特点</h2><ol>
+<li>支持客户/服务器模式。</li>
+<li>简单快速：客户向服务器请求服务时，只需传送请求方法和路径。请求方法常用的有GET、HEAD、POST。每种方法规定了客户与服务器联系的类型不同。由于HTTP协议简单，使得HTTP服务器的程序规模小，因而通信速度很快。</li>
+<li>灵活：HTTP允许传输任意类型的数据对象。正在传输的类型由Content-Type加以标记。</li>
+<li>无连接：无连接的含义是限制每次连接只处理一个请求。服务器处理完客户的请求，并收到客户的应答后，即断开连接。采用这种方式可以节省传输时间。</li>
+<li>无状态：HTTP协议是无状态协议。无状态是指协议对于事务处理没有记忆能力。缺少状态意味着如果后续处理需要前面的信息，则它必须重传，这样可能导致每次连接传送的数据量增大。另一方面，在服务器不需要先前信息时它的应答就较快。</li>
+</ol>
 <h1 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h1><ul>
-<li><a href="http://blog.csdn.net/sinat_21274091/article/details/52741788" target="_blank" rel="external">JS重点整理之JS原型链彻底搞清楚</a></li>
-<li><a href="http://www.blogjava.net/heavensay/archive/2013/10/20/405440.html" target="_blank" rel="external">Js中Prototype、<strong>proto</strong>、Constructor、Object、Function关系介绍</a></li>
-<li><a href="https://www.zhihu.com/question/34183746" target="_blank" rel="external">js中<strong>proto</strong>和prototype的区别和关系？</a></li>
-<li><a href="https://segmentfault.com/a/1190000005363885" target="_blank" rel="external">JavaScript之原型链</a></li>
-<li><a href="https://segmentfault.com/q/1010000000249140" target="_blank" rel="external">Function为何是Object的实例呢</a></li>
-<li><a href="https://segmentfault.com/q/1010000002736664" target="_blank" rel="external">js 原型的问题 Object 和 Function 到底是什么关系？</a></li>
-<li><a href="https://zhuanlan.zhihu.com/p/22989691" target="_blank" rel="external">JavaScript 世界万物诞生记</a></li>
-<li><a href="https://zhuanlan.zhihu.com/p/23090041?refer=study-fe" target="_blank" rel="external">「每日一题」什么是 JS 原型链？</a></li>
-<li><a href="http://www.jianshu.com/p/dee9f8b14771" target="_blank" rel="external">最详尽的 JS 原型与原型链终极详解，没有「可能是」</a></li>
+<li><a href="http://www.jianshu.com/p/2ecd288d27ad" target="_blank" rel="external">HTTP知识点总结</a></li>
+<li><a href="http://www.cnblogs.com/puyaoyao/p/3705970.html" target="_blank" rel="external">HTTP协议详解（前端面试常考知识点）</a></li>
 </ul>
 
             
@@ -697,7 +701,7 @@ Function.prototype.__proto__ === Object.prototype; // true
                             本文采用 <a rel='nofollow noopener' href='https://creativecommons.org/licenses/by-nc-sa/3.0/deed.zh' target='_blank'>CC BY-NC-SA 3.0 Unported</a> 协议进行许可，阅读 <a href='/creativecommons.html' target='_blank'>相关说明</a>
                         
                         <br>
-                        本文链接： http://janebt.github.io/2017/11/01/JSPrototype/
+                        本文链接： http://janebt.github.io/2017/12/01/http/
                     </p>
                 </blockquote>
             
@@ -719,8 +723,8 @@ Function.prototype.__proto__ === Object.prototype; // true
     <div id="disqus_thread"></div>
 <script type="text/javascript">
     var disqus_config = function () {
-        this.page.url = 'http://janebt.github.io/2017/11/01/JSPrototype/';  // Replace PAGE_URL with your page's canonical URL variable
-        this.page.identifier = 'http://janebt.github.io/2017/11/01/JSPrototype/'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+        this.page.url = 'http://janebt.github.io/2017/12/01/http/';  // Replace PAGE_URL with your page's canonical URL variable
+        this.page.identifier = 'http://janebt.github.io/2017/12/01/http/'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
     };
 </script>
 <script type="text/ls-javascript" id="disqus-thread-script">
@@ -750,7 +754,7 @@ Function.prototype.__proto__ === Object.prototype; // true
             <nav class="material-nav mdl-color-text--grey-50 mdl-cell mdl-cell--12-col">
     <!-- Prev Nav -->
     
-        <a href="/2017/11/01/前端大纲/" id="post_nav-newer" class="prev-content">
+        <a href="/2017/12/02/WEB安全/" id="post_nav-newer" class="prev-content">
             <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
                 <i class="material-icons">arrow_back</i>
             </button>
@@ -764,7 +768,7 @@ Function.prototype.__proto__ === Object.prototype; // true
 
     <!-- Next Nav -->
     
-        <a href="/2016/10/01/Hexo/" id="post_nav-older" class="next-content">
+        <a href="/2017/11/30/json/" id="post_nav-older" class="next-content">
             旧篇
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">

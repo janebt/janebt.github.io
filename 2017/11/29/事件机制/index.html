@@ -37,7 +37,7 @@
     
     <title>
         
-            分类: 技术栈 | 
+            事件机制 | 
         
         Jane&#39;s blog
     </title>
@@ -48,8 +48,8 @@
     <meta name="format-detection" content="telephone=no"/>
     <meta name="theme-color" content="#0097A7">
     <meta name="author" content="jane">
-    <meta name="description" itemprop="description" content="我想在跑车里 想要一辆法拉利 想要钱 Money Money 一切的一切都得靠你自己">
-    <meta name="keywords" content="jane, blog, hexo, Web, 博客">
+    <meta name="description" itemprop="description" content="本文介绍事件循环机制">
+    <meta name="keywords" content="jane, blog, hexo, Web, 博客,JavaScript">
 
     <!-- Import lsloader -->
     <script>(function(){window.lsloader={jsRunSequence:[],jsnamemap:{},cssnamemap:{}};lsloader.removeLS=function(key){try{localStorage.removeItem(key)}catch(e){}};lsloader.setLS=function(key,val){try{localStorage.setItem(key,val)}catch(e){}};lsloader.getLS=function(key){var val="";try{val=localStorage.getItem(key)}catch(e){val=""}return val};versionString="/*"+(window.materialVersion||"unknownVersion")+"*/";lsloader.clean=function(){try{var keys=[];for(var i=0;i<localStorage.length;i++){keys.push(localStorage.key(i))}keys.forEach(function(key){var data=lsloader.getLS(key);if(window.oldVersion){var remove=window.oldVersion.reduce(function(p,c){return p||data.indexOf("/*"+c+"*/")!==-1},false);if(remove){lsloader.removeLS(key)}}})}catch(e){}};lsloader.clean();lsloader.load=function(jsname,jspath,cssonload,isJs){if(typeof cssonload==="boolean"){isJs=cssonload;cssonload=undefined}isJs=isJs||false;cssonload=cssonload||function(){};var code;code=this.getLS(jsname);if(code&&code.indexOf(versionString)===-1){this.removeLS(jsname);this.requestResource(jsname,jspath,cssonload,isJs);return}if(code){var versionNumber=code.split(versionString)[0];if(versionNumber!=jspath){console.log("reload:"+jspath);this.removeLS(jsname);this.requestResource(jsname,jspath,cssonload,isJs);return}code=code.split(versionString)[1];if(isJs){this.jsRunSequence.push({name:jsname,code:code});this.runjs(jspath,jsname,code)}else{document.getElementById(jsname).appendChild(document.createTextNode(code));cssonload()}}else{this.requestResource(jsname,jspath,cssonload,isJs)}};lsloader.requestResource=function(name,path,cssonload,isJs){var that=this;if(isJs){this.iojs(path,name,function(path,name,code){that.setLS(name,path+versionString+code);that.runjs(path,name,code)})}else{this.iocss(path,name,function(code){document.getElementById(name).appendChild(document.createTextNode(code));that.setLS(name,path+versionString+code)},cssonload)}};lsloader.iojs=function(path,jsname,callback){var that=this;that.jsRunSequence.push({name:jsname,code:""});try{var xhr=new XMLHttpRequest;xhr.open("get",path,true);xhr.onreadystatechange=function(){if(xhr.readyState==4){if(xhr.status>=200&&xhr.status<300||xhr.status==304){if(xhr.response!=""){callback(path,jsname,xhr.response);return}}that.jsfallback(path,jsname)}};xhr.send(null)}catch(e){that.jsfallback(path,jsname)}};lsloader.iocss=function(path,jsname,callback,cssonload){var that=this;try{var xhr=new XMLHttpRequest;xhr.open("get",path,true);xhr.onreadystatechange=function(){if(xhr.readyState==4){if(xhr.status>=200&&xhr.status<300||xhr.status==304){if(xhr.response!=""){callback(xhr.response);cssonload();return}}that.cssfallback(path,jsname,cssonload)}};xhr.send(null)}catch(e){that.cssfallback(path,jsname,cssonload)}};lsloader.iofonts=function(path,jsname,callback,cssonload){var that=this;try{var xhr=new XMLHttpRequest;xhr.open("get",path,true);xhr.onreadystatechange=function(){if(xhr.readyState==4){if(xhr.status>=200&&xhr.status<300||xhr.status==304){if(xhr.response!=""){callback(xhr.response);cssonload();return}}that.cssfallback(path,jsname,cssonload)}};xhr.send(null)}catch(e){that.cssfallback(path,jsname,cssonload)}};lsloader.runjs=function(path,name,code){if(!!name&&!!code){for(var k in this.jsRunSequence){if(this.jsRunSequence[k].name==name){this.jsRunSequence[k].code=code}}}if(!!this.jsRunSequence[0]&&!!this.jsRunSequence[0].code&&this.jsRunSequence[0].status!="failed"){var script=document.createElement("script");script.appendChild(document.createTextNode(this.jsRunSequence[0].code));script.type="text/javascript";document.getElementsByTagName("head")[0].appendChild(script);this.jsRunSequence.shift();if(this.jsRunSequence.length>0){this.runjs()}}else if(!!this.jsRunSequence[0]&&this.jsRunSequence[0].status=="failed"){var that=this;var script=document.createElement("script");script.src=this.jsRunSequence[0].path;script.type="text/javascript";this.jsRunSequence[0].status="loading";script.onload=function(){that.jsRunSequence.shift();if(that.jsRunSequence.length>0){that.runjs()}};document.body.appendChild(script)}};lsloader.tagLoad=function(path,name){this.jsRunSequence.push({name:name,code:"",path:path,status:"failed"});this.runjs()};lsloader.jsfallback=function(path,name){if(!!this.jsnamemap[name]){return}else{this.jsnamemap[name]=name}for(var k in this.jsRunSequence){if(this.jsRunSequence[k].name==name){this.jsRunSequence[k].code="";this.jsRunSequence[k].status="failed";this.jsRunSequence[k].path=path}}this.runjs()};lsloader.cssfallback=function(path,name,cssonload){if(!!this.cssnamemap[name]){return}else{this.cssnamemap[name]=1}var link=document.createElement("link");link.type="text/css";link.href=path;link.rel="stylesheet";link.onload=link.onerror=cssonload;var root=document.getElementsByTagName("script")[0];root.parentNode.insertBefore(link,root)};lsloader.runInlineScript=function(scriptId,codeId){var code=document.getElementById(codeId).innerText;this.jsRunSequence.push({name:scriptId,code:code});this.runjs()};lsloader.loadCombo=function(jslist){var updateList="";var requestingModules={};for(var k in jslist){var LS=this.getLS(jslist[k].name);if(!!LS){var version=LS.split(versionString)[0];var code=LS.split(versionString)[1]}else{var version=""}if(version==jslist[k].path){this.jsRunSequence.push({name:jslist[k].name,code:code,path:jslist[k].path})}else{this.jsRunSequence.push({name:jslist[k].name,code:null,path:jslist[k].path,status:"comboloading"});requestingModules[jslist[k].name]=true;updateList+=(updateList==""?"":";")+jslist[k].path}}var that=this;if(!!updateList){var xhr=new XMLHttpRequest;xhr.open("get",combo+updateList,true);xhr.onreadystatechange=function(){if(xhr.readyState==4){if(xhr.status>=200&&xhr.status<300||xhr.status==304){if(xhr.response!=""){that.runCombo(xhr.response,requestingModules);return}}else{for(var i in that.jsRunSequence){if(requestingModules[that.jsRunSequence[i].name]){that.jsRunSequence[i].status="failed"}}that.runjs()}}};xhr.send(null)}this.runjs()};lsloader.runCombo=function(comboCode,requestingModules){comboCode=comboCode.split("/*combojs*/");comboCode.shift();for(var k in this.jsRunSequence){if(!!requestingModules[this.jsRunSequence[k].name]&&!!comboCode[0]){this.jsRunSequence[k].status="comboJS";this.jsRunSequence[k].code=comboCode[0];this.setLS(this.jsRunSequence[k].name,this.jsRunSequence[k].path+versionString+comboCode[0]);comboCode.shift()}}this.runjs()}})();</script>
@@ -102,6 +102,9 @@
         <style id="style_css"></style><script>if(typeof window.lsLoadCSSMaxNums === "undefined")window.lsLoadCSSMaxNums = 0;window.lsLoadCSSMaxNums++;lsloader.load("style_css","/css/style.min.css?MKetZV3cUTfDxvMffaOezg==",function(){if(typeof window.lsLoadCSSNums === "undefined")window.lsLoadCSSNums = 0;window.lsLoadCSSNums++;if(window.lsLoadCSSNums == window.lsLoadCSSMaxNums)document.documentElement.style.display="";}, false)</script>
 
         
+            
+                <style id="prettify_css"></style><script>if(typeof window.lsLoadCSSMaxNums === "undefined")window.lsLoadCSSMaxNums = 0;window.lsLoadCSSMaxNums++;lsloader.load("prettify_css","/css/prettify.min.css?zp8STOU9v89XWFEnN+6YmQ==",function(){if(typeof window.lsLoadCSSNums === "undefined")window.lsLoadCSSNums = 0;window.lsLoadCSSNums++;if(window.lsLoadCSSNums == window.lsLoadCSSMaxNums)document.documentElement.style.display="";}, false)</script>
+                <style id="prettify_theme"></style><script>if(typeof window.lsLoadCSSMaxNums === "undefined")window.lsLoadCSSMaxNums = 0;window.lsLoadCSSMaxNums++;lsloader.load("prettify_theme","/css/prettify/github-v2.min.css?AfzKxt++K+/lhZBlSjnxwg==",function(){if(typeof window.lsLoadCSSNums === "undefined")window.lsLoadCSSNums = 0;window.lsLoadCSSNums++;if(window.lsLoadCSSNums == window.lsLoadCSSMaxNums)document.documentElement.style.display="";}, false)</script>
             
         
 
@@ -287,29 +290,62 @@
     <!-- The Open Graph protocol -->
     <meta property="og:url" content="http://janebt.github.io">
     <meta property="og:type" content="blog">
-    <meta property="og:title" content="分类: 技术栈 | Jane&#39;s blog">
+    <meta property="og:title" content="事件机制 | Jane&#39;s blog">
     <meta property="og:image" content="http://janebt.github.io/img/favicon.jpeg" />
-    <meta property="og:description" content="我想在跑车里 想要一辆法拉利 想要钱 Money Money 一切的一切都得靠你自己">
-    
+    <meta property="og:description" content="本文介绍事件循环机制">
+    <meta property="og:article:tag" content="JavaScript"> 
 
+    
+        <meta property="article:published_time" content="Wed Nov 29 2017 16:42:34 GMT+0800" />
+        <meta property="article:modified_time" content="Wed Nov 29 2017 16:42:34 GMT+0800" />
     
 
     <!-- The Twitter Card protocol -->
-    <meta name="twitter:title" content="分类: 技术栈 | Jane&#39;s blog">
-    <meta name="twitter:description" content="我想在跑车里 想要一辆法拉利 想要钱 Money Money 一切的一切都得靠你自己">
+    <meta name="twitter:title" content="事件机制 | Jane&#39;s blog">
+    <meta name="twitter:description" content="本文介绍事件循环机制">
     <meta name="twitter:image" content="http://janebt.github.io/img/favicon.jpeg">
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:url" content="http://janebt.github.io" />
 
     <!-- Add canonical link for SEO -->
     
-        <link rel="canonical" href="http://janebt.github.io/categories/技术栈/page/2/index.html" />
+        <link rel="canonical" href="http://janebt.github.io/2017/11/29/事件机制/index.html" />
     
 
     <!-- Structured-data for SEO -->
     
         
 
+
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "mainEntityOfPage": "http://janebt.github.io/2017/11/29/事件机制/index.html",
+    "headline": "事件机制",
+    "datePublished": "Wed Nov 29 2017 16:42:34 GMT+0800",
+    "dateModified": "Wed Nov 29 2017 16:42:34 GMT+0800",
+    "author": {
+        "@type": "Person",
+        "name": "jane",
+        "image": {
+            "@type": "ImageObject",
+            "url": "/img/avatar.jpg"
+        },
+        "description": "念念不忘，必有回响"
+    },
+    "publisher": {
+        "@type": "Organization",
+        "name": "Jane&#39;s blog",
+        "logo": {
+            "@type":"ImageObject",
+            "url": "/img/favicon.jpeg"
+        }
+    },
+    "keywords": ",JavaScriptjane, blog, hexo, Web, 博客",
+    "description": "本文介绍事件循环机制",
+}
+</script>
 
 
     
@@ -473,23 +509,29 @@
 
                     
 
-                    <!-- Index Module -->
-<div class="material-index mdl-grid">
-    
-    <div class="locate-thumbnail-symbol"></div>
+                    <!-- Post TOC -->
 
-    <!-- Pin on top -->
     
-        
-            
+
+
+
+<!-- Layouts -->
+
+    <!-- Post Module -->
+    <div class="material-post_container">
+
+        <div class="material-post mdl-grid">
+            <div class="mdl-card mdl-shadow--4dp mdl-cell mdl-cell--12-col">
+
+                <!-- Post Header(Thumbnail & Title) -->
                 
-                
-                    <!-- Isolation Thumbnail -->
-                    <div class="post_entry-module mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col fade out">
-    <!-- Post_entry Header -->
+
+
+    <!-- Isolation Post Header -->
+    <!-- Post thumbnail -->
     
         <!-- Post Header Info -->
-        <div class="post_entry-header_info without-thumbnail">
+        <div class="post-header_info without-thumbnail">
             <!-- Author Avatar & Name -->
             <img src="/img/avatar.jpg" class="avatar-img" width="44px" height="44px" alt="jane's avatar">
             <span class="name-span">jane</span>
@@ -500,537 +542,393 @@
     
         </div>
 
-    <!-- Post_entry Content -->
-    <div class="post_entry-content mdl-color-text--grey-600 mdl-card__supporting-text">
-        <!-- Post Title -->
-        <p class="post_entry-title">
-            <a href="/2017/11/01/前端大纲/"><span>[Top]</span>前端大纲</a>
-        </p>
 
-        <!-- Post Excerpt -->
-        <p class="post_entry-excerpt">
-            
-                这篇文章是为了时刻提醒自己，还有哪些坑要填。
-            
-            &nbsp;&nbsp;&nbsp;
-            <span>
-                <a href="/2017/11/01/前端大纲/" target="_self">阅读全文</a>
-            </span>
-        </p>
 
-        <!-- Post Tags -->
-        <ul class="post_entry-tags-list"><li class="post_entry-tags-list-item"><a class="post_entry-tags-list-link" href="/tags/CSS/">CSS</a></li><li class="post_entry-tags-list-item"><a class="post_entry-tags-list-link" href="/tags/HTML/">HTML</a></li><li class="post_entry-tags-list-item"><a class="post_entry-tags-list-link" href="/tags/JavaScript/">JavaScript</a></li><li class="post_entry-tags-list-item"><a class="post_entry-tags-list-link" href="/tags/前端/">前端</a></li></ul>
-    </div>
-
-    <!-- Post_entry Footer -->
-    <div class="post_entry-footer">
-        <div class="post_entry-footer-border"></div>
-        <div class="post_entry-footer-info">
-            <div class="post_entry-footer-date">
-                11月 01, 2017
-            </div>
-            <div class="post_entry-footer-comment">
                 
-                
-            </div>
+
+                <!-- Post Content -->
+                <div id="post-content" class="mdl-color-text--grey-700 mdl-card__supporting-text fade out">
+    
+
+    
+        <div class="post-content_wrapper">
+            <p class="post-title">
+                事件机制
+            </p>
+            <p>本文介绍事件循环机制</p>
+<a id="more"></a>
+<h1 id="知识点"><a href="#知识点" class="headerlink" title="知识点"></a>知识点</h1><h2 id="事件流"><a href="#事件流" class="headerlink" title="事件流"></a>事件流</h2><h3 id="标准事件流"><a href="#标准事件流" class="headerlink" title="标准事件流"></a>标准事件流</h3><p>EMCAScript标准规定事件流包含三个阶段，分别为事件捕获阶段，处于目标阶段，事件冒泡阶段。</p>
+<p><strong>Case</strong></p>
+<pre><code class="html">&lt;!DOCTYPE HTML&gt;
+&lt;html&gt;
+    &lt;body&gt;
+        &lt;div&gt;
+            &lt;button&gt;click&lt;/button&gt;
+        &lt;/div&gt;
+    &lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+<p>如果点击按钮button，则标准事件触发分别经历以下三个阶段：</p>
+<p><img src="http://images.cnitblog.com/blog2015/697856/201504/080003152437715.png" alt=""></p>
+<p>事件触发一次经历三个阶段，所以我们在一个元素上注册事件也就可以在对应阶段注册事件，移除事件也同样</p>
+<pre><code class="javascript">//标准注册事件函数
+//target:target： 文档节点、document、window 或 XMLHttpRequest。
+//函数的参数，分别为 注册事件类型---type不包含on，事件的回调函数，事件注册在捕获期间还是冒泡期间，true：捕获，false：冒泡
+target.addEventListener(type, listener, useCapture);  
+
+//在某一个元素上撤销已注册的事件。这里强调的是:这里的函数必须与已注册的函数是同一个函数！
+target.removeEventListener(type, listener, useCapture);
+</code></pre>
+<h4 id="理解"><a href="#理解" class="headerlink" title="理解"></a>理解</h4><ol>
+<li>点击时<strong>是先判断是否处于事件阶段二</strong>，这个时候，我们已经处于了事件阶段，所以根本不存在捕获或者冒泡。<strong>这个时候会按照事件注册顺序，由事件队列中取出回调函数，执行之！</strong></li>
+<li><code>addEventListener（function(),true）（将函数注册到捕获阶段和处于阶段）</code>,<code>addEventListener（function(),false）（将函数注册到处于阶段和冒泡阶段）</code>，注意注册的两个函数都是可以认为是在处于阶段的，因此函数是按注册的顺序来执行，第二个参数为true或者false都没有影响。</li>
+</ol>
+<h3 id="IE中事件流"><a href="#IE中事件流" class="headerlink" title="IE中事件流"></a>IE中事件流</h3><p>IE中事件流只有两个阶段： 处于目标阶段，冒泡阶段。 </p>
+<p><strong>Case</strong></p>
+<p><img src="http://images.cnitblog.com/blog2015/697856/201504/080003359931643.png" alt=""></p>
+<p>对应着在IE中的事件注册和撤销事件函数</p>
+<pre><code class="javascript">//target： 文档节点、document、window 或 XMLHttpRequest。
+//函数参数： type----包含on.type一般为“onclick”,&quot;onkeydown&quot;
+//          listener：事件触发时的回调函数。
+target.attachEvent(type, listener);  
+target.detachEvent(type,listener);   //参数与注册参数相对应。
+</code></pre>
+<h3 id="事件的执行顺序"><a href="#事件的执行顺序" class="headerlink" title="事件的执行顺序"></a>事件的执行顺序</h3><p>一般事件的执行顺序： <strong>事件的捕获阶段====&gt;处于目标阶段====&gt;事件的冒泡阶段====&gt;事件的默认行为</strong>。</p>
+<p>正因为事件的默认行为是最后执行的，我们才得以机会阻止事件的默认行为。</p>
+<p><strong>Case</strong></p>
+<pre><code class="javascript">//阻止文本框获取焦点  
+  var input=document.getElementById(&quot;inputText&quot;);
+    input.onmousedown=function(event){
+        event=event||window.event;
+        if(event.preventDefault){  //非IE浏览器阻止事件默认行为
+            event.preventDefault();
+        }else{
+            event.returnValue=false;//IE浏览器阻止事件默认行为
+        }
+    }
+</code></pre>
+<h3 id="跨浏览器注册事件"><a href="#跨浏览器注册事件" class="headerlink" title="跨浏览器注册事件"></a>跨浏览器注册事件</h3><pre><code class="javascript">var EventUtil =  {
+    addEventListener: function (element, type, callback) {  //注册事件，因为浏览器的兼容性考虑，注册事件一般都是注册在事件的冒泡阶段
+        if (element.addEventListener) {
+            element.addEventListener(type, callback, false);
+        } else if (element.attachEvent) {
+            element.attachEvent(&#39;on&#39; + type, callback);
+        } else {
+            element[&#39;on&#39; + type] = callback;
+        }
+    },                   
+    removeEventListener: function(element, type, callback) {  //撤销事件
+        if (element.removeEventListener) {
+            element.removeEventListener(type, callback, false);
+        } else if (element.detachEvent) {
+            element.detachEvent(&#39;on&#39; + type, callback);
+        } else {
+            element[&#39;on&#39; + type] = null;
+        }
+    }
+};
+</code></pre>
+<h2 id="DOM事件"><a href="#DOM事件" class="headerlink" title="DOM事件"></a>DOM事件</h2><h3 id="DOM0级事件"><a href="#DOM0级事件" class="headerlink" title="DOM0级事件"></a>DOM0级事件</h3><p>将一个函数赋值给一个事件处理程序的属性。</p>
+<p><strong>Case</strong></p>
+<pre><code class="javascript">var btn = document.getElementById(&#39;mybtn&#39;);
+btn.onclick = function () {
+  alert(&#39;click&#39;);
+}
+</code></pre>
+<p><strong>优点</strong></p>
+<ol>
+<li>简单</li>
+<li>具有跨浏览器优势。</li>
+</ol>
+<p><strong>缺点</strong></p>
+<ol>
+<li>某一个属性只能赋值给一个函数，也就导致在某一个元素上的某一个事件属性只能对应着一个函数。多次注册时，已最后一次注册为准。</li>
+<li>DOM0级事件全部都是默认在冒泡阶段执行。</li>
+</ol>
+<h3 id="DOM2级事件"><a href="#DOM2级事件" class="headerlink" title="DOM2级事件"></a>DOM2级事件</h3><pre><code class="javascript">var btn = document.getElementById(&#39;mybtn&#39;);
+
+function fun1(){ alert(&quot;1&quot;);}
+function fun2(){ alert(&quot;2&quot;);}
+
+EventUtil.addEventListener(btn,&quot;click&quot;,fun1);  //注册事件
+EventUtil.addEventListener(btn,&quot;click&quot;,fun1); //触发事件的时候会 先弹出 1 在弹出 2
+</code></pre>
+<p><strong>优点</strong></p>
+<ol>
+<li>可以多次注册</li>
+<li>执行顺序与注册顺序一致。</li>
+</ol>
+<p>一般因兼容性考虑，我们很少在事件的捕获阶段注册事件</p>
+<h2 id="事件对象"><a href="#事件对象" class="headerlink" title="事件对象"></a>事件对象</h2><p>在触发DOM上的某个事件时，会产生一个事件对象event，这个对象中包含着所有事件有关的信息。</p>
+<h3 id="标准浏览器中的事件对象"><a href="#标准浏览器中的事件对象" class="headerlink" title="标准浏览器中的事件对象"></a>标准浏览器中的事件对象</h3><table>
+<thead>
+<tr>
+<th>属性</th>
+<th>类型</th>
+<th>读写</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>bubbles</td>
+<td>boolean</td>
+<td>只读</td>
+<td>返回布尔值，指示事件是否是起泡冒泡</td>
+</tr>
+<tr>
+<td>cancelable</td>
+<td>boolean</td>
+<td>只读</td>
+<td>返回布尔值，指示事件是否可拥可取消的默认动作。</td>
+</tr>
+<tr>
+<td>currentTarget</td>
+<td>Element</td>
+<td>只读</td>
+<td>返回其事件监听器触发该事件的元素。</td>
+</tr>
+<tr>
+<td>eventPhase</td>
+<td>Intenger</td>
+<td>只读</td>
+<td>返回事件传播的当前阶段。</td>
+</tr>
+<tr>
+<td>target</td>
+<td>Element</td>
+<td>只读</td>
+<td>返回触发此事件的元素（事件的目标节点）。</td>
+</tr>
+<tr>
+<td>timeStamp</td>
+<td>Date</td>
+<td>只读</td>
+<td>返回事件生成的日期和时间。</td>
+</tr>
+<tr>
+<td>type</td>
+<td>String</td>
+<td>只读</td>
+<td>返回当前 Event 对象表示的事件的名称。</td>
+</tr>
+<tr>
+<td>trusted</td>
+<td>boolean</td>
+<td>只读</td>
+<td>该事件是否是浏览器生成（true代表是，false代表是开发人员创建</td>
+</tr>
+<tr>
+<td>preventDefault</td>
+<td>Function</td>
+<td>只读</td>
+<td>取消事件的默认行为在<a href="http://www.w3school.com.cn/jsref/event_cancelable.asp" target="_blank" rel="external">cancelable</a>=true时有效</td>
+</tr>
+<tr>
+<td>stopPropagation</td>
+<td>Function</td>
+<td>只读</td>
+<td>取消事件的捕获或者冒泡行为在<a href="http://www.w3school.com.cn/jsref/event_bubbles.asp" target="_blank" rel="external">bubbles</a>=true时有效</td>
+</tr>
+</tbody>
+</table>
+<p>在事件处理程序内部，对象this始终指向currentTarget的值，而target则只包含事件的实际目标。</p>
+<h3 id="IE中的事件对象"><a href="#IE中的事件对象" class="headerlink" title="IE中的事件对象"></a>IE中的事件对象</h3><table>
+<thead>
+<tr>
+<th>属性</th>
+<th>类型</th>
+<th>读写</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>cancelBubble</td>
+<td>boolean</td>
+<td>读/写</td>
+<td>返回布尔值，指示事件是否是起泡冒泡</td>
+</tr>
+<tr>
+<td>returnValue</td>
+<td>boolean</td>
+<td>读/写</td>
+<td>返回布尔值，指示事件是否可拥可取消的默认动作。</td>
+</tr>
+<tr>
+<td>srcElement</td>
+<td>Element</td>
+<td>只读</td>
+<td>返回其事件监听器触发该事件的元素。</td>
+</tr>
+<tr>
+<td>type</td>
+<td>String</td>
+<td>只读</td>
+<td>被触发事件的类型</td>
+</tr>
+</tbody>
+</table>
+<p><strong>与标准浏览器事件对象对应关系</strong></p>
+<ul>
+<li>srcElement 对应 target;</li>
+<li>event.returnValue=false 对应event.preventDefault();</li>
+<li>event.cancelBubble=true 对应event.stopPropagation();</li>
+<li>fromElement和toElement 对应 relatedTarget</li>
+</ul>
+<h3 id="跨浏览器事件对象"><a href="#跨浏览器事件对象" class="headerlink" title="跨浏览器事件对象"></a>跨浏览器事件对象</h3><pre><code class="javascript">var EventUtil =  {
+        addEventListener: function (element, type, callback) {  //注册事件，因为浏览器的兼容性考虑，注册事件一般都是注册在事件的捕获阶段
+            if (element.addEventListener) {
+                element.addEventListener(type, callback, false);
+            } else if (element.attachEvent) {
+                element.attachEvent(&#39;on&#39; + type, callback);
+            } else {
+                element[&#39;on&#39; + type] = callback;
+            }
+        }, 
+        getEvent:function(event){           //获取事件
+            return event||window.event;
+        },                
+        getTarget:function(event){           //获取事件的触发目标
+            return event.target||event.srcElement;
+        },
+        preventDefault:function(event){        //阻止事件的默认行为
+            event.preventDefault?event.preventDefault():event.returnValue=false;
+        },
+        stopPropagation:function(event){          //阻止事件冒泡
+            event.stopPropagation?event.stopPropagation:event.cancelBubble=true;
+        },
+        removeEventListener: function(element, type, callback) {  //撤销事件
+            if (element.removeEventListener) {
+                element.removeEventListener(type, callback, false);
+            } else if (element.detachEvent) {
+                element.detachEvent(&#39;on&#39; + type, callback);
+            } else {
+                element[&#39;on&#39; + type] = null;
+            }
+        }
+    };
+</code></pre>
+<h2 id="自定义事件"><a href="#自定义事件" class="headerlink" title="自定义事件"></a>自定义事件</h2><p>这块更新较大，后续补上</p>
+<h3 id="模拟鼠标事件"><a href="#模拟鼠标事件" class="headerlink" title="模拟鼠标事件"></a>模拟鼠标事件</h3><p>具体请查<a href="https://developer.mozilla.org/en-US/docs/Web/API/" target="_blank" rel="external">MDN APIs</a></p>
+<h4 id="非IE浏览器"><a href="#非IE浏览器" class="headerlink" title="非IE浏览器"></a>非IE浏览器</h4><p>使用 <strong>MouseEvent()构造器来创建一个</strong> <a href="https://developer.mozilla.org/zh-CN/docs/Web/API/MouseEvent" target="_blank" rel="external"><code>MouseEvent</code></a>.</p>
+<p><a href="https://developer.mozilla.org/zh-CN/docs/Web/API/MouseEvent/MouseEvent" target="_blank" rel="external">API:MouseEvent</a></p>
+<pre><code class="javascript">event = new MouseEvent(typeArg, mouseEventInit);
+</code></pre>
+<h4 id="IE浏览器模拟鼠标事件"><a href="#IE浏览器模拟鼠标事件" class="headerlink" title="IE浏览器模拟鼠标事件"></a>IE浏览器模拟鼠标事件</h4><p><a href="https://developer.mozilla.org/en-US/docs/Web/Events" target="_blank" rel="external">API:createEventObject</a></p>
+<p><a href="https://developer.mozilla.org/zh-CN/docs/Web/API/EventTarget/fireEvent" target="_blank" rel="external">API:fireEvent</a> IE11已废弃</p>
+<pre><code class="javascript">var event=document.createEventObject();
+event.screenX=100;
+event.screenY=100;
+event.clientX=100;
+event.clientX=100;
+event.ctrlKey=false;
+
+btn.fireEvent(&quot;onclick&quot;,event);   //在这一步会设置event.serElement,以及触发事件类型
+</code></pre>
+<h3 id="模拟键盘事件"><a href="#模拟键盘事件" class="headerlink" title="模拟键盘事件"></a>模拟键盘事件</h3><h4 id="DOM3标准"><a href="#DOM3标准" class="headerlink" title="DOM3标准"></a>DOM3标准</h4><p>createEvent()传入字符串“KeyboardEvent”.返回的对象有initKeyEvent()方法</p>
+<h4 id="IE浏览器"><a href="#IE浏览器" class="headerlink" title="IE浏览器"></a>IE浏览器</h4><p><a href="https://developer.mozilla.org/zh-CN/docs/Web/API/EventTarget/fireEvent" target="_blank" rel="external">API:fireEvent</a> IE11已废弃</p>
+<pre><code class="javascript">var event=document.createEventObject();
+event.altKey=false;
+event.ctrlKey=false;
+event.shiftKey=false;
+event.keyCode=65;
+
+textbox.fireEvent(&quot;onkeydown&quot;,event);
+</code></pre>
+<h3 id="自定义DOM事件"><a href="#自定义DOM事件" class="headerlink" title="自定义DOM事件"></a>自定义DOM事件</h3><p>…</p>
+<h1 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h1><h2 id="Case1"><a href="#Case1" class="headerlink" title="Case1."></a>Case1.</h2><h1 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h1><ul>
+<li><a href="http://www.cnblogs.com/renlong0602/p/4401113.html" target="_blank" rel="external">JavaScript系列—-事件机制</a></li>
+<li><a href="http://www.cnblogs.com/yexiaochai/p/3567597.html" target="_blank" rel="external">【前端盲点】事件的几个阶段你真的了解么？？？</a></li>
+</ul>
+
+            
+                <blockquote>
+                    <p>
+                         
+                            本文采用 <a rel='nofollow noopener' href='https://creativecommons.org/licenses/by-nc-sa/3.0/deed.zh' target='_blank'>CC BY-NC-SA 3.0 Unported</a> 协议进行许可，阅读 <a href='/creativecommons.html' target='_blank'>相关说明</a>
+                        
+                        <br>
+                        本文链接： http://janebt.github.io/2017/11/29/事件机制/
+                    </p>
+                </blockquote>
+            
         </div>
-    </div>
+    
 </div>
 
+
                 
-            
-        
-    
-
-    <!-- Normal Post -->
-    
-        
-            
-            
-                <!-- Isolation Thumbnail -->
-                <div class="post_entry-module mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col fade out">
-    <!-- Post_entry Header -->
-    
-        <!-- Post Header Info -->
-        <div class="post_entry-header_info without-thumbnail">
-            <!-- Author Avatar & Name -->
-            <img src="/img/avatar.jpg" class="avatar-img" width="44px" height="44px" alt="jane's avatar">
-            <span class="name-span">jane</span>
-        </div>
-
-        <!-- Null Thumbnail -->
-        <div class="post_thumbnail-null">
-    
-        </div>
-
-    <!-- Post_entry Content -->
-    <div class="post_entry-content mdl-color-text--grey-600 mdl-card__supporting-text">
-        <!-- Post Title -->
-        <p class="post_entry-title">
-            <a href="/2017/11/27/逗号、冒号与括号/">逗号、冒号与括号</a>
-        </p>
-
-        <!-- Post Excerpt -->
-        <p class="post_entry-excerpt">
-            
-                有看见一些很好的博文做这点，感觉有必要对这些坑总结记录一下。
-            
-            &nbsp;&nbsp;&nbsp;
-            <span>
-                <a href="/2017/11/27/逗号、冒号与括号/" target="_self">阅读全文</a>
-            </span>
-        </p>
-
-        <!-- Post Tags -->
-        <ul class="post_entry-tags-list"><li class="post_entry-tags-list-item"><a class="post_entry-tags-list-link" href="/tags/JavaScript/">JavaScript</a></li></ul>
-    </div>
-
-    <!-- Post_entry Footer -->
-    <div class="post_entry-footer">
-        <div class="post_entry-footer-border"></div>
-        <div class="post_entry-footer-info">
-            <div class="post_entry-footer-date">
-                11月 27, 2017
-            </div>
-            <div class="post_entry-footer-comment">
+                    <!-- Paradox Post Info -->
+                    
                 
+
+                <!-- Post Comments -->
                 
-            </div>
-        </div>
-    </div>
+                    
+    <!-- 使用 DISQUS -->
+<div id="disqus-comment">
+    <div id="disqus_thread"></div>
+<script type="text/javascript">
+    var disqus_config = function () {
+        this.page.url = 'http://janebt.github.io/2017/11/29/事件机制/';  // Replace PAGE_URL with your page's canonical URL variable
+        this.page.identifier = 'http://janebt.github.io/2017/11/29/事件机制/'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+    };
+</script>
+<script type="text/ls-javascript" id="disqus-thread-script">
+    queue.offer(function() {
+            (function() { // DON'T EDIT BELOW THIS LINE
+                var d = document;
+                var s = d.createElement('script');
+                s.src = '//https-janebt-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', + new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        });
+</script>
+
 </div>
+<style>
+    #disqus-comment{
+        background-color: #eee;
+        padding: 2pc;
+    }
+</style>
 
-            
-        
-    
-        
-            
-            
-                <!-- Isolation Thumbnail -->
-                <div class="post_entry-module mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col fade out">
-    <!-- Post_entry Header -->
-    
-        <!-- Post Header Info -->
-        <div class="post_entry-header_info without-thumbnail">
-            <!-- Author Avatar & Name -->
-            <img src="/img/avatar.jpg" class="avatar-img" width="44px" height="44px" alt="jane's avatar">
-            <span class="name-span">jane</span>
-        </div>
-
-        <!-- Null Thumbnail -->
-        <div class="post_thumbnail-null">
-    
-        </div>
-
-    <!-- Post_entry Content -->
-    <div class="post_entry-content mdl-color-text--grey-600 mdl-card__supporting-text">
-        <!-- Post Title -->
-        <p class="post_entry-title">
-            <a href="/2017/11/26/表达式与运算符/">表达式与运算符</a>
-        </p>
-
-        <!-- Post Excerpt -->
-        <p class="post_entry-excerpt">
-            
-                这篇文章整理一些表达式和运算符的点和坑。
-工作和面试中总会碰到相关问题，但如果不进行分类总结，可能还会探雷。
-            
-            &nbsp;&nbsp;&nbsp;
-            <span>
-                <a href="/2017/11/26/表达式与运算符/" target="_self">阅读全文</a>
-            </span>
-        </p>
-
-        <!-- Post Tags -->
-        <ul class="post_entry-tags-list"><li class="post_entry-tags-list-item"><a class="post_entry-tags-list-link" href="/tags/JavaScript/">JavaScript</a></li></ul>
-    </div>
-
-    <!-- Post_entry Footer -->
-    <div class="post_entry-footer">
-        <div class="post_entry-footer-border"></div>
-        <div class="post_entry-footer-info">
-            <div class="post_entry-footer-date">
-                11月 26, 2017
-            </div>
-            <div class="post_entry-footer-comment">
-                
                 
             </div>
+
+            <!-- Post Prev & Next Nav -->
+            <nav class="material-nav mdl-color-text--grey-50 mdl-cell mdl-cell--12-col">
+    <!-- Prev Nav -->
+    
+        <a href="/2017/11/29/内存泄漏/" id="post_nav-newer" class="prev-content">
+            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
+                <i class="material-icons">arrow_back</i>
+            </button>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            新篇
+        </a>
+    
+
+    <!-- Section Spacer -->
+    <div class="section-spacer"></div>
+
+    <!-- Next Nav -->
+    
+        <a href="/2017/11/29/跨域/" id="post_nav-older" class="next-content">
+            旧篇
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
+                <i class="material-icons">arrow_forward</i>
+            </button>
+        </a>
+    
+</nav>
+
         </div>
     </div>
-</div>
 
-            
-        
-    
-        
-            
-            
-                <!-- Isolation Thumbnail -->
-                <div class="post_entry-module mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col fade out">
-    <!-- Post_entry Header -->
-    
-        <!-- Post Header Info -->
-        <div class="post_entry-header_info without-thumbnail">
-            <!-- Author Avatar & Name -->
-            <img src="/img/avatar.jpg" class="avatar-img" width="44px" height="44px" alt="jane's avatar">
-            <span class="name-span">jane</span>
-        </div>
-
-        <!-- Null Thumbnail -->
-        <div class="post_thumbnail-null">
-    
-        </div>
-
-    <!-- Post_entry Content -->
-    <div class="post_entry-content mdl-color-text--grey-600 mdl-card__supporting-text">
-        <!-- Post Title -->
-        <p class="post_entry-title">
-            <a href="/2017/11/26/JSDataType/">数据类型</a>
-        </p>
-
-        <!-- Post Excerpt -->
-        <p class="post_entry-excerpt">
-            
-                这篇文章整理一些数据类型的点和坑。
-            
-            &nbsp;&nbsp;&nbsp;
-            <span>
-                <a href="/2017/11/26/JSDataType/" target="_self">阅读全文</a>
-            </span>
-        </p>
-
-        <!-- Post Tags -->
-        <ul class="post_entry-tags-list"><li class="post_entry-tags-list-item"><a class="post_entry-tags-list-link" href="/tags/JavaScript/">JavaScript</a></li></ul>
-    </div>
-
-    <!-- Post_entry Footer -->
-    <div class="post_entry-footer">
-        <div class="post_entry-footer-border"></div>
-        <div class="post_entry-footer-info">
-            <div class="post_entry-footer-date">
-                11月 26, 2017
-            </div>
-            <div class="post_entry-footer-comment">
-                
-                
-            </div>
-        </div>
-    </div>
-</div>
-
-            
-        
-    
-        
-            
-            
-                <!-- Isolation Thumbnail -->
-                <div class="post_entry-module mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col fade out">
-    <!-- Post_entry Header -->
-    
-        <!-- Post Header Info -->
-        <div class="post_entry-header_info without-thumbnail">
-            <!-- Author Avatar & Name -->
-            <img src="/img/avatar.jpg" class="avatar-img" width="44px" height="44px" alt="jane's avatar">
-            <span class="name-span">jane</span>
-        </div>
-
-        <!-- Null Thumbnail -->
-        <div class="post_thumbnail-null">
-    
-        </div>
-
-    <!-- Post_entry Content -->
-    <div class="post_entry-content mdl-color-text--grey-600 mdl-card__supporting-text">
-        <!-- Post Title -->
-        <p class="post_entry-title">
-            <a href="/2017/11/26/HTML_Foundation/">HTML基础</a>
-        </p>
-
-        <!-- Post Excerpt -->
-        <p class="post_entry-excerpt">
-            
-                本文总结一些HTML基础知识。
-HTML一些基础知识看似简单，但实际在解释中可能会get不到点。因此做一个整理。
-            
-            &nbsp;&nbsp;&nbsp;
-            <span>
-                <a href="/2017/11/26/HTML_Foundation/" target="_self">阅读全文</a>
-            </span>
-        </p>
-
-        <!-- Post Tags -->
-        <ul class="post_entry-tags-list"><li class="post_entry-tags-list-item"><a class="post_entry-tags-list-link" href="/tags/HTML/">HTML</a></li></ul>
-    </div>
-
-    <!-- Post_entry Footer -->
-    <div class="post_entry-footer">
-        <div class="post_entry-footer-border"></div>
-        <div class="post_entry-footer-info">
-            <div class="post_entry-footer-date">
-                11月 26, 2017
-            </div>
-            <div class="post_entry-footer-comment">
-                
-                
-            </div>
-        </div>
-    </div>
-</div>
-
-            
-        
-    
-        
-            
-            
-                <!-- Isolation Thumbnail -->
-                <div class="post_entry-module mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col fade out">
-    <!-- Post_entry Header -->
-    
-        <!-- Post Header Info -->
-        <div class="post_entry-header_info without-thumbnail">
-            <!-- Author Avatar & Name -->
-            <img src="/img/avatar.jpg" class="avatar-img" width="44px" height="44px" alt="jane's avatar">
-            <span class="name-span">jane</span>
-        </div>
-
-        <!-- Null Thumbnail -->
-        <div class="post_thumbnail-null">
-    
-        </div>
-
-    <!-- Post_entry Content -->
-    <div class="post_entry-content mdl-color-text--grey-600 mdl-card__supporting-text">
-        <!-- Post Title -->
-        <p class="post_entry-title">
-            <a href="/2017/11/26/Apply, call and bind/">Apply, call and bind</a>
-        </p>
-
-        <!-- Post Excerpt -->
-        <p class="post_entry-excerpt">
-            
-                这篇文章介绍Apply, call and bind的概念和常用方法。
-            
-            &nbsp;&nbsp;&nbsp;
-            <span>
-                <a href="/2017/11/26/Apply, call and bind/" target="_self">阅读全文</a>
-            </span>
-        </p>
-
-        <!-- Post Tags -->
-        <ul class="post_entry-tags-list"><li class="post_entry-tags-list-item"><a class="post_entry-tags-list-link" href="/tags/JavaScript/">JavaScript</a></li></ul>
-    </div>
-
-    <!-- Post_entry Footer -->
-    <div class="post_entry-footer">
-        <div class="post_entry-footer-border"></div>
-        <div class="post_entry-footer-info">
-            <div class="post_entry-footer-date">
-                11月 26, 2017
-            </div>
-            <div class="post_entry-footer-comment">
-                
-                
-            </div>
-        </div>
-    </div>
-</div>
-
-            
-        
-    
-        
-            
-            
-                <!-- Isolation Thumbnail -->
-                <div class="post_entry-module mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col fade out">
-    <!-- Post_entry Header -->
-    
-        <!-- Post Header Info -->
-        <div class="post_entry-header_info without-thumbnail">
-            <!-- Author Avatar & Name -->
-            <img src="/img/avatar.jpg" class="avatar-img" width="44px" height="44px" alt="jane's avatar">
-            <span class="name-span">jane</span>
-        </div>
-
-        <!-- Null Thumbnail -->
-        <div class="post_thumbnail-null">
-    
-        </div>
-
-    <!-- Post_entry Content -->
-    <div class="post_entry-content mdl-color-text--grey-600 mdl-card__supporting-text">
-        <!-- Post Title -->
-        <p class="post_entry-title">
-            <a href="/2017/11/25/JSInheritance/">继承、封装、多态</a>
-        </p>
-
-        <!-- Post Excerpt -->
-        <p class="post_entry-excerpt">
-            
-                本文介绍继承的写法，参考《JS高程》。封装、多态待补。
-            
-            &nbsp;&nbsp;&nbsp;
-            <span>
-                <a href="/2017/11/25/JSInheritance/" target="_self">阅读全文</a>
-            </span>
-        </p>
-
-        <!-- Post Tags -->
-        <ul class="post_entry-tags-list"><li class="post_entry-tags-list-item"><a class="post_entry-tags-list-link" href="/tags/JavaScript/">JavaScript</a></li></ul>
-    </div>
-
-    <!-- Post_entry Footer -->
-    <div class="post_entry-footer">
-        <div class="post_entry-footer-border"></div>
-        <div class="post_entry-footer-info">
-            <div class="post_entry-footer-date">
-                11月 25, 2017
-            </div>
-            <div class="post_entry-footer-comment">
-                
-                
-            </div>
-        </div>
-    </div>
-</div>
-
-            
-        
-    
-        
-            
-            
-                <!-- Isolation Thumbnail -->
-                <div class="post_entry-module mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col fade out">
-    <!-- Post_entry Header -->
-    
-        <!-- Post Header Info -->
-        <div class="post_entry-header_info without-thumbnail">
-            <!-- Author Avatar & Name -->
-            <img src="/img/avatar.jpg" class="avatar-img" width="44px" height="44px" alt="jane's avatar">
-            <span class="name-span">jane</span>
-        </div>
-
-        <!-- Null Thumbnail -->
-        <div class="post_thumbnail-null">
-    
-        </div>
-
-    <!-- Post_entry Content -->
-    <div class="post_entry-content mdl-color-text--grey-600 mdl-card__supporting-text">
-        <!-- Post Title -->
-        <p class="post_entry-title">
-            <a href="/2017/11/01/HTML5/">HTML5总结</a>
-        </p>
-
-        <!-- Post Excerpt -->
-        <p class="post_entry-excerpt">
-            
-                这篇文章介绍H5的概念和考察方法。
-后续补上demo。
-            
-            &nbsp;&nbsp;&nbsp;
-            <span>
-                <a href="/2017/11/01/HTML5/" target="_self">阅读全文</a>
-            </span>
-        </p>
-
-        <!-- Post Tags -->
-        <ul class="post_entry-tags-list"><li class="post_entry-tags-list-item"><a class="post_entry-tags-list-link" href="/tags/HTML/">HTML</a></li><li class="post_entry-tags-list-item"><a class="post_entry-tags-list-link" href="/tags/HTML5/">HTML5</a></li><li class="post_entry-tags-list-item"><a class="post_entry-tags-list-link" href="/tags/前端/">前端</a></li></ul>
-    </div>
-
-    <!-- Post_entry Footer -->
-    <div class="post_entry-footer">
-        <div class="post_entry-footer-border"></div>
-        <div class="post_entry-footer-info">
-            <div class="post_entry-footer-date">
-                11月 01, 2017
-            </div>
-            <div class="post_entry-footer-comment">
-                
-                
-            </div>
-        </div>
-    </div>
-</div>
-
-            
-        
-    
-        
-    
-        
-            
-            
-                <!-- Isolation Thumbnail -->
-                <div class="post_entry-module mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col fade out">
-    <!-- Post_entry Header -->
-    
-        <!-- Post Header Info -->
-        <div class="post_entry-header_info without-thumbnail">
-            <!-- Author Avatar & Name -->
-            <img src="/img/avatar.jpg" class="avatar-img" width="44px" height="44px" alt="jane's avatar">
-            <span class="name-span">jane</span>
-        </div>
-
-        <!-- Null Thumbnail -->
-        <div class="post_thumbnail-null">
-    
-        </div>
-
-    <!-- Post_entry Content -->
-    <div class="post_entry-content mdl-color-text--grey-600 mdl-card__supporting-text">
-        <!-- Post Title -->
-        <p class="post_entry-title">
-            <a href="/2017/11/01/JSPrototype/">原型与原型链</a>
-        </p>
-
-        <!-- Post Excerpt -->
-        <p class="post_entry-excerpt">
-            
-                本文介绍原型和原型链的概念，参考多篇热门博客，持续总结和更新思想。
-            
-            &nbsp;&nbsp;&nbsp;
-            <span>
-                <a href="/2017/11/01/JSPrototype/" target="_self">阅读全文</a>
-            </span>
-        </p>
-
-        <!-- Post Tags -->
-        <ul class="post_entry-tags-list"><li class="post_entry-tags-list-item"><a class="post_entry-tags-list-link" href="/tags/JavaScript/">JavaScript</a></li></ul>
-    </div>
-
-    <!-- Post_entry Footer -->
-    <div class="post_entry-footer">
-        <div class="post_entry-footer-border"></div>
-        <div class="post_entry-footer-info">
-            <div class="post_entry-footer-date">
-                11月 01, 2017
-            </div>
-            <div class="post_entry-footer-comment">
-                
-                
-            </div>
-        </div>
-    </div>
-</div>
-
-            
-        
-    
-
-    
-    <!-- Index nav -->
-        <nav class="material-nav mdl-cell mdl-cell--12-col">
-            <a class="extend prev" rel="prev" href="/categories/技术栈/"><button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon"><i class="material-icons" role="presentation">arrow_back</i></button></a><a class="page-number" href="/categories/技术栈/">1</a><span class="page-number current">2</span>
-        </nav>
-    
-
-    
-</div>
 
 
                     
@@ -1104,6 +1002,10 @@ HTML一些基础知识看似简单，但实际在解释中可能会get不到点�
 <!-- Import prettify js  -->
 
     
+        
+            <script>lsloader.load("prettify_js","/js/prettify.min.js?WN07fivHQSMKWy7BmHBB6w==", true)</script>
+        
+    
 
 
 
@@ -1116,6 +1018,11 @@ HTML一些基础知识看似简单，但实际在解释中可能会get不到点�
     });
 
     
+        
+            $(function() {
+                $('pre').addClass('prettyprint linenums').attr('style', 'overflow:auto;');
+                prettyPrint();
+                })
         
     
     
