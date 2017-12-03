@@ -2270,113 +2270,6 @@ var c = fun(0).fun(1);  c.fun(2);  c.fun(3);//undefined,0,1,1
     </entry>
     
     <entry>
-      <title><![CDATA[面向对象]]></title>
-      <url>/2017/11/28/%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1/</url>
-      <content type="html"><![CDATA[<p>本文介绍面向对象的</p>
-<a id="more"></a>
-<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><h2 id="创建对象"><a href="#创建对象" class="headerlink" title="创建对象"></a>创建对象</h2><h3 id="方法一：Object"><a href="#方法一：Object" class="headerlink" title="方法一：Object()"></a>方法一：Object()</h3><h3 id="方法二：对象字面量"><a href="#方法二：对象字面量" class="headerlink" title="方法二：对象字面量"></a>方法二：对象字面量</h3><p><strong>Case</strong></p>
-<pre><code class="javascript">var bitch = new Object();
-bitch.boobs = &#39;huge&#39;;
-bitch[&#39;bf&#39;] = {name:Jhon,age:22};
-</code></pre>
-<p>在调用Object()构造函数时，new运算符实际上是可以省略的，这点可以推广到其他很多构造函数上，但有两个是例外：String() 和 Number()。<strong>对这两个函数而言，如果不加new，只是作一次数据类型的转换，得到的将是基本数据类型的值；而带new运算符的话，得到的将是String/Number的实例。</strong></p>
-<p>这两种方法创建对象简单直观，但也存在问题，那就是无法批量生产对象。由此，工厂模式应运而生。</p>
-<h3 id="方法三：工厂模式（注意区别于设计模式中的工厂模式）"><a href="#方法三：工厂模式（注意区别于设计模式中的工厂模式）" class="headerlink" title="方法三：工厂模式（注意区别于设计模式中的工厂模式）"></a>方法三：工厂模式（注意区别于设计模式中的工厂模式）</h3><p><strong>Case</strong></p>
-<pre><code class="javascript">function Bitch(boobs,bfName,bfAge){
-    var bitch = new Object();
-    bitch.boobs = boobs;
-    bitch.bf = {name:bfName,age:bfAge};
-    bitch.cry = function(){console.log(&#39;Crying&#39;);}
-　　return bitch;
-}
-　　bitch=Bitch(&#39;huge&#39;,&#39;Jhon&#39;,22);
-</code></pre>
-<p>工厂模式解决了对象的批量生产问题，但还有个问题没有解决——对象的识别问题。也就是说，这样创建出来的对象是独立的个体，跟其他对象没关系，即使是用同一个函数创建出来的对象，也是互不相识的:</p>
-<p><code>bitch instanceof Bitch //false</code></p>
-<h3 id="方法四：构造函数模式"><a href="#方法四：构造函数模式" class="headerlink" title="方法四：构造函数模式"></a>方法四：构造函数模式</h3><p><strong>Case</strong></p>
-<pre><code class="javascript">function Bitch(boobs,bfName,bfAge){
-    this.boobs=boobs;
-    this.bf={name:bfName, age:bfAge};
-　  this.cry = function(){console.log(&#39;Crying&#39;);}
-}
-bitch=new Bitch(&#39;huge&#39;,&#39;Jhon&#39;,22);
-</code></pre>
-<p>对比工厂模式可以发现构造函数模式的特点：一，没有显示创建对象，而是直接将对象属性赋给了this指针；二，没有return语句；三，调用时需要用new运算府。其实，最关键的地方在于这个new运算符，如果不加这个new，那构造函数就是个普通函数；而任何普通函数在调用时前面加new运算符的话就会变成构造函数。</p>
-<p>对象识别没有问题，但存在一个问题：对象的所有函数属性在每个对象上都要重新创建一遍，而这些函数实际上完全相同</p>
-<h3 id="方法五：原型模式"><a href="#方法五：原型模式" class="headerlink" title="方法五：原型模式"></a>方法五：原型模式</h3><p><strong>Case</strong></p>
-<pre><code class="javascript">function Bitch(boobs,bfName,bfAge){
-    this.boobs=boobs;
-    this.bf={name:bfName, age:bfAge};
-}
-Bitch.prototype.cry = function(){console.log(&#39;Crying&#39;);};
-</code></pre>
-<p>组合使用构造函数模式和原型模式，前者负责个性，后者负责共性</p>
-<h2 id="私有属性"><a href="#私有属性" class="headerlink" title="私有属性"></a>私有属性</h2><p>通过闭包访问</p>
-<p><strong>Case</strong></p>
-<pre><code class="javascript">function Bitch(boo,bfName,bfAge){
-    var boobs = boo; // 私有属性
-    this.bf={name:bfName, age:bfAge}; // 公共属性
-    this.watchBoobs = function(){ return &#39;huge&#39;; }; // 私有属性的访问接口
-}
-Bitch.prototype.cry = function(){console.log(&#39;Crying&#39;);};
-</code></pre>
-<h2 id="继承"><a href="#继承" class="headerlink" title="继承"></a>继承</h2><p><strong>Case</strong></p>
-<pre><code class="javascript">function Sup(a){
-    this.a = a;
-}
-Sup.prototype.foo = function(){console.log(&#39;Function of Sup.prototype&#39;);}
-function Sub(a,b){
-    this.a = a;
-    this.b = b;
-}
-Sub.prototype = new Sup();
-Sub.prototype.bar = function(){console.log(&#39;Function of Sub.prototype&#39;);}
-</code></pre>
-<p>注意比较JS继承与传统OO语言继承之间的差别，我觉得区别主要有两点：</p>
-<ul>
-<li>传统OO语言的继承是类的继承，是抽象概念之间的继承，实现继承并不需要父类的实例；而JS的继承则是实例的继承，子类继承的是父类的一个实例。</li>
-<li>传统OO语言的继承分public/private/protected等不同的继承方式，而JS本身连私有变量的概念都没有，就更不可能区分共有继承和私有继承了。</li>
-</ul>
-<p>上述JS实现继承的方式称为“原型模式”，这种方式存在几个缺点：</p>
-<ul>
-<li>在创建子类实例时，不能向父类的构造函数传递参数</li>
-<li>当父类属性存在引用类型值时，会造成致命问题。</li>
-</ul>
-<p>解决方法：借用构造函数模式，将二者结合起来</p>
-<p><strong>Case</strong></p>
-<pre><code class="javascript">function Sup(a){
-    this.a = a;
-}
-Sup.prototype.foo = function(){console.log(&#39;Function of Sup.prototype&#39;);}
-function Sub(a,b){
-    Sup.apply(this,arguments);    //Sup.call(this,a);不方便扩展
-    this.b = b;
-}
-Sub.prototype = new Sup();
-Sub.prototype.construtor = Sub;
-Sub.prototype.bar = function(){console.log(&#39;Function of Sub.prototype&#39;);}
-</code></pre>
-<h1 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h1><h1 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h1><ul>
-<li><a href="http://www.cnblogs.com/zhangjianhu/p/4548693.html" target="_blank" rel="external">由几道JS笔试题引发的知识点探究十五——JS面向对象编程</a></li>
-</ul>
-]]></content>
-      
-        <categories>
-            
-            <category> 技术栈 </category>
-            
-        </categories>
-        
-        
-        <tags>
-            
-            <tag> JavaScript </tag>
-            
-        </tags>
-        
-    </entry>
-    
-    <entry>
       <title><![CDATA[作用域]]></title>
       <url>/2017/11/28/%E4%BD%9C%E7%94%A8%E5%9F%9F/</url>
       <content type="html"><![CDATA[<p>本文介绍面向对象的</p>
@@ -2540,6 +2433,113 @@ with(person.wife){
 <li><a href="http://blog.csdn.net/yueguanghaidao/article/details/9568071" target="_blank" rel="external">Js作用域与作用域链详解</a></li>
 <li><a href="http://www.cnblogs.com/lhb25/archive/2011/09/06/javascript-scope-chain.html" target="_blank" rel="external">JavaScript 开发进阶：理解 JavaScript 作用域和作用域链</a></li>
 <li><a href="https://segmentfault.com/a/1190000000736812" target="_blank" rel="external">js作用域与命名空间</a></li>
+</ul>
+]]></content>
+      
+        <categories>
+            
+            <category> 技术栈 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> JavaScript </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[面向对象]]></title>
+      <url>/2017/11/28/%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1/</url>
+      <content type="html"><![CDATA[<p>本文介绍面向对象的</p>
+<a id="more"></a>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><h2 id="创建对象"><a href="#创建对象" class="headerlink" title="创建对象"></a>创建对象</h2><h3 id="方法一：Object"><a href="#方法一：Object" class="headerlink" title="方法一：Object()"></a>方法一：Object()</h3><h3 id="方法二：对象字面量"><a href="#方法二：对象字面量" class="headerlink" title="方法二：对象字面量"></a>方法二：对象字面量</h3><p><strong>Case</strong></p>
+<pre><code class="javascript">var bitch = new Object();
+bitch.boobs = &#39;huge&#39;;
+bitch[&#39;bf&#39;] = {name:Jhon,age:22};
+</code></pre>
+<p>在调用Object()构造函数时，new运算符实际上是可以省略的，这点可以推广到其他很多构造函数上，但有两个是例外：String() 和 Number()。<strong>对这两个函数而言，如果不加new，只是作一次数据类型的转换，得到的将是基本数据类型的值；而带new运算符的话，得到的将是String/Number的实例。</strong></p>
+<p>这两种方法创建对象简单直观，但也存在问题，那就是无法批量生产对象。由此，工厂模式应运而生。</p>
+<h3 id="方法三：工厂模式（注意区别于设计模式中的工厂模式）"><a href="#方法三：工厂模式（注意区别于设计模式中的工厂模式）" class="headerlink" title="方法三：工厂模式（注意区别于设计模式中的工厂模式）"></a>方法三：工厂模式（注意区别于设计模式中的工厂模式）</h3><p><strong>Case</strong></p>
+<pre><code class="javascript">function Bitch(boobs,bfName,bfAge){
+    var bitch = new Object();
+    bitch.boobs = boobs;
+    bitch.bf = {name:bfName,age:bfAge};
+    bitch.cry = function(){console.log(&#39;Crying&#39;);}
+　　return bitch;
+}
+　　bitch=Bitch(&#39;huge&#39;,&#39;Jhon&#39;,22);
+</code></pre>
+<p>工厂模式解决了对象的批量生产问题，但还有个问题没有解决——对象的识别问题。也就是说，这样创建出来的对象是独立的个体，跟其他对象没关系，即使是用同一个函数创建出来的对象，也是互不相识的:</p>
+<p><code>bitch instanceof Bitch //false</code></p>
+<h3 id="方法四：构造函数模式"><a href="#方法四：构造函数模式" class="headerlink" title="方法四：构造函数模式"></a>方法四：构造函数模式</h3><p><strong>Case</strong></p>
+<pre><code class="javascript">function Bitch(boobs,bfName,bfAge){
+    this.boobs=boobs;
+    this.bf={name:bfName, age:bfAge};
+　  this.cry = function(){console.log(&#39;Crying&#39;);}
+}
+bitch=new Bitch(&#39;huge&#39;,&#39;Jhon&#39;,22);
+</code></pre>
+<p>对比工厂模式可以发现构造函数模式的特点：一，没有显示创建对象，而是直接将对象属性赋给了this指针；二，没有return语句；三，调用时需要用new运算府。其实，最关键的地方在于这个new运算符，如果不加这个new，那构造函数就是个普通函数；而任何普通函数在调用时前面加new运算符的话就会变成构造函数。</p>
+<p>对象识别没有问题，但存在一个问题：对象的所有函数属性在每个对象上都要重新创建一遍，而这些函数实际上完全相同</p>
+<h3 id="方法五：原型模式"><a href="#方法五：原型模式" class="headerlink" title="方法五：原型模式"></a>方法五：原型模式</h3><p><strong>Case</strong></p>
+<pre><code class="javascript">function Bitch(boobs,bfName,bfAge){
+    this.boobs=boobs;
+    this.bf={name:bfName, age:bfAge};
+}
+Bitch.prototype.cry = function(){console.log(&#39;Crying&#39;);};
+</code></pre>
+<p>组合使用构造函数模式和原型模式，前者负责个性，后者负责共性</p>
+<h2 id="私有属性"><a href="#私有属性" class="headerlink" title="私有属性"></a>私有属性</h2><p>通过闭包访问</p>
+<p><strong>Case</strong></p>
+<pre><code class="javascript">function Bitch(boo,bfName,bfAge){
+    var boobs = boo; // 私有属性
+    this.bf={name:bfName, age:bfAge}; // 公共属性
+    this.watchBoobs = function(){ return &#39;huge&#39;; }; // 私有属性的访问接口
+}
+Bitch.prototype.cry = function(){console.log(&#39;Crying&#39;);};
+</code></pre>
+<h2 id="继承"><a href="#继承" class="headerlink" title="继承"></a>继承</h2><p><strong>Case</strong></p>
+<pre><code class="javascript">function Sup(a){
+    this.a = a;
+}
+Sup.prototype.foo = function(){console.log(&#39;Function of Sup.prototype&#39;);}
+function Sub(a,b){
+    this.a = a;
+    this.b = b;
+}
+Sub.prototype = new Sup();
+Sub.prototype.bar = function(){console.log(&#39;Function of Sub.prototype&#39;);}
+</code></pre>
+<p>注意比较JS继承与传统OO语言继承之间的差别，我觉得区别主要有两点：</p>
+<ul>
+<li>传统OO语言的继承是类的继承，是抽象概念之间的继承，实现继承并不需要父类的实例；而JS的继承则是实例的继承，子类继承的是父类的一个实例。</li>
+<li>传统OO语言的继承分public/private/protected等不同的继承方式，而JS本身连私有变量的概念都没有，就更不可能区分共有继承和私有继承了。</li>
+</ul>
+<p>上述JS实现继承的方式称为“原型模式”，这种方式存在几个缺点：</p>
+<ul>
+<li>在创建子类实例时，不能向父类的构造函数传递参数</li>
+<li>当父类属性存在引用类型值时，会造成致命问题。</li>
+</ul>
+<p>解决方法：借用构造函数模式，将二者结合起来</p>
+<p><strong>Case</strong></p>
+<pre><code class="javascript">function Sup(a){
+    this.a = a;
+}
+Sup.prototype.foo = function(){console.log(&#39;Function of Sup.prototype&#39;);}
+function Sub(a,b){
+    Sup.apply(this,arguments);    //Sup.call(this,a);不方便扩展
+    this.b = b;
+}
+Sub.prototype = new Sup();
+Sub.prototype.construtor = Sub;
+Sub.prototype.bar = function(){console.log(&#39;Function of Sub.prototype&#39;);}
+</code></pre>
+<h1 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h1><h1 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h1><ul>
+<li><a href="http://www.cnblogs.com/zhangjianhu/p/4548693.html" target="_blank" rel="external">由几道JS笔试题引发的知识点探究十五——JS面向对象编程</a></li>
 </ul>
 ]]></content>
       
@@ -3829,76 +3829,6 @@ class Child1 extends Parent {
     </entry>
     
     <entry>
-      <title><![CDATA[前端大纲]]></title>
-      <url>/2017/11/01/%E5%89%8D%E7%AB%AF%E5%A4%A7%E7%BA%B2/</url>
-      <content type="html"><![CDATA[<p>这篇文章是为了时刻提醒自己，还有哪些坑要填。</p>
-<a id="more"></a>
-<h1 id="结构层-HTML"><a href="#结构层-HTML" class="headerlink" title="结构层(HTML)"></a>结构层(HTML)</h1><p><a href="https://janebt.github.io/2017/11/26/HTML_Foundation/">对WEB标准的理解</a></p>
-<p><a href="https://janebt.github.io/2017/11/26/HTML_Foundation/">浏览器内核差异</a></p>
-<p><a href="https://janebt.github.io/2017/11/01/HTML5/">HTML5新特性及应用</a></p>
-<h1 id="表示层-CSS"><a href="#表示层-CSS" class="headerlink" title="表示层(CSS)"></a>表示层(CSS)</h1><p>布局</p>
-<p>盒子模型</p>
-<p>选择器优先级及使用</p>
-<p>CSS3新特性及应用</p>
-<p>兼容性</p>
-<p>Hack</p>
-<p>移动端适应</p>
-<h1 id="行为层-JavaScript"><a href="#行为层-JavaScript" class="headerlink" title="行为层(JavaScript)"></a>行为层(JavaScript)</h1><p><a href="https://janebt.github.io/2017/11/25/JsDataType/">数据类型</a></p>
-<p><a href="">面向对象</a></p>
-<p><a href="">作用域</a></p>
-<p><a href="https://janebt.github.io/2017/11/01/JSPrototype/">原型链</a></p>
-<p><a href="https://janebt.github.io/2017/11/25/JSInheritance/">继承、封装、多态</a></p>
-<p><a href="https://janebt.github.io/2017/11/26/Apply,%20call%20and%20bind/">Apply, call and bind</a></p>
-<p><a href="">闭包</a></p>
-<p>插件</p>
-<p><a href="">跨域</a></p>
-<p>模块化</p>
-<p><a href="">事件机制</a></p>
-<p>自定义事件</p>
-<p><a href="">内存泄漏</a></p>
-<p>异步装载回调</p>
-<p>模版引擎</p>
-<p><a href="">Ajax</a></p>
-<p>Jquery</p>
-<p><a href="">JSON</a></p>
-<p>Nodejs</p>
-<h1 id="进阶"><a href="#进阶" class="headerlink" title="进阶"></a>进阶</h1><p>优化</p>
-<p>交互</p>
-<p>响应式</p>
-<p><a href="">HTTP</a></p>
-<p><a href="">WEB安全</a></p>
-<p>重构</p>
-<p>SEO</p>
-<p>UED</p>
-<p>架构</p>
-<p>后端</p>
-<p>移动端</p>
-<h1 id="补充"><a href="#补充" class="headerlink" title="补充"></a>补充</h1><p><a href="https://janebt.github.io/2017/11/2017-11-26-22/">表达式与运算符</a></p>
-<p><a href="">逗号、冒号与括号</a></p>
-]]></content>
-      
-        <categories>
-            
-            <category> 技术栈 </category>
-            
-        </categories>
-        
-        
-        <tags>
-            
-            <tag> JavaScript </tag>
-            
-            <tag> CSS </tag>
-            
-            <tag> HTML </tag>
-            
-            <tag> 前端 </tag>
-            
-        </tags>
-        
-    </entry>
-    
-    <entry>
       <title><![CDATA[HTML5总结]]></title>
       <url>/2017/11/01/HTML5/</url>
       <content type="html"><![CDATA[<p>这篇文章介绍H5的概念和考察方法。</p>
@@ -4492,11 +4422,81 @@ Response.Flush()
         
         <tags>
             
+            <tag> 前端 </tag>
+            
             <tag> HTML </tag>
+            
+            <tag> HTML5 </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[前端大纲]]></title>
+      <url>/2017/11/01/%E5%89%8D%E7%AB%AF%E5%A4%A7%E7%BA%B2/</url>
+      <content type="html"><![CDATA[<p>这篇文章是为了时刻提醒自己，还有哪些坑要填。</p>
+<a id="more"></a>
+<h1 id="结构层-HTML"><a href="#结构层-HTML" class="headerlink" title="结构层(HTML)"></a>结构层(HTML)</h1><p><a href="https://janebt.github.io/2017/11/26/HTML_Foundation/">对WEB标准的理解</a></p>
+<p><a href="https://janebt.github.io/2017/11/26/HTML_Foundation/">浏览器内核差异</a></p>
+<p><a href="https://janebt.github.io/2017/11/01/HTML5/">HTML5新特性及应用</a></p>
+<h1 id="表示层-CSS"><a href="#表示层-CSS" class="headerlink" title="表示层(CSS)"></a>表示层(CSS)</h1><p>布局</p>
+<p>盒子模型</p>
+<p>选择器优先级及使用</p>
+<p>CSS3新特性及应用</p>
+<p>兼容性</p>
+<p>Hack</p>
+<p>移动端适应</p>
+<h1 id="行为层-JavaScript"><a href="#行为层-JavaScript" class="headerlink" title="行为层(JavaScript)"></a>行为层(JavaScript)</h1><p><a href="https://janebt.github.io/2017/11/25/JsDataType/">数据类型</a></p>
+<p><a href="">面向对象</a></p>
+<p><a href="">作用域</a></p>
+<p><a href="https://janebt.github.io/2017/11/01/JSPrototype/">原型链</a></p>
+<p><a href="https://janebt.github.io/2017/11/25/JSInheritance/">继承、封装、多态</a></p>
+<p><a href="https://janebt.github.io/2017/11/26/Apply,%20call%20and%20bind/">Apply, call and bind</a></p>
+<p><a href="">闭包</a></p>
+<p>插件</p>
+<p><a href="">跨域</a></p>
+<p>模块化</p>
+<p><a href="">事件机制</a></p>
+<p>自定义事件</p>
+<p><a href="">内存泄漏</a></p>
+<p>异步装载回调</p>
+<p>模版引擎</p>
+<p><a href="">Ajax</a></p>
+<p>Jquery</p>
+<p><a href="">JSON</a></p>
+<p>Nodejs</p>
+<h1 id="进阶"><a href="#进阶" class="headerlink" title="进阶"></a>进阶</h1><p>优化</p>
+<p>交互</p>
+<p>响应式</p>
+<p><a href="">HTTP</a></p>
+<p><a href="">WEB安全</a></p>
+<p>重构</p>
+<p>SEO</p>
+<p>UED</p>
+<p>架构</p>
+<p>后端</p>
+<p>移动端</p>
+<h1 id="补充"><a href="#补充" class="headerlink" title="补充"></a>补充</h1><p><a href="https://janebt.github.io/2017/11/2017-11-26-22/">表达式与运算符</a></p>
+<p><a href="">逗号、冒号与括号</a></p>
+]]></content>
+      
+        <categories>
+            
+            <category> 技术栈 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> JavaScript </tag>
+            
+            <tag> CSS </tag>
             
             <tag> 前端 </tag>
             
-            <tag> HTML5 </tag>
+            <tag> HTML </tag>
             
         </tags>
         
