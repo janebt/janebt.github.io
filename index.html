@@ -21,6 +21,8 @@
     <meta http-equiv="x-dns-prefetch-control" content="on">
 
 
+    <link rel="dns-prefetch" href="https://cdn1.lncld.net"/>
+
 
 
 
@@ -590,17 +592,18 @@
     
 
         <!-- Post Title -->
-        <p class="article-headline-p"><a href="/2017/12/04/前端/框架与组件/ES6参考手册/">es6-cheatsheet</a></p>
+        <p class="article-headline-p"><a href="/2017/12/04/前端/框架与组件/es6/">es6</a></p>
     </div>
 
     <!-- Post Excerpt -->
     <div class="mdl-color-text--grey-600 mdl-card__supporting-text post_entry-content">
         
-            ES6参考手册。
+            ES6知识点整理。
+ES6给我的感觉主要是一个简化的工具，一是将作用域、继承、原型这些JS比较难理解的概念做抽象，二是对对象、数组这些不太方便使用的方法增加方法，三是对函数模型做简化，默认值、Rest这些，四是对模块交互上做简化，比如Modules。有点C向C++过渡的意思。
         
         &nbsp;&nbsp;&nbsp;
         <span>
-            <a href="/2017/12/04/前端/框架与组件/ES6参考手册/" target="_self">阅读全文</a>
+            <a href="/2017/12/04/前端/框架与组件/es6/" target="_self">阅读全文</a>
         </span>
     </div>
     <!-- Post_entry Info-->
@@ -651,18 +654,17 @@
     
 
         <!-- Post Title -->
-        <p class="article-headline-p"><a href="/2017/12/04/前端/框架与组件/es6/">es6</a></p>
+        <p class="article-headline-p"><a href="/2017/12/04/前端/框架与组件/ES6参考手册/">es6-cheatsheet</a></p>
     </div>
 
     <!-- Post Excerpt -->
     <div class="mdl-color-text--grey-600 mdl-card__supporting-text post_entry-content">
         
-            ES6知识点整理。
-ES6给我的感觉主要是一个简化的工具，一是将作用域、继承、原型这些JS比较难理解的概念做抽象，二是对对象、数组这些不太方便使用的方法增加方法，三是对函数模型做简化，默认值、Rest这些，四是对模块交互上做简化，比如Modules。有点C向C++过渡的意思。
+            ES6参考手册。
         
         &nbsp;&nbsp;&nbsp;
         <span>
-            <a href="/2017/12/04/前端/框架与组件/es6/" target="_self">阅读全文</a>
+            <a href="/2017/12/04/前端/框架与组件/ES6参考手册/" target="_self">阅读全文</a>
         </span>
     </div>
     <!-- Post_entry Info-->
@@ -1558,6 +1560,91 @@ It will not impact the appearance and can give developers a lot of support :)
 
 
 
+
+
+    <!-- Leancloud -->
+    <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+    <script>
+        AV.initialize('3gXS00IaaGNfNPMhlV73UmeJ-gzGzoHsz', 'b3xbjqdGWcfsqeXEHw5yT3vx');
+    </script>
+    <script type="text/ls-javascript" id="leancloud-views-script">
+    function showTime(Counter) {
+        var query = new AV.Query(Counter);
+        $('.leancloud-views_num').each(function() {
+            var url = $(this).attr('id').trim();
+            query.equalTo('url', url);
+            query.find({
+                success: function(results) {
+                    if (results.length === 0) {
+                        var content = '0 ' + $(document.getElementById(url)).text();
+                        $(document.getElementById(url)).text(content);
+                        return;
+                    }
+                    for (var i = 0; i < results.length; i++) {
+                        var object = results[i];
+                        var content = object.get('time') + ' ' + $(document.getElementById(url)).text();
+                        $(document.getElementById(url)).text(content);
+                    }
+                },
+                error: function(object, error) {
+                    console.log('Error: ' + error.code + ' ' + error.message);
+                }
+            });
+        });
+    }
+
+    function addCount(Counter) {
+      var Counter = AV.Object.extend('Counter');
+      url = $('.leancloud-views_num').attr('id').trim();
+      title = $('.leancloud-views_num').attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+      query.equalTo('url', url);
+      query.find({
+          success: function(results) {
+            if (results.length > 0) {
+                var counter = results[0];
+                counter.fetchWhenSave(true);
+                counter.increment('time');
+                counter.save(null, {
+                    success: function(counter) {
+                        var content =  counter.get('time') + ' ' + $(document.getElementById(url)).text();
+                        $(document.getElementById(url)).text(content);
+                    },
+                    error: function(counter, error) {
+                        console.log('Failed to save Visitor num, with error message: ' + error.message);
+                    }
+                });
+            } else {
+              var newcounter = new Counter();
+              newcounter.set('title', title);
+              newcounter.set('url', url);
+              newcounter.set('time', 1);
+              newcounter.save(null, {
+                  success: function(newcounter) {
+                      console.log('newcounter.get(\'time\')='+newcounter.get('time'));
+                      var content = newcounter.get('time') + ' ' + $(document.getElementById(url)).text();
+                      $(document.getElementById(url)).text(content);
+                  },
+                  error: function(newcounter, error) {
+                      console.log('Failed to create');
+                  }
+              });
+            }
+        },
+        error: function(error) {
+            console.log('Error:' + error.code + ' ' + error.message);
+        }
+      });
+    }
+    $(function() {
+        var Counter = AV.Object.extend('Counter');
+        if ($('.leancloud-views_num').length === 1) {
+            addCount(Counter);
+        } else if ($('.post-title-link').length > 1) {
+            showTime(Counter);
+        }
+    });
+</script>
 
 
 
