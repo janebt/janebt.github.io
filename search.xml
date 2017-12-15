@@ -706,219 +706,6 @@ main();
     </entry>
     
     <entry>
-      <title><![CDATA[jquery]]></title>
-      <url>/2017/12/04/%E5%89%8D%E7%AB%AF/%E6%A1%86%E6%9E%B6%E4%B8%8E%E7%BB%84%E4%BB%B6/jquery/</url>
-      <content type="html"><![CDATA[<p>jquery知识点整理。</p>
-<p>jquery ajax没整理。</p>
-<a id="more"></a>
-<h1 id="知识点"><a href="#知识点" class="headerlink" title="知识点"></a>知识点</h1><h2 id=""><a href="#" class="headerlink" title="$()"></a>$()</h2><p>$()函数是JQuery函数的别名</p>
-<p>$()函数用于将任何对象包裹成jQuery对象</p>
-<h2 id="jQuery入口函数与Js入口函数的区别"><a href="#jQuery入口函数与Js入口函数的区别" class="headerlink" title="jQuery入口函数与Js入口函数的区别"></a>jQuery入口函数与Js入口函数的区别</h2><p>js入口函数指的是：window.onload = function(){};</p>
-<p>jQuery入口函数是：$(document).ready()</p>
-<table>
-<thead>
-<tr>
-<th>window.onload</th>
-<th></th>
-<th>$(document).ready()</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>必须等待网页中所有的内容加载完毕后（包括图片）才能执行</td>
-<td>执行时机</td>
-<td>网页中所有DOM结构绘制完毕后就执行，可能DOM元素关联的东西并没有加载完</td>
-</tr>
-<tr>
-<td>不能同时编写多个 ，出现多次会存在事件覆盖的问题。</td>
-<td>编写个数</td>
-<td>能同时编写多个</td>
-</tr>
-<tr>
-<td>无</td>
-<td>简化写法</td>
-<td>$(document).ready(function(){});可以简写成$(function(){});</td>
-</tr>
-<tr>
-<td>很差</td>
-<td>兼容性</td>
-<td>好</td>
-</tr>
-</tbody>
-</table>
-<h2 id="jQuery选择器"><a href="#jQuery选择器" class="headerlink" title="jQuery选择器"></a>jQuery选择器</h2><h3 id="基本选择器"><a href="#基本选择器" class="headerlink" title="基本选择器"></a>基本选择器</h3><ul>
-<li>ID选择器：#</li>
-<li>类选择器： .</li>
-<li>标签选择器： element</li>
-</ul>
-<h3 id="层级选择器"><a href="#层级选择器" class="headerlink" title="层级选择器"></a>层级选择器</h3><ul>
-<li>后代选择器：空格</li>
-<li>子代选择器：&gt;</li>
-</ul>
-<h3 id="基本过滤选择器"><a href="#基本过滤选择器" class="headerlink" title="基本过滤选择器"></a>基本过滤选择器</h3><p>索引号为index：<strong>:eq(index)</strong></p>
-<p>索引号为奇数：<strong>:odd</strong></p>
-<p>索引号为偶数：<strong>:even</strong></p>
-<h2 id="jQuery操作"><a href="#jQuery操作" class="headerlink" title="jQuery操作"></a>jQuery操作</h2><h3 id="筛选"><a href="#筛选" class="headerlink" title="筛选"></a>筛选</h3><p>查找指定元素的所有后代元素（子子孙孙）：find(selector)</p>
-<p>查找指定元素的直接子元素（亲儿子元素）：children()</p>
-<p>查找所有兄弟元素（不包括自己）：siblings()</p>
-<p>查找父元素（亲的）：parent()</p>
-<p>查找指定元素的第index个元素，index是索引号，从0开始：eq(index)</p>
-<h3 id="选择网页元素"><a href="#选择网页元素" class="headerlink" title="选择网页元素"></a>选择网页元素</h3><pre><code class="javascript">$(&#39;a:first&#39;)//选择网页中第一个a元素  
-$(&#39;tr:odd&#39;)//选择表格的奇数行  
-$(&#39;#myForm :input&#39;)//选择表单中的input元素  
-$(&#39;div:visible&#39;) //选择可见的div元素  
-$(&#39;div:gt(2)&#39;)//选择所有的div元素，除了前三个  
-$(&#39;div:animated&#39;)//选择当前处于动画状态的div元素
-</code></pre>
-<h3 id="改变结果集"><a href="#改变结果集" class="headerlink" title="改变结果集"></a>改变结果集</h3><pre><code class="javascript">$(&#39;div&#39;).has(&#39;p&#39;); //选择包含p元素的div元素  
-$(&#39;div&#39;).not(&#39;.myClass&#39;); //选择class不等于myClass的div元素  
-$(&#39;div&#39;).filter(&#39;.myClass&#39;); //选择class等于myClass的div元素  
-$(&#39;div&#39;).first(); //选择第1个div元素  
-$(&#39;div&#39;).eq(5); //选择第6个div元素  
-$(&#39;div&#39;).next(&#39;p&#39;); //选择div元素后面的第一个p元素  
-$(&#39;div&#39;).parent(); //选择div元素的父元素  
-$(&#39;div&#39;).closest(&#39;form&#39;); //选择离div最近的那个form父元素  
-$(&#39;div&#39;).children(); //选择div的所有子元素  
-$(&#39;div&#39;).siblings(); //选择div的同级元素
-</code></pre>
-<h3 id="链式操作"><a href="#链式操作" class="headerlink" title="链式操作"></a>链式操作</h3><p>.end()：回到最近的一个”破坏性”操作之前。如果之前没有破坏性操作，则返回一个空集。所谓的”破坏性”就是指任何改变所匹配的jQuery元素的操作。</p>
-<h3 id="元素的操作：取值和赋值"><a href="#元素的操作：取值和赋值" class="headerlink" title="元素的操作：取值和赋值"></a>元素的操作：取值和赋值</h3><p>常见的取值和赋值函数如下：</p>
-<ol>
-<li>html() 返回或设置被选元素的内容 (inner HTML)    </li>
-<li>text() 取出或设置text内容      </li>
-<li><strong>attr()</strong> 取出或设置某个属性的值    </li>
-<li>width() 取出或设置某个元素的宽度    </li>
-<li>height() 取出或设置某个元素的高度  </li>
-<li>val() 取出或设置html内容 取出某个表单元素的值  </li>
-<li>css() 设置css样式</li>
-</ol>
-<p>需要注意的是，如果结果集包含多个元素，那么赋值的时候，将对其中所有的元素赋值；取值的时候，则是只取出第一个元素的值（.text()例外，它取出所有元素的text内容）。</p>
-<h3 id="元素的操作：移动"><a href="#元素的操作：移动" class="headerlink" title="元素的操作：移动"></a>元素的操作：移动</h3><ol>
-<li>.insertAfter()和.after()：在现存元素的外部，从后面插入元素  </li>
-<li>.insertBefore()和.before()：在现存元素的外部，从前面插入元素  </li>
-<li>.appendTo()和.append()：在现存元素的内部，从后面插入元素  </li>
-<li>.prependTo()和.prepend()  ：在现存元素的内部，从前面插入元素</li>
-</ol>
-<h3 id="元素的操作：复制、删除和创建"><a href="#元素的操作：复制、删除和创建" class="headerlink" title="元素的操作：复制、删除和创建"></a>元素的操作：复制、删除和创建</h3><p>复制元素使用.clone()</p>
-<p>删除元素使用.remove()和.detach()。两者的区别在于，<strong>前者不保留被删除元素的事件，后者保留，有利于重新插入文档时使用。</strong></p>
-<p>清空元素内容（但是不删除该元素）使用.empty()。</p>
-<h3 id="工具方法"><a href="#工具方法" class="headerlink" title="工具方法"></a>工具方法</h3><p> $.trim() 去除字符串两端的空格。<br> $.each() 遍历一个数组或对象。<br> $.inArray() 返回一个值在数组中的索引位置。如果该值不在数组中，则返回-1。<br> $.grep() 返回数组中符合某种标准的元素。<br> $.extend() 将多个对象，合并到第一个对象。<br> $.makeArray() 将对象转化为数组。<br> $.type() 判断对象的类别（函数对象、日期对象、数组对象、正则对象等等）。<br> $.isArray() 判断某个参数是否为数组。<br> $.isEmptyObject() 判断某个对象是否为空（不含有任何属性）。<br> $.isFunction() 判断某个参数是否为函数。<br> $.isPlainObject() 判断某个参数是否为用”{}”或”new Object”建立的对象。<br> $.support() 判断浏览器是否支持某个特性。 </p>
-<h3 id="事件操作"><a href="#事件操作" class="headerlink" title="事件操作"></a>事件操作</h3><p> .blur() 表单元素失去焦点。<br> .change() 表单元素的值发生变化<br> .click() 鼠标单击<br> .dblclick() 鼠标双击<br> .focus() 表单元素获得焦点<br> .focusin() 子元素获得焦点<br> .focusout() 子元素失去焦点<br> .hover() 同时为mouseenter和mouseleave事件指定处理函数<br> .keydown() 按下键盘（长时间按键，只返回一个事件）<br> .keypress() 按下键盘（长时间按键，将返回多个事件）<br> .keyup() 松开键盘<br> .load() 元素加载完毕<br> .mousedown() 按下鼠标<br> .mouseenter() 鼠标进入（进入子元素不触发）<br> .mouseleave() 鼠标离开（离开子元素不触发）<br> .mousemove() 鼠标在元素内部移动<br> .mouseout() 鼠标离开（离开子元素也触发）<br> .mouseover() 鼠标进入（进入子元素也触发）<br> .mouseup() 松开鼠标<br> .ready() DOM加载完成<br> .resize() 浏览器窗口的大小发生改变<br> .scroll() 滚动条的位置发生变化<br> .select() 用户选中文本框中的内容<br> .submit() 用户递交表单<br> .toggle() 根据鼠标点击的次数，依次运行多个函数<br> .unload()  用户离开页面  </p>
-<p><strong>特别的</strong></p>
-<ul>
-<li>.bind()：以上这些事件在jQuery内部，都是.bind()的便捷方式。使用.bind()可以更灵活地控制事件</li>
-<li>.one()：只想让事件运行一次</li>
-<li>.unbind()：解除事件绑定</li>
-</ul>
-<p>所有的事件处理函数，都可以接受一个事件对象(event object)作为参数，这个事件对象有一些很有用的属性和方法：</p>
-<p>event.pageX 事件发生时，鼠标距离网页左上角的水平距离 　　<br>event.pageY 事件发生时，鼠标距离网页左上角的垂直距离<br>event.type 事件的类型（比如click） 　　<br>event.which 按下了哪一个键 　　<br>event.data在事件对象上绑定数据，然后传入事件处理函数 　　<br>event.target 事件针对的网页元素<br>event.preventDefault() 阻止事件的默认行为（比如点击链接，会自动打开新页面）<br>event.stopPropagation() 停止事件向上层元素冒泡</p>
-<p>有两种方法，可以自动触发一个事件。一种是直接使用事件函数，另一种是使用.trigger()或.triggerHandler()。</p>
-<pre><code class="javascript">$(&#39;a&#39;).click();
-$(&#39;a&#39;).trigger(&#39;click&#39;);
-</code></pre>
-<h3 id="特殊效果"><a href="#特殊效果" class="headerlink" title="特殊效果"></a>特殊效果</h3><p>.fadeIn() 淡入<br>.fadeOut() 淡出<br>.fadeTo() 调整透明度<br>.hide() 隐藏元素<br>.show() 显示元素<br>.slideDown() 向下展开<br>.slideUp() 向上卷起<br>.slideToggle() 依次展开或卷起某个元素<br>.toggle() 依次展示或隐藏某个元素</p>
-<p>除了.show()和.hide()，所有其他特效的默认执行时间都是400ms(毫秒)，但是你可以改变这个设置。</p>
-<p>更复杂的特效，可以用.animate()自定义。</p>
-<p>.stop()和.delay()用来停止或延缓特效的执行。</p>
-<p>$.fx.off如果设置为true，则关闭所有网页特效。</p>
-<p>几个常见的筛选选择器：</p>
-<p>filter()：筛选出与指定表达式匹配的元素集合。这个方法用于缩小匹配的范围。用逗号分隔多个表达式</p>
-<pre><code class="javascript">//保留子元素中不含有ol的元素。
-//&lt;p&gt;&lt;ol&gt;&lt;li&gt;Hello&lt;/li&gt;&lt;/ol&gt;&lt;/p&gt;&lt;p&gt;How are you?&lt;/p&gt;
-$(&quot;p&quot;).filter(function(index) {
- return $(&quot;ol&quot;, this).length == 0;
-});
-//&lt;p&gt;How are you?&lt;/p&gt;
-</code></pre>
-<p>silce()：选取一个匹配的子集</p>
-<pre><code class="javascript">//选择第一个p元素
-//&lt;p&gt;Hello&lt;/p&gt;&lt;p&gt;cruel&lt;/p&gt;&lt;p&gt;World&lt;/p&gt;
-$(&quot;p&quot;).slice(0, 1).wrapInner(&quot;&lt;b&gt;&lt;/b&gt;&quot;);
-//&lt;p&gt;&lt;b&gt;Hello&lt;/b&gt;&lt;/p&gt;
-</code></pre>
-<h1 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h1><h2 id="Case1-jQuery对象和DOM对象的相互转换"><a href="#Case1-jQuery对象和DOM对象的相互转换" class="headerlink" title="Case1.jQuery对象和DOM对象的相互转换"></a>Case1.jQuery对象和DOM对象的相互转换</h2><pre><code class="javascript">var btn = document.getElementById(“btnShow”);
-var $btn = $(“#btnShow”); // $btn就是一个jQuery对象
-
-//DOM对象转换成jQuery对象
-var $btn1 = $(btn);
-
-//jQuery对象转换成DOM对象
-var btn1 = $btn[0]; 
-var btn2 = $btn.get(0);
-</code></pre>
-<h2 id="Case2-如何找到所有-HTML-select-标签的选中项？"><a href="#Case2-如何找到所有-HTML-select-标签的选中项？" class="headerlink" title="Case2.如何找到所有 HTML select 标签的选中项？"></a>Case2.如何找到所有 HTML select 标签的选中项？</h2><pre><code class="javascript">$(&#39;[name=NameOfSelectedTag] :selected&#39;)
-</code></pre>
-<h2 id="Case3-jQuery-里的-each-是什么函数？你是如何使用它的？"><a href="#Case3-jQuery-里的-each-是什么函数？你是如何使用它的？" class="headerlink" title="Case3. jQuery 里的 each() 是什么函数？你是如何使用它的？"></a>Case3. jQuery 里的 each() 是什么函数？你是如何使用它的？</h2><p>each() 函数就像是 Java 里的一个 Iterator，它允许你遍历一个元素集合。你可以传一个函数给 each() 方法，被调用的 jQuery 对象会在其每个元素上执行传入的函数。</p>
-<pre><code class="javascript">$(&#39;[name=NameOfSelectedTag] :selected&#39;).each(function(selected) {
-    alert($(selected).text());
-});
-</code></pre>
-<h2 id="Case4-this-和-this-关键字在-jQuery-中有何不同？"><a href="#Case4-this-和-this-关键字在-jQuery-中有何不同？" class="headerlink" title="Case4.$(this) 和 this 关键字在 jQuery 中有何不同？"></a>Case4.$(this) 和 this 关键字在 jQuery 中有何不同？</h2><p>$(this) 返回一个 jQuery 对象，你可以对它调用多个 jQuery 方法</p>
-<p>而 this 代表当前元素，它是 JavaScript 关键词中的一个，表示上下文中的当前 DOM 元素。</p>
-<h2 id="Case5-你如何使用jQuery来提取一个HTML-标记的属性-例如-链接的href"><a href="#Case5-你如何使用jQuery来提取一个HTML-标记的属性-例如-链接的href" class="headerlink" title="Case5.你如何使用jQuery来提取一个HTML 标记的属性 例如. 链接的href?"></a>Case5.你如何使用jQuery来提取一个HTML 标记的属性 例如. 链接的href?</h2><pre><code class="javascript">$(&#39;a&#39;).each(function(){
-   alert($(this).attr(&#39;href&#39;));
-});
-</code></pre>
-<h2 id="Case6-jQuery中-detach-和-remove-方法的区别是什么"><a href="#Case6-jQuery中-detach-和-remove-方法的区别是什么" class="headerlink" title="Case6.jQuery中 detach() 和 remove() 方法的区别是什么?"></a>Case6.jQuery中 detach() 和 remove() 方法的区别是什么?</h2><p>尽管 detach() 和 remove() 方法都被用来移除一个DOM元素, 两者之间的主要不同在于 detach() 会保持对过去被解除元素的跟踪, 因此它可以被取消解除, 而 remove() 方法则会保持过去被移除对象的引用. </p>
-<h2 id="Case7-你如何利用jQuery来向一个元素中添加和移除CSS类"><a href="#Case7-你如何利用jQuery来向一个元素中添加和移除CSS类" class="headerlink" title="Case7.你如何利用jQuery来向一个元素中添加和移除CSS类?"></a>Case7.你如何利用jQuery来向一个元素中添加和移除CSS类?</h2><p>利用 addClass() 和 removeClass() 这两个 jQuery 方法。</p>
-<h2 id="Case8-使用-CDN-加载-jQuery-库的主要优势是什么"><a href="#Case8-使用-CDN-加载-jQuery-库的主要优势是什么" class="headerlink" title="Case8.使用 CDN 加载 jQuery 库的主要优势是什么 ?"></a>Case8.使用 CDN 加载 jQuery 库的主要优势是什么 ?</h2><ul>
-<li>节省服务器带宽</li>
-<li>更快的下载速度</li>
-<li>只需要下载一次。如果浏览器已经从同一个CDN下载类相同的 jQuery 版本, 那么它就不会再去下载它一次.</li>
-</ul>
-<h2 id="Case9-jQuery-get-和-jQuery-ajax-方法之间的区别是什么"><a href="#Case9-jQuery-get-和-jQuery-ajax-方法之间的区别是什么" class="headerlink" title="Case9.jQuery.get() 和 jQuery.ajax() 方法之间的区别是什么?"></a>Case9.jQuery.get() 和 jQuery.ajax() 方法之间的区别是什么?</h2><p>ajax() 方法更强大，更具可配置性, 让你可以指定等待多久，以及如何处理错误。get() 方法是一个只获取一些数据的专门化方法。</p>
-<h3 id="Case10-要是在一个-jQuery-事件处理程序里返回了-false-会怎样？"><a href="#Case10-要是在一个-jQuery-事件处理程序里返回了-false-会怎样？" class="headerlink" title="Case10. 要是在一个 jQuery 事件处理程序里返回了 false 会怎样？"></a>Case10. 要是在一个 jQuery 事件处理程序里返回了 false 会怎样？</h3><p>通常用于阻止事件向上冒泡。</p>
-<h3 id="Case11-哪种方式更高效：document-getElementbyId-“myId”-还是-“-myId”-？"><a href="#Case11-哪种方式更高效：document-getElementbyId-“myId”-还是-“-myId”-？" class="headerlink" title="Case11. 哪种方式更高效：document.getElementbyId(“myId”) 还是 $(“#myId”)？"></a>Case11. 哪种方式更高效：document.getElementbyId(“myId”) 还是 $(“#myId”)？</h3><p>第一种，因为它直接调用了 JavaScript 引擎。</p>
-<h2 id="Case12-当CDN上的jQuery文件不可用时，该怎么办？"><a href="#Case12-当CDN上的jQuery文件不可用时，该怎么办？" class="headerlink" title="Case12.当CDN上的jQuery文件不可用时，该怎么办？"></a>Case12.当CDN上的jQuery文件不可用时，该怎么办？</h2><pre><code class="javascript">&lt;script type=&quot;text/javascript&quot; language=&quot;Javascript&quot; src=&quot;http://ajax.aspnetcdn.com/ajax/jquery/jquery-1.4.1.min.js &quot;&gt;&lt;/script&gt;
-
-&lt;script type=&#39;text/javascript&#39;&gt;//&lt;![CDATA[
-if (typeof jQuery == &#39;undefined&#39;) {
-document.write(unescape(&quot;%3Cscript src=&#39;/Script/jquery-1.4.1.min.js&#39; type=&#39;text/javascript&#39; %3E%3C/script%3E&quot;));
-}//]]&gt;
-&lt;/script&gt;
-</code></pre>
-<h2 id="Case13-jQuery中的Delegate-函数有什么作用？"><a href="#Case13-jQuery中的Delegate-函数有什么作用？" class="headerlink" title="Case13.jQuery中的Delegate()函数有什么作用？"></a>Case13.jQuery中的Delegate()函数有什么作用？</h2><p>delegate()会在以下两个情况下使用到：</p>
-<ol>
-<li>如果你有一个父元素，需要给其下的子元素添加事件，这时你可以使用delegate()了，代码如下：</li>
-</ol>
-<pre><code class="javascript">$(&quot;ul&quot;).delegate(&quot;li&quot;, &quot;click&quot;, function(){
-    $(this).hide();
-});
-</code></pre>
-<p>2、当元素在当前页面中不可用时，可以使用delegate()</p>
-<h2 id="Case14-jQuery编码和解码URL？"><a href="#Case14-jQuery编码和解码URL？" class="headerlink" title="Case14.jQuery编码和解码URL？"></a>Case14.jQuery编码和解码URL？</h2><p>encodeURIComponent(url) and decodeURIComponent(url)</p>
-<h3 id="Case15-如何用jQuery禁用浏览器的前进后退按钮？"><a href="#Case15-如何用jQuery禁用浏览器的前进后退按钮？" class="headerlink" title="Case15. 如何用jQuery禁用浏览器的前进后退按钮？"></a>Case15. 如何用jQuery禁用浏览器的前进后退按钮？</h3><pre><code class="javascript">&lt;script type=&quot;text/javascript&quot; language=&quot;javascript&quot;&gt;
-$(document).ready(function() {
-     window.history.forward(1);    // 原理就是产生一个“前进”的动作，以抵消后退功能
-     //OR
-     window.history.forward(-1);
-});
-&lt;/script&gt;
-</code></pre>
-<h1 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h1><ul>
-<li><a href="http://www.jb51.net/article/85471.htm" target="_blank" rel="external">jQuery基础知识点总结(必看)</a></li>
-<li><a href="http://www.jb51.net/article/54745.htm" target="_blank" rel="external">jquery学习总结（超级详细）</a></li>
-<li><a href="http://www.cnblogs.com/mehjb/p/6095230.html" target="_blank" rel="external">最常见的 20 个 jQuery 面试问题及答案</a></li>
-<li><a href="http://www.cnblogs.com/vanone/p/5257157.html" target="_blank" rel="external">jQuery经典面试题及答案精选</a></li>
-</ul>
-]]></content>
-      
-        <categories>
-            
-            <category> 技术栈 </category>
-            
-        </categories>
-        
-        
-        <tags>
-            
-            <tag> JavaScript </tag>
-            
-        </tags>
-        
-    </entry>
-    
-    <entry>
       <title><![CDATA[es6]]></title>
       <url>/2017/12/04/%E5%89%8D%E7%AB%AF/%E6%A1%86%E6%9E%B6%E4%B8%8E%E7%BB%84%E4%BB%B6/es6/</url>
       <content type="html"><![CDATA[<p>ES6知识点整理。</p>
@@ -1211,8 +998,221 @@ process.on(&#39;unhandledRejection&#39;, function (err, p) { console.error(&#39;
     </entry>
     
     <entry>
+      <title><![CDATA[jquery]]></title>
+      <url>/2017/12/04/%E5%89%8D%E7%AB%AF/%E6%A1%86%E6%9E%B6%E4%B8%8E%E7%BB%84%E4%BB%B6/jquery/</url>
+      <content type="html"><![CDATA[<p>jquery知识点整理。</p>
+<p>jquery ajax没整理。</p>
+<a id="more"></a>
+<h1 id="知识点"><a href="#知识点" class="headerlink" title="知识点"></a>知识点</h1><h2 id=""><a href="#" class="headerlink" title="$()"></a>$()</h2><p>$()函数是JQuery函数的别名</p>
+<p>$()函数用于将任何对象包裹成jQuery对象</p>
+<h2 id="jQuery入口函数与Js入口函数的区别"><a href="#jQuery入口函数与Js入口函数的区别" class="headerlink" title="jQuery入口函数与Js入口函数的区别"></a>jQuery入口函数与Js入口函数的区别</h2><p>js入口函数指的是：window.onload = function(){};</p>
+<p>jQuery入口函数是：$(document).ready()</p>
+<table>
+<thead>
+<tr>
+<th>window.onload</th>
+<th></th>
+<th>$(document).ready()</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>必须等待网页中所有的内容加载完毕后（包括图片）才能执行</td>
+<td>执行时机</td>
+<td>网页中所有DOM结构绘制完毕后就执行，可能DOM元素关联的东西并没有加载完</td>
+</tr>
+<tr>
+<td>不能同时编写多个 ，出现多次会存在事件覆盖的问题。</td>
+<td>编写个数</td>
+<td>能同时编写多个</td>
+</tr>
+<tr>
+<td>无</td>
+<td>简化写法</td>
+<td>$(document).ready(function(){});可以简写成$(function(){});</td>
+</tr>
+<tr>
+<td>很差</td>
+<td>兼容性</td>
+<td>好</td>
+</tr>
+</tbody>
+</table>
+<h2 id="jQuery选择器"><a href="#jQuery选择器" class="headerlink" title="jQuery选择器"></a>jQuery选择器</h2><h3 id="基本选择器"><a href="#基本选择器" class="headerlink" title="基本选择器"></a>基本选择器</h3><ul>
+<li>ID选择器：#</li>
+<li>类选择器： .</li>
+<li>标签选择器： element</li>
+</ul>
+<h3 id="层级选择器"><a href="#层级选择器" class="headerlink" title="层级选择器"></a>层级选择器</h3><ul>
+<li>后代选择器：空格</li>
+<li>子代选择器：&gt;</li>
+</ul>
+<h3 id="基本过滤选择器"><a href="#基本过滤选择器" class="headerlink" title="基本过滤选择器"></a>基本过滤选择器</h3><p>索引号为index：<strong>:eq(index)</strong></p>
+<p>索引号为奇数：<strong>:odd</strong></p>
+<p>索引号为偶数：<strong>:even</strong></p>
+<h2 id="jQuery操作"><a href="#jQuery操作" class="headerlink" title="jQuery操作"></a>jQuery操作</h2><h3 id="筛选"><a href="#筛选" class="headerlink" title="筛选"></a>筛选</h3><p>查找指定元素的所有后代元素（子子孙孙）：find(selector)</p>
+<p>查找指定元素的直接子元素（亲儿子元素）：children()</p>
+<p>查找所有兄弟元素（不包括自己）：siblings()</p>
+<p>查找父元素（亲的）：parent()</p>
+<p>查找指定元素的第index个元素，index是索引号，从0开始：eq(index)</p>
+<h3 id="选择网页元素"><a href="#选择网页元素" class="headerlink" title="选择网页元素"></a>选择网页元素</h3><pre><code class="javascript">$(&#39;a:first&#39;)//选择网页中第一个a元素  
+$(&#39;tr:odd&#39;)//选择表格的奇数行  
+$(&#39;#myForm :input&#39;)//选择表单中的input元素  
+$(&#39;div:visible&#39;) //选择可见的div元素  
+$(&#39;div:gt(2)&#39;)//选择所有的div元素，除了前三个  
+$(&#39;div:animated&#39;)//选择当前处于动画状态的div元素
+</code></pre>
+<h3 id="改变结果集"><a href="#改变结果集" class="headerlink" title="改变结果集"></a>改变结果集</h3><pre><code class="javascript">$(&#39;div&#39;).has(&#39;p&#39;); //选择包含p元素的div元素  
+$(&#39;div&#39;).not(&#39;.myClass&#39;); //选择class不等于myClass的div元素  
+$(&#39;div&#39;).filter(&#39;.myClass&#39;); //选择class等于myClass的div元素  
+$(&#39;div&#39;).first(); //选择第1个div元素  
+$(&#39;div&#39;).eq(5); //选择第6个div元素  
+$(&#39;div&#39;).next(&#39;p&#39;); //选择div元素后面的第一个p元素  
+$(&#39;div&#39;).parent(); //选择div元素的父元素  
+$(&#39;div&#39;).closest(&#39;form&#39;); //选择离div最近的那个form父元素  
+$(&#39;div&#39;).children(); //选择div的所有子元素  
+$(&#39;div&#39;).siblings(); //选择div的同级元素
+</code></pre>
+<h3 id="链式操作"><a href="#链式操作" class="headerlink" title="链式操作"></a>链式操作</h3><p>.end()：回到最近的一个”破坏性”操作之前。如果之前没有破坏性操作，则返回一个空集。所谓的”破坏性”就是指任何改变所匹配的jQuery元素的操作。</p>
+<h3 id="元素的操作：取值和赋值"><a href="#元素的操作：取值和赋值" class="headerlink" title="元素的操作：取值和赋值"></a>元素的操作：取值和赋值</h3><p>常见的取值和赋值函数如下：</p>
+<ol>
+<li>html() 返回或设置被选元素的内容 (inner HTML)    </li>
+<li>text() 取出或设置text内容      </li>
+<li><strong>attr()</strong> 取出或设置某个属性的值    </li>
+<li>width() 取出或设置某个元素的宽度    </li>
+<li>height() 取出或设置某个元素的高度  </li>
+<li>val() 取出或设置html内容 取出某个表单元素的值  </li>
+<li>css() 设置css样式</li>
+</ol>
+<p>需要注意的是，如果结果集包含多个元素，那么赋值的时候，将对其中所有的元素赋值；取值的时候，则是只取出第一个元素的值（.text()例外，它取出所有元素的text内容）。</p>
+<h3 id="元素的操作：移动"><a href="#元素的操作：移动" class="headerlink" title="元素的操作：移动"></a>元素的操作：移动</h3><ol>
+<li>.insertAfter()和.after()：在现存元素的外部，从后面插入元素  </li>
+<li>.insertBefore()和.before()：在现存元素的外部，从前面插入元素  </li>
+<li>.appendTo()和.append()：在现存元素的内部，从后面插入元素  </li>
+<li>.prependTo()和.prepend()  ：在现存元素的内部，从前面插入元素</li>
+</ol>
+<h3 id="元素的操作：复制、删除和创建"><a href="#元素的操作：复制、删除和创建" class="headerlink" title="元素的操作：复制、删除和创建"></a>元素的操作：复制、删除和创建</h3><p>复制元素使用.clone()</p>
+<p>删除元素使用.remove()和.detach()。两者的区别在于，<strong>前者不保留被删除元素的事件，后者保留，有利于重新插入文档时使用。</strong></p>
+<p>清空元素内容（但是不删除该元素）使用.empty()。</p>
+<h3 id="工具方法"><a href="#工具方法" class="headerlink" title="工具方法"></a>工具方法</h3><p> $.trim() 去除字符串两端的空格。<br> $.each() 遍历一个数组或对象。<br> $.inArray() 返回一个值在数组中的索引位置。如果该值不在数组中，则返回-1。<br> $.grep() 返回数组中符合某种标准的元素。<br> $.extend() 将多个对象，合并到第一个对象。<br> $.makeArray() 将对象转化为数组。<br> $.type() 判断对象的类别（函数对象、日期对象、数组对象、正则对象等等）。<br> $.isArray() 判断某个参数是否为数组。<br> $.isEmptyObject() 判断某个对象是否为空（不含有任何属性）。<br> $.isFunction() 判断某个参数是否为函数。<br> $.isPlainObject() 判断某个参数是否为用”{}”或”new Object”建立的对象。<br> $.support() 判断浏览器是否支持某个特性。 </p>
+<h3 id="事件操作"><a href="#事件操作" class="headerlink" title="事件操作"></a>事件操作</h3><p> .blur() 表单元素失去焦点。<br> .change() 表单元素的值发生变化<br> .click() 鼠标单击<br> .dblclick() 鼠标双击<br> .focus() 表单元素获得焦点<br> .focusin() 子元素获得焦点<br> .focusout() 子元素失去焦点<br> .hover() 同时为mouseenter和mouseleave事件指定处理函数<br> .keydown() 按下键盘（长时间按键，只返回一个事件）<br> .keypress() 按下键盘（长时间按键，将返回多个事件）<br> .keyup() 松开键盘<br> .load() 元素加载完毕<br> .mousedown() 按下鼠标<br> .mouseenter() 鼠标进入（进入子元素不触发）<br> .mouseleave() 鼠标离开（离开子元素不触发）<br> .mousemove() 鼠标在元素内部移动<br> .mouseout() 鼠标离开（离开子元素也触发）<br> .mouseover() 鼠标进入（进入子元素也触发）<br> .mouseup() 松开鼠标<br> .ready() DOM加载完成<br> .resize() 浏览器窗口的大小发生改变<br> .scroll() 滚动条的位置发生变化<br> .select() 用户选中文本框中的内容<br> .submit() 用户递交表单<br> .toggle() 根据鼠标点击的次数，依次运行多个函数<br> .unload()  用户离开页面  </p>
+<p><strong>特别的</strong></p>
+<ul>
+<li>.bind()：以上这些事件在jQuery内部，都是.bind()的便捷方式。使用.bind()可以更灵活地控制事件</li>
+<li>.one()：只想让事件运行一次</li>
+<li>.unbind()：解除事件绑定</li>
+</ul>
+<p>所有的事件处理函数，都可以接受一个事件对象(event object)作为参数，这个事件对象有一些很有用的属性和方法：</p>
+<p>event.pageX 事件发生时，鼠标距离网页左上角的水平距离 　　<br>event.pageY 事件发生时，鼠标距离网页左上角的垂直距离<br>event.type 事件的类型（比如click） 　　<br>event.which 按下了哪一个键 　　<br>event.data在事件对象上绑定数据，然后传入事件处理函数 　　<br>event.target 事件针对的网页元素<br>event.preventDefault() 阻止事件的默认行为（比如点击链接，会自动打开新页面）<br>event.stopPropagation() 停止事件向上层元素冒泡</p>
+<p>有两种方法，可以自动触发一个事件。一种是直接使用事件函数，另一种是使用.trigger()或.triggerHandler()。</p>
+<pre><code class="javascript">$(&#39;a&#39;).click();
+$(&#39;a&#39;).trigger(&#39;click&#39;);
+</code></pre>
+<h3 id="特殊效果"><a href="#特殊效果" class="headerlink" title="特殊效果"></a>特殊效果</h3><p>.fadeIn() 淡入<br>.fadeOut() 淡出<br>.fadeTo() 调整透明度<br>.hide() 隐藏元素<br>.show() 显示元素<br>.slideDown() 向下展开<br>.slideUp() 向上卷起<br>.slideToggle() 依次展开或卷起某个元素<br>.toggle() 依次展示或隐藏某个元素</p>
+<p>除了.show()和.hide()，所有其他特效的默认执行时间都是400ms(毫秒)，但是你可以改变这个设置。</p>
+<p>更复杂的特效，可以用.animate()自定义。</p>
+<p>.stop()和.delay()用来停止或延缓特效的执行。</p>
+<p>$.fx.off如果设置为true，则关闭所有网页特效。</p>
+<p>几个常见的筛选选择器：</p>
+<p>filter()：筛选出与指定表达式匹配的元素集合。这个方法用于缩小匹配的范围。用逗号分隔多个表达式</p>
+<pre><code class="javascript">//保留子元素中不含有ol的元素。
+//&lt;p&gt;&lt;ol&gt;&lt;li&gt;Hello&lt;/li&gt;&lt;/ol&gt;&lt;/p&gt;&lt;p&gt;How are you?&lt;/p&gt;
+$(&quot;p&quot;).filter(function(index) {
+ return $(&quot;ol&quot;, this).length == 0;
+});
+//&lt;p&gt;How are you?&lt;/p&gt;
+</code></pre>
+<p>silce()：选取一个匹配的子集</p>
+<pre><code class="javascript">//选择第一个p元素
+//&lt;p&gt;Hello&lt;/p&gt;&lt;p&gt;cruel&lt;/p&gt;&lt;p&gt;World&lt;/p&gt;
+$(&quot;p&quot;).slice(0, 1).wrapInner(&quot;&lt;b&gt;&lt;/b&gt;&quot;);
+//&lt;p&gt;&lt;b&gt;Hello&lt;/b&gt;&lt;/p&gt;
+</code></pre>
+<h1 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h1><h2 id="Case1-jQuery对象和DOM对象的相互转换"><a href="#Case1-jQuery对象和DOM对象的相互转换" class="headerlink" title="Case1.jQuery对象和DOM对象的相互转换"></a>Case1.jQuery对象和DOM对象的相互转换</h2><pre><code class="javascript">var btn = document.getElementById(“btnShow”);
+var $btn = $(“#btnShow”); // $btn就是一个jQuery对象
+
+//DOM对象转换成jQuery对象
+var $btn1 = $(btn);
+
+//jQuery对象转换成DOM对象
+var btn1 = $btn[0]; 
+var btn2 = $btn.get(0);
+</code></pre>
+<h2 id="Case2-如何找到所有-HTML-select-标签的选中项？"><a href="#Case2-如何找到所有-HTML-select-标签的选中项？" class="headerlink" title="Case2.如何找到所有 HTML select 标签的选中项？"></a>Case2.如何找到所有 HTML select 标签的选中项？</h2><pre><code class="javascript">$(&#39;[name=NameOfSelectedTag] :selected&#39;)
+</code></pre>
+<h2 id="Case3-jQuery-里的-each-是什么函数？你是如何使用它的？"><a href="#Case3-jQuery-里的-each-是什么函数？你是如何使用它的？" class="headerlink" title="Case3. jQuery 里的 each() 是什么函数？你是如何使用它的？"></a>Case3. jQuery 里的 each() 是什么函数？你是如何使用它的？</h2><p>each() 函数就像是 Java 里的一个 Iterator，它允许你遍历一个元素集合。你可以传一个函数给 each() 方法，被调用的 jQuery 对象会在其每个元素上执行传入的函数。</p>
+<pre><code class="javascript">$(&#39;[name=NameOfSelectedTag] :selected&#39;).each(function(selected) {
+    alert($(selected).text());
+});
+</code></pre>
+<h2 id="Case4-this-和-this-关键字在-jQuery-中有何不同？"><a href="#Case4-this-和-this-关键字在-jQuery-中有何不同？" class="headerlink" title="Case4.$(this) 和 this 关键字在 jQuery 中有何不同？"></a>Case4.$(this) 和 this 关键字在 jQuery 中有何不同？</h2><p>$(this) 返回一个 jQuery 对象，你可以对它调用多个 jQuery 方法</p>
+<p>而 this 代表当前元素，它是 JavaScript 关键词中的一个，表示上下文中的当前 DOM 元素。</p>
+<h2 id="Case5-你如何使用jQuery来提取一个HTML-标记的属性-例如-链接的href"><a href="#Case5-你如何使用jQuery来提取一个HTML-标记的属性-例如-链接的href" class="headerlink" title="Case5.你如何使用jQuery来提取一个HTML 标记的属性 例如. 链接的href?"></a>Case5.你如何使用jQuery来提取一个HTML 标记的属性 例如. 链接的href?</h2><pre><code class="javascript">$(&#39;a&#39;).each(function(){
+   alert($(this).attr(&#39;href&#39;));
+});
+</code></pre>
+<h2 id="Case6-jQuery中-detach-和-remove-方法的区别是什么"><a href="#Case6-jQuery中-detach-和-remove-方法的区别是什么" class="headerlink" title="Case6.jQuery中 detach() 和 remove() 方法的区别是什么?"></a>Case6.jQuery中 detach() 和 remove() 方法的区别是什么?</h2><p>尽管 detach() 和 remove() 方法都被用来移除一个DOM元素, 两者之间的主要不同在于 detach() 会保持对过去被解除元素的跟踪, 因此它可以被取消解除, 而 remove() 方法则会保持过去被移除对象的引用. </p>
+<h2 id="Case7-你如何利用jQuery来向一个元素中添加和移除CSS类"><a href="#Case7-你如何利用jQuery来向一个元素中添加和移除CSS类" class="headerlink" title="Case7.你如何利用jQuery来向一个元素中添加和移除CSS类?"></a>Case7.你如何利用jQuery来向一个元素中添加和移除CSS类?</h2><p>利用 addClass() 和 removeClass() 这两个 jQuery 方法。</p>
+<h2 id="Case8-使用-CDN-加载-jQuery-库的主要优势是什么"><a href="#Case8-使用-CDN-加载-jQuery-库的主要优势是什么" class="headerlink" title="Case8.使用 CDN 加载 jQuery 库的主要优势是什么 ?"></a>Case8.使用 CDN 加载 jQuery 库的主要优势是什么 ?</h2><ul>
+<li>节省服务器带宽</li>
+<li>更快的下载速度</li>
+<li>只需要下载一次。如果浏览器已经从同一个CDN下载类相同的 jQuery 版本, 那么它就不会再去下载它一次.</li>
+</ul>
+<h2 id="Case9-jQuery-get-和-jQuery-ajax-方法之间的区别是什么"><a href="#Case9-jQuery-get-和-jQuery-ajax-方法之间的区别是什么" class="headerlink" title="Case9.jQuery.get() 和 jQuery.ajax() 方法之间的区别是什么?"></a>Case9.jQuery.get() 和 jQuery.ajax() 方法之间的区别是什么?</h2><p>ajax() 方法更强大，更具可配置性, 让你可以指定等待多久，以及如何处理错误。get() 方法是一个只获取一些数据的专门化方法。</p>
+<h3 id="Case10-要是在一个-jQuery-事件处理程序里返回了-false-会怎样？"><a href="#Case10-要是在一个-jQuery-事件处理程序里返回了-false-会怎样？" class="headerlink" title="Case10. 要是在一个 jQuery 事件处理程序里返回了 false 会怎样？"></a>Case10. 要是在一个 jQuery 事件处理程序里返回了 false 会怎样？</h3><p>通常用于阻止事件向上冒泡。</p>
+<h3 id="Case11-哪种方式更高效：document-getElementbyId-“myId”-还是-“-myId”-？"><a href="#Case11-哪种方式更高效：document-getElementbyId-“myId”-还是-“-myId”-？" class="headerlink" title="Case11. 哪种方式更高效：document.getElementbyId(“myId”) 还是 $(“#myId”)？"></a>Case11. 哪种方式更高效：document.getElementbyId(“myId”) 还是 $(“#myId”)？</h3><p>第一种，因为它直接调用了 JavaScript 引擎。</p>
+<h2 id="Case12-当CDN上的jQuery文件不可用时，该怎么办？"><a href="#Case12-当CDN上的jQuery文件不可用时，该怎么办？" class="headerlink" title="Case12.当CDN上的jQuery文件不可用时，该怎么办？"></a>Case12.当CDN上的jQuery文件不可用时，该怎么办？</h2><pre><code class="javascript">&lt;script type=&quot;text/javascript&quot; language=&quot;Javascript&quot; src=&quot;http://ajax.aspnetcdn.com/ajax/jquery/jquery-1.4.1.min.js &quot;&gt;&lt;/script&gt;
+
+&lt;script type=&#39;text/javascript&#39;&gt;//&lt;![CDATA[
+if (typeof jQuery == &#39;undefined&#39;) {
+document.write(unescape(&quot;%3Cscript src=&#39;/Script/jquery-1.4.1.min.js&#39; type=&#39;text/javascript&#39; %3E%3C/script%3E&quot;));
+}//]]&gt;
+&lt;/script&gt;
+</code></pre>
+<h2 id="Case13-jQuery中的Delegate-函数有什么作用？"><a href="#Case13-jQuery中的Delegate-函数有什么作用？" class="headerlink" title="Case13.jQuery中的Delegate()函数有什么作用？"></a>Case13.jQuery中的Delegate()函数有什么作用？</h2><p>delegate()会在以下两个情况下使用到：</p>
+<ol>
+<li>如果你有一个父元素，需要给其下的子元素添加事件，这时你可以使用delegate()了，代码如下：</li>
+</ol>
+<pre><code class="javascript">$(&quot;ul&quot;).delegate(&quot;li&quot;, &quot;click&quot;, function(){
+    $(this).hide();
+});
+</code></pre>
+<p>2、当元素在当前页面中不可用时，可以使用delegate()</p>
+<h2 id="Case14-jQuery编码和解码URL？"><a href="#Case14-jQuery编码和解码URL？" class="headerlink" title="Case14.jQuery编码和解码URL？"></a>Case14.jQuery编码和解码URL？</h2><p>encodeURIComponent(url) and decodeURIComponent(url)</p>
+<h3 id="Case15-如何用jQuery禁用浏览器的前进后退按钮？"><a href="#Case15-如何用jQuery禁用浏览器的前进后退按钮？" class="headerlink" title="Case15. 如何用jQuery禁用浏览器的前进后退按钮？"></a>Case15. 如何用jQuery禁用浏览器的前进后退按钮？</h3><pre><code class="javascript">&lt;script type=&quot;text/javascript&quot; language=&quot;javascript&quot;&gt;
+$(document).ready(function() {
+     window.history.forward(1);    // 原理就是产生一个“前进”的动作，以抵消后退功能
+     //OR
+     window.history.forward(-1);
+});
+&lt;/script&gt;
+</code></pre>
+<h1 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h1><ul>
+<li><a href="http://www.jb51.net/article/85471.htm" target="_blank" rel="external">jQuery基础知识点总结(必看)</a></li>
+<li><a href="http://www.jb51.net/article/54745.htm" target="_blank" rel="external">jquery学习总结（超级详细）</a></li>
+<li><a href="http://www.cnblogs.com/mehjb/p/6095230.html" target="_blank" rel="external">最常见的 20 个 jQuery 面试问题及答案</a></li>
+<li><a href="http://www.cnblogs.com/vanone/p/5257157.html" target="_blank" rel="external">jQuery经典面试题及答案精选</a></li>
+</ul>
+]]></content>
+      
+        <categories>
+            
+            <category> 技术栈 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> JavaScript </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[CSS]]></title>
-      <url>/2017/12/02/%E5%89%8D%E7%AB%AF/css/CSS/</url>
+      <url>/2017/12/02/%E5%89%8D%E7%AB%AF/%E5%9F%BA%E7%A1%80/css/CSS/</url>
       <content type="html"><![CDATA[<p>本文介绍CSS面试知识点。</p>
 <a id="more"></a>
 <h1 id="知识点"><a href="#知识点" class="headerlink" title="知识点"></a>知识点</h1><h2 id="布局"><a href="#布局" class="headerlink" title="布局"></a>布局</h2><h3 id="流动布局"><a href="#流动布局" class="headerlink" title="流动布局"></a>流动布局</h3><p>需了解实现块居中常见的几种方式</p>
@@ -1811,7 +1811,7 @@ db.collection.find({
     
     <entry>
       <title><![CDATA[http]]></title>
-      <url>/2017/12/01/%E5%89%8D%E7%AB%AF/javascript/http/</url>
+      <url>/2017/12/01/%E5%89%8D%E7%AB%AF/%E5%9F%BA%E7%A1%80/javascript/http/</url>
       <content type="html"><![CDATA[<p>本文介绍http。</p>
 <a id="more"></a>
 <h1 id="知识点"><a href="#知识点" class="headerlink" title="知识点"></a>知识点</h1><h2 id="TCP-IP协议族"><a href="#TCP-IP协议族" class="headerlink" title="TCP/IP协议族"></a>TCP/IP协议族</h2><p>TCP/IP协议族可以分为4层，分别是应用层、传输层、网络层和链路层。</p>
@@ -1969,7 +1969,7 @@ db.collection.find({
     
     <entry>
       <title><![CDATA[json]]></title>
-      <url>/2017/11/30/%E5%89%8D%E7%AB%AF/javascript/json/</url>
+      <url>/2017/11/30/%E5%89%8D%E7%AB%AF/%E5%9F%BA%E7%A1%80/javascript/json/</url>
       <content type="html"><![CDATA[<p>本文介绍json。</p>
 <a id="more"></a>
 <h1 id="知识点"><a href="#知识点" class="headerlink" title="知识点"></a>知识点</h1><h2 id="JSON是什么"><a href="#JSON是什么" class="headerlink" title="JSON是什么"></a>JSON是什么</h2><p>JSON(JavaScript Object Notation) 是一种轻量级的数据交换格式。它是基于JavaScript的一个子集。数据格式简单, 易于读写, 占用带宽小。是前后台数据交互最常见的一种数据格式。</p>
@@ -2053,7 +2053,7 @@ var obj = JSON.parse(str);
     
     <entry>
       <title><![CDATA[Ajax]]></title>
-      <url>/2017/11/30/%E5%89%8D%E7%AB%AF/javascript/Ajax/</url>
+      <url>/2017/11/30/%E5%89%8D%E7%AB%AF/%E5%9F%BA%E7%A1%80/javascript/Ajax/</url>
       <content type="html"><![CDATA[<p>本文介绍Ajax知识体系。</p>
 <p>参考一篇非常好的文章<a href="https://segmentfault.com/a/1190000008697448" target="_blank" rel="external">《Ajax知识体系大梳理》</a>，内容比较多，我就做一点关注点总结。</p>
 <a id="more"></a>
@@ -2385,7 +2385,7 @@ xhr.setRequestHeader(&quot;Cache-Control&quot;,&quot;no-cache&quot;);
     
     <entry>
       <title><![CDATA[内存泄漏]]></title>
-      <url>/2017/11/29/%E5%89%8D%E7%AB%AF/javascript/%E5%86%85%E5%AD%98%E6%B3%84%E6%BC%8F/</url>
+      <url>/2017/11/29/%E5%89%8D%E7%AB%AF/%E5%9F%BA%E7%A1%80/javascript/%E5%86%85%E5%AD%98%E6%B3%84%E6%BC%8F/</url>
       <content type="html"><![CDATA[<p>本文介绍事件内存泄漏</p>
 <a id="more"></a>
 <h1 id="知识点"><a href="#知识点" class="headerlink" title="知识点"></a>知识点</h1><h2 id="js的回收机制"><a href="#js的回收机制" class="headerlink" title="js的回收机制"></a>js的回收机制</h2><p>垃圾收集算法所依赖的主要概念之一就是内存引用。</p>
@@ -2454,7 +2454,7 @@ fn();
     
     <entry>
       <title><![CDATA[事件机制]]></title>
-      <url>/2017/11/29/%E5%89%8D%E7%AB%AF/javascript/%E4%BA%8B%E4%BB%B6%E6%9C%BA%E5%88%B6/</url>
+      <url>/2017/11/29/%E5%89%8D%E7%AB%AF/%E5%9F%BA%E7%A1%80/javascript/%E4%BA%8B%E4%BB%B6%E6%9C%BA%E5%88%B6/</url>
       <content type="html"><![CDATA[<p>本文介绍事件循环机制</p>
 <a id="more"></a>
 <h1 id="知识点"><a href="#知识点" class="headerlink" title="知识点"></a>知识点</h1><h2 id="事件流"><a href="#事件流" class="headerlink" title="事件流"></a>事件流</h2><h3 id="标准事件流"><a href="#标准事件流" class="headerlink" title="标准事件流"></a>标准事件流</h3><p>EMCAScript标准规定事件流包含三个阶段，分别为事件捕获阶段，处于目标阶段，事件冒泡阶段。</p>
@@ -2760,7 +2760,7 @@ textbox.fireEvent(&quot;onkeydown&quot;,event);
     
     <entry>
       <title><![CDATA[跨域]]></title>
-      <url>/2017/11/29/%E5%89%8D%E7%AB%AF/javascript/%E8%B7%A8%E5%9F%9F/</url>
+      <url>/2017/11/29/%E5%89%8D%E7%AB%AF/%E5%9F%BA%E7%A1%80/javascript/%E8%B7%A8%E5%9F%9F/</url>
       <content type="html"><![CDATA[<p>本文介绍面向对象的</p>
 <a id="more"></a>
 <h1 id="知识点"><a href="#知识点" class="headerlink" title="知识点"></a>知识点</h1><h2 id="同源策略"><a href="#同源策略" class="headerlink" title="同源策略"></a>同源策略</h2><p>页面请求的url地址，必须与浏览器上url地址处于同域上（即域名，端口，协议相同）。</p>
@@ -3054,7 +3054,7 @@ iframe.onload = function() {
     
     <entry>
       <title><![CDATA[闭包]]></title>
-      <url>/2017/11/28/%E5%89%8D%E7%AB%AF/javascript/%E9%97%AD%E5%8C%85/</url>
+      <url>/2017/11/28/%E5%89%8D%E7%AB%AF/%E5%9F%BA%E7%A1%80/javascript/%E9%97%AD%E5%8C%85/</url>
       <content type="html"><![CDATA[<p>本文介绍面向对象的</p>
 <a id="more"></a>
 <h1 id="闭包"><a href="#闭包" class="headerlink" title="闭包"></a>闭包</h1><h2 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h2><h3 id="闭包是什么？"><a href="#闭包是什么？" class="headerlink" title="闭包是什么？"></a>闭包是什么？</h3><p><strong>解释1</strong></p>
@@ -3479,7 +3479,7 @@ var c = fun(0).fun(1);  c.fun(2);  c.fun(3);//undefined,0,1,1
     
     <entry>
       <title><![CDATA[面向对象]]></title>
-      <url>/2017/11/28/%E5%89%8D%E7%AB%AF/javascript/%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1/</url>
+      <url>/2017/11/28/%E5%89%8D%E7%AB%AF/%E5%9F%BA%E7%A1%80/javascript/%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1/</url>
       <content type="html"><![CDATA[<p>本文介绍面向对象的</p>
 <a id="more"></a>
 <h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><h2 id="创建对象"><a href="#创建对象" class="headerlink" title="创建对象"></a>创建对象</h2><h3 id="方法一：Object"><a href="#方法一：Object" class="headerlink" title="方法一：Object()"></a>方法一：Object()</h3><h3 id="方法二：对象字面量"><a href="#方法二：对象字面量" class="headerlink" title="方法二：对象字面量"></a>方法二：对象字面量</h3><p><strong>Case</strong></p>
@@ -3586,7 +3586,7 @@ Sub.prototype.bar = function(){console.log(&#39;Function of Sub.prototype&#39;);
     
     <entry>
       <title><![CDATA[作用域]]></title>
-      <url>/2017/11/28/%E5%89%8D%E7%AB%AF/javascript/%E4%BD%9C%E7%94%A8%E5%9F%9F/</url>
+      <url>/2017/11/28/%E5%89%8D%E7%AB%AF/%E5%9F%BA%E7%A1%80/javascript/%E4%BD%9C%E7%94%A8%E5%9F%9F/</url>
       <content type="html"><![CDATA[<p>本文介绍面向对象的</p>
 <a id="more"></a>
 <h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>其实作用域很简单，搞清楚以下几点：</p>
@@ -3768,7 +3768,7 @@ with(person.wife){
     
     <entry>
       <title><![CDATA[逗号、冒号与括号]]></title>
-      <url>/2017/11/27/%E5%89%8D%E7%AB%AF/javascript/%E9%80%97%E5%8F%B7%E3%80%81%E5%86%92%E5%8F%B7%E4%B8%8E%E6%8B%AC%E5%8F%B7/</url>
+      <url>/2017/11/27/%E5%89%8D%E7%AB%AF/%E5%9F%BA%E7%A1%80/javascript/%E9%80%97%E5%8F%B7%E3%80%81%E5%86%92%E5%8F%B7%E4%B8%8E%E6%8B%AC%E5%8F%B7/</url>
       <content type="html"><![CDATA[<p>有看见一些很好的博文做这点，感觉有必要对这些坑总结记录一下。</p>
 <a id="more"></a>
 <h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><h2 id="逗号"><a href="#逗号" class="headerlink" title="逗号"></a>逗号</h2><p><strong>连续声明一些变量</strong></p>
@@ -3869,7 +3869,7 @@ var jsonObj=eval(&#39;(&#39; + jsonStr + &#39;)&#39;);
     
     <entry>
       <title><![CDATA[表达式与运算符]]></title>
-      <url>/2017/11/26/%E5%89%8D%E7%AB%AF/javascript/%E8%A1%A8%E8%BE%BE%E5%BC%8F%E4%B8%8E%E8%BF%90%E7%AE%97%E7%AC%A6/</url>
+      <url>/2017/11/26/%E5%89%8D%E7%AB%AF/%E5%9F%BA%E7%A1%80/javascript/%E8%A1%A8%E8%BE%BE%E5%BC%8F%E4%B8%8E%E8%BF%90%E7%AE%97%E7%AC%A6/</url>
       <content type="html"><![CDATA[<p>这篇文章整理一些表达式和运算符的点和坑。</p>
 <p>工作和面试中总会碰到相关问题，但如果不进行分类总结，可能还会探雷。</p>
 <a id="more"></a>
@@ -4222,7 +4222,7 @@ result=匿名函数();//返回匿名函数的执行结果
     
     <entry>
       <title><![CDATA[数据类型]]></title>
-      <url>/2017/11/26/%E5%89%8D%E7%AB%AF/javascript/%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/</url>
+      <url>/2017/11/26/%E5%89%8D%E7%AB%AF/%E5%9F%BA%E7%A1%80/javascript/%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/</url>
       <content type="html"><![CDATA[<p>这篇文章整理一些数据类型的点和坑。</p>
 <a id="more"></a>
 <h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><h2 id="基本数据类型"><a href="#基本数据类型" class="headerlink" title="基本数据类型"></a>基本数据类型</h2><p>String、boolean、Number、undefined、null</p>
@@ -4433,26 +4433,28 @@ new Number(1) instanceof Number; //true
     
     <entry>
       <title><![CDATA[HTML基础]]></title>
-      <url>/2017/11/26/%E5%89%8D%E7%AB%AF/HTML/HTML%E5%9F%BA%E7%A1%80/</url>
-      <content type="html"><![CDATA[<p>本文总结一些HTML基础知识。</p>
-<p>HTML一些基础知识看似简单，但实际在解释中可能会get不到点。因此做一个整理。</p>
+      <url>/2017/11/26/%E5%89%8D%E7%AB%AF/%E5%9F%BA%E7%A1%80/HTML/HTML%E5%9F%BA%E7%A1%80/</url>
+      <content type="html"><![CDATA[<p>HTML基础概念。</p>
 <a id="more"></a>
-<h1 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h1><h2 id="对Web标准的理解"><a href="#对Web标准的理解" class="headerlink" title="对Web标准的理解"></a>对Web标准的理解</h2><p>网页主要由三部分组成：结构、表现和行为。对应的标准也分三方面：结构化标准语言主要包括XHTML和HTML以及XML，表现标准语言主要包括CSS，行为标准主要包括对象模型（如W3C DOM）、ECMAScript等。这些标准大部分由W3C起草和发布，也有一些是其他标准组织制订的标准。</p>
-<p>W3C对web标准提出了规范化的要求，也就是在实际编程中的一些代码规范：包含如下几点</p>
-<p>1.对于结构要求：（标签规范可以提高搜索引擎对页面的抓取效率，对SEO很有帮助）</p>
-<p>1）标签字母要小写</p>
-<p>2）标签要闭合</p>
-<p>3）标签不允许随意嵌套</p>
-<p>2.对于css和js来说</p>
-<p>1）尽量使用外链css样式表和js脚本。是结构、表现和行为分为三块，符合规范。同时提高页面渲染速度，提高用户的体验。</p>
-<p>2）样式尽量少用行间样式表，使结构与表现分离，标签的id和class等属性命名要做到见文知义，标签越少，加载越快，用户体验提高，代码维护简单，便于改版</p>
-<p>3）不需要变动页面内容，便可提供打印版本而不需要复制内容，提高网站易用性。</p>
-<h2 id="浏览器内核"><a href="#浏览器内核" class="headerlink" title="浏览器内核"></a>浏览器内核</h2><h3 id="浏览器内核的理解"><a href="#浏览器内核的理解" class="headerlink" title="浏览器内核的理解"></a>浏览器内核的理解</h3><p>主要分成两个部分：渲染引擎(Render Engine)和JS引擎。</p>
-<p><strong>渲染引擎</strong>：负责取得网页的内容(html,xml和图像等)，整理讯息(例如假如css)，以及计算网页的显示方式，然后输出到显示器或打印机。浏览器的内核的不同对于网页的语法解释会有不同，所以渲染的效果也不同。所有网页浏览器、电子邮件客户端以及它需要编辑、显示网络内容的应用程序都需要内核。</p>
-<p><strong>JS引擎</strong>：解析和执行JavaScript来实现网页的动态效果。</p>
-<p>最开始渲染引擎和JS引擎并没有区分的很明确，后来JS引擎越来越独立，内核就倾向与只指渲染引擎。</p>
-<p><strong>常见的浏览器内核有哪些？</strong></p>
+<h1 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h1><h2 id="对Web标准的理解"><a href="#对Web标准的理解" class="headerlink" title="对Web标准的理解"></a>对Web标准的理解</h2><p>W3C对web标准提出了规范化的要求：</p>
+<ol>
+<li>对于结构要求：<ul>
+<li>标签字母要小写</li>
+<li>标签要闭合</li>
+<li>标签不允许随意嵌套</li>
+</ul>
+</li>
+<li>对于css和js来说</li>
+</ol>
 <ul>
+<li>尽量使用外链css样式表和js脚本。</li>
+</ul>
+<ul>
+<li>样式尽量少用行间样式表，使结构与表现分离，标签的id和class等属性命名要做到见文知义，标签越少，加载越快。</li>
+<li>不需要变动页面内容，便可提供打印版本而不需要复制内容，提高网站易用性。</li>
+</ul>
+<h2 id="浏览器内核"><a href="#浏览器内核" class="headerlink" title="浏览器内核"></a>浏览器内核</h2><h3 id="浏览器内核的理解"><a href="#浏览器内核的理解" class="headerlink" title="浏览器内核的理解"></a>浏览器内核的理解</h3><p>主要分成两个部分：渲染引擎(Render Engine)和JS引擎。</p>
+<h3 id="常见的浏览器内核有哪些？"><a href="#常见的浏览器内核有哪些？" class="headerlink" title="常见的浏览器内核有哪些？"></a>常见的浏览器内核有哪些？</h3><ul>
 <li>Trident内核：IE，360，搜过浏览器；</li>
 <li>Gecko内核：Netscape6及以上版本，Mozilla FireFox(火狐浏览器)</li>
 <li>Presto内核：Opera</li>
@@ -4461,10 +4463,10 @@ new Number(1) instanceof Number; //true
 </ul>
 <p><strong>优缺点：</strong></p>
 <ul>
-<li><strong>Trident内核</strong>：Trident内核和W3C标准脱节，Trident内核的大量Bug等安全问题没有得到解决，占有大量的市场份额</li>
-<li><strong>Presto内核</strong>：Presto内核被称为公认的浏览网页速度最快的内核，这得益于它在开发时的天生优势，在处理JS脚本等脚本语言时，会比其他的内核快3倍左右，缺点就是为了达到很快的   速度而丢掉了一部分网页兼容性。</li>
-<li><strong>Gecko内核</strong>：优点就是功能强大、丰富，可以支持很多复杂网页效果和浏览器扩展接口，但是代价是也显而易见就是要消耗很多的资源，比如内存。</li>
-<li><strong>Webkit内核</strong>：优点就是网页浏览速度较快，虽然不及 Presto 但是也胜于 Gecko 和 Trident，缺点是对于网页代码的容错性不高，也就是说对网页代码的兼容性较低，会使一些编写不标准的网页无法正确显示。</li>
+<li><strong>Trident内核</strong>：和W3C标准脱节，大量Bug等安全问题</li>
+<li><strong>Presto内核</strong>：速度最快，缺点是兼容性。</li>
+<li><strong>Gecko内核</strong>：功能强大，消耗很多的资源。</li>
+<li><strong>Webkit内核</strong>：速度较快，兼容性较低</li>
 </ul>
 <h2 id="HTML语义化"><a href="#HTML语义化" class="headerlink" title="HTML语义化"></a>HTML语义化</h2><h3 id="什么是HTML语义化"><a href="#什么是HTML语义化" class="headerlink" title="什么是HTML语义化"></a>什么是HTML语义化</h3><p>1、让开发者阅读和写出更优雅的代码<br>2、让浏览器的爬虫和机器很好的解析</p>
 <h3 id="为什么要语义化"><a href="#为什么要语义化" class="headerlink" title="为什么要语义化"></a>为什么要语义化</h3><ul>
@@ -4522,7 +4524,7 @@ new Number(1) instanceof Number; //true
     
     <entry>
       <title><![CDATA[Apply, call and bind]]></title>
-      <url>/2017/11/26/%E5%89%8D%E7%AB%AF/javascript/Apply,%20call%20and%20bind/</url>
+      <url>/2017/11/26/%E5%89%8D%E7%AB%AF/%E5%9F%BA%E7%A1%80/javascript/Apply,%20call%20and%20bind/</url>
       <content type="html"><![CDATA[<p>这篇文章介绍Apply, call and bind的概念和常用方法。</p>
 <a id="more"></a>
 <h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><h2 id="this"><a href="#this" class="headerlink" title="this"></a>this</h2><h3 id="this指向"><a href="#this指向" class="headerlink" title="this指向"></a>this指向</h3><p><code>this</code>的指向就是我们这里所说的<strong>执行上下文（执行环境）</strong></p>
@@ -4872,7 +4874,7 @@ slice(arguments);
     
     <entry>
       <title><![CDATA[继承、封装、多态]]></title>
-      <url>/2017/11/25/%E5%89%8D%E7%AB%AF/javascript/%E7%BB%A7%E6%89%BF/</url>
+      <url>/2017/11/25/%E5%89%8D%E7%AB%AF/%E5%9F%BA%E7%A1%80/javascript/%E7%BB%A7%E6%89%BF/</url>
       <content type="html"><![CDATA[<p>本文介绍继承的写法，参考《JS高程》。<br>封装、多态待补。</p>
 <a id="more"></a>
 <h1 id="继承"><a href="#继承" class="headerlink" title="继承"></a>继承</h1><h2 id="借用构造函数继承"><a href="#借用构造函数继承" class="headerlink" title="借用构造函数继承"></a>借用构造函数继承</h2><pre><code class="javascript">function Parent0(){
@@ -5133,8 +5135,81 @@ class Child1 extends Parent {
     </entry>
     
     <entry>
+      <title><![CDATA[前端大纲]]></title>
+      <url>/2017/11/01/%E5%89%8D%E7%AB%AF/%E5%89%8D%E7%AB%AF%E5%A4%A7%E7%BA%B2/</url>
+      <content type="html"><![CDATA[<p>做总结有三个目的：</p>
+<ul>
+<li>想成为前端架构师，还有哪些坑要填</li>
+<li>对所学的知识做一个总结</li>
+<li>由浅入深，记录自己的学习，内在源动力</li>
+</ul>
+<blockquote>
+<p>最好能做成一个可扩展的思维导图，并附上链接，做成一颗技能树</p>
+</blockquote>
+<a id="more"></a>
+<h1 id="结构层-HTML"><a href="#结构层-HTML" class="headerlink" title="结构层(HTML)"></a>结构层(HTML)</h1><p><a href="https://janebt.github.io/2017/11/26/HTML_Foundation/">对WEB标准的理解</a></p>
+<p><a href="https://janebt.github.io/2017/11/26/HTML_Foundation/">浏览器内核差异</a></p>
+<p><a href="https://janebt.github.io/2017/11/01/HTML5/">HTML5新特性及应用</a></p>
+<h1 id="表示层-CSS"><a href="#表示层-CSS" class="headerlink" title="表示层(CSS)"></a>表示层(CSS)</h1><p>布局</p>
+<p>盒子模型</p>
+<p>选择器优先级及使用</p>
+<p>CSS3新特性及应用</p>
+<p>兼容性</p>
+<p>Hack</p>
+<p>移动端适应</p>
+<h1 id="行为层-JavaScript"><a href="#行为层-JavaScript" class="headerlink" title="行为层(JavaScript)"></a>行为层(JavaScript)</h1><p><a href="https://janebt.github.io/2017/11/25/JsDataType/">数据类型</a></p>
+<p><a href="">面向对象</a></p>
+<p><a href="">作用域</a></p>
+<p><a href="https://janebt.github.io/2017/11/01/JSPrototype/">原型链</a></p>
+<p><a href="https://janebt.github.io/2017/11/25/JSInheritance/">继承、封装、多态</a></p>
+<p><a href="https://janebt.github.io/2017/11/26/Apply,%20call%20and%20bind/">Apply, call and bind</a></p>
+<p><a href="">闭包</a></p>
+<p>插件</p>
+<p><a href="">跨域</a></p>
+<p>模块化</p>
+<p><a href="">事件机制</a></p>
+<p>自定义事件</p>
+<p><a href="">内存泄漏</a></p>
+<p>异步装载回调</p>
+<p>模版引擎</p>
+<p><a href="">Ajax</a></p>
+<p>Jquery</p>
+<p><a href="">JSON</a></p>
+<p>Nodejs</p>
+<p><a href="">ES6</a></p>
+<h1 id="进阶"><a href="#进阶" class="headerlink" title="进阶"></a>进阶</h1><p>优化</p>
+<p>交互</p>
+<p>响应式</p>
+<p><a href="">HTTP</a></p>
+<p><a href="">WEB安全</a></p>
+<p>重构</p>
+<p>SEO</p>
+<p>UED</p>
+<p>架构</p>
+<p>后端</p>
+<p>移动端</p>
+<h1 id="补充"><a href="#补充" class="headerlink" title="补充"></a>补充</h1><p><a href="https://janebt.github.io/2017/11/2017-11-26-22/">表达式与运算符</a></p>
+<p><a href="">逗号、冒号与括号</a></p>
+]]></content>
+      
+        <categories>
+            
+            <category> 大前端 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> 前端 </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[原型与原型链]]></title>
-      <url>/2017/11/01/%E5%89%8D%E7%AB%AF/javascript/%E5%8E%9F%E5%9E%8B%E4%B8%8E%E5%8E%9F%E5%9E%8B%E9%93%BE/</url>
+      <url>/2017/11/01/%E5%89%8D%E7%AB%AF/%E5%9F%BA%E7%A1%80/javascript/%E5%8E%9F%E5%9E%8B%E4%B8%8E%E5%8E%9F%E5%9E%8B%E9%93%BE/</url>
       <content type="html"><![CDATA[<p>本文介绍原型和原型链的概念，参考多篇热门博客，持续总结和更新思想。</p>
 <a id="more"></a>
 <h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><h2 id="proto"><a href="#proto" class="headerlink" title="_proto_"></a><code>_proto_</code></h2><p>任何一个对象Object都有<em>proto</em>，它是每一个对象的私有属性，是天生自带的。</p>
@@ -5288,7 +5363,7 @@ Function.prototype.__proto__ === Object.prototype; // true
     
     <entry>
       <title><![CDATA[HTML5总结]]></title>
-      <url>/2017/11/01/%E5%89%8D%E7%AB%AF/HTML/HTML5/</url>
+      <url>/2017/11/01/%E5%89%8D%E7%AB%AF/%E5%9F%BA%E7%A1%80/HTML/HTML5/</url>
       <content type="html"><![CDATA[<p>这篇文章介绍H5的概念和考察方法。</p>
 <p>后续补上demo。</p>
 <a id="more"></a>
@@ -5891,85 +5966,6 @@ Response.Flush()
     </entry>
     
     <entry>
-      <title><![CDATA[前端大纲]]></title>
-      <url>/2017/11/01/%E5%89%8D%E7%AB%AF/%E5%89%8D%E7%AB%AF%E5%A4%A7%E7%BA%B2/</url>
-      <content type="html"><![CDATA[<p>做总结有三个目的：</p>
-<ul>
-<li>想成为前端架构师，还有哪些坑要填</li>
-<li>对所学的知识做一个总结：为什么学的东西很多，但是倒不出来</li>
-<li>由浅入深，记录自己的学习，内在源动力</li>
-</ul>
-<blockquote>
-<p>PS：由于结构目录经常改变，很多内容不贴链接了。</p>
-</blockquote>
-<a id="more"></a>
-<h1 id="结构层-HTML"><a href="#结构层-HTML" class="headerlink" title="结构层(HTML)"></a>结构层(HTML)</h1><p><a href="https://janebt.github.io/2017/11/26/HTML_Foundation/">对WEB标准的理解</a></p>
-<p><a href="https://janebt.github.io/2017/11/26/HTML_Foundation/">浏览器内核差异</a></p>
-<p><a href="https://janebt.github.io/2017/11/01/HTML5/">HTML5新特性及应用</a></p>
-<h1 id="表示层-CSS"><a href="#表示层-CSS" class="headerlink" title="表示层(CSS)"></a>表示层(CSS)</h1><p>布局</p>
-<p>盒子模型</p>
-<p>选择器优先级及使用</p>
-<p>CSS3新特性及应用</p>
-<p>兼容性</p>
-<p>Hack</p>
-<p>移动端适应</p>
-<h1 id="行为层-JavaScript"><a href="#行为层-JavaScript" class="headerlink" title="行为层(JavaScript)"></a>行为层(JavaScript)</h1><p><a href="https://janebt.github.io/2017/11/25/JsDataType/">数据类型</a></p>
-<p><a href="">面向对象</a></p>
-<p><a href="">作用域</a></p>
-<p><a href="https://janebt.github.io/2017/11/01/JSPrototype/">原型链</a></p>
-<p><a href="https://janebt.github.io/2017/11/25/JSInheritance/">继承、封装、多态</a></p>
-<p><a href="https://janebt.github.io/2017/11/26/Apply,%20call%20and%20bind/">Apply, call and bind</a></p>
-<p><a href="">闭包</a></p>
-<p>插件</p>
-<p><a href="">跨域</a></p>
-<p>模块化</p>
-<p><a href="">事件机制</a></p>
-<p>自定义事件</p>
-<p><a href="">内存泄漏</a></p>
-<p>异步装载回调</p>
-<p>模版引擎</p>
-<p><a href="">Ajax</a></p>
-<p>Jquery</p>
-<p><a href="">JSON</a></p>
-<p>Nodejs</p>
-<p><a href="">ES6</a></p>
-<h1 id="进阶"><a href="#进阶" class="headerlink" title="进阶"></a>进阶</h1><p>优化</p>
-<p>交互</p>
-<p>响应式</p>
-<p><a href="">HTTP</a></p>
-<p><a href="">WEB安全</a></p>
-<p>重构</p>
-<p>SEO</p>
-<p>UED</p>
-<p>架构</p>
-<p>后端</p>
-<p>移动端</p>
-<h1 id="补充"><a href="#补充" class="headerlink" title="补充"></a>补充</h1><p><a href="https://janebt.github.io/2017/11/2017-11-26-22/">表达式与运算符</a></p>
-<p><a href="">逗号、冒号与括号</a></p>
-]]></content>
-      
-        <categories>
-            
-            <category> 技术栈 </category>
-            
-        </categories>
-        
-        
-        <tags>
-            
-            <tag> 前端 </tag>
-            
-            <tag> JavaScript </tag>
-            
-            <tag> HTML </tag>
-            
-            <tag> CSS </tag>
-            
-        </tags>
-        
-    </entry>
-    
-    <entry>
       <title><![CDATA[webpack篇]]></title>
       <url>/2017/10/02/%E5%89%8D%E7%AB%AF/%E6%9E%84%E5%BB%BA%E7%94%9F%E6%80%81/webpack%E7%AF%87/</url>
       <content type="html"><![CDATA[<p>本文介绍webpack结构</p>
@@ -6144,7 +6140,7 @@ var baseConfig = {
     
     <entry>
       <title><![CDATA[Less语言特性]]></title>
-      <url>/2017/10/02/%E5%89%8D%E7%AB%AF/html%E3%80%81css%E4%B8%8E%E9%87%8D%E6%9E%84/Less%E8%AF%AD%E8%A8%80%E7%89%B9%E6%80%A7/</url>
+      <url>/2017/10/02/%E5%89%8D%E7%AB%AF/%E6%9E%84%E5%BB%BA%E7%94%9F%E6%80%81/Less%E8%AF%AD%E8%A8%80%E7%89%B9%E6%80%A7/</url>
       <content type="html"><![CDATA[<p>本文介绍Less语言特性</p>
 <a id="more"></a>
 <h1 id="Less语言特性"><a href="#Less语言特性" class="headerlink" title="Less语言特性"></a>Less语言特性</h1><h2 id="概念总结"><a href="#概念总结" class="headerlink" title="概念总结"></a>概念总结</h2><h3 id="1-变量"><a href="#1-变量" class="headerlink" title="1.变量"></a>1.变量</h3><ul>
@@ -6765,7 +6761,7 @@ h1 { color: green; }
     
     <entry>
       <title><![CDATA[剑指offer]]></title>
-      <url>/2017/10/02/%E9%9D%A2%E8%AF%95/%E5%89%91%E6%8C%87offer/</url>
+      <url>/2017/01/02/%E9%9D%A2%E8%AF%95/%E7%AE%97%E6%B3%95/%E5%89%91%E6%8C%87offer/</url>
       <content type="html"><![CDATA[<p>剑指offer一刷留念</p>
 <a id="more"></a>
 <h1 id="剑指offer"><a href="#剑指offer" class="headerlink" title="剑指offer"></a>剑指offer</h1><blockquote>

@@ -1,0 +1,1383 @@
+<!DOCTYPE html>
+<html style="display: none;" lang="zh">
+    <head>
+    <meta charset="utf-8">
+    <!--
+        © Material Theme
+        https://github.com/viosey/hexo-theme-material
+        Version: 1.5.0 -->
+    <script>
+        window.materialVersion = "1.5.0"
+        // Delete localstorage with these tags
+        window.oldVersion = [
+            'codestartv1',
+            '1.3.4',
+            '1.4.0',
+            '1.4.0b1'
+        ]
+    </script>
+
+    <!-- dns prefetch -->
+    <meta http-equiv="x-dns-prefetch-control" content="on">
+
+    <link rel="dns-prefetch" href="https://cdn.jsdelivr.net/npm/hexo-material@1.4.0/source"/>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <!-- Title -->
+    
+    <title>
+        
+            Ajax | 
+        
+        Jane&#39;s blog
+    </title>
+
+    <!-- Meta & Info -->
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="format-detection" content="telephone=no"/>
+    <meta name="theme-color" content="#0097A7">
+    <meta name="author" content="jane">
+    <meta name="description" itemprop="description" content="本文介绍Ajax知识体系。
+参考一篇非常好的文章《Ajax知识体系大梳理》，内容比较多，我就做一点关注点总结。">
+    <meta name="keywords" content="jane, blog, hexo, Web, 博客,JavaScript">
+
+    <!-- Import lsloader -->
+    <script>(function(){window.lsloader={jsRunSequence:[],jsnamemap:{},cssnamemap:{}};lsloader.removeLS=function(key){try{localStorage.removeItem(key)}catch(e){}};lsloader.setLS=function(key,val){try{localStorage.setItem(key,val)}catch(e){}};lsloader.getLS=function(key){var val="";try{val=localStorage.getItem(key)}catch(e){val=""}return val};versionString="/*"+(window.materialVersion||"unknownVersion")+"*/";lsloader.clean=function(){try{var keys=[];for(var i=0;i<localStorage.length;i++){keys.push(localStorage.key(i))}keys.forEach(function(key){var data=lsloader.getLS(key);if(window.oldVersion){var remove=window.oldVersion.reduce(function(p,c){return p||data.indexOf("/*"+c+"*/")!==-1},false);if(remove){lsloader.removeLS(key)}}})}catch(e){}};lsloader.clean();lsloader.load=function(jsname,jspath,cssonload,isJs){if(typeof cssonload==="boolean"){isJs=cssonload;cssonload=undefined}isJs=isJs||false;cssonload=cssonload||function(){};var code;code=this.getLS(jsname);if(code&&code.indexOf(versionString)===-1){this.removeLS(jsname);this.requestResource(jsname,jspath,cssonload,isJs);return}if(code){var versionNumber=code.split(versionString)[0];if(versionNumber!=jspath){console.log("reload:"+jspath);this.removeLS(jsname);this.requestResource(jsname,jspath,cssonload,isJs);return}code=code.split(versionString)[1];if(isJs){this.jsRunSequence.push({name:jsname,code:code});this.runjs(jspath,jsname,code)}else{document.getElementById(jsname).appendChild(document.createTextNode(code));cssonload()}}else{this.requestResource(jsname,jspath,cssonload,isJs)}};lsloader.requestResource=function(name,path,cssonload,isJs){var that=this;if(isJs){this.iojs(path,name,function(path,name,code){that.setLS(name,path+versionString+code);that.runjs(path,name,code)})}else{this.iocss(path,name,function(code){document.getElementById(name).appendChild(document.createTextNode(code));that.setLS(name,path+versionString+code)},cssonload)}};lsloader.iojs=function(path,jsname,callback){var that=this;that.jsRunSequence.push({name:jsname,code:""});try{var xhr=new XMLHttpRequest;xhr.open("get",path,true);xhr.onreadystatechange=function(){if(xhr.readyState==4){if(xhr.status>=200&&xhr.status<300||xhr.status==304){if(xhr.response!=""){callback(path,jsname,xhr.response);return}}that.jsfallback(path,jsname)}};xhr.send(null)}catch(e){that.jsfallback(path,jsname)}};lsloader.iocss=function(path,jsname,callback,cssonload){var that=this;try{var xhr=new XMLHttpRequest;xhr.open("get",path,true);xhr.onreadystatechange=function(){if(xhr.readyState==4){if(xhr.status>=200&&xhr.status<300||xhr.status==304){if(xhr.response!=""){callback(xhr.response);cssonload();return}}that.cssfallback(path,jsname,cssonload)}};xhr.send(null)}catch(e){that.cssfallback(path,jsname,cssonload)}};lsloader.iofonts=function(path,jsname,callback,cssonload){var that=this;try{var xhr=new XMLHttpRequest;xhr.open("get",path,true);xhr.onreadystatechange=function(){if(xhr.readyState==4){if(xhr.status>=200&&xhr.status<300||xhr.status==304){if(xhr.response!=""){callback(xhr.response);cssonload();return}}that.cssfallback(path,jsname,cssonload)}};xhr.send(null)}catch(e){that.cssfallback(path,jsname,cssonload)}};lsloader.runjs=function(path,name,code){if(!!name&&!!code){for(var k in this.jsRunSequence){if(this.jsRunSequence[k].name==name){this.jsRunSequence[k].code=code}}}if(!!this.jsRunSequence[0]&&!!this.jsRunSequence[0].code&&this.jsRunSequence[0].status!="failed"){var script=document.createElement("script");script.appendChild(document.createTextNode(this.jsRunSequence[0].code));script.type="text/javascript";document.getElementsByTagName("head")[0].appendChild(script);this.jsRunSequence.shift();if(this.jsRunSequence.length>0){this.runjs()}}else if(!!this.jsRunSequence[0]&&this.jsRunSequence[0].status=="failed"){var that=this;var script=document.createElement("script");script.src=this.jsRunSequence[0].path;script.type="text/javascript";this.jsRunSequence[0].status="loading";script.onload=function(){that.jsRunSequence.shift();if(that.jsRunSequence.length>0){that.runjs()}};document.body.appendChild(script)}};lsloader.tagLoad=function(path,name){this.jsRunSequence.push({name:name,code:"",path:path,status:"failed"});this.runjs()};lsloader.jsfallback=function(path,name){if(!!this.jsnamemap[name]){return}else{this.jsnamemap[name]=name}for(var k in this.jsRunSequence){if(this.jsRunSequence[k].name==name){this.jsRunSequence[k].code="";this.jsRunSequence[k].status="failed";this.jsRunSequence[k].path=path}}this.runjs()};lsloader.cssfallback=function(path,name,cssonload){if(!!this.cssnamemap[name]){return}else{this.cssnamemap[name]=1}var link=document.createElement("link");link.type="text/css";link.href=path;link.rel="stylesheet";link.onload=link.onerror=cssonload;var root=document.getElementsByTagName("script")[0];root.parentNode.insertBefore(link,root)};lsloader.runInlineScript=function(scriptId,codeId){var code=document.getElementById(codeId).innerText;this.jsRunSequence.push({name:scriptId,code:code});this.runjs()};lsloader.loadCombo=function(jslist){var updateList="";var requestingModules={};for(var k in jslist){var LS=this.getLS(jslist[k].name);if(!!LS){var version=LS.split(versionString)[0];var code=LS.split(versionString)[1]}else{var version=""}if(version==jslist[k].path){this.jsRunSequence.push({name:jslist[k].name,code:code,path:jslist[k].path})}else{this.jsRunSequence.push({name:jslist[k].name,code:null,path:jslist[k].path,status:"comboloading"});requestingModules[jslist[k].name]=true;updateList+=(updateList==""?"":";")+jslist[k].path}}var that=this;if(!!updateList){var xhr=new XMLHttpRequest;xhr.open("get",combo+updateList,true);xhr.onreadystatechange=function(){if(xhr.readyState==4){if(xhr.status>=200&&xhr.status<300||xhr.status==304){if(xhr.response!=""){that.runCombo(xhr.response,requestingModules);return}}else{for(var i in that.jsRunSequence){if(requestingModules[that.jsRunSequence[i].name]){that.jsRunSequence[i].status="failed"}}that.runjs()}}};xhr.send(null)}this.runjs()};lsloader.runCombo=function(comboCode,requestingModules){comboCode=comboCode.split("/*combojs*/");comboCode.shift();for(var k in this.jsRunSequence){if(!!requestingModules[this.jsRunSequence[k].name]&&!!comboCode[0]){this.jsRunSequence[k].status="comboJS";this.jsRunSequence[k].code=comboCode[0];this.setLS(this.jsRunSequence[k].name,this.jsRunSequence[k].path+versionString+comboCode[0]);comboCode.shift()}}this.runjs()}})();</script>
+
+    <!-- Import queue -->
+    <script>function Queue(){this.dataStore=[];this.offer=b;this.poll=d;this.execNext=a;this.debug=false;this.startDebug=c;function b(e){if(this.debug){console.log("Offered a Queued Function.")}if(typeof e==="function"){this.dataStore.push(e)}else{console.log("You must offer a function.")}}function d(){if(this.debug){console.log("Polled a Queued Function.")}return this.dataStore.shift()}function a(){var e=this.poll();if(e!==undefined){if(this.debug){console.log("Run a Queued Function.")}e()}}function c(){this.debug=true}}var queue=new Queue();</script>
+
+    <!-- Favicons -->
+    <link rel="icon shortcut" type="image/ico" href="/img/favicon.jpeg">
+    <link rel="icon" sizes="192x192" href="/img/favicon.jpeg">
+    <link rel="apple-touch-icon" href="/img/favicon.jpeg">
+
+    <!--iOS -->
+    <meta name="apple-mobile-web-app-title" content="Title">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="480">
+
+    <!-- Add to homescreen for Chrome on Android -->
+    <meta name="mobile-web-app-capable" content="yes">
+
+    <!-- Add to homescreen for Safari on iOS -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="Jane&#39;s blog">
+
+    <!-- Site Verification -->
+    
+    
+
+    <!-- RSS -->
+    
+        
+            <link rel=alternate type="application/atom+xml" href="atom.xml">
+        
+    
+
+    <!--[if lte IE 9]>
+        <link rel="stylesheet" href="/css/ie-blocker.css">
+
+        
+            <script src="/js/ie-blocker.zhCN.js"></script>
+        
+    <![endif]-->
+
+    <!-- Import CSS -->
+    
+        <style id="material_css"></style><script>if(typeof window.lsLoadCSSMaxNums === "undefined")window.lsLoadCSSMaxNums = 0;window.lsLoadCSSMaxNums++;lsloader.load("material_css","https://cdn.jsdelivr.net/npm/hexo-material@1.4.0/source/css/material.min.css",function(){if(typeof window.lsLoadCSSNums === "undefined")window.lsLoadCSSNums = 0;window.lsLoadCSSNums++;if(window.lsLoadCSSNums == window.lsLoadCSSMaxNums)document.documentElement.style.display="";}, false)</script>
+        <style id="style_css"></style><script>if(typeof window.lsLoadCSSMaxNums === "undefined")window.lsLoadCSSMaxNums = 0;window.lsLoadCSSMaxNums++;lsloader.load("style_css","https://cdn.jsdelivr.net/npm/hexo-material@1.4.0/source/css/style.min.css",function(){if(typeof window.lsLoadCSSNums === "undefined")window.lsLoadCSSNums = 0;window.lsLoadCSSNums++;if(window.lsLoadCSSNums == window.lsLoadCSSMaxNums)document.documentElement.style.display="";}, false)</script>
+
+        
+            
+                <style id="prettify_css"></style><script>if(typeof window.lsLoadCSSMaxNums === "undefined")window.lsLoadCSSMaxNums = 0;window.lsLoadCSSMaxNums++;lsloader.load("prettify_css","https://cdn.jsdelivr.net/npm/hexo-material@1.4.0/source/css/prettify.min.css",function(){if(typeof window.lsLoadCSSNums === "undefined")window.lsLoadCSSNums = 0;window.lsLoadCSSNums++;if(window.lsLoadCSSNums == window.lsLoadCSSMaxNums)document.documentElement.style.display="";}, false)</script>
+                <style id="prettify_theme"></style><script>if(typeof window.lsLoadCSSMaxNums === "undefined")window.lsLoadCSSMaxNums = 0;window.lsLoadCSSMaxNums++;lsloader.load("prettify_theme","https://cdn.jsdelivr.net/npm/hexo-material@1.4.0/source/css/prettify/github-v2.min.css",function(){if(typeof window.lsLoadCSSNums === "undefined")window.lsLoadCSSNums = 0;window.lsLoadCSSNums++;if(window.lsLoadCSSNums == window.lsLoadCSSMaxNums)document.documentElement.style.display="";}, false)</script>
+            
+        
+
+    
+
+    
+
+    <!-- Config CSS -->
+
+<!-- Other Styles -->
+<style>
+  body, html {
+    font-family: Roboto, "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
+    overflow-x: hidden !important;
+  }
+  
+  code {
+    font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+  }
+
+  a {
+    color: #00838F;
+  }
+
+  .mdl-card__media,
+  #search-label,
+  #search-form-label:after,
+  #scheme-Paradox .hot_tags-count,
+  #scheme-Paradox .sidebar_archives-count,
+  #scheme-Paradox .sidebar-colored .sidebar-header,
+  #scheme-Paradox .sidebar-colored .sidebar-badge{
+    background-color: #0097A7 !important;
+  }
+
+  /* Sidebar User Drop Down Menu Text Color */
+  #scheme-Paradox .sidebar-colored .sidebar-nav>.dropdown>.dropdown-menu>li>a:hover,
+  #scheme-Paradox .sidebar-colored .sidebar-nav>.dropdown>.dropdown-menu>li>a:focus {
+    color: #0097A7 !important;
+  }
+
+  #post_entry-right-info,
+  .sidebar-colored .sidebar-nav li:hover > a,
+  .sidebar-colored .sidebar-nav li:hover > a i,
+  .sidebar-colored .sidebar-nav li > a:hover,
+  .sidebar-colored .sidebar-nav li > a:hover i,
+  .sidebar-colored .sidebar-nav li > a:focus i,
+  .sidebar-colored .sidebar-nav > .open > a,
+  .sidebar-colored .sidebar-nav > .open > a:hover,
+  .sidebar-colored .sidebar-nav > .open > a:focus,
+  #ds-reset #ds-ctx .ds-ctx-entry .ds-ctx-head a {
+    color: #0097A7 !important;
+  }
+
+  .toTop {
+    background: #757575 !important;
+  }
+
+  .material-layout .material-post>.material-nav,
+  .material-layout .material-index>.material-nav,
+  .material-nav a {
+    color: #757575;
+  }
+
+  #scheme-Paradox .MD-burger-layer {
+    background-color: #757575;
+  }
+
+  #scheme-Paradox #post-toc-trigger-btn {
+    color: #757575;
+  }
+
+  .post-toc a:hover {
+    color: #00838F;
+    text-decoration: underline;
+  }
+
+</style>
+
+
+<!-- Theme Background Related-->
+
+    <style>
+      body{
+        background-image: url(/img/bg.png);
+      }
+    </style>
+
+
+
+
+<!-- Fade Effect -->
+
+    <style>
+      .fade {
+        transition: all 800ms linear;
+        -webkit-transform: translate3d(0,0,0);
+        -moz-transform: translate3d(0,0,0);
+        -ms-transform: translate3d(0,0,0);
+        -o-transform: translate3d(0,0,0);
+        transform: translate3d(0,0,0);
+        opacity: 1;
+      }
+
+      .fade.out{
+        opacity: 0;
+      }
+    </style>
+
+
+<!-- Import Font -->
+<!-- Import Roboto -->
+
+    <style>
+        @font-face {
+            font-family: 'Roboto';
+            font-style: normal;
+            font-weight: 300;
+            src: local('Roboto Light'), local('Roboto-Light'), url('https://cdnjs.cat.net/ajax/libs/mdui/0.2.1/fonts/roboto/Roboto-Light.woff2') format('woff2'), url('https://cdnjs.cat.net/ajax/libs/mdui/0.2.1/fonts/roboto/Roboto-Light.woff') format('woff');
+        }
+        @font-face {
+            font-family: 'Roboto';
+            font-style: italic;
+            font-weight: 300;
+            src: local('Roboto LightItalic'), local('Roboto-LightItalic'), url('https://cdnjs.cat.net/ajax/libs/mdui/0.2.1/fonts/roboto/Roboto-LightItalic.woff2') format('woff2'), url('https://cdnjs.cat.net/ajax/libs/mdui/0.2.1/fonts/roboto/Roboto-LightItalic.woff') format('woff');
+          }
+        @font-face {
+            font-family: 'Roboto';
+            font-style: normal;
+            font-weight: 400;
+            src: local('Roboto Regular'), local('Roboto-Regular'), url('https://cdnjs.cat.net/ajax/libs/mdui/0.2.1/fonts/roboto/Roboto-Regular.woff2') format('woff2'), url('https://cdnjs.cat.net/ajax/libs/mdui/0.2.1/fonts/roboto/Roboto-Regular.woff') format('woff');
+        }
+        @font-face {
+            font-family: 'Roboto';
+            font-style: italic;
+            font-weight: 400;
+            src: local('Roboto RegularItalic'), local('Roboto-RegularItalic'), url('https://cdnjs.cat.net/ajax/libs/mdui/0.2.1/fonts/roboto/Roboto-RegularItalic.woff2') format('woff2'), url('https://cdnjs.cat.net/ajax/libs/mdui/0.2.1/fonts/roboto/Roboto-RegularItalic.woff') format('woff');
+          }
+        @font-face {
+            font-family: 'Roboto';
+            font-style: normal;
+            font-weight: 500;
+            src: local('Roboto Medium'), local('Roboto-Medium'), url('https://cdnjs.cat.net/ajax/libs/mdui/0.2.1/fonts/roboto/Roboto-Medium.woff2') format('woff2'), url('https://cdnjs.cat.net/ajax/libs/mdui/0.2.1/fonts/roboto/Roboto-Medium.woff') format('woff');
+        }
+        @font-face {
+            font-family: 'Roboto';
+            font-style: italic;
+            font-weight: 500;
+            src: local('Roboto MediumItalic'), local('Roboto-MediumItalic'), url('https://cdnjs.cat.net/ajax/libs/mdui/0.2.1/fonts/roboto/Roboto-MediumItalic.woff2') format('woff2'), url('https://cdnjs.cat.net/ajax/libs/mdui/0.2.1/fonts/roboto/Roboto-MediumItalic.woff') format('woff');
+        }
+        @font-face {
+            font-family: 'Material Icons';
+            font-style: normal;
+            font-weight: 400;
+            src: local('Material Icons'),
+            local('MaterialIcons-Regular'),
+            url(https://cdnjs.cat.net/ajax/libs/material-design-icons/3.0.1/iconfont/MaterialIcons-Regular.woff2) format('woff2'),
+            url(https://cdnjs.cat.net/ajax/libs/material-design-icons/3.0.1/iconfont/MaterialIcons-Regular.woff) format('woff'),
+            url(https://cdnjs.cat.net/ajax/libs/material-design-icons/3.0.1/iconfont/MaterialIcons-Regular.ttf) format('truetype');
+        }
+    </style>
+
+
+<!-- Import Material Icon -->
+
+    <link rel="stylesheet" href="https://cdn.bootcss.com/material-design-icons/3.0.1/iconfont/material-icons.min.css">
+
+
+
+
+    <!-- Import jQuery -->
+    
+        <script>lsloader.load("jq_js","https://cdn.bootcss.com/jquery/2.2.0/jquery.js", true)</script>
+    
+
+    <!-- The Open Graph protocol -->
+    <meta property="og:url" content="http://janebt.github.io">
+    <meta property="og:type" content="blog">
+    <meta property="og:title" content="Ajax | Jane&#39;s blog">
+    <meta property="og:image" content="http://janebt.github.io/img/favicon.jpeg" />
+    <meta property="og:description" content="本文介绍Ajax知识体系。
+参考一篇非常好的文章《Ajax知识体系大梳理》，内容比较多，我就做一点关注点总结。">
+    <meta property="og:article:tag" content="JavaScript"> 
+
+    
+        <meta property="article:published_time" content="Thu Nov 30 2017 10:35:34 GMT+0800" />
+        <meta property="article:modified_time" content="Thu Nov 30 2017 10:35:34 GMT+0800" />
+    
+
+    <!-- The Twitter Card protocol -->
+    <meta name="twitter:title" content="Ajax | Jane&#39;s blog">
+    <meta name="twitter:description" content="本文介绍Ajax知识体系。
+参考一篇非常好的文章《Ajax知识体系大梳理》，内容比较多，我就做一点关注点总结。">
+    <meta name="twitter:image" content="http://janebt.github.io/img/favicon.jpeg">
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:url" content="http://janebt.github.io" />
+
+    <!-- Add canonical link for SEO -->
+    
+        <link rel="canonical" href="http://janebt.github.io/2017/11/30/前端/基础/javascript/Ajax/index.html" />
+    
+
+    <!-- Structured-data for SEO -->
+    
+        
+
+
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "mainEntityOfPage": "http://janebt.github.io/2017/11/30/前端/基础/javascript/Ajax/index.html",
+    "headline": "Ajax",
+    "datePublished": "Thu Nov 30 2017 10:35:34 GMT+0800",
+    "dateModified": "Thu Nov 30 2017 10:35:34 GMT+0800",
+    "author": {
+        "@type": "Person",
+        "name": "jane",
+        "image": {
+            "@type": "ImageObject",
+            "url": "/img/avatar.jpg"
+        },
+        "description": ""
+    },
+    "publisher": {
+        "@type": "Organization",
+        "name": "Jane&#39;s blog",
+        "logo": {
+            "@type":"ImageObject",
+            "url": "/img/favicon.jpeg"
+        }
+    },
+    "keywords": ",JavaScriptjane, blog, hexo, Web, 博客",
+    "description": "本文介绍Ajax知识体系。
+参考一篇非常好的文章《Ajax知识体系大梳理》，内容比较多，我就做一点关注点总结。",
+}
+</script>
+
+
+    
+
+    <!-- Analytics -->
+    
+    
+    
+
+    <!-- Custom Head -->
+    
+
+</head>
+
+
+    
+        <body id="scheme-Paradox" class="lazy">
+            <div class="material-layout  mdl-js-layout has-drawer is-upgraded">
+                
+
+                <!-- Main Container -->
+                <main class="material-layout__content" id="main">
+
+                    <!-- Top Anchor -->
+                    <div id="top"></div>
+
+                    
+                        <!-- Hamburger Button -->
+                        <button class="MD-burger-icon sidebar-toggle">
+                            <span class="MD-burger-layer"></span>
+                        </button>
+                    
+
+                    <!-- Post TOC -->
+
+    
+    <!-- Back Button -->
+    <!--
+    <div class="material-back" id="backhome-div" tabindex="0">
+        <a class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon"
+           href="#" onclick="window.history.back();return false;"
+           target="_self"
+           role="button"
+           data-upgraded=",MaterialButton,MaterialRipple">
+            <i class="material-icons" role="presentation">arrow_back</i>
+            <span class="mdl-button__ripple-container">
+                <span class="mdl-ripple"></span>
+            </span>
+        </a>
+    </div>
+    -->
+
+
+    <!-- Left aligned menu below button -->
+    
+    
+    <button id="post-toc-trigger-btn"
+        class="mdl-button mdl-js-button mdl-button--icon">
+        <i class="material-icons">format_list_numbered</i>
+    </button>
+
+    <ul class="post-toc-wrap mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect" for="post-toc-trigger-btn" style="max-height:80vh; overflow-y:scroll;">
+        <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#知识点"><span class="post-toc-number">1.</span> <span class="post-toc-text">知识点</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#导读"><span class="post-toc-number">1.1.</span> <span class="post-toc-text">导读</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#浏览器为ajax做了什么"><span class="post-toc-number">1.2.</span> <span class="post-toc-text">浏览器为ajax做了什么</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#MSXML"><span class="post-toc-number">1.2.1.</span> <span class="post-toc-text">MSXML</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#全平台兼容的XMLHttpRequest对象"><span class="post-toc-number">1.2.2.</span> <span class="post-toc-text">全平台兼容的XMLHttpRequest对象</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#ajax有没有破坏js单线程机制"><span class="post-toc-number">1.3.</span> <span class="post-toc-text">ajax有没有破坏js单线程机制</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#ajax与setTimeout排队问题"><span class="post-toc-number">1.4.</span> <span class="post-toc-text">ajax与setTimeout排队问题</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#XMLHttpRequest-属性解读"><span class="post-toc-number">1.5.</span> <span class="post-toc-text">XMLHttpRequest 属性解读</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#readyState"><span class="post-toc-number">1.5.1.</span> <span class="post-toc-text">readyState</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#onreadystatechange"><span class="post-toc-number">1.5.2.</span> <span class="post-toc-text">onreadystatechange</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#status"><span class="post-toc-number">1.5.3.</span> <span class="post-toc-text">status</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#statusText"><span class="post-toc-number">1.5.4.</span> <span class="post-toc-text">statusText</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#onloadstart"><span class="post-toc-number">1.5.5.</span> <span class="post-toc-text">onloadstart</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#onprogress"><span class="post-toc-number">1.5.6.</span> <span class="post-toc-text">onprogress</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#onload"><span class="post-toc-number">1.5.7.</span> <span class="post-toc-text">onload</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#onloadend"><span class="post-toc-number">1.5.8.</span> <span class="post-toc-text">onloadend</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#timeout"><span class="post-toc-number">1.5.9.</span> <span class="post-toc-text">timeout</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#ontimeout"><span class="post-toc-number">1.5.10.</span> <span class="post-toc-text">ontimeout</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#response-responseText"><span class="post-toc-number">1.5.11.</span> <span class="post-toc-text">response responseText</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#responseXML"><span class="post-toc-number">1.5.12.</span> <span class="post-toc-text">responseXML</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#responseType"><span class="post-toc-number">1.5.13.</span> <span class="post-toc-text">responseType</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#responseURL"><span class="post-toc-number">1.5.14.</span> <span class="post-toc-text">responseURL</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#withCredentials"><span class="post-toc-number">1.5.15.</span> <span class="post-toc-text">withCredentials</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#abort"><span class="post-toc-number">1.5.16.</span> <span class="post-toc-text">abort</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#getResponseHeader"><span class="post-toc-number">1.5.17.</span> <span class="post-toc-text">getResponseHeader</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#getAllResponseHeaders"><span class="post-toc-number">1.5.18.</span> <span class="post-toc-text">getAllResponseHeaders</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#setRequestHeader"><span class="post-toc-number">1.5.19.</span> <span class="post-toc-text">setRequestHeader</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#onerror"><span class="post-toc-number">1.5.20.</span> <span class="post-toc-text">onerror</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#upload"><span class="post-toc-number">1.5.21.</span> <span class="post-toc-text">upload</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#overrideMimeType"><span class="post-toc-number">1.5.22.</span> <span class="post-toc-text">overrideMimeType</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#XHR一级"><span class="post-toc-number">1.6.</span> <span class="post-toc-text">XHR一级</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#XHR二级"><span class="post-toc-number">1.7.</span> <span class="post-toc-text">XHR二级</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#XDomainRequest"><span class="post-toc-number">1.8.</span> <span class="post-toc-text">XDomainRequest</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#ajax"><span class="post-toc-number">1.9.</span> <span class="post-toc-text">$.ajax</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#参数列表"><span class="post-toc-number">1.9.1.</span> <span class="post-toc-text">参数列表</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#支持promise"><span class="post-toc-number">1.9.2.</span> <span class="post-toc-text">支持promise</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#使用转换器"><span class="post-toc-number">1.9.3.</span> <span class="post-toc-text">使用转换器</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#事件触发顺序"><span class="post-toc-number">1.9.4.</span> <span class="post-toc-text">事件触发顺序</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Axios"><span class="post-toc-number">1.10.</span> <span class="post-toc-text">Axios</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Fetch"><span class="post-toc-number">1.11.</span> <span class="post-toc-text">Fetch</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#ajax跨域请求"><span class="post-toc-number">1.12.</span> <span class="post-toc-text">ajax跨域请求</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#什么是CORS"><span class="post-toc-number">1.12.1.</span> <span class="post-toc-text">什么是CORS</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#移动端CORS兼容性"><span class="post-toc-number">1.12.2.</span> <span class="post-toc-text">移动端CORS兼容性</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#CORS有关的headers"><span class="post-toc-number">1.12.3.</span> <span class="post-toc-text">CORS有关的headers</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#CORS请求"><span class="post-toc-number">1.12.4.</span> <span class="post-toc-text">CORS请求</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#HTML启用CORS"><span class="post-toc-number">1.12.5.</span> <span class="post-toc-text">HTML启用CORS</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#图片启用CORS"><span class="post-toc-number">1.12.6.</span> <span class="post-toc-text">图片启用CORS</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#ajax文件上传"><span class="post-toc-number">1.13.</span> <span class="post-toc-text">ajax文件上传</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#js文件上传"><span class="post-toc-number">1.13.1.</span> <span class="post-toc-text">js文件上传</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#fetch上传"><span class="post-toc-number">1.13.2.</span> <span class="post-toc-text">fetch上传</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#jquery文件上传"><span class="post-toc-number">1.13.3.</span> <span class="post-toc-text">jquery文件上传</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#ajax请求二进制文件"><span class="post-toc-number">1.14.</span> <span class="post-toc-text">ajax请求二进制文件</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#FileReader"><span class="post-toc-number">1.14.1.</span> <span class="post-toc-text">FileReader</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#如何等待多个ajax请求完成"><span class="post-toc-number">1.15.</span> <span class="post-toc-text">如何等待多个ajax请求完成</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#ajax与history的兼容"><span class="post-toc-number">1.16.</span> <span class="post-toc-text">ajax与history的兼容</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#pjax"><span class="post-toc-number">1.16.1.</span> <span class="post-toc-text">pjax</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#ajax缓存处理"><span class="post-toc-number">1.17.</span> <span class="post-toc-text">ajax缓存处理</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#ajax的错误处理"><span class="post-toc-number">1.18.</span> <span class="post-toc-text">ajax的错误处理</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#ajax调试技巧"><span class="post-toc-number">1.19.</span> <span class="post-toc-text">ajax调试技巧</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#编码问题"><span class="post-toc-number">1.19.1.</span> <span class="post-toc-text">编码问题</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#后端接口测试技巧"><span class="post-toc-number">1.20.</span> <span class="post-toc-text">后端接口测试技巧</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#使用命令测试OPTIONS请求"><span class="post-toc-number">1.20.1.</span> <span class="post-toc-text">使用命令测试OPTIONS请求</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#postman"><span class="post-toc-number">1.20.2.</span> <span class="post-toc-text">postman</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#ajax移动端兼容性"><span class="post-toc-number">1.21.</span> <span class="post-toc-text">ajax移动端兼容性</span></a></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#问题"><span class="post-toc-number">2.</span> <span class="post-toc-text">问题</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Case1-什么是AJAX"><span class="post-toc-number">2.1.</span> <span class="post-toc-text">Case1.什么是AJAX</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Case2-为什么要用ajax"><span class="post-toc-number">2.2.</span> <span class="post-toc-text">Case2.为什么要用ajax</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Case3-AJAX最大的特点"><span class="post-toc-number">2.3.</span> <span class="post-toc-text">Case3.AJAX最大的特点</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Case4-介绍XMLhttprequest对象"><span class="post-toc-number">2.4.</span> <span class="post-toc-text">Case4.介绍XMLhttprequest对象</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Case5-AJAX技术体系的组成部分有哪些"><span class="post-toc-number">2.5.</span> <span class="post-toc-text">Case5.AJAX技术体系的组成部分有哪些</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Case6-AJAX应用和传统Web应用有什么不同"><span class="post-toc-number">2.6.</span> <span class="post-toc-text">Case6.AJAX应用和传统Web应用有什么不同</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Case7-AJAX请求总共有多少种CALLBACK"><span class="post-toc-number">2.7.</span> <span class="post-toc-text">Case7.AJAX请求总共有多少种CALLBACK</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Case8-在浏览器端如何得到服务器端响应的XML数据"><span class="post-toc-number">2.8.</span> <span class="post-toc-text">Case8.在浏览器端如何得到服务器端响应的XML数据</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Case9-XMLHttpRequest对象在IE和Firefox中创建方式"><span class="post-toc-number">2.9.</span> <span class="post-toc-text">Case9.XMLHttpRequest对象在IE和Firefox中创建方式</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Case10-XMLHttpRequest对象的常用方法和属性"><span class="post-toc-number">2.10.</span> <span class="post-toc-text">Case10.XMLHttpRequest对象的常用方法和属性</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Case11-AJAX有哪些优点和缺点？"><span class="post-toc-number">2.11.</span> <span class="post-toc-text">Case11.AJAX有哪些优点和缺点？</span></a></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#参考文章"><span class="post-toc-number">3.</span> <span class="post-toc-text">参考文章</span></a></li></ol>
+    </ul>
+    
+
+
+
+
+<!-- Layouts -->
+
+    <!-- Post Module -->
+    <div class="material-post_container">
+
+        <div class="material-post mdl-grid">
+            <div class="mdl-card mdl-shadow--4dp mdl-cell mdl-cell--12-col">
+
+                <!-- Post Header(Thumbnail & Title) -->
+                
+    <!-- Paradox Post Header -->
+    
+        
+            <!-- Random Thumbnail -->
+            <div class="post_thumbnail-random mdl-card__media mdl-color-text--grey-50">
+            <script type="text/ls-javascript" id="post-thumbnail-script">
+    var randomNum = Math.floor(Math.random() * 19 + 1);
+
+    $('.post_thumbnail-random').attr('data-original', '/img/random/material-' + randomNum + '.png');
+    $('.post_thumbnail-random').addClass('lazy');
+</script>
+
+        
+    
+            <p class="article-headline-p">
+                Ajax
+            </p>
+        </div>
+
+
+
+
+
+                
+                    <!-- Paradox Post Info -->
+                    <div class="mdl-color-text--grey-700 mdl-card__supporting-text meta">
+
+    <!-- Author Avatar -->
+    <div id="author-avatar">
+        <img src="/img/avatar.jpg" width="44px" height="44px" alt="Author Avatar"/>
+    </div>
+    <!-- Author Name & Date -->
+    <div>
+        <strong>jane</strong>
+        <span>11月 30, 2017</span>
+    </div>
+
+    <div class="section-spacer"></div>
+
+    <!-- Favorite -->
+    <!--
+        <button id="article-functions-like-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon btn-like">
+            <i class="material-icons" role="presentation">favorite</i>
+            <span class="visuallyhidden">favorites</span>
+        </button>
+    -->
+
+    <!-- Qrcode -->
+    
+
+    <!-- Tags (bookmark) -->
+    
+    <button id="article-functions-viewtags-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
+        <i class="material-icons" role="presentation">bookmark</i>
+        <span class="visuallyhidden">bookmark</span>
+    </button>
+    <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-functions-viewtags-button">
+        <li class="mdl-menu__item">
+        <a class="post_tag-link" href="/tags/JavaScript/">JavaScript</a>
+    </ul>
+    
+
+    <!-- Share -->
+    <button id="article-fuctions-share-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
+    <i class="material-icons" role="presentation">share</i>
+    <span class="visuallyhidden">share</span>
+</button>
+<ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-fuctions-share-button">
+    
+
+    
+
+    <!-- Share Weibo -->
+    
+        <a class="post_share-link" href="http://service.weibo.com/share/share.php?appkey=&title=Ajax&url=http://janebt.github.io/2017/11/30/前端/基础/javascript/Ajax/index.html&pic=http://janebt.github.io/img/favicon.jpeg&searchPic=false&style=simple" target="_blank">
+            <li class="mdl-menu__item">
+                分享到微博
+            </li>
+        </a>
+    
+
+    <!-- Share Twitter -->
+    
+        <a class="post_share-link" href="https://twitter.com/intent/tweet?text=Ajax&url=http://janebt.github.io/2017/11/30/前端/基础/javascript/Ajax/index.html&via=jane" target="_blank">
+            <li class="mdl-menu__item">
+                分享到 Twitter
+            </li>
+        </a>
+    
+
+    <!-- Share Facebook -->
+    
+        <a class="post_share-link" href="https://www.facebook.com/sharer/sharer.php?u=http://janebt.github.io/2017/11/30/前端/基础/javascript/Ajax/index.html" target="_blank">
+            <li class="mdl-menu__item">
+                分享到 Facebook
+            </li>
+        </a>
+    
+
+    <!-- Share Google+ -->
+    
+        <a class="post_share-link" href="https://plus.google.com/share?url=http://janebt.github.io/2017/11/30/前端/基础/javascript/Ajax/index.html" target="_blank">
+            <li class="mdl-menu__item">
+                分享到 Google+
+            </li>
+        </a>
+    
+
+    <!-- Share LinkedIn -->
+    
+
+    <!-- Share QQ -->
+    
+
+    <!-- Share Telegram -->
+    
+</ul>
+
+</div>
+
+                
+
+                <!-- Post Content -->
+                <div id="post-content" class="mdl-color-text--grey-700 mdl-card__supporting-text fade out">
+    
+        <p>本文介绍Ajax知识体系。</p>
+<p>参考一篇非常好的文章<a href="https://segmentfault.com/a/1190000008697448" target="_blank" rel="external">《Ajax知识体系大梳理》</a>，内容比较多，我就做一点关注点总结。</p>
+<a id="more"></a>
+<h1 id="知识点"><a href="#知识点" class="headerlink" title="知识点"></a>知识点</h1><h2 id="导读"><a href="#导读" class="headerlink" title="导读"></a>导读</h2><p>Ajax 全称 Asynchronous JavaScript and XML, 即异步JS与XML. </p>
+<h2 id="浏览器为ajax做了什么"><a href="#浏览器为ajax做了什么" class="headerlink" title="浏览器为ajax做了什么"></a>浏览器为ajax做了什么</h2><p>1.标准浏览器通过 <code>XMLHttpRequest</code> 对象实现了ajax的功能. 只需要通过一行语句便可创建一个用于发送ajax请求的对象.</p>
+<pre><code class="javascript">var xhr = new XMLHttpRequest();
+</code></pre>
+<p>2.IE浏览器通过 <code>XMLHttpRequest</code> 或者 <code>ActiveXObject</code> 对象同样实现了ajax的功能.</p>
+<h3 id="MSXML"><a href="#MSXML" class="headerlink" title="MSXML"></a>MSXML</h3><p>IE6及更低版本浏览器只能使用 <code>ActiveXObject</code> 对象来创建 XMLHttpRequest 对象实例. 创建时需要指明一个类似”Microsoft.XMLHTTP”这样的ProgID. </p>
+<p>IE5及之后的浏览器均可以通过如下语句获取xhr对象:</p>
+<pre><code class="javascript">var xhr = new ActiveXObject(&quot;Msxml2.XMLHTTP&quot;);// 即MSXML3
+var xhr = new ActiveXObject(&quot;Microsoft.XMLHTTP&quot;);// 很老的api,虽然浏览器支持,功能可能不完善,故不建议使用
+</code></pre>
+<h3 id="全平台兼容的XMLHttpRequest对象"><a href="#全平台兼容的XMLHttpRequest对象" class="headerlink" title="全平台兼容的XMLHttpRequest对象"></a>全平台兼容的XMLHttpRequest对象</h3><pre><code class="javascript">function getXHR(){
+  var xhr = null;
+  if(window.XMLHttpRequest) {
+    xhr = new XMLHttpRequest();
+  } else if (window.ActiveXObject) {
+    try {
+      xhr = new ActiveXObject(&quot;Msxml2.XMLHTTP&quot;);
+    } catch (e) {
+      try {
+        xhr = new ActiveXObject(&quot;Microsoft.XMLHTTP&quot;);
+      } catch (e) { 
+        alert(&quot;您的浏览器暂不支持Ajax!&quot;);
+      }
+    }
+  }
+  return xhr;
+}
+</code></pre>
+<h2 id="ajax有没有破坏js单线程机制"><a href="#ajax有没有破坏js单线程机制" class="headerlink" title="ajax有没有破坏js单线程机制"></a>ajax有没有破坏js单线程机制</h2><p>一般情况下, 浏览器有如下四种线程:</p>
+<ul>
+<li>GUI渲染线程</li>
+<li>javascript引擎线程</li>
+<li>浏览器事件触发线程</li>
+<li>HTTP请求线程</li>
+</ul>
+<p>通常, 它们的线程间交互以事件的方式发生, 通过事件回调的方式予以通知. 而事件回调, 又是以先进先出的方式添加到<code>任务队列</code> 的末尾 , 等到js引擎空闲时, <code>任务队列</code> 中排队的任务将会依次被执行. 这些事件回调包括 setTimeout, setInterval, click, ajax异步请求等回调.</p>
+<p><strong>浏览器中, js引擎线程会循环从 任务队列 中读取事件并且执行, 这种运行机制称作 Event Loop (事件循环).</strong></p>
+<p>对于一个ajax请求, js引擎首先生成 <code>XMLHttpRequest</code> 实例对象, open过后再调用send方法. 至此, 所有的语句都是同步执行. 但从send方法内部开始, 浏览器为将要发生的网络请求创建了新的http请求线程, 这个线程独立于js引擎线程, 于是网络请求异步被发送出去了. 另一方面, js引擎并不会等待 ajax 发起的http请求收到结果, 而是直接顺序往下执行.</p>
+<p>当ajax请求被服务器响应并且收到response后, 浏览器事件触发线程捕获到了ajax的回调事件 <code>onreadystatechange</code> (当然也可能触发onload, 或者 onerror等等) . 该回调事件并没有被立即执行, 而是被添加到 <code>任务队列</code> 的末尾. 直到js引擎空闲了, <code>任务队列</code> 的任务才被捞出来, 按照添加顺序, 挨个执行, 当然也包括刚刚append到队列末尾的 <code>onreadystatechange</code> 事件.</p>
+<p>在 <code>onreadystatechange</code> 事件内部, 有可能对dom进行操作. 此时浏览器便会挂起js引擎线程, 转而执行GUI渲染线程, 进行UI重绘(repaint)或者回流(reflow). 当js引擎重新执行时, GUI渲染线程又会被挂起, GUI更新将被保存起来, 等到js引擎空闲时立即被执行.</p>
+<p>以上整个ajax请求过程中, 有涉及到浏览器的4种线程. 其中除了 <code>GUI渲染线程</code> 和 <code>js引擎线程</code> 是互斥的. 其他线程相互之间, 都是可以并行执行的. 通过这样的一种方式, ajax并没有破坏js的单线程机制.</p>
+<h2 id="ajax与setTimeout排队问题"><a href="#ajax与setTimeout排队问题" class="headerlink" title="ajax与setTimeout排队问题"></a>ajax与setTimeout排队问题</h2><p>由于ajax异步, setTimeout回调本应该最先被执行, 然而实际上, 一次ajax请求, 并非所有的部分都是异步的, 至少<strong>“readyState==1”的 <code>onreadystatechange</code> 回调以及 <code>onloadstart</code> 回调就是同步执行的</strong>. 因此它们的输出排在最前面.</p>
+<h2 id="XMLHttpRequest-属性解读"><a href="#XMLHttpRequest-属性解读" class="headerlink" title="XMLHttpRequest 属性解读"></a>XMLHttpRequest 属性解读</h2><p>追根溯源, XMLHttpRequest 实例对象具有如下的继承关系. (下面以a&lt;&lt;b表示a继承b)</p>
+<p><code>xhr</code> &lt;&lt; <code>XMLHttpRequest.prototype</code> &lt;&lt; <code>XMLHttpRequestEventTarget.prototype</code> &lt;&lt; <code>EventTarget.prototype</code> &lt;&lt; <code>Object.prototype</code></p>
+<p>通常, 一个xhr实例对象拥有10个普通属性+9个方法.</p>
+<h3 id="readyState"><a href="#readyState" class="headerlink" title="readyState"></a>readyState</h3><p>只读属性, readyState属性记录了ajax调用过程中所有可能的状态.</p>
+<h3 id="onreadystatechange"><a href="#onreadystatechange" class="headerlink" title="onreadystatechange"></a>onreadystatechange</h3><p>onreadystatechange事件回调方法在readystate状态改变时触发, 在一个收到响应的ajax请求周期中, onreadystatechange 方法会被触发4次. 因此可以在 onreadystatechange 方法中绑定一些事件回调</p>
+<h3 id="status"><a href="#status" class="headerlink" title="status"></a>status</h3><p>只读属性, status表示http请求的状态, 初始值为0. 如果服务器没有显式地指定状态码, 那么status将被设置为默认值, 即200.</p>
+<h3 id="statusText"><a href="#statusText" class="headerlink" title="statusText"></a>statusText</h3><p>只读属性, statusText表示服务器的响应状态信息, 它是一个 UTF-16 的字符串, 请求成功且status==20X时, 返回大写的 <code>OK</code> . 请求失败时返回空字符串. 其他情况下返回相应的状态描述. 比如: 301的 <code>Moved Permanently</code> , 302的 <code>Found</code> , 303的 <code>See Other</code> , 307 的 <code>Temporary Redirect</code> , 400的 <code>Bad Request</code> , 401的 <code>Unauthorized</code> 等等.</p>
+<h3 id="onloadstart"><a href="#onloadstart" class="headerlink" title="onloadstart"></a>onloadstart</h3><p>onloadstart事件回调方法在ajax请求发送之前触发, 触发时机在 <code>readyState==1</code> 状态之后, <code>readyState==2</code> 状态之前.</p>
+<h3 id="onprogress"><a href="#onprogress" class="headerlink" title="onprogress"></a>onprogress</h3><p>onprogress事件回调方法在 <code>readyState==3</code> 状态时开始触发, 默认传入 ProgressEvent 对象, 可通过 <code>e.loaded/e.total</code> 来计算加载资源的进度, 该方法用于获取资源的下载进度.</p>
+<h3 id="onload"><a href="#onload" class="headerlink" title="onload"></a>onload</h3><p>onload事件回调方法在ajax请求成功后触发, 触发时机在 <code>readyState==4</code> 状态之后.</p>
+<p>可用于捕捉到一个ajax异步请求的成功状态, 并且执行回调。</p>
+<h3 id="onloadend"><a href="#onloadend" class="headerlink" title="onloadend"></a>onloadend</h3><p>onloadend事件回调方法在ajax请求完成后触发, 触发时机在 <code>readyState==4</code> 状态之后(收到响应时) 或者<code>readyState==2</code> 状态之后(未收到响应时).</p>
+<h3 id="timeout"><a href="#timeout" class="headerlink" title="timeout"></a>timeout</h3><p>timeout属性用于指定ajax的超时时长. </p>
+<h3 id="ontimeout"><a href="#ontimeout" class="headerlink" title="ontimeout"></a>ontimeout</h3><p>ontimeout方法在ajax请求超时时触发, 通过它可以在ajax请求超时时做一些后续处理.</p>
+<h3 id="response-responseText"><a href="#response-responseText" class="headerlink" title="response responseText"></a>response responseText</h3><p>均为只读属性, response表示服务器的响应内容, 相应的, responseText表示服务器响应内容的文本形式.</p>
+<h3 id="responseXML"><a href="#responseXML" class="headerlink" title="responseXML"></a>responseXML</h3><p>只读属性, responseXML表示xml形式的响应数据, 缺省为null, 若数据不是有效的xml, 则会报错.</p>
+<h3 id="responseType"><a href="#responseType" class="headerlink" title="responseType"></a>responseType</h3><p>responseType表示响应的类型, 缺省为空字符串, 可取 <code>&quot;arraybuffer&quot;</code> , <code>&quot;blob&quot;</code> , <code>&quot;document&quot;</code> , <code>&quot;json&quot;</code> , and <code>&quot;text&quot;</code> 共五种类型.</p>
+<h3 id="responseURL"><a href="#responseURL" class="headerlink" title="responseURL"></a>responseURL</h3><p>responseURL返回ajax请求最终的URL, 如果请求中存在重定向, 那么responseURL表示重定向之后的URL.</p>
+<h3 id="withCredentials"><a href="#withCredentials" class="headerlink" title="withCredentials"></a>withCredentials</h3><p>withCredentials是一个布尔值, 默认为false, 表示跨域请求中不发送cookies等信息.</p>
+<h3 id="abort"><a href="#abort" class="headerlink" title="abort"></a>abort</h3><p>abort方法用于取消ajax请求, 取消后, readyState 状态将被设置为 <code>0</code> (<code>UNSENT</code>). </p>
+<h3 id="getResponseHeader"><a href="#getResponseHeader" class="headerlink" title="getResponseHeader"></a>getResponseHeader</h3><p>getResponseHeader方法用于获取ajax响应头中指定name的值. </p>
+<h3 id="getAllResponseHeaders"><a href="#getAllResponseHeaders" class="headerlink" title="getAllResponseHeaders"></a>getAllResponseHeaders</h3><p>getAllResponseHeaders方法用于获取所有安全的ajax响应头, 响应头以字符串形式返回. </p>
+<h3 id="setRequestHeader"><a href="#setRequestHeader" class="headerlink" title="setRequestHeader"></a>setRequestHeader</h3><p>设置请求头</p>
+<h3 id="onerror"><a href="#onerror" class="headerlink" title="onerror"></a>onerror</h3><p>onerror方法用于在ajax请求出错后执行. 通常只在网络出现问题时或者ERR_CONNECTION_RESET时触发</p>
+<h3 id="upload"><a href="#upload" class="headerlink" title="upload"></a>upload</h3><p>upload属性默认返回一个 <code>XMLHttpRequestUpload</code> 对象, 用于上传资源</p>
+<h3 id="overrideMimeType"><a href="#overrideMimeType" class="headerlink" title="overrideMimeType"></a>overrideMimeType</h3><p>overrideMimeType方法用于强制指定response 的 MIME 类型, 即强制修改response的 <code>Content-Type</code> . </p>
+<h2 id="XHR一级"><a href="#XHR一级" class="headerlink" title="XHR一级"></a>XHR一级</h2><p>XHR1时, xhr对象具有如下缺点:</p>
+<ul>
+<li>仅支持文本数据传输, 无法传输二进制数据.</li>
+<li>传输数据时, 没有进度信息提示, 只能提示是否完成.</li>
+<li>受浏览器 <code>同源策略</code> 限制, 只能请求同域资源.</li>
+<li>没有超时机制, 不方便掌控ajax请求节奏.</li>
+</ul>
+<h2 id="XHR二级"><a href="#XHR二级" class="headerlink" title="XHR二级"></a>XHR二级</h2><p>XHR2针对XHR1的上述缺点做了如下改进:</p>
+<ul>
+<li>支持二进制数据, 可以上传文件, 可以使用FormData对象管理表单.</li>
+<li>提供进度提示, 可通过 <code>xhr.upload.onprogress</code> 事件回调方法获取传输进度.</li>
+<li>依然受 <code>同源策略</code> 限制, 这个安全机制不会变. XHR2新提供 <code>Access-Control-Allow-Origin</code> 等headers, 设置为 <code>*</code> 时表示允许任何域名请求, 从而实现跨域CORS访问</li>
+<li>可以设置timeout 及 ontimeout, 方便设置超时时长和超时后续处理.</li>
+</ul>
+<p>目前, 主流浏览器基本上都支持XHR2, 除了IE系列需要IE10及更高版本. 因此IE10以下是不支持XHR2的.</p>
+<h2 id="XDomainRequest"><a href="#XDomainRequest" class="headerlink" title="XDomainRequest"></a>XDomainRequest</h2><p>XDomainRequest 对象是IE8,9折腾出来的, 用于支持CORS请求非成熟的解决方案. 以至于IE10中直接移除了它, 并重新回到了 XMLHttpRequest 的怀抱.</p>
+<h2 id="ajax"><a href="#ajax" class="headerlink" title="$.ajax"></a>$.ajax</h2><h3 id="参数列表"><a href="#参数列表" class="headerlink" title="参数列表"></a>参数列表</h3><h3 id="支持promise"><a href="#支持promise" class="headerlink" title="支持promise"></a>支持promise</h3><p>$.ajax() 方法返回jqXHR对象(jq1.5起), 如果使用的不是XMLHttpRequest对象时, 如jsonp请求, 返回的jqXHR对象将尽可能模拟原生的xhr. 从jq1.5起, 返回的jqXHR对象实现了promise接口.</p>
+<h3 id="使用转换器"><a href="#使用转换器" class="headerlink" title="使用转换器"></a>使用转换器</h3><p>$.ajax() 的转换器可以将支持的数据类型映射到其它数据类型. 如果需要将自定义数据类型映射到已知的类型. 需要使用 <code>contents</code> 选项在响应的 “Content-Type” 和实际数据类型之间添加一个转换函数.</p>
+<h3 id="事件触发顺序"><a href="#事件触发顺序" class="headerlink" title="事件触发顺序"></a>事件触发顺序</h3><h2 id="Axios"><a href="#Axios" class="headerlink" title="Axios"></a>Axios</h2><p>Axios Vs jquery</p>
+<ul>
+<li>Axios支持node, jquery并不支持.</li>
+<li>Axios基于promise语法, jq3.0才开始全面支持.</li>
+<li>Axios短小精悍, 更加适合http场景, jquery大而全, 加载较慢.</li>
+<li>vue作者尤大放弃推荐vue-resource, 转向推荐Axios. 以下为尤大原话.</li>
+</ul>
+<p>语法上Axios基本就和promise一样, 在then方法中处理回调, 在catch方法中处理异常. 如下:</p>
+<pre><code class="javascript">axios.get(&quot;https://api.github.com/users/louiszhai&quot;)
+  .then(function(response){
+    console.log(response);
+  })
+  .catch(function (error) {
+    console.log(error);
+  });
+</code></pre>
+<p>除了get, 它还支持post, delete, head, put, patch, request请求. </p>
+<h2 id="Fetch"><a href="#Fetch" class="headerlink" title="Fetch"></a>Fetch</h2><p><a href="http://louiszhai.github.io/2016/11/02/fetch/" target="_blank" rel="external">Fetch进阶指南</a> .</p>
+<h2 id="ajax跨域请求"><a href="#ajax跨域请求" class="headerlink" title="ajax跨域请求"></a>ajax跨域请求</h2><h3 id="什么是CORS"><a href="#什么是CORS" class="headerlink" title="什么是CORS"></a>什么是CORS</h3><p>实际上, 浏览器不会拦截不合法的跨域请求, 而是拦截了他们的响应, 因此即使请求不合法, 很多时候, 服务器依然收到了请求.(Chrome和Firefox下https网站不允许发送http异步请求除外)</p>
+<h3 id="移动端CORS兼容性"><a href="#移动端CORS兼容性" class="headerlink" title="移动端CORS兼容性"></a>移动端CORS兼容性</h3><p>当前几乎所有的桌面浏览器(Internet Explorer 8+, Firefox 3.5+, Safari 4+和 Chrome 3+)都可通过名为跨域资源共享的协议支持ajax跨域调用.</p>
+<p> CORS的技术在IOS Safari7.1及Android webview2.3中就早已支持, 即使低版本下webview的canvas在使用跨域的video或图片时会有问题, 也丝毫不影响CORS的在移动端的使用. </p>
+<h3 id="CORS有关的headers"><a href="#CORS有关的headers" class="headerlink" title="CORS有关的headers"></a>CORS有关的headers</h3><h3 id="CORS请求"><a href="#CORS请求" class="headerlink" title="CORS请求"></a>CORS请求</h3><p>CORS请求分为两种, ① 简单请求; ② 非简单请求.</p>
+<p>对于简单请求, 浏览器将发送一次http请求, 同时在Request头域中增加 <code>Origin</code> 字段, 用来标示请求发起的源, 服务器根据这个源采取不同的响应策略. 若服务器认为该请求合法, 那么需要往返回的 HTTP Response 中添加 <code>Access-Control-*</code> 等字段.</p>
+<p>对于非简单请求, 比如Method为<code>POST</code>且Content-Type值为 <code>application/json</code> 的请求或者Method为 <code>PUT</code> 或 <code>DELETE</code> 的请求, 浏览器将发送两次http请求. 第一次为preflight预检(Method: OPTIONS),主要验证来源是否合法. 值得注意的是:OPTION请求响应头同样需要包含 <code>Access-Control-*</code> 字段等. 第二次才是真正的HTTP请求. 所以服务器必须处理OPTIONS应答(通常需要返回20X的状态码, 否则xhr.onerror事件将被触发).</p>
+<h3 id="HTML启用CORS"><a href="#HTML启用CORS" class="headerlink" title="HTML启用CORS"></a>HTML启用CORS</h3><pre><code class="html">&lt;meta http-equiv=&quot;Access-Control-Allow-Origin&quot; content=&quot;*&quot;&gt;
+</code></pre>
+<h3 id="图片启用CORS"><a href="#图片启用CORS" class="headerlink" title="图片启用CORS"></a>图片启用CORS</h3><p>通常, 图片允许跨域访问, 也可以在canvas中使用跨域的图片, 但这样做会污染画布, 一旦画布受污染, 将无法读取其数据. 浏览器的这种安全机制规避了未经许可的远程服务器图片被滥用的风险.</p>
+<p>因此如需在canvas中使用跨域的图片资源, 请参考如下apache配置片段(来自<a href="https://github.com/h5bp/server-configs-apache/blob/fc379c45f52a09dd41279dbf4e60ae281110a5b0/src/.htaccess#L36-L53" target="_blank" rel="external">HTML5 Boilerplate Apache server configs</a>).</p>
+<h2 id="ajax文件上传"><a href="#ajax文件上传" class="headerlink" title="ajax文件上传"></a>ajax文件上传</h2><p>1) 为了上传文件, 我们得先选中一个文件. 一个type为file的input框就够了.</p>
+<pre><code class="html">&lt;input id=&quot;input&quot; type=&quot;file&quot;&gt;
+</code></pre>
+<p>2) 然后用FormData对象包裹📦选中的文件.</p>
+<pre><code class="javascript">var input = document.getElementById(&quot;input&quot;),
+    formData = new FormData();
+formData.append(&quot;file&quot;,input.files[0]);//key可以随意定义,只要后台能理解就行
+</code></pre>
+<p>3) 定义上传的URL, 以及方法. github上我搭建了一个 <a href="https://github.com/Louiszhai/node-webserver" target="_blank" rel="external">node-webserver</a>, 根据需要可以自行克隆下来npm start后便可调试本篇代码.</p>
+<pre><code class="javascript">var url = &quot;http://localhost:10108/test&quot;,
+    method = &quot;POST&quot;;
+</code></pre>
+<h3 id="js文件上传"><a href="#js文件上传" class="headerlink" title="js文件上传"></a>js文件上传</h3><p>4.1) 封装一个用于发送ajax请求的方法.</p>
+<pre><code class="javascript">function ajax(url, method, data){
+  var xhr = null;
+  if(window.XMLHttpRequest) {
+    xhr = new XMLHttpRequest();
+  } else if (window.ActiveXObject) {
+    try {
+      xhr = new ActiveXObject(&quot;Msxml2.XMLHTTP&quot;);
+    } catch (e) {
+      try {
+        xhr = new ActiveXObject(&quot;Microsoft.XMLHTTP&quot;);
+      } catch (e) { 
+        alert(&quot;您的浏览器暂不支持Ajax!&quot;);
+      }
+    }
+  }
+  xhr.onerror = function(e){
+    console.log(e);
+  }
+  xhr.open(method, url);
+  try{
+    setTimeout(function(){
+      xhr.send(data);
+    });
+  }catch(e){
+    console.log(&#39;error:&#39;,e);
+  }
+  return xhr;
+}
+</code></pre>
+<p>4.2) 上传文件并绑定事件.</p>
+<pre><code class="javascript">var xhr = ajax(url, method, formData);
+xhr.upload.onprogress = function(e){
+  console.log(&quot;upload progress:&quot;, e.loaded/e.total*100 + &quot;%&quot;);
+};
+xhr.upload.onload = function(){
+  console.log(&quot;upload onload.&quot;);
+};
+xhr.onload = function(){
+  console.log(&quot;onload.&quot;);
+}
+</code></pre>
+<h3 id="fetch上传"><a href="#fetch上传" class="headerlink" title="fetch上传"></a>fetch上传</h3><p>5) fetch只要发送一个post请求, 并且body属性设置为formData即可. 遗憾的是, fetch无法跟踪上传的进度信息.</p>
+<pre><code class="javascript">fetch(url, {
+  method: method,
+  body: formData
+  }).then(function(res){
+  console.log(res);
+  }).catch(function(e){
+  console.log(e);
+});
+</code></pre>
+<h3 id="jquery文件上传"><a href="#jquery文件上传" class="headerlink" title="jquery文件上传"></a>jquery文件上传</h3><p>6) jq的ajax提供了xhr属性用于自定义各种事件.</p>
+<pre><code class="javascript">$.ajax({
+  type: method,
+  url: url,
+  data: formData,
+  processData : false,
+  contentType : false ,//必须false才会自动加上正确的Content-Type
+  xhr: function(){
+    var xhr = $.ajaxSettings.xhr();//实际上就是return new window.XMLHttpRequest()对象
+    if(xhr.upload) {
+      xhr.upload.addEventListener(&quot;progress&quot;, function(e){
+        console.log(&quot;jq upload progress:&quot;, e.loaded/e.total*100 + &quot;%&quot;);
+      }, false);
+      xhr.upload.addEventListener(&quot;load&quot;, function(){
+        console.log(&quot;jq upload onload.&quot;);
+      });
+      xhr.addEventListener(&quot;load&quot;, function(){
+        console.log(&quot;jq onload.&quot;);
+      });
+      return xhr;
+    }
+  }
+});
+</code></pre>
+<h2 id="ajax请求二进制文件"><a href="#ajax请求二进制文件" class="headerlink" title="ajax请求二进制文件"></a>ajax请求二进制文件</h2><h3 id="FileReader"><a href="#FileReader" class="headerlink" title="FileReader"></a>FileReader</h3><p>处理二进制文件主要使用的是H5的FileReader.</p>
+<h2 id="如何等待多个ajax请求完成"><a href="#如何等待多个ajax请求完成" class="headerlink" title="如何等待多个ajax请求完成"></a>如何等待多个ajax请求完成</h2><p>原生js可以使用ES6新增的Promise.</p>
+<p>这里先提供一个解析responses的函数.</p>
+<pre><code class="javascript">function todo(responses){
+  responses.forEach(function(response){
+    response.json().then(function(res){
+      console.log(res);
+    });
+  });
+}
+</code></pre>
+<p>原生js使用 <code>Promise.all</code> 方法. 如下:</p>
+<pre><code class="javascript">var p1 = fetch(&quot;http://localhost:10108/test1&quot;),
+    p2 = fetch(&quot;http://localhost:10108/test2&quot;);
+Promise.all([p1, p2]).then(function(responses){
+  todo(responses);
+  //TODO do somethings
+});
+//&quot;test1&quot;
+//&quot;test2&quot;
+</code></pre>
+<p>jquery可以使用$.when方法. 该方法接受一个或多个Deferred对象作为参数, 只有全部成功才调用resolved状态的回调函数, 但只要其中有一个失败，就调用rejected状态的回调函数. 其实, jq的Deferred是基于 Promises/A规范实现, 但并非完全遵循. (传送门: <a href="http://www.css88.com/archives/4750/comment-page-1" target="_blank" rel="external">jQuery 中的 Deferred 和 Promises (2)</a> ).</p>
+<pre><code class="javascript">var p1 = $.ajax(&quot;http://localhost:10108/test1&quot;),
+    p2 = $.ajax(&quot;http://localhost:10108/test2&quot;);
+$.when(p1, p2).then(function(res1, res2){
+  console.log(res1);//[&quot;test1&quot;, &quot;success&quot;, Object]
+  console.log(res2);//[&quot;test2&quot;, &quot;success&quot;, Object]
+  //TODO do somethings
+});
+</code></pre>
+<h2 id="ajax与history的兼容"><a href="#ajax与history的兼容" class="headerlink" title="ajax与history的兼容"></a>ajax与history的兼容</h2><p>如今, H5普及, pjax大行其道. pajax 就是 ajax+history.pushState 组合的一种技术. 使用它便可以无刷新通过浏览器前进和后退来改变页面内容.</p>
+<p>IE8,9并不能使用 H5的history. 需要使用垫片 <a href="https://github.com/devote/HTML5-History-API" target="_blank" rel="external">HTML5 History API expansion for browsers not supporting pushState, replaceState</a> .</p>
+<h3 id="pjax"><a href="#pjax" class="headerlink" title="pjax"></a>pjax</h3><p>pjax简单易用, 仅需要如下三个api:</p>
+<ul>
+<li>history.pushState(obj, title, url) 表示往页面history末尾新增一个历史项(history entry), 此时history.length会+1.</li>
+<li>history.replaceState(obj, title, url) 表示替换当前历史项为新的历史项. 此时history.length保持不变.</li>
+<li>window.onpopstate 仅在浏览器前进和后退时触发(history.go(1), history.back() 及location.href=”xxx” 均会触发), 此时可在history.state中拿到刚刚塞进去的state, 即obj对象(其他数据类型亦可).</li>
+</ul>
+<h2 id="ajax缓存处理"><a href="#ajax缓存处理" class="headerlink" title="ajax缓存处理"></a>ajax缓存处理</h2><p>js中的http缓存没有开关, 受制于浏览器http缓存策略. 原生xhr请求中, 可通过如下设置关闭缓存.</p>
+<pre><code class="javascript">xhr.setRequestHeader(&quot;If-Modified-Since&quot;,&quot;0&quot;);
+xhr.setRequestHeader(&quot;Cache-Control&quot;,&quot;no-cache&quot;);
+//或者 URL 参数后加上  &quot;?timestamp=&quot; + new Date().getTime()
+</code></pre>
+<h2 id="ajax的错误处理"><a href="#ajax的错误处理" class="headerlink" title="ajax的错误处理"></a>ajax的错误处理</h2><p>前面已经提过, 通常只要是ajax请求收到了http状态码, 便不会进入到错误捕获里.(Chrome中407响应头除外)</p>
+<p>实际上, <code>$.ajax</code>方法略有区别, jquery的ajax方法还会在类型解析出错时触发error回调. 最常见的便是: dataType设置为json, 但是返回的data并非json格式, 此时 <code>$.ajax</code> 的error回调便会触发.</p>
+<h2 id="ajax调试技巧"><a href="#ajax调试技巧" class="headerlink" title="ajax调试技巧"></a>ajax调试技巧</h2><h3 id="编码问题"><a href="#编码问题" class="headerlink" title="编码问题"></a>编码问题</h3><h2 id="后端接口测试技巧"><a href="#后端接口测试技巧" class="headerlink" title="后端接口测试技巧"></a>后端接口测试技巧</h2><h3 id="使用命令测试OPTIONS请求"><a href="#使用命令测试OPTIONS请求" class="headerlink" title="使用命令测试OPTIONS请求"></a>使用命令测试OPTIONS请求</h3><h3 id="postman"><a href="#postman" class="headerlink" title="postman"></a>postman</h3><h2 id="ajax移动端兼容性"><a href="#ajax移动端兼容性" class="headerlink" title="ajax移动端兼容性"></a>ajax移动端兼容性</h2><p>移动端的支持性比较弱, 使用需谨慎. </p>
+<h1 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h1><h2 id="Case1-什么是AJAX"><a href="#Case1-什么是AJAX" class="headerlink" title="Case1.什么是AJAX"></a>Case1.什么是AJAX</h2><p>AJAX是“Asynchronous JavaScript and XML”的缩写。他是指一种创建交互式网页应用的网页开发技术。</p>
+<p>Ajax包含下列技术：<br>基于web标准（standards-basedpresentation）XHTML+CSS的表示；<br>使用 DOM（Document ObjectModel）进行动态显示及交互；<br>使用 XML 和 XSLT 进行数据交换及相关操作；<br>使用 XMLHttpRequest 进行异步数据查询、检索；<br>使用 JavaScript 将所有的东西绑定在一起。</p>
+<h2 id="Case2-为什么要用ajax"><a href="#Case2-为什么要用ajax" class="headerlink" title="Case2.为什么要用ajax"></a>Case2.为什么要用ajax</h2><p>Ajax应用程序的优势在于：</p>
+<ol>
+<li>通过异步模式，提升了用户体验</li>
+<li>优化了浏览器和服务器之间的传输，减少不必要的数据往返，减少了带宽占用</li>
+<li>Ajax引擎在客户端运行，承担了一部分本来由服务器承担的工作，从而减少了大用户量下的服务器负载。</li>
+</ol>
+<h2 id="Case3-AJAX最大的特点"><a href="#Case3-AJAX最大的特点" class="headerlink" title="Case3.AJAX最大的特点"></a>Case3.AJAX最大的特点</h2><p>Ajax可以实现动态不刷新（局部刷新）。就是能在不更新整个页面的前提下维护数据。这使得Web应用程序更为迅捷地回应用户动作，并避免了在网络上发送那些没有改变过的信息。</p>
+<h2 id="Case4-介绍XMLhttprequest对象"><a href="#Case4-介绍XMLhttprequest对象" class="headerlink" title="Case4.介绍XMLhttprequest对象"></a>Case4.介绍XMLhttprequest对象</h2><p>Ajax的核心是JavaScript对象XmlHttpRequest。该对象在Internet Explorer 5中首次引入，它是一种支持异步请求的技术。简而言之，XmlHttpRequest使您可以使用JavaScript向服务器提出请求并处理响应，而不阻塞用户。通过XMLHttpRequest对象，Web开发人员可以在页面加载以后进行页面的局部更新。</p>
+<h2 id="Case5-AJAX技术体系的组成部分有哪些"><a href="#Case5-AJAX技术体系的组成部分有哪些" class="headerlink" title="Case5.AJAX技术体系的组成部分有哪些"></a>Case5.AJAX技术体系的组成部分有哪些</h2><p>HTML，css，dom，xml，xmlHttpRequest，javascript</p>
+<h2 id="Case6-AJAX应用和传统Web应用有什么不同"><a href="#Case6-AJAX应用和传统Web应用有什么不同" class="headerlink" title="Case6.AJAX应用和传统Web应用有什么不同"></a>Case6.AJAX应用和传统Web应用有什么不同</h2><p>在传统的Javascript编程中，如果想得到服务器端数据库或文件上的信息，或者发送客户端信息到服务器，需要建立一个HTML form然后GET或者POST数据到服务器端。用户需要点击”Submit”按钮来发送或者接受数据信息，然后等待服务器响应请求，页面重新加载。因为服务器每次都会返回一个新的页面， 所以传统的web应用有可能很慢而且用户交互不友好。</p>
+<p>使用AJAX技术， 就可以使Javascript通过XMLHttpRequest对象直接与服务器进行交互。<br>通过HTTP Request， 一个web页面可以发送一个请求到web服务器并且接受web服务器返回的信息(不用重新加载页面)，展示给用户的还是通一个页面，用户感觉页面刷新，也看不到到Javascript后台进行的发送请求和接受响应。</p>
+<h2 id="Case7-AJAX请求总共有多少种CALLBACK"><a href="#Case7-AJAX请求总共有多少种CALLBACK" class="headerlink" title="Case7.AJAX请求总共有多少种CALLBACK"></a>Case7.AJAX请求总共有多少种CALLBACK</h2><p>Ajax请求总共有八种Callback</p>
+<ul>
+<li>onSuccess</li>
+<li>onFailure</li>
+<li>onUninitialized</li>
+<li>onLoading</li>
+<li>onLoaded</li>
+<li>onInteractive</li>
+<li>onComplete</li>
+<li>onException</li>
+</ul>
+<h2 id="Case8-在浏览器端如何得到服务器端响应的XML数据"><a href="#Case8-在浏览器端如何得到服务器端响应的XML数据" class="headerlink" title="Case8.在浏览器端如何得到服务器端响应的XML数据"></a>Case8.在浏览器端如何得到服务器端响应的XML数据</h2><p>XMLHttpRequest对象的responseXMl属性</p>
+<h2 id="Case9-XMLHttpRequest对象在IE和Firefox中创建方式"><a href="#Case9-XMLHttpRequest对象在IE和Firefox中创建方式" class="headerlink" title="Case9.XMLHttpRequest对象在IE和Firefox中创建方式"></a>Case9.XMLHttpRequest对象在IE和Firefox中创建方式</h2><p>IE中通过new ActiveXObject()得到，Firefox中通过newXMLHttpRequest()得到</p>
+<h2 id="Case10-XMLHttpRequest对象的常用方法和属性"><a href="#Case10-XMLHttpRequest对象的常用方法和属性" class="headerlink" title="Case10.XMLHttpRequest对象的常用方法和属性"></a>Case10.XMLHttpRequest对象的常用方法和属性</h2><p><strong>方法</strong></p>
+<p><code>open(“method”,”URL”)</code> 建立对服务器的调用，第一个参数是HTTP请求方式可以为GET，POST或任何服务器所支持的您想调用的方式。第二个参数是请求页面的URL。</p>
+<p><code>send()</code>方法，发送具体请求</p>
+<p><code>abort()</code>方法，停止当前请求</p>
+<p><strong>熟悉</strong></p>
+<p><code>readyState</code>属性：请求的状态，有5个可取值</p>
+<ul>
+<li>0=未初始化</li>
+<li>1=正在加载</li>
+<li>2=以加载</li>
+<li>3=交互中</li>
+<li>4=完成</li>
+</ul>
+<p><code>responseText</code>属性：服务器的响应，表示为一个串</p>
+<p><code>reponseXML</code> 属性：服务器的响应，表示为XML</p>
+<p><code>status</code>属性：服务器的HTTP状态码，200对应ok，400对应error</p>
+<h2 id="Case11-AJAX有哪些优点和缺点？"><a href="#Case11-AJAX有哪些优点和缺点？" class="headerlink" title="Case11.AJAX有哪些优点和缺点？"></a>Case11.AJAX有哪些优点和缺点？</h2><p><strong>优点</strong></p>
+<ol>
+<li>最大的一点是页面无刷新，用户的体验非常好。</li>
+<li>使用异步方式与服务器通信，具有更加迅速的响应能力。</li>
+<li>可以把以前一些服务器负担的工作转嫁到客户端，利用客户端闲置的能力来处理，减轻服务器和带宽的负担，节约空间和宽带租用成本。并且减轻服务器的负担，ajax的原则是“按需取数据”，可以最大程度的减少冗余请求，和响应对服务器造成的负担。</li>
+<li>基于标准化的并被广泛支持的技术，不需要下载插件或者小程序。</li>
+</ol>
+<p><strong>缺点</strong></p>
+<ol>
+<li>ajax不支持浏览器back按钮。</li>
+<li>安全问题 AJAX暴露了与服务器交互的细节。</li>
+<li>对搜索引擎的支持比较弱。</li>
+<li>破坏了程序的异常机制。</li>
+<li>不容易调试。</li>
+</ol>
+<h1 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h1><ul>
+<li><a href="https://segmentfault.com/a/1190000008697448" target="_blank" rel="external">Ajax知识体系大梳理</a></li>
+<li><a href="http://blog.csdn.net/chow__zh/article/details/9149811" target="_blank" rel="external">经典的20道AJAX面试题</a></li>
+</ul>
+
+        
+                <blockquote style="margin: 2em 0 0;padding: 0.5em 1em;border-left: 3px solid #F44336;background-color: #F5F5F5;list-style: none;">
+                    <p><strong>
+                         
+                            本文采用 <a rel='nofollow noopener' href='https://creativecommons.org/licenses/by-nc-sa/3.0/deed.zh' target='_blank'>CC BY-NC-SA 3.0 Unported</a> 协议进行许可，阅读 <a href='/creativecommons.html' target='_blank'>相关说明</a>
+                        </strong>
+                        <br>
+                        <strong>本文链接：</strong><a href="http://janebt.github.io/2017/11/30/前端/基础/javascript/Ajax/">http://janebt.github.io/2017/11/30/前端/基础/javascript/Ajax/</a>
+                    </p>
+                </blockquote>
+        
+    
+
+    
+</div>
+
+
+                
+
+                <!-- Post Comments -->
+                
+                    
+    <!-- 使用 DISQUS -->
+<div id="disqus-comment">
+    <div id="disqus_thread"></div>
+<script type="text/javascript">
+    var disqus_config = function () {
+        this.page.url = 'http://janebt.github.io/2017/11/30/前端/基础/javascript/Ajax/';  // Replace PAGE_URL with your page's canonical URL variable
+        this.page.identifier = 'http://janebt.github.io/2017/11/30/前端/基础/javascript/Ajax/'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+    };
+</script>
+<script type="text/ls-javascript" id="disqus-thread-script">
+    queue.offer(function() {
+            (function() { // DON'T EDIT BELOW THIS LINE
+                var d = document;
+                var s = d.createElement('script');
+                s.src = '//https-janebt-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', + new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        });
+</script>
+
+</div>
+<style>
+    #disqus-comment{
+        background-color: #eee;
+        padding: 2pc;
+    }
+</style>
+
+                
+            </div>
+
+            <!-- Post Prev & Next Nav -->
+            <nav class="material-nav mdl-color-text--grey-50 mdl-cell mdl-cell--12-col">
+    <!-- Prev Nav -->
+    
+        <a href="/2017/11/30/前端/基础/javascript/json/" id="post_nav-newer" class="prev-content">
+            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
+                <i class="material-icons">arrow_back</i>
+            </button>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            新篇
+        </a>
+    
+
+    <!-- Section Spacer -->
+    <div class="section-spacer"></div>
+
+    <!-- Next Nav -->
+    
+        <a href="/2017/11/29/前端/基础/javascript/内存泄漏/" id="post_nav-older" class="next-content">
+            旧篇
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
+                <i class="material-icons">arrow_forward</i>
+            </button>
+        </a>
+    
+</nav>
+
+        </div>
+    </div>
+
+
+
+                    
+                        <!-- Overlay For Active Sidebar -->
+<div class="sidebar-overlay"></div>
+
+<!-- Material sidebar -->
+<aside id="sidebar" class="sidebar sidebar-colored sidebar-fixed-left" role="navigation">
+    <div id="sidebar-main">
+        <!-- Sidebar Header -->
+        <div class="sidebar-header header-cover" style="background-image: url(/img/sidebar_header.jpg);">
+    <!-- Top bar -->
+    <div class="top-bar"></div>
+
+    <!-- Sidebar toggle button -->
+    <button type="button" class="sidebar-toggle mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon" style="display: initial;" data-upgraded=",MaterialButton,MaterialRipple">
+        <i class="material-icons">clear_all</i>
+        <span class="mdl-button__ripple-container">
+            <span class="mdl-ripple">
+            </span>
+        </span>
+    </button>
+
+    <!-- Sidebar Avatar -->
+    <div class="sidebar-image">
+        <img src="/img/avatar.jpg" alt="jane's avatar">
+    </div>
+
+    <!-- Sidebar Email -->
+    <a data-toggle="dropdown" class="sidebar-brand" href="#settings-dropdown">
+        janebtgithub@163.com
+        <b class="caret"></b>
+    </a>
+</div>
+
+
+        <!-- Sidebar Navigation  -->
+        <ul class="nav sidebar-nav">
+    <!-- User dropdown  -->
+    <li class="dropdown">
+        <ul id="settings-dropdown" class="dropdown-menu">
+            
+                <li>
+                    <a href="mailto:janebtgithub@163.com" target="_blank" title="Email Me">
+                        
+                            <i class="material-icons sidebar-material-icons sidebar-indent-left1pc-element">email</i>
+                        
+                        Email Me
+                    </a>
+                </li>
+            
+        </ul>
+    </li>
+
+    <!-- Homepage -->
+    
+        <li id="sidebar-first-li">
+            <a href="/">
+                
+                    <i class="material-icons sidebar-material-icons">home</i>
+                
+                主页
+            </a>
+        </li>
+        
+    
+
+    <!-- Archives  -->
+    
+        <li class="dropdown">
+            <a href="#" class="ripple-effect dropdown-toggle" data-toggle="dropdown">
+                
+                    <i class="material-icons sidebar-material-icons">inbox</i>
+                
+                    归档
+                <b class="caret"></b>
+            </a>
+            <ul class="dropdown-menu">
+            <li>
+                <a class="sidebar_archives-link" href="/archives/2017/12/">十二月 2017<span class="sidebar_archives-count">6</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/11/">十一月 2017<span class="sidebar_archives-count">18</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/10/">十月 2017<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/01/">一月 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/10/">十月 2016<span class="sidebar_archives-count">1</span></a>
+            </ul>
+        </li>
+        
+    
+
+    <!-- Categories  -->
+    
+        <li class="dropdown">
+            <a href="#" class="ripple-effect dropdown-toggle" data-toggle="dropdown">
+                
+                    <i class="material-icons sidebar-material-icons">apps</i>
+                
+                分类
+                <b class="caret"></b>
+            </a>
+            <ul class="dropdown-menu">
+                <li>
+                <a class="sidebar_archives-link" href="/categories/博客栈/">博客栈<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/大前端/">大前端<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/技术栈/">技术栈<span class="sidebar_archives-count">26</span></a>
+            </ul>
+        </li>
+        
+    
+
+    <!-- Pages  -->
+    
+        <li>
+            <a href="/tags.html" title="标签">
+                
+                    <i class="material-icons sidebar-material-icons">bookmark</i>
+                
+                标签
+            </a>
+        </li>
+        
+    
+        <li>
+            <a href="/timeline.html" title="时间线">
+                
+                    <i class="material-icons sidebar-material-icons">inbox</i>
+                
+                时间线
+            </a>
+        </li>
+        
+            <li class="divider"></li>
+        
+    
+        <li>
+            <a href="/gallery.html" title="映像">
+                
+                    <i class="material-icons sidebar-material-icons">photo</i>
+                
+                映像
+            </a>
+        </li>
+        
+    
+        <li>
+            <a href="/links.html" title="友链">
+                
+                    <i class="material-icons sidebar-material-icons">people</i>
+                
+                友链
+            </a>
+        </li>
+        
+            <li class="divider"></li>
+        
+    
+        <li>
+            <a href="/about.html" title="简历">
+                
+                    <i class="material-icons sidebar-material-icons">person</i>
+                
+                简历
+            </a>
+        </li>
+        
+    
+
+    <!-- Article Number  -->
+    
+        <li>
+            <a href="/archives">
+                文章总数
+                <span class="sidebar-badge">28</span>
+            </a>
+        </li>
+        
+    
+</ul>
+
+
+        <!-- Sidebar Footer -->
+        <!--
+I'm glad you use this theme, the development is no so easy, I hope you can keep the copyright, I will thank you so much.
+If you still want to delete the copyrights, could you still retain the first one? Which namely "Theme Material"
+It will not impact the appearance and can give developers a lot of support :)
+
+很高兴您使用并喜欢该主题，开发不易 十分谢谢与希望您可以保留一下版权声明。
+如果您仍然想删除的话 能否只保留第一项呢？即 "Theme Material"
+它不会影响美观并可以给开发者很大的支持和动力。 :)
+-->
+
+<!-- Sidebar Divider -->
+
+
+<!-- Theme Material -->
+
+
+<!-- Help & Support -->
+<!--
+
+-->
+
+<!-- Feedback -->
+<!--
+
+-->
+
+<!-- About Theme -->
+<!--
+
+-->
+
+    </div>
+
+    <!-- Sidebar Image -->
+    
+
+</aside>
+
+                    
+
+                    
+                        <!-- Footer Top Button -->
+                        <div id="back-to-top" class="toTop-wrap">
+    <a href="#top" class="toTop">
+        <i class="material-icons footer_top-i">expand_less</i>
+    </a>
+</div>
+
+                    
+
+                    <!--Footer-->
+<footer class="mdl-mini-footer" id="bottom">
+    
+        <!-- Paradox Footer Left Section -->
+        <div class="mdl-mini-footer--left-section sns-list">
+    <!-- Twitter -->
+    
+
+    <!-- Facebook -->
+    
+
+    <!-- Google + -->
+    
+
+    <!-- Weibo -->
+    
+
+    <!-- Instagram -->
+    
+
+    <!-- Tumblr -->
+    
+
+    <!-- Github -->
+    
+        <a href="https://github.com/janebt" target="_blank">
+            <button class="mdl-mini-footer--social-btn social-btn footer-sns-github">
+                <span class="visuallyhidden">Github</span>
+            </button><!--
+     --></a>
+    
+
+    <!-- LinkedIn -->
+    
+
+    <!-- Zhihu -->
+    
+        <a href="https://www.zhihu.com/people/bai-yan-zhi-ji/activities" target="_blank">
+            <button class="mdl-mini-footer--social-btn social-btn footer-sns-zhihu">
+                <span class="visuallyhidden">Zhihu</span>
+            </button><!--
+     --></a>
+    
+
+    <!-- Bilibili -->
+    
+
+    <!-- Telegram -->
+    
+    
+    <!-- V2EX -->
+    
+</div>
+
+
+        <!--Copyright-->
+        <div id="copyright">
+            Copyright&nbsp;©&nbsp;2016&nbsp;-<script type="text/javascript">var fd = new Date();document.write("&nbsp;" + fd.getFullYear() + "&nbsp;");</script>Jane's blog
+            
+        </div>
+
+        <!-- Paradox Footer Right Section -->
+
+        <!--
+        I am glad you use this theme, the development is no so easy, I hope you can keep the copyright.
+        It will not impact the appearance and can give developers a lot of support :)
+
+        很高兴您使用该主题，开发不易，希望您可以保留一下版权声明。
+        它不会影响美观并可以给开发者很大的支持。 :)
+        -->
+
+        <div class="mdl-mini-footer--right-section">
+            <div>
+                <div class="footer-develop-div">Powered by <a href="https://hexo.io" target="_blank" class="footer-develop-a">Hexo</a></div>
+                <div class="footer-develop-div">Theme - <a href="https://github.com/viosey/hexo-theme-material" target="_blank" class="footer-develop-a">Material</a></div>
+            </div>
+        </div>
+    
+</footer>
+
+
+                    <!-- Import JS File -->
+
+    <script>lsloader.load("lazyload_js","https://cdn.jsdelivr.net/npm/hexo-material@1.4.0/source/js/lazyload.min.js", true)</script>
+
+
+
+    <script>lsloader.load("js_js","https://cdn.jsdelivr.net/npm/hexo-material@1.4.0/source/js/js.min.js", true)</script>
+
+
+
+    <script>lsloader.load("np_js","https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js", true)</script>
+
+
+<script type="text/ls-javascript" id="NProgress-script">
+    NProgress.configure({
+        showSpinner: true
+    });
+    NProgress.start();
+    $('#nprogress .bar').css({
+        'background': '#29d'
+    });
+    $('#nprogress .peg').css({
+        'box-shadow': '0 0 10px #29d, 0 0 15px #29d'
+    });
+    $('#nprogress .spinner-icon').css({
+        'border-top-color': '#29d',
+        'border-left-color': '#29d'
+    });
+    setTimeout(function() {
+        NProgress.done();
+        $('.fade').removeClass('out');
+    }, 800);
+</script>
+
+
+
+
+
+
+
+
+
+   <!-- 使用 DISQUS js 代码 -->
+<script id="dsq-count-scr" src="//https-janebt-github-io.disqus.com/count.js" async></script>
+
+
+
+
+
+<!-- UC Browser Compatible -->
+<script>
+	var agent = navigator.userAgent.toLowerCase();
+	if(agent.indexOf('ucbrowser')>0) {
+		document.write('<link rel="stylesheet" href="/css/uc.css">');
+	   alert('由于 UC 浏览器使用极旧的内核，而本网站使用了一些新的特性。\n为了您能更好的浏览，推荐使用 Chrome 或 Firefox 浏览器。');
+	}
+</script>
+
+<!-- Import prettify js  -->
+
+    
+        
+            <script>lsloader.load("prettify_js","https://cdn.jsdelivr.net/npm/prettify@0.1.7/prettify.min.js", true)</script>
+        
+    
+
+
+
+<!-- Window Load -->
+<!-- add class for prettify -->
+<script type="text/ls-javascript" id="window-load">
+    $(window).on('load', function() {
+        // Post_Toc parent position fixed
+        $('.post-toc-wrap').parent('.mdl-menu__container').css('position', 'fixed');
+    });
+
+    
+        
+            $(function() {
+                $('pre').addClass('prettyprint linenums').attr('style', 'overflow:auto;');
+                prettyPrint();
+                })
+        
+    
+    
+</script>
+
+<!-- MathJax Load-->
+
+
+<!-- Bing Background -->
+
+
+<script type="text/ls-javascript" id="lazy-load">
+    // Offer LazyLoad
+    queue.offer(function(){
+        $('.lazy').lazyload({
+            effect : 'show'
+        });
+    });
+
+    // Start Queue
+    $(document).ready(function(){
+        setInterval(function(){
+            queue.execNext();
+        },200);
+    });
+</script>
+
+<!-- Custom Footer -->
+
+
+
+<script>
+    (function(){
+        var scriptList = document.querySelectorAll('script[type="text/ls-javascript"]')
+
+        for (var i = 0; i < scriptList.length; ++i) {
+            var item = scriptList[i];
+            lsloader.runInlineScript(item.id,item.id);
+        }
+    })()
+console.log('\n %c © Material Theme | Version: 1.5.0 | https://github.com/viosey/hexo-theme-material %c \n', 'color:#455a64;background:#e0e0e0;padding:5px 0;border-top-left-radius:5px;border-bottom-left-radius:5px;', 'color:#455a64;background:#e0e0e0;padding:5px 0;border-top-right-radius:5px;border-bottom-right-radius:5px;');
+</script>
+
+                </main>
+            </div>
+        </body>
+    
+</html>
