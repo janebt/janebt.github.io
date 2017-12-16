@@ -3,6 +3,253 @@
   
     
     <entry>
+      <title></title>
+      <url>/2017/12/16/%E9%9D%A2%E8%AF%95/%E7%AE%97%E6%B3%95/%E5%9F%BA%E7%A1%80%E7%AE%97%E6%B3%95/</url>
+      <content type="html"><![CDATA[<h1 id="算法"><a href="#算法" class="headerlink" title="算法"></a>算法</h1><h2 id="快排"><a href="#快排" class="headerlink" title="快排"></a>快排</h2><pre><code class="javascript">function quickSort(arr){
+  if(arr.length&lt;=1){return arr;}
+  var pivotIndex=Math.floor(arr.length/2);
+  //找基准，并把基准从原数组删除
+  var pivot=arr.splice(pivotIndex,1)[0];
+  //定义左右数组
+  var left=[];
+  var right=[];
+
+  //比基准小的放在left，比基准大的放在right
+  for(var i=0;i&lt;arr.length;i++){
+    if(arr[i]&lt;=pivot){
+      left.push(arr[i]);
+    }
+    else{
+      right.push(arr[i]);
+    }
+  }
+  //递归
+  return quickSort(left).concat([pivot],quickSort(right));
+}
+</code></pre>
+<h2 id="二叉树"><a href="#二叉树" class="headerlink" title="二叉树"></a>二叉树</h2><h3 id="节点个数"><a href="#节点个数" class="headerlink" title="节点个数"></a>节点个数</h3><p>递归解法：</p>
+<ol>
+<li>如果二叉树为空，节点个数为0</li>
+<li>如果二叉树不为空，二叉树节点个数 = 左子树节点个数 + 右子树节点个数 + 1</li>
+</ol>
+<pre><code class="c++">int GetNodeNum(BinaryTreeNode * pRoot)  
+{  
+    if(pRoot == NULL) // 递归出口  
+        return 0;  
+    return GetNodeNum(pRoot-&gt;m_pLeft) + GetNodeNum(pRoot-&gt;m_pRight) + 1;  
+}
+</code></pre>
+<h3 id="二叉树的深度"><a href="#二叉树的深度" class="headerlink" title="二叉树的深度"></a>二叉树的深度</h3><p>递归解法：</p>
+<ol>
+<li>如果二叉树为空，二叉树的深度为0</li>
+<li>如果二叉树不为空，二叉树的深度 = max(左子树深度， 右子树深度) + 1</li>
+</ol>
+<pre><code class="c++">int GetDepth(BinaryTreeNode * pRoot)  
+{  
+    if(pRoot == NULL) // 递归出口  
+        return 0;  
+    int depthLeft = GetDepth(pRoot-&gt;m_pLeft);  
+    int depthRight = GetDepth(pRoot-&gt;m_pRight);  
+    return depthLeft &gt; depthRight ? (depthLeft + 1) : (depthRight + 1);   
+}
+</code></pre>
+<h3 id="前序遍历，中序遍历，后序遍历"><a href="#前序遍历，中序遍历，后序遍历" class="headerlink" title="前序遍历，中序遍历，后序遍历"></a>前序遍历，中序遍历，后序遍历</h3><p>前序遍历递归解法：</p>
+<ol>
+<li>如果二叉树为空，空操作</li>
+<li>如果二叉树不为空，访问根节点，前序遍历左子树，前序遍历右子树</li>
+</ol>
+<pre><code class="javascript">void PreOrderTraverse(BinaryTreeNode * pRoot)  
+{  
+    if(pRoot == NULL)  
+        return;  
+    Visit(pRoot); // 访问根节点  
+    PreOrderTraverse(pRoot-&gt;m_pLeft); // 前序遍历左子树  
+    PreOrderTraverse(pRoot-&gt;m_pRight); // 前序遍历右子树  
+}
+</code></pre>
+<p>中序遍历递归解法</p>
+<ol>
+<li>如果二叉树为空，空操作。</li>
+<li>如果二叉树不为空，中序遍历左子树，访问根节点，中序遍历右子树</li>
+</ol>
+<pre><code class="javascript">void InOrderTraverse(BinaryTreeNode * pRoot)  
+{  
+    if(pRoot == NULL)  
+        return;  
+    InOrderTraverse(pRoot-&gt;m_pLeft); // 中序遍历左子树  
+    Visit(pRoot); // 访问根节点  
+    InOrderTraverse(pRoot-&gt;m_pRight); // 中序遍历右子树  
+}
+</code></pre>
+<p>后序遍历递归解法</p>
+<ol>
+<li>如果二叉树为空，空操作</li>
+<li>如果二叉树不为空，后序遍历左子树，后序遍历右子树，访问根节点</li>
+</ol>
+<pre><code class="javascript">void PostOrderTraverse(BinaryTreeNode * pRoot)  
+{  
+    if(pRoot == NULL)  
+        return;  
+    PostOrderTraverse(pRoot-&gt;m_pLeft); // 后序遍历左子树  
+    PostOrderTraverse(pRoot-&gt;m_pRight); // 后序遍历右子树  
+    Visit(pRoot); // 访问根节点  
+}
+</code></pre>
+<h3 id="分层遍历二叉树（按层次从上往下，从左往右）"><a href="#分层遍历二叉树（按层次从上往下，从左往右）" class="headerlink" title="分层遍历二叉树（按层次从上往下，从左往右）"></a>分层遍历二叉树（按层次从上往下，从左往右）</h3><p>相当于广度优先搜索，使用队列实现。队列初始化，将根节点压入队列。当队列不为空，进行如下操作：弹出一个节点，访问，若左子节点或右子节点不为空，将其压入队列。</p>
+<pre><code class="c++">void LevelTraverse(BinaryTreeNode * pRoot)  
+{  
+    if(pRoot == NULL)  
+        return;  
+    queue&lt;BinaryTreeNode *&gt; q;  
+    q.push(pRoot);  
+    while(!q.empty())  
+    {  
+        BinaryTreeNode * pNode = q.front();  
+        q.pop();  
+        Visit(pNode); // 访问节点  
+        if(pNode-&gt;m_pLeft != NULL)  
+            q.push(pNode-&gt;m_pLeft);  
+        if(pNode-&gt;m_pRight != NULL)  
+            q.push(pNode-&gt;m_pRight);  
+    }  
+    return;  
+}
+</code></pre>
+<h3 id="求二叉树第K层的节点个数"><a href="#求二叉树第K层的节点个数" class="headerlink" title="求二叉树第K层的节点个数"></a>求二叉树第K层的节点个数</h3><p>递归解法：</p>
+<ol>
+<li>如果二叉树为空或者k&lt;1返回0</li>
+</ol>
+<ol>
+<li>如果二叉树不为空并且k==1，返回1</li>
+<li>如果二叉树不为空且k&gt;1，返回左子树中k-1层的节点个数与右子树k-1层节点个数之和</li>
+</ol>
+<pre><code class="c++">int GetNodeNumKthLevel(BinaryTreeNode * pRoot, int k)  
+{  
+    if(pRoot == NULL || k &lt; 1)  
+        return 0;  
+    if(k == 1)  
+        return 1;  
+    int numLeft = GetNodeNumKthLevel(pRoot-&gt;m_pLeft, k-1); // 左子树中k-1层的节点个数  
+    int numRight = GetNodeNumKthLevel(pRoot-&gt;m_pRight, k-1); // 右子树中k-1层的节点个数  
+    return (numLeft + numRight);  
+}
+</code></pre>
+<h3 id="求二叉树中叶子节点的个数"><a href="#求二叉树中叶子节点的个数" class="headerlink" title="求二叉树中叶子节点的个数"></a>求二叉树中叶子节点的个数</h3><p>递归解法：</p>
+<ol>
+<li>如果二叉树为空，返回0</li>
+</ol>
+<ol>
+<li>如果二叉树不为空且左右子树为空，返回1</li>
+<li>如果二叉树不为空，且左右子树不同时为空，返回左子树中叶子节点个数加上右子树中叶子节点个数</li>
+</ol>
+<pre><code class="c++">int GetLeafNodeNum(BinaryTreeNode * pRoot)  
+{  
+    if(pRoot == NULL)  
+        return 0;  
+    if(pRoot-&gt;m_pLeft == NULL &amp;&amp; pRoot-&gt;m_pRight == NULL)  
+        return 1;  
+    int numLeft = GetLeafNodeNum(pRoot-&gt;m_pLeft); // 左子树中叶节点的个数  
+    int numRight = GetLeafNodeNum(pRoot-&gt;m_pRight); // 右子树中叶节点的个数  
+    return (numLeft + numRight);  
+}
+</code></pre>
+<h3 id="求二叉树的镜像"><a href="#求二叉树的镜像" class="headerlink" title="求二叉树的镜像"></a>求二叉树的镜像</h3><p>递归解法：</p>
+<ol>
+<li>如果二叉树为空，返回空</li>
+<li>如果二叉树不为空，求左子树和右子树的镜像，然后交换左子树和右子树</li>
+</ol>
+<pre><code class="c++">BinaryTreeNode * Mirror(BinaryTreeNode * pRoot)  
+{  
+    if(pRoot == NULL) // 返回NULL  
+        return NULL;  
+    BinaryTreeNode * pLeft = Mirror(pRoot-&gt;m_pLeft); // 求左子树镜像  
+    BinaryTreeNode * pRight = Mirror(pRoot-&gt;m_pRight); // 求右子树镜像  
+        // 交换左子树和右子树  
+    pRoot-&gt;m_pLeft = pRight;  
+    pRoot-&gt;m_pRight = pLeft;  
+    return pRoot;  
+}
+</code></pre>
+<h3 id="判断二叉树是不是平衡二叉树"><a href="#判断二叉树是不是平衡二叉树" class="headerlink" title="判断二叉树是不是平衡二叉树"></a>判断二叉树是不是平衡二叉树</h3><p>递归解法：</p>
+<ol>
+<li>如果二叉树为空，返回真</li>
+<li>如果二叉树不为空，如果左子树和右子树都是AVL树并且左子树和右子树高度相差不大于1，返回真，其他返回假</li>
+</ol>
+<pre><code class="c++">bool IsAVL(BinaryTreeNode * pRoot, int &amp; height)  
+{  
+    if(pRoot == NULL) // 空树，返回真  
+    {  
+        height = 0;  
+        return true;  
+    }  
+    int heightLeft;  
+    bool resultLeft = IsAVL(pRoot-&gt;m_pLeft, heightLeft);  
+    int heightRight;  
+    bool resultRight = IsAVL(pRoot-&gt;m_pRight, heightRight);  
+    if(resultLeft &amp;&amp; resultRight &amp;&amp; abs(heightLeft - heightRight) &lt;= 1) // 左子树和右子树都是AVL，并且高度相差不大于1，返回真  
+    {  
+        height = max(heightLeft, heightRight) + 1;  
+        return true;  
+    }  
+    else  
+    {  
+        height = max(heightLeft, heightRight) + 1;  
+        return false;  
+    }  
+}
+</code></pre>
+<h3 id="由前序遍历序列和中序遍历序列重建二叉树"><a href="#由前序遍历序列和中序遍历序列重建二叉树" class="headerlink" title="由前序遍历序列和中序遍历序列重建二叉树"></a>由前序遍历序列和中序遍历序列重建二叉树</h3><p>递归解法：</p>
+<ol>
+<li>如果前序遍历为空或中序遍历为空或节点个数小于等于0，返回NULL。</li>
+<li>创建根节点。前序遍历的第一个数据就是根节点的数据，在中序遍历中找到根节点的位置，可分别得知左子树和右子树的前序和中序遍历序列，重建左右子树。</li>
+</ol>
+<pre><code class="javascript">function reConstructBinaryTree(pre, vin)
+{
+    // write code here
+    if(pre.length==0 || vin.length==0) return null;
+    var index=vin.indexOf(pre[0]);
+    var left=vin.slice(0,index);//中序左子树
+    var right=vin.slice(index+1);//中序右子树
+    return {
+        val:pre[0],
+        //递归左右子树的前序，中序 
+        left:reConstructBinaryTree(pre.slice(1,index+1),left),
+        right:reConstructBinaryTree(pre.slice(index+1),right)
+     }; 
+}
+</code></pre>
+]]></content>
+      
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[Diary_2017.12.15]]></title>
+      <url>/2017/12/16/%E6%97%A5%E8%AE%B0/Diary_2017.12.15/</url>
+      <content type="html"><![CDATA[<p>从今天开始，开始记日记。目的是：</p>
+<ul>
+<li>记录学习方向，总结成长历程，调整战术</li>
+<li>一段时间，三天or一周，回顾和总结，调整战略</li>
+</ul>
+<a id="more"></a>
+]]></content>
+      
+        <categories>
+            
+            <category> 流水账 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> diary </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[es6]]></title>
       <url>/2017/12/04/%E5%89%8D%E7%AB%AF/%E6%A1%86%E6%9E%B6%E4%B8%8E%E7%BB%84%E4%BB%B6/es6/</url>
       <content type="html"><![CDATA[<p>ES6知识点整理。</p>
@@ -1801,9 +2048,9 @@ db.collection.find({
         
         <tags>
             
-            <tag> web </tag>
-            
             <tag> 安全 </tag>
+            
+            <tag> web </tag>
             
         </tags>
         
@@ -4432,97 +4679,6 @@ new Number(1) instanceof Number; //true
     </entry>
     
     <entry>
-      <title><![CDATA[HTML基础]]></title>
-      <url>/2017/11/26/%E5%89%8D%E7%AB%AF/%E5%9F%BA%E7%A1%80/HTML/HTML%E5%9F%BA%E7%A1%80/</url>
-      <content type="html"><![CDATA[<p>HTML基础概念。</p>
-<a id="more"></a>
-<h1 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h1><h2 id="对Web标准的理解"><a href="#对Web标准的理解" class="headerlink" title="对Web标准的理解"></a>对Web标准的理解</h2><p>W3C对web标准提出了规范化的要求：</p>
-<ol>
-<li>对于结构要求：<ul>
-<li>标签字母要小写</li>
-<li>标签要闭合</li>
-<li>标签不允许随意嵌套</li>
-</ul>
-</li>
-<li>对于css和js来说</li>
-</ol>
-<ul>
-<li>尽量使用外链css样式表和js脚本。</li>
-</ul>
-<ul>
-<li>样式尽量少用行间样式表，使结构与表现分离，标签的id和class等属性命名要做到见文知义，标签越少，加载越快。</li>
-<li>不需要变动页面内容，便可提供打印版本而不需要复制内容，提高网站易用性。</li>
-</ul>
-<h2 id="浏览器内核"><a href="#浏览器内核" class="headerlink" title="浏览器内核"></a>浏览器内核</h2><h3 id="浏览器内核的理解"><a href="#浏览器内核的理解" class="headerlink" title="浏览器内核的理解"></a>浏览器内核的理解</h3><p>主要分成两个部分：渲染引擎(Render Engine)和JS引擎。</p>
-<h3 id="常见的浏览器内核有哪些？"><a href="#常见的浏览器内核有哪些？" class="headerlink" title="常见的浏览器内核有哪些？"></a>常见的浏览器内核有哪些？</h3><ul>
-<li>Trident内核：IE，360，搜过浏览器；</li>
-<li>Gecko内核：Netscape6及以上版本，Mozilla FireFox(火狐浏览器)</li>
-<li>Presto内核：Opera</li>
-<li>Blink内核：Opera；</li>
-<li>Webkit内核：Safari，Chrome</li>
-</ul>
-<p><strong>优缺点：</strong></p>
-<ul>
-<li><strong>Trident内核</strong>：和W3C标准脱节，大量Bug等安全问题</li>
-<li><strong>Presto内核</strong>：速度最快，缺点是兼容性。</li>
-<li><strong>Gecko内核</strong>：功能强大，消耗很多的资源。</li>
-<li><strong>Webkit内核</strong>：速度较快，兼容性较低</li>
-</ul>
-<h2 id="HTML语义化"><a href="#HTML语义化" class="headerlink" title="HTML语义化"></a>HTML语义化</h2><h3 id="什么是HTML语义化"><a href="#什么是HTML语义化" class="headerlink" title="什么是HTML语义化"></a>什么是HTML语义化</h3><p>1、让开发者阅读和写出更优雅的代码<br>2、让浏览器的爬虫和机器很好的解析</p>
-<h3 id="为什么要语义化"><a href="#为什么要语义化" class="headerlink" title="为什么要语义化"></a>为什么要语义化</h3><ul>
-<li>有利于seo</li>
-<li>方便其他设备监听 屏幕阅读设备 盲人阅读器</li>
-<li>方便团队协作开发</li>
-</ul>
-<h3 id="语义化元素"><a href="#语义化元素" class="headerlink" title="语义化元素"></a>语义化元素</h3><ul>
-<li>header</li>
-<li>footer</li>
-<li>hgroup 网页或者section的标题</li>
-<li>nav 导航</li>
-<li>aside 特殊的section 与当前文章主要内容相关的附属信息 最好有与之对应的article（文章主要内容）</li>
-<li>article</li>
-<li>section 文章的节或者段</li>
-</ul>
-<h1 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h1><h2 id="Case1-Doctype作用？标准模式与兼容模式各有什么区别"><a href="#Case1-Doctype作用？标准模式与兼容模式各有什么区别" class="headerlink" title="Case1.Doctype作用？标准模式与兼容模式各有什么区别?"></a>Case1.Doctype作用？标准模式与兼容模式各有什么区别?</h2><p><code>&lt;!DOCTYPE&gt;</code>声明位于位于HTML文档中的第一行，处于<code>&lt;html&gt;</code> 标签之前。告知浏览器的解析器用什么文档标准解析这个文档。DOCTYPE不存在或格式不正确会导致文档以兼容模式呈现。</p>
-<p>标准模式的排版和JS运作模式都是以该浏览器支持的最高标准运行。在兼容模式中，页面以宽松的向后兼容的方式显示,模拟老式浏览器的行为以防止站点无法工作。</p>
-<h2 id="Case2-HTML5为什么只需要写-lt-DOCTYPE-HTML-gt-？"><a href="#Case2-HTML5为什么只需要写-lt-DOCTYPE-HTML-gt-？" class="headerlink" title="Case2.HTML5为什么只需要写&lt;!DOCTYPE HTML&gt;？"></a>Case2.HTML5为什么只需要写&lt;!DOCTYPE HTML&gt;？</h2><p>HTML5 不基于 SGML，因此不需要对DTD进行引用，但是需要doctype来规范浏览器的行为（让浏览器按照它们应该的方式来运行）；而HTML4.01基于SGML,所以需要对DTD进行引用，才能告知浏览器文档所使用的文档类型。</p>
-<h2 id="Case3-html-css-js加载顺序"><a href="#Case3-html-css-js加载顺序" class="headerlink" title="Case3.html,css,js加载顺序"></a>Case3.html,css,js加载顺序</h2><p>1.js放在head中会立即执行，阻塞后续的资源下载与执行。因为js有可能会修改dom，如果不阻塞后续的资源下载，dom的操作顺序不可控。</p>
-<p>正常的网页加载流程是这样的。</p>
-<ol>
-<li>浏览器一边下载HTML网页，一边开始解析</li>
-<li>解析过程中，发现<code>&lt;script&gt;</code>标签</li>
-<li>暂停解析，网页渲染的控制权转交给JavaScript引擎</li>
-<li>如果<code>&lt;script&gt;</code>标签引用了外部脚本，就下载该脚本，否则就直接执行</li>
-<li>执行完毕，控制权交还渲染引擎，恢复往下解析HTML网页</li>
-</ol>
-<p>html需要等head中所有的js和css加载完成后才会开始绘制，但是html不需要等待放在body最后的js下载执行就会开始绘制,因此将js放在body的最后面，可以避免资源阻塞，同时使静态的html页面迅速显示。将脚本文件都放在网页尾部加载，还有一个好处。在DOM结构生成之前就调用DOM，JavaScript会报错，如果脚本都在网页尾部加载，就不存在这个问题，因为这时DOM肯定已经生成了。</p>
-<p>2.js的执行依赖前面的样式。即只有前面的样式全部下载完成后才会执行js，但是此时外链css和外链js是并行下载的。</p>
-<p>css需要分块，首页的css独立，其余的css需要动态加载，因为html的绘制会被css阻塞，这样可以减少首次进入时的白屏时间。</p>
-<p>3.外链的js如果含有defer=”true”属性，将会并行加载js，到页面全部加载完成后才会执行，会按顺序执行。<code>defer</code>属性的作用是，告诉浏览器，等到DOM加载完成后，再执行指定脚本。</p>
-<p>对于内置而不是连接外部脚本的script标签，以及动态生成的script标签，<code>defer</code>属性不起作用。</p>
-<h2 id="Case4-HTML结构理解"><a href="#Case4-HTML结构理解" class="headerlink" title="Case4. HTML结构理解"></a>Case4. HTML结构理解</h2><h3 id="lt-DOCTYPE-html-gt"><a href="#lt-DOCTYPE-html-gt" class="headerlink" title="&lt;!DOCTYPE html&gt;"></a><code>&lt;!DOCTYPE html&gt;</code></h3><p>IE6+兼容，都是标准模式，IE6-是怪异模式</p>
-<h3 id="lt-html-xmlns-quot-http-www-w3-org-1999-xhtml-quot-gt"><a href="#lt-html-xmlns-quot-http-www-w3-org-1999-xhtml-quot-gt" class="headerlink" title="&lt;html xmlns=&quot;http://www.w3.org/1999/xhtml&quot;&gt;"></a><code>&lt;html xmlns=&quot;http://www.w3.org/1999/xhtml&quot;&gt;</code></h3><p>xmlns是XHTML namespace的缩写。<br>作用：由于xml允许定义自己的标记，但你定义的标记和其他人定义的标记有可能相同，但表示不同的含义。当文档交换或者共享的时候就容易产生错误。为避免这种错误产生，xml采用名字空间声明，允许你通过一个网址来识别你的标记。<br>XHTML是HTML先xml过度的标记语言，它需要符合xml文档规则，因此，也需要定义名字空间，又因为XHTML1.0不能自定义标识，所以，它的名字空间都相同，就是：<a href="http://www.w3.org/1999/xhtml" target="_blank" rel="external">http://www.w3.org/1999/xhtml</a></p>
-<h3 id="lt-meta-name-quot-renderer-quot-content-quot-webkit-quot-gt"><a href="#lt-meta-name-quot-renderer-quot-content-quot-webkit-quot-gt" class="headerlink" title="&lt;meta name=&quot;renderer&quot; content=&quot;webkit&quot;&gt;"></a><code>&lt;meta name=&quot;renderer&quot; content=&quot;webkit&quot;&gt;</code></h3><p>对于双核浏览器，如果用户手动调节成兼容模式，那么无法切换为极速模式</p>
-<h3 id="lt-meta-http-equiv-quot-X-UA-Compatible-quot-content-quot-IE-edge-chrome-1-quot-gt"><a href="#lt-meta-http-equiv-quot-X-UA-Compatible-quot-content-quot-IE-edge-chrome-1-quot-gt" class="headerlink" title="&lt;meta http-equiv=&quot;X-UA-Compatible&quot; content=&quot;IE=edge,chrome=1&quot;&gt;"></a><code>&lt;meta http-equiv=&quot;X-UA-Compatible&quot; content=&quot;IE=edge,chrome=1&quot;&gt;</code></h3><p>这是个是IE8的专用标记,用来指定IE8浏览器去模拟某个特定版本的IE浏览器的渲染方式(比如人见人烦的IE6)，以此来解决部分兼容问题<br>谷歌做了个外挂：Google Chrome Frame(谷歌内嵌浏览器框架GCF)。这个插件可以让用户的IE浏览器外不变，但用户在浏览网页时，实际上使用的是Google Chrome浏览器内核，而且支持IE6、7、8等多个版本的IE浏览器。<br>这样写可以达到的效果是如果安装了GCF，则使用GCF来渲染页面，如果为安装GCF，则使用最高版本的IE内核进行渲染。</p>
-<h3 id="lt-link-rel-quot-shortcut-icon-quot-href-quot-quot-type-quot-image-x-icon-quot-gt"><a href="#lt-link-rel-quot-shortcut-icon-quot-href-quot-quot-type-quot-image-x-icon-quot-gt" class="headerlink" title="&lt;link rel=&quot;shortcut icon&quot; href=&quot;...&quot; type=&quot;image/x-icon&quot; /&gt;"></a><code>&lt;link rel=&quot;shortcut icon&quot; href=&quot;...&quot; type=&quot;image/x-icon&quot; /&gt;</code></h3><p>固定写法，定义网站图标</p>
-]]></content>
-      
-        <categories>
-            
-            <category> 技术栈 </category>
-            
-        </categories>
-        
-        
-        <tags>
-            
-            <tag> HTML </tag>
-            
-        </tags>
-        
-    </entry>
-    
-    <entry>
       <title><![CDATA[Apply, call and bind]]></title>
       <url>/2017/11/26/%E5%89%8D%E7%AB%AF/%E5%9F%BA%E7%A1%80/javascript/Apply,%20call%20and%20bind/</url>
       <content type="html"><![CDATA[<p>这篇文章介绍Apply, call and bind的概念和常用方法。</p>
@@ -5208,160 +5364,6 @@ class Child1 extends Parent {
     </entry>
     
     <entry>
-      <title><![CDATA[原型与原型链]]></title>
-      <url>/2017/11/01/%E5%89%8D%E7%AB%AF/%E5%9F%BA%E7%A1%80/javascript/%E5%8E%9F%E5%9E%8B%E4%B8%8E%E5%8E%9F%E5%9E%8B%E9%93%BE/</url>
-      <content type="html"><![CDATA[<p>本文介绍原型和原型链的概念，参考多篇热门博客，持续总结和更新思想。</p>
-<a id="more"></a>
-<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><h2 id="proto"><a href="#proto" class="headerlink" title="_proto_"></a><code>_proto_</code></h2><p>任何一个对象Object都有<em>proto</em>，它是每一个对象的私有属性，是天生自带的。</p>
-<p>又叫做隐式原型</p>
-<p>JavaScript中任意对象都有一个内置属性[[prototype]]，在ES5之前没有标准的方法访问这个内置属性，但是大多数浏览器都支持通过<code>__proto__</code>来访问。ES5中有了对于这个内置属性标准的Get方法Object.getPrototypeOf().</p>
-<p>Note: Object.prototype 这个对象是个例外，它的<code>__proto__</code>值为null </p>
-<p>隐式原型指向<strong>创建</strong>这个对象的函数(constructor)的prototype</p>
-<p>一个对象的<strong>proto</strong>记录着自己的原型链，决定了自身的数据类型，改变<strong>proto</strong>就等于改变对象的数据类型。</p>
-<p>隐式原型的作用：构成原型链，同样用于实现基于原型的继承。</p>
-<h2 id="prototype"><a href="#prototype" class="headerlink" title="prototype"></a><code>prototype</code></h2><p><strong>原型对象</strong>。不是任何对象都有prototype，只有构造函数有prototype，是后天赋予的。</p>
-<p>每创建一个函数都会有一个prototype属性，这个属性是一个指针，<strong>指向一个对象（通过该构造函数创建实例对象的原型对象）</strong>。</p>
-<p>原型对象是包含特定类型的所有实例共享的属性和方法。原型对象的好处是，可以让所有实例对象共享它所包含的属性和方法。</p>
-<p>原型对象属于普通对象。</p>
-<p>又叫做显式原型。</p>
-<p><strong>Note</strong>：通过Function.prototype.bind方法构造出来的函数是个例外，它没有prototype属性</p>
-<p>函数的prototype不属于自身的原型链，它是子类创建的核心，决定了子类的数据类型，是连接子类原型链的桥梁。</p>
-<p>在原型对象上定义方法和属性的目的是为了被子类继承和使用。</p>
-<p>显式原型的作用：用来实现基于原型的继承与属性的共享。</p>
-<h2 id="获取对象的原型"><a href="#获取对象的原型" class="headerlink" title="获取对象的原型"></a>获取对象的原型</h2><pre><code class="javascript">dog1.__proto__  //不推荐  
-Object.getPrototypeOf(dog1) === Dog.prototype   //推荐
-</code></pre>
-<h2 id="原型链"><a href="#原型链" class="headerlink" title="原型链"></a>原型链</h2><p>原型链的存在，主要是为了实现对象的<code>继承</code>。</p>
-<p>原型链基本思路（图解）：</p>
-<p><img src="http://img.blog.csdn.net/20161006191631510?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQv/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt=""></p>
-<h2 id="原型链查找"><a href="#原型链查找" class="headerlink" title="原型链查找"></a>原型链查找</h2><p><strong>调用一个对象的属性或方法，一但这个对象中没有，就去这个对象的<em>proto</em>中查找。这个对象的<em>proto</em>指向自己构造函数的prototype属性</strong></p>
-<p>关键的点在于找到创建这个对象的构造函数，本质上只有一种方式，也就是通过new来创建。</p>
-<p>由Object.create(o)创建出来的对象它的隐式原型指向o。</p>
-<h2 id="new"><a href="#new" class="headerlink" title="new"></a>new</h2><p>JS在通过new 表达式创建一个对象的时候，通常会把父类的prototype赋值给新对象的<strong>proto</strong>属性</p>
-<p>当使用<code>new</code>去调用构造函数时，相当于执行了</p>
-<pre><code class="javascript">var o = {};
-o.__proto__ = F.prototype;
-F.call(o);
-</code></pre>
-<h2 id="constructor-NaN"><a href="#constructor-NaN" class="headerlink" title="constructor"></a>constructor</h2><p>原型对象prototype上都有个预定义的<code>constructor</code>属性，用来引用它的函数对象。这是一种循环引用。</p>
-<pre><code class="javascript">function F(){};
-F.prototype.constructor === F;
-</code></pre>
-<p>在实际运用中，经常会有下列的写法</p>
-<pre><code class="javascript">function F(){};
-F.prototype = {
-    constructor : F,
-    doSomething : function(){}
-}
-</code></pre>
-<p>这里要加<code>constructor</code>是因为重写了原型对象，constructor属性就消失了，需要自己手动补上。</p>
-<p>实例对象的constructor属性指向其构造函数, 因此</p>
-<pre><code class="javascript">Object.constructor === Function;
-Function.constructor === Function;
-</code></pre>
-<p>由 Object.create() 创建出来的对象没有构造函数</p>
-<h1 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h1><h2 id="Case1-Function-prototype没有prototype属性"><a href="#Case1-Function-prototype没有prototype属性" class="headerlink" title="Case1.Function.prototype没有prototype属性"></a>Case1.Function.prototype没有prototype属性</h2><p><strong>原型对象属于普通对象。</strong>Function.prototype是个例外，它是原型对象，却又是函数对象，作为一个函数对象，它又没有prototype属性。</p>
-<pre><code class="javascript">function person(){};  
-
-console.log(typeof person.prototype) //Object  
-console.log(typeof Object.prototype) // Object  
-console.log(typeof Function.prototype) // 特殊 Function  
-console.log(typeof Function.prototype.prototype) //undefined 函数对象却没有prototype属性
-</code></pre>
-<h2 id="Case2-构造函数的显示原型的隐式原型"><a href="#Case2-构造函数的显示原型的隐式原型" class="headerlink" title="Case2.构造函数的显示原型的隐式原型"></a>Case2.构造函数的显示原型的隐式原型</h2><p>内建对象(built-in object)比如Array()，Array.prototype.<strong>proto</strong>指向什么？</p>
-<p>Array.prototype.<strong>proto</strong> === Object.prototype，或者也可以这么理解，所有的内建对象都是由Object()创建而来。</p>
-<p>Array是函数对象，是Function的实例对象，Array是通过new Function创建出来的。因为Array是Function的实例，所以Array.<strong>proto</strong> ===  Function.prototype</p>
-<h2 id="Case3-instanceof"><a href="#Case3-instanceof" class="headerlink" title="Case3.instanceof"></a>Case3.instanceof</h2><h3 id="解释1"><a href="#解释1" class="headerlink" title="解释1"></a>解释1</h3><p>instanceof 操作符的内部实现机制和隐式原型、显式原型有直接的关系。instanceof的左值一般是一个对象，右值一般是一个构造函数，用来判断左值是否是右值的实例。</p>
-<p>内部实现原理：</p>
-<pre><code class="javascript">//设 L instanceof R 
-//通过判断
- L.__proto__.__proto__ ..... === R.prototype ？
-//最终返回true or false
-</code></pre>
-<h3 id="解释2"><a href="#解释2" class="headerlink" title="解释2"></a>解释2</h3><p><code>A instanceof B</code> 是在 A 的原型链里查找 B 的 constructor，找到返回 true，找不到返回 false。</p>
-<pre><code class="javascript">Function instanceof Object === true
-Object instanceof Function === true
-
-Object.__proto__ === Function.prototype; // true
-Object.__proto__ == Object.prototype; // false
-Function.prototype.__proto__ === Object.prototype; // true
-</code></pre>
-<h2 id="Case4-Function、Object关系"><a href="#Case4-Function、Object关系" class="headerlink" title="Case4.Function、Object关系"></a>Case4.Function、Object关系</h2><p><code>Object.prototype</code>是所有对象的根源<br><code>Object.prototype</code>只是挂载在<code>Object</code>函数对象上<br><code>Function.prototype</code>构造自<code>Object.prototype</code><br><code>Function.prototype</code> 只是挂载在<code>Function</code>函数对象上<br><code>Object</code>函数和<code>Function</code>函数构造自<code>Function.prototype</code><br><code>Object</code>字面量对象{}构造自<code>Object.prototype</code><br><code>Object</code>字面量对象<code>{}.__proto__</code>（原构造对象） === <code>Object.prototype</code><br><code>Function</code>函数 和 自定义函数 都继承（构造而成）自<code>Function.prototype</code><br><code>Function.prototype</code> 和 <code>Function.__proto__</code>（原构造对象）相同<br>所以，是先有的<code>Object.prototype</code>,再有的<code>Function.prototype</code>，再有的<code>Function</code>和<code>Object</code>函数对象</p>
-<h2 id="Case5-Function、Object、Prototype、proto内存关系图"><a href="#Case5-Function、Object、Prototype、proto内存关系图" class="headerlink" title="Case5.Function、Object、Prototype、proto内存关系图"></a>Case5.Function、Object、Prototype、<strong>proto</strong>内存关系图</h2><ol>
-<li>所有对象所有对象，包括函数对象的原型链最终都指向了Object.prototype，而Object.prototype.<strong>proto</strong>===null，原型链至此结束。</li>
-<li>Animal.prototype是一个普通对象。</li>
-<li>Object是一个函数对象，也是Function构造的，Object.prototype是一个普通对象。</li>
-<li>Object.prototype.<strong>type</strong>指向null。</li>
-<li>Function.prototype是一个函数对象，前面说函数对象都有一个显示的prototype属性，但是Function.prototype却没有prototype属性，即Function.prototype.prototype===undefined，所有Function.prototype函数对象是一个特例，没有prototype属性。</li>
-<li>Object虽是Function构造的一个函数对象，但是Object.prototype没有指向Function.prototype，即Object.prototype!==Function.prototype。</li>
-</ol>
-<p><img src="http://images.blogjava.net/blogjava_net/heavensay/web-front/8199006.png" alt=""></p>
-<h2 id="Case6-经典原型链"><a href="#Case6-经典原型链" class="headerlink" title="Case6.经典原型链"></a>Case6.经典原型链</h2><p><img src="https://pic2.zhimg.com/50/e83bca5f1d1e6bf359d1f75727968c11_hd.jpg" alt=""></p>
-<h2 id="Case7-《JavaScript-世界万物诞生记》"><a href="#Case7-《JavaScript-世界万物诞生记》" class="headerlink" title="Case7.《JavaScript 世界万物诞生记》"></a>Case7.《JavaScript 世界万物诞生记》</h2><p>Object作为一个机器可以看做是有由Function制造出来的，而Function作为一个对象可以看做是由Object制造出来的。</p>
-<p><img src="https://pic2.zhimg.com/v2-52726a7f86690c0663452112d66836c5_r.png" alt=""></p>
-<h2 id="Case8-《什么是-JS-原型链？》"><a href="#Case8-《什么是-JS-原型链？》" class="headerlink" title="Case8.《什么是 JS 原型链？》"></a>Case8.《什么是 JS 原型链？》</h2><blockquote>
-<p>这篇流程讲的很清晰</p>
-</blockquote>
-<pre><code class="javascript">var obj = { name: &#39;obj&#39; }
-</code></pre>
-<h3 id="valueOf-toString-constructor-是怎么来？"><a href="#valueOf-toString-constructor-是怎么来？" class="headerlink" title="valueOf / toString / constructor 是怎么来？"></a>valueOf / toString / constructor 是怎么来？</h3><ol>
-<li>obj.<strong>proto</strong> 有很多属性，包括 valueOf、toString、constructor 等</li>
-<li>obj.<strong>proto</strong> 其实也有一个叫做 <strong>proto</strong> 的属性，值为 null</li>
-</ol>
-<h3 id="共享原型链"><a href="#共享原型链" class="headerlink" title="共享原型链"></a>共享原型链</h3><p>如果我们改写 obj2.<strong>proto</strong>.toString，那么 obj.toString 其实也会变！</p>
-<h3 id="差异化"><a href="#差异化" class="headerlink" title="差异化"></a>差异化</h3><p>如果我们想让 obj.toString 和 obj2.toString 的行为不同怎么做呢？</p>
-<p>直接赋值就好了：</p>
-<pre><code class="javascript">obj.toString = function(){ return &#39;新的 toString 方法&#39; }
-</code></pre>
-<h3 id="总结-1"><a href="#总结-1" class="headerlink" title="总结"></a>总结</h3><p>「读」属性时会<strong>沿着原型链搜索</strong>。</p>
-<p>「新增」属性时<strong>不会</strong>去看原型链（但是如果你给这个属性加了一些配置，则不一样）。</p>
-<h2 id="Case9-《最详尽的-JS-原型与原型链终极详解》"><a href="#Case9-《最详尽的-JS-原型与原型链终极详解》" class="headerlink" title="Case9 《最详尽的 JS 原型与原型链终极详解》"></a>Case9 《最详尽的 JS 原型与原型链终极详解》</h2><h3 id="一-普通对象与函数对象"><a href="#一-普通对象与函数对象" class="headerlink" title="一. 普通对象与函数对象"></a>一. 普通对象与函数对象</h3><p>对象也有区别，大致可以分为两类，即：普通对象（Object）和函数对象（Function）。<strong>凡是通过 new Function() 创建的对象都是函数对象，其他的都是普通对象。f1,f2,归根结底都是通过 new Function()的方式进行创建的。Function Object 也都是通过 New Function()创建的</strong>。</p>
-<h3 id="二-构造函数"><a href="#二-构造函数" class="headerlink" title="二. 构造函数"></a>二. 构造函数</h3><p><strong>实例的构造函数属性（constructor）指向构造函数。</strong></p>
-<h3 id="三-原型对象"><a href="#三-原型对象" class="headerlink" title="三. 原型对象"></a>三. 原型对象</h3><p>在默认情况下，所有的<strong>原型对象</strong>都会<strong>自动获得</strong>一个 <code>constructor</code>（构造函数）属性，这个属性（是一个指针）指向 <code>prototype</code> 属性所在的函数,即：<code>Person.prototype.constructor == Person</code></p>
-<p><strong>结论：原型对象（Person.prototype）是 构造函数（Person）的一个实例。</strong></p>
-<p><code>Function.prototype</code> 为什么是函数对象呢？</p>
-<pre><code class="javascript"> var A = new Function ();
- Function.prototype = A;
-</code></pre>
-<p><strong>凡是通过 new Function( ) 产生的对象都是函数对象</strong>。因为 A 是函数对象，所以<code>Function.prototype</code> 是函数对象。</p>
-<h3 id="六-原型链"><a href="#六-原型链" class="headerlink" title="六. 原型链"></a>六. 原型链</h3><p>Person.prototype.<strong>proto</strong> 是什么？</p>
-<p><code>Person.prototype</code> 是一个普通对象，我们无需关注它有哪些属性，只要记住它是一个普通对象。所以 <code>Person.prototype.__proto__ === Object.prototype</code></p>
-<h3 id="七-函数对象"><a href="#七-函数对象" class="headerlink" title="七. 函数对象"></a>七. 函数对象</h3><h5 id="所有函数对象的proto都指向Function-prototype，它是一个空函数"><a href="#所有函数对象的proto都指向Function-prototype，它是一个空函数" class="headerlink" title="所有函数对象的proto都指向Function.prototype，它是一个空函数"></a>所有<em>函数对象</em>的<strong>proto</strong>都指向Function.prototype，它是一个空函数</h5><p><strong>所有的构造器都来自于 Function.prototype，甚至包括根构造器Object及Function自身。所有构造器都继承了·Function.prototype·的属性及方法。如length、call、apply、bind</strong></p>
-<p><code>Function.prototype</code>也是唯一一个<code>typeof XXX.prototype</code>为 <code>function</code>的<code>prototype</code>。其它的构造器的<code>prototype</code>都是一个对象</p>
-<p><code>Function.prototype</code>的<code>__proto__</code>是谁呢？</p>
-<pre><code class="javascript">Function.prototype.__proto__ === Object.prototype
-</code></pre>
-<p>这说明所有的构造器也都是一个普通 JS 对象，可以给构造器添加/删除属性等。同时它也继承了Object.prototype上的所有方法：toString、valueOf、hasOwnProperty等。</p>
-<h3 id="八-Prototype"><a href="#八-Prototype" class="headerlink" title="八. Prototype"></a>八. Prototype</h3><p>可以用一个 ES5 提供的新方法：<code>Object.getOwnPropertyNames</code>获取所有（<strong>包括不可枚举的属性</strong>）的属性名<strong>不包括 prototy 中的属性</strong>，返回一个数组</p>
-<h1 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h1><ul>
-<li><a href="http://blog.csdn.net/sinat_21274091/article/details/52741788" target="_blank" rel="external">JS重点整理之JS原型链彻底搞清楚</a></li>
-<li><a href="http://www.blogjava.net/heavensay/archive/2013/10/20/405440.html" target="_blank" rel="external">Js中Prototype、<strong>proto</strong>、Constructor、Object、Function关系介绍</a></li>
-<li><a href="https://www.zhihu.com/question/34183746" target="_blank" rel="external">js中<strong>proto</strong>和prototype的区别和关系？</a></li>
-<li><a href="https://segmentfault.com/a/1190000005363885" target="_blank" rel="external">JavaScript之原型链</a></li>
-<li><a href="https://segmentfault.com/q/1010000000249140" target="_blank" rel="external">Function为何是Object的实例呢</a></li>
-<li><a href="https://segmentfault.com/q/1010000002736664" target="_blank" rel="external">js 原型的问题 Object 和 Function 到底是什么关系？</a></li>
-<li><a href="https://zhuanlan.zhihu.com/p/22989691" target="_blank" rel="external">JavaScript 世界万物诞生记</a></li>
-<li><a href="https://zhuanlan.zhihu.com/p/23090041?refer=study-fe" target="_blank" rel="external">「每日一题」什么是 JS 原型链？</a></li>
-<li><a href="http://www.jianshu.com/p/dee9f8b14771" target="_blank" rel="external">最详尽的 JS 原型与原型链终极详解，没有「可能是」</a></li>
-</ul>
-]]></content>
-      
-        <categories>
-            
-            <category> 技术栈 </category>
-            
-        </categories>
-        
-        
-        <tags>
-            
-            <tag> JavaScript </tag>
-            
-        </tags>
-        
-    </entry>
-    
-    <entry>
       <title><![CDATA[HTML5总结]]></title>
       <url>/2017/11/01/%E5%89%8D%E7%AB%AF/%E5%9F%BA%E7%A1%80/HTML/HTML5/</url>
       <content type="html"><![CDATA[<p>这篇文章介绍H5的概念和考察方法。</p>
@@ -5966,159 +5968,142 @@ Response.Flush()
     </entry>
     
     <entry>
-      <title><![CDATA[webpack篇]]></title>
-      <url>/2017/10/02/%E5%89%8D%E7%AB%AF/%E6%9E%84%E5%BB%BA%E7%94%9F%E6%80%81/webpack%E7%AF%87/</url>
-      <content type="html"><![CDATA[<p>本文介绍webpack结构</p>
+      <title><![CDATA[原型与原型链]]></title>
+      <url>/2017/11/01/%E5%89%8D%E7%AB%AF/%E5%9F%BA%E7%A1%80/javascript/%E5%8E%9F%E5%9E%8B%E4%B8%8E%E5%8E%9F%E5%9E%8B%E9%93%BE/</url>
+      <content type="html"><![CDATA[<p>本文介绍原型和原型链的概念，参考多篇热门博客，持续总结和更新思想。</p>
 <a id="more"></a>
-<h1 id="webpack篇"><a href="#webpack篇" class="headerlink" title="webpack篇"></a>webpack篇</h1><h1 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h1><p>不像大多数的模块打包机，webpack是收把项目当作一个整体，通过一个给定的的主文件，webpack将从这个文件开始找到你的项目的所有依赖文件，使用loaders处理它们，最后打包成一个或多个浏览器可识别的js文件</p>
-<h1 id="install"><a href="#install" class="headerlink" title="install"></a>install</h1><p>webpack是我们需要的模块打包机，webpack-dev-server用来创建本地服务器，监听你的代码修改，并自动刷新修改后的结果。这些是有关<strong>devServer的配置</strong></p>
-<pre><code class="javascript">contentBase,  // 为文件提供本地服务器
-port, // 监听端口，默认8080
-inline, // 设置为true,源文件发生改变自动刷新页面
-historyApiFallback  // 依赖HTML5 history API,如果设置为true,所有的页面跳转指向index.html
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><h2 id="proto"><a href="#proto" class="headerlink" title="_proto_"></a><code>_proto_</code></h2><p>任何一个对象Object都有<em>proto</em>，它是每一个对象的私有属性，是天生自带的。</p>
+<p>又叫做隐式原型</p>
+<p>JavaScript中任意对象都有一个内置属性[[prototype]]，在ES5之前没有标准的方法访问这个内置属性，但是大多数浏览器都支持通过<code>__proto__</code>来访问。ES5中有了对于这个内置属性标准的Get方法Object.getPrototypeOf().</p>
+<p>Note: Object.prototype 这个对象是个例外，它的<code>__proto__</code>值为null </p>
+<p>隐式原型指向<strong>创建</strong>这个对象的函数(constructor)的prototype</p>
+<p>一个对象的<strong>proto</strong>记录着自己的原型链，决定了自身的数据类型，改变<strong>proto</strong>就等于改变对象的数据类型。</p>
+<p>隐式原型的作用：构成原型链，同样用于实现基于原型的继承。</p>
+<h2 id="prototype"><a href="#prototype" class="headerlink" title="prototype"></a><code>prototype</code></h2><p><strong>原型对象</strong>。不是任何对象都有prototype，只有构造函数有prototype，是后天赋予的。</p>
+<p>每创建一个函数都会有一个prototype属性，这个属性是一个指针，<strong>指向一个对象（通过该构造函数创建实例对象的原型对象）</strong>。</p>
+<p>原型对象是包含特定类型的所有实例共享的属性和方法。原型对象的好处是，可以让所有实例对象共享它所包含的属性和方法。</p>
+<p>原型对象属于普通对象。</p>
+<p>又叫做显式原型。</p>
+<p><strong>Note</strong>：通过Function.prototype.bind方法构造出来的函数是个例外，它没有prototype属性</p>
+<p>函数的prototype不属于自身的原型链，它是子类创建的核心，决定了子类的数据类型，是连接子类原型链的桥梁。</p>
+<p>在原型对象上定义方法和属性的目的是为了被子类继承和使用。</p>
+<p>显式原型的作用：用来实现基于原型的继承与属性的共享。</p>
+<h2 id="获取对象的原型"><a href="#获取对象的原型" class="headerlink" title="获取对象的原型"></a>获取对象的原型</h2><pre><code class="javascript">dog1.__proto__  //不推荐  
+Object.getPrototypeOf(dog1) === Dog.prototype   //推荐
+</code></pre>
+<h2 id="原型链"><a href="#原型链" class="headerlink" title="原型链"></a>原型链</h2><p>原型链的存在，主要是为了实现对象的<code>继承</code>。</p>
+<p>原型链基本思路（图解）：</p>
+<p><img src="http://img.blog.csdn.net/20161006191631510?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQv/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt=""></p>
+<h2 id="原型链查找"><a href="#原型链查找" class="headerlink" title="原型链查找"></a>原型链查找</h2><p><strong>调用一个对象的属性或方法，一但这个对象中没有，就去这个对象的<em>proto</em>中查找。这个对象的<em>proto</em>指向自己构造函数的prototype属性</strong></p>
+<p>关键的点在于找到创建这个对象的构造函数，本质上只有一种方式，也就是通过new来创建。</p>
+<p>由Object.create(o)创建出来的对象它的隐式原型指向o。</p>
+<h2 id="new"><a href="#new" class="headerlink" title="new"></a>new</h2><p>JS在通过new 表达式创建一个对象的时候，通常会把父类的prototype赋值给新对象的<strong>proto</strong>属性</p>
+<p>当使用<code>new</code>去调用构造函数时，相当于执行了</p>
+<pre><code class="javascript">var o = {};
+o.__proto__ = F.prototype;
+F.call(o);
+</code></pre>
+<h2 id="constructor-NaN"><a href="#constructor-NaN" class="headerlink" title="constructor"></a>constructor</h2><p>原型对象prototype上都有个预定义的<code>constructor</code>属性，用来引用它的函数对象。这是一种循环引用。</p>
+<pre><code class="javascript">function F(){};
+F.prototype.constructor === F;
+</code></pre>
+<p>在实际运用中，经常会有下列的写法</p>
+<pre><code class="javascript">function F(){};
+F.prototype = {
+    constructor : F,
+    doSomething : function(){}
+}
+</code></pre>
+<p>这里要加<code>constructor</code>是因为重写了原型对象，constructor属性就消失了，需要自己手动补上。</p>
+<p>实例对象的constructor属性指向其构造函数, 因此</p>
+<pre><code class="javascript">Object.constructor === Function;
+Function.constructor === Function;
+</code></pre>
+<p>由 Object.create() 创建出来的对象没有构造函数</p>
+<h1 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h1><h2 id="Case1-Function-prototype没有prototype属性"><a href="#Case1-Function-prototype没有prototype属性" class="headerlink" title="Case1.Function.prototype没有prototype属性"></a>Case1.Function.prototype没有prototype属性</h2><p><strong>原型对象属于普通对象。</strong>Function.prototype是个例外，它是原型对象，却又是函数对象，作为一个函数对象，它又没有prototype属性。</p>
+<pre><code class="javascript">function person(){};  
 
-devServer:{
-    contentBase: &#39;./src&#39; // 本地服务器所加载的页面所在的目录
-    historyApiFallback: true, // 不跳转
-    inline: true // 实时刷新
-}
+console.log(typeof person.prototype) //Object  
+console.log(typeof Object.prototype) // Object  
+console.log(typeof Function.prototype) // 特殊 Function  
+console.log(typeof Function.prototype.prototype) //undefined 函数对象却没有prototype属性
 </code></pre>
-<p>然后我们在根目录下创建一个’webpack.config.js’，在’package.json’添加两个命令用于本地开发和生产发布</p>
-<pre><code class="javascript">&quot;scripts&quot;: {
-      &quot;start&quot;: &quot;webpack-dev-server&quot;,
-    &quot;build&quot;: &quot;webpack&quot;
-}
+<h2 id="Case2-构造函数的显示原型的隐式原型"><a href="#Case2-构造函数的显示原型的隐式原型" class="headerlink" title="Case2.构造函数的显示原型的隐式原型"></a>Case2.构造函数的显示原型的隐式原型</h2><p>内建对象(built-in object)比如Array()，Array.prototype.<strong>proto</strong>指向什么？</p>
+<p>Array.prototype.<strong>proto</strong> === Object.prototype，或者也可以这么理解，所有的内建对象都是由Object()创建而来。</p>
+<p>Array是函数对象，是Function的实例对象，Array是通过new Function创建出来的。因为Array是Function的实例，所以Array.<strong>proto</strong> ===  Function.prototype</p>
+<h2 id="Case3-instanceof"><a href="#Case3-instanceof" class="headerlink" title="Case3.instanceof"></a>Case3.instanceof</h2><h3 id="解释1"><a href="#解释1" class="headerlink" title="解释1"></a>解释1</h3><p>instanceof 操作符的内部实现机制和隐式原型、显式原型有直接的关系。instanceof的左值一般是一个对象，右值一般是一个构造函数，用来判断左值是否是右值的实例。</p>
+<p>内部实现原理：</p>
+<pre><code class="javascript">//设 L instanceof R 
+//通过判断
+ L.__proto__.__proto__ ..... === R.prototype ？
+//最终返回true or false
 </code></pre>
-<h1 id="webpack-config-js"><a href="#webpack-config-js" class="headerlink" title="webpack.config.js"></a>webpack.config.js</h1><h2 id="entry"><a href="#entry" class="headerlink" title="entry"></a>entry</h2><p>entry: 用来写入口文件，它将是整个依赖关系的根，当我们需要多个入口文件的时候，可以把entry写成一个对象</p>
-<pre><code class="javascript">var baseConfig = {
-        entry: {
-            main: &#39;./src/index.js&#39;
-        }
-    }
+<h3 id="解释2"><a href="#解释2" class="headerlink" title="解释2"></a>解释2</h3><p><code>A instanceof B</code> 是在 A 的原型链里查找 B 的 constructor，找到返回 true，找不到返回 false。</p>
+<pre><code class="javascript">Function instanceof Object === true
+Object instanceof Function === true
+
+Object.__proto__ === Function.prototype; // true
+Object.__proto__ == Object.prototype; // false
+Function.prototype.__proto__ === Object.prototype; // true
 </code></pre>
-<h2 id="output"><a href="#output" class="headerlink" title="output"></a>output</h2><p>output: 即使入口文件有多个，但是只有一个输出配置</p>
-<pre><code class="javascript">var path = require(&#39;path&#39;)
-var baseConfig = {
-    entry: {
-        main: &#39;./src/index.js&#39;
-    },
-    output: {
-        filename: &#39;main.js&#39;,
-        path: path.resolve(&#39;./build&#39;)
-    }
-}
-module.exports = baseConfig
-</code></pre>
-<p>如果你定义的入口文件有多个，那么我们需要使用<strong>占位符</strong>来确保输出文件的唯一性</p>
-<pre><code class="javascript">output: {
-      filename: &#39;[name].js&#39;,
-    path: path.resolve(&#39;./build&#39;)
-}
-</code></pre>
-<p>注：filename应该比较好理解，就是对应于entry里面生成出来的文件名。</p>
-<h2 id="Loader"><a href="#Loader" class="headerlink" title="Loader"></a>Loader</h2><p><strong>loader的作用</strong>： </p>
-<ol>
-<li>实现对不同格式的文件的处理，比如说将scss转换为css，或者typescript转化为js</li>
-<li>转换这些文件，从而使其能够被添加到依赖图中</li>
+<h2 id="Case4-Function、Object关系"><a href="#Case4-Function、Object关系" class="headerlink" title="Case4.Function、Object关系"></a>Case4.Function、Object关系</h2><p><code>Object.prototype</code>是所有对象的根源<br><code>Object.prototype</code>只是挂载在<code>Object</code>函数对象上<br><code>Function.prototype</code>构造自<code>Object.prototype</code><br><code>Function.prototype</code> 只是挂载在<code>Function</code>函数对象上<br><code>Object</code>函数和<code>Function</code>函数构造自<code>Function.prototype</code><br><code>Object</code>字面量对象{}构造自<code>Object.prototype</code><br><code>Object</code>字面量对象<code>{}.__proto__</code>（原构造对象） === <code>Object.prototype</code><br><code>Function</code>函数 和 自定义函数 都继承（构造而成）自<code>Function.prototype</code><br><code>Function.prototype</code> 和 <code>Function.__proto__</code>（原构造对象）相同<br>所以，是先有的<code>Object.prototype</code>,再有的<code>Function.prototype</code>，再有的<code>Function</code>和<code>Object</code>函数对象</p>
+<h2 id="Case5-Function、Object、Prototype、proto内存关系图"><a href="#Case5-Function、Object、Prototype、proto内存关系图" class="headerlink" title="Case5.Function、Object、Prototype、proto内存关系图"></a>Case5.Function、Object、Prototype、<strong>proto</strong>内存关系图</h2><ol>
+<li>所有对象所有对象，包括函数对象的原型链最终都指向了Object.prototype，而Object.prototype.<strong>proto</strong>===null，原型链至此结束。</li>
+<li>Animal.prototype是一个普通对象。</li>
+<li>Object是一个函数对象，也是Function构造的，Object.prototype是一个普通对象。</li>
+<li>Object.prototype.<strong>type</strong>指向null。</li>
+<li>Function.prototype是一个函数对象，前面说函数对象都有一个显示的prototype属性，但是Function.prototype却没有prototype属性，即Function.prototype.prototype===undefined，所有Function.prototype函数对象是一个特例，没有prototype属性。</li>
+<li>Object虽是Function构造的一个函数对象，但是Object.prototype没有指向Function.prototype，即Object.prototype!==Function.prototype。</li>
 </ol>
-<p>loader是webpack最重要的部分之一，通过使用不同的Loader，我们能够调用外部的脚本或者工具，实现对不同格式文件的处理，loader需要在webpack.config.js里边单独用module进行配置，需要的loader需要通过npm 进行安装。配置如下：</p>
-<pre><code class="javascript">var baseConfig = {
-  // ...
-  module: {
-    rules: [
-      {
-        test: /*匹配文件后缀名的正则*/,
-        use: [
-        loader: /*loader名字*/,
-        query: /*额外配置*/
-        ]
-      }
-    ]
-  }
-}
+<p><img src="http://images.blogjava.net/blogjava_net/heavensay/web-front/8199006.png" alt=""></p>
+<h2 id="Case6-经典原型链"><a href="#Case6-经典原型链" class="headerlink" title="Case6.经典原型链"></a>Case6.经典原型链</h2><p><img src="https://pic2.zhimg.com/50/e83bca5f1d1e6bf359d1f75727968c11_hd.jpg" alt=""></p>
+<h2 id="Case7-《JavaScript-世界万物诞生记》"><a href="#Case7-《JavaScript-世界万物诞生记》" class="headerlink" title="Case7.《JavaScript 世界万物诞生记》"></a>Case7.《JavaScript 世界万物诞生记》</h2><p>Object作为一个机器可以看做是有由Function制造出来的，而Function作为一个对象可以看做是由Object制造出来的。</p>
+<p><img src="https://pic2.zhimg.com/v2-52726a7f86690c0663452112d66836c5_r.png" alt=""></p>
+<h2 id="Case8-《什么是-JS-原型链？》"><a href="#Case8-《什么是-JS-原型链？》" class="headerlink" title="Case8.《什么是 JS 原型链？》"></a>Case8.《什么是 JS 原型链？》</h2><blockquote>
+<p>这篇流程讲的很清晰</p>
+</blockquote>
+<pre><code class="javascript">var obj = { name: &#39;obj&#39; }
 </code></pre>
-<p>几个常用的loader：</p>
-<ul>
-<li>babel-loader： 让下一代的js文件转换成现代浏览器能够支持的JS文件。babel有些复杂，所以大多数都会新建一个.babelrc进行配置</li>
-<li>css-loader,style-loader:两个建议配合使用，用来解析css文件，能够解释@import,url()如果需要解析less就在后面加一个less-loader</li>
-<li>file-loader: 生成的文件名就是文件内容的MD5哈希值并会保留所引用资源的原始扩展名</li>
-<li>url-loader: 功能类似 file-loader,但是文件大小低于指定的限制时，可以返回一个DataURL事实上，在使用less,scss,stylus这些的时候，npm会提示你差什么插件，差什么，你就安上就行了</li>
+<h3 id="valueOf-toString-constructor-是怎么来？"><a href="#valueOf-toString-constructor-是怎么来？" class="headerlink" title="valueOf / toString / constructor 是怎么来？"></a>valueOf / toString / constructor 是怎么来？</h3><ol>
+<li>obj.<strong>proto</strong> 有很多属性，包括 valueOf、toString、constructor 等</li>
+<li>obj.<strong>proto</strong> 其实也有一个叫做 <strong>proto</strong> 的属性，值为 null</li>
+</ol>
+<h3 id="共享原型链"><a href="#共享原型链" class="headerlink" title="共享原型链"></a>共享原型链</h3><p>如果我们改写 obj2.<strong>proto</strong>.toString，那么 obj.toString 其实也会变！</p>
+<h3 id="差异化"><a href="#差异化" class="headerlink" title="差异化"></a>差异化</h3><p>如果我们想让 obj.toString 和 obj2.toString 的行为不同怎么做呢？</p>
+<p>直接赋值就好了：</p>
+<pre><code class="javascript">obj.toString = function(){ return &#39;新的 toString 方法&#39; }
+</code></pre>
+<h3 id="总结-1"><a href="#总结-1" class="headerlink" title="总结"></a>总结</h3><p>「读」属性时会<strong>沿着原型链搜索</strong>。</p>
+<p>「新增」属性时<strong>不会</strong>去看原型链（但是如果你给这个属性加了一些配置，则不一样）。</p>
+<h2 id="Case9-《最详尽的-JS-原型与原型链终极详解》"><a href="#Case9-《最详尽的-JS-原型与原型链终极详解》" class="headerlink" title="Case9 《最详尽的 JS 原型与原型链终极详解》"></a>Case9 《最详尽的 JS 原型与原型链终极详解》</h2><h3 id="一-普通对象与函数对象"><a href="#一-普通对象与函数对象" class="headerlink" title="一. 普通对象与函数对象"></a>一. 普通对象与函数对象</h3><p>对象也有区别，大致可以分为两类，即：普通对象（Object）和函数对象（Function）。<strong>凡是通过 new Function() 创建的对象都是函数对象，其他的都是普通对象。f1,f2,归根结底都是通过 new Function()的方式进行创建的。Function Object 也都是通过 New Function()创建的</strong>。</p>
+<h3 id="二-构造函数"><a href="#二-构造函数" class="headerlink" title="二. 构造函数"></a>二. 构造函数</h3><p><strong>实例的构造函数属性（constructor）指向构造函数。</strong></p>
+<h3 id="三-原型对象"><a href="#三-原型对象" class="headerlink" title="三. 原型对象"></a>三. 原型对象</h3><p>在默认情况下，所有的<strong>原型对象</strong>都会<strong>自动获得</strong>一个 <code>constructor</code>（构造函数）属性，这个属性（是一个指针）指向 <code>prototype</code> 属性所在的函数,即：<code>Person.prototype.constructor == Person</code></p>
+<p><strong>结论：原型对象（Person.prototype）是 构造函数（Person）的一个实例。</strong></p>
+<p><code>Function.prototype</code> 为什么是函数对象呢？</p>
+<pre><code class="javascript"> var A = new Function ();
+ Function.prototype = A;
+</code></pre>
+<p><strong>凡是通过 new Function( ) 产生的对象都是函数对象</strong>。因为 A 是函数对象，所以<code>Function.prototype</code> 是函数对象。</p>
+<h3 id="六-原型链"><a href="#六-原型链" class="headerlink" title="六. 原型链"></a>六. 原型链</h3><p>Person.prototype.<strong>proto</strong> 是什么？</p>
+<p><code>Person.prototype</code> 是一个普通对象，我们无需关注它有哪些属性，只要记住它是一个普通对象。所以 <code>Person.prototype.__proto__ === Object.prototype</code></p>
+<h3 id="七-函数对象"><a href="#七-函数对象" class="headerlink" title="七. 函数对象"></a>七. 函数对象</h3><h5 id="所有函数对象的proto都指向Function-prototype，它是一个空函数"><a href="#所有函数对象的proto都指向Function-prototype，它是一个空函数" class="headerlink" title="所有函数对象的proto都指向Function.prototype，它是一个空函数"></a>所有<em>函数对象</em>的<strong>proto</strong>都指向Function.prototype，它是一个空函数</h5><p><strong>所有的构造器都来自于 Function.prototype，甚至包括根构造器Object及Function自身。所有构造器都继承了·Function.prototype·的属性及方法。如length、call、apply、bind</strong></p>
+<p><code>Function.prototype</code>也是唯一一个<code>typeof XXX.prototype</code>为 <code>function</code>的<code>prototype</code>。其它的构造器的<code>prototype</code>都是一个对象</p>
+<p><code>Function.prototype</code>的<code>__proto__</code>是谁呢？</p>
+<pre><code class="javascript">Function.prototype.__proto__ === Object.prototype
+</code></pre>
+<p>这说明所有的构造器也都是一个普通 JS 对象，可以给构造器添加/删除属性等。同时它也继承了Object.prototype上的所有方法：toString、valueOf、hasOwnProperty等。</p>
+<h3 id="八-Prototype"><a href="#八-Prototype" class="headerlink" title="八. Prototype"></a>八. Prototype</h3><p>可以用一个 ES5 提供的新方法：<code>Object.getOwnPropertyNames</code>获取所有（<strong>包括不可枚举的属性</strong>）的属性名<strong>不包括 prototy 中的属性</strong>，返回一个数组</p>
+<h1 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h1><ul>
+<li><a href="http://blog.csdn.net/sinat_21274091/article/details/52741788" target="_blank" rel="external">JS重点整理之JS原型链彻底搞清楚</a></li>
+<li><a href="http://www.blogjava.net/heavensay/archive/2013/10/20/405440.html" target="_blank" rel="external">Js中Prototype、<strong>proto</strong>、Constructor、Object、Function关系介绍</a></li>
+<li><a href="https://www.zhihu.com/question/34183746" target="_blank" rel="external">js中<strong>proto</strong>和prototype的区别和关系？</a></li>
+<li><a href="https://segmentfault.com/a/1190000005363885" target="_blank" rel="external">JavaScript之原型链</a></li>
+<li><a href="https://segmentfault.com/q/1010000000249140" target="_blank" rel="external">Function为何是Object的实例呢</a></li>
+<li><a href="https://segmentfault.com/q/1010000002736664" target="_blank" rel="external">js 原型的问题 Object 和 Function 到底是什么关系？</a></li>
+<li><a href="https://zhuanlan.zhihu.com/p/22989691" target="_blank" rel="external">JavaScript 世界万物诞生记</a></li>
+<li><a href="https://zhuanlan.zhihu.com/p/23090041?refer=study-fe" target="_blank" rel="external">「每日一题」什么是 JS 原型链？</a></li>
+<li><a href="http://www.jianshu.com/p/dee9f8b14771" target="_blank" rel="external">最详尽的 JS 原型与原型链终极详解，没有「可能是」</a></li>
 </ul>
-<h2 id="Plugins"><a href="#Plugins" class="headerlink" title="Plugins"></a>Plugins</h2><p><strong>plugins和loader区别</strong></p>
-<p><strong>loaders负责的是处理源文件的如css、jsx，一次处理一个文件。而plugins并不是直接操作单个文件，</strong>它直接对整个构建过程起作用。下面列举了一些我们常用的plugins和他的用法</p>
-<ul>
-<li>ExtractTextWebpackPlugin: 它会将入口中引用css文件，都打包都独立的css文件中，而不是内嵌在js打包文件中。</li>
-<li>HtmlWebpackPlugin:它依据一个简单的index.html模版，生成一个自动引用你打包后的js文件的新index.html</li>
-<li>HotModuleReplacementPlugin: 它允许你在修改组件代码时，自动刷新实时预览修改后的结果注意永远不要在生产环境中使用HMR。这儿说一下一般情况分为开发环境，测试环境，生产环境。</li>
-</ul>
-<p>Case.webapck.config.js的全部内容:</p>
-<pre><code class="javascript">const webpack = require(&quot;webpack&quot;)
-const HtmlWebpackPlugin = require(&quot;html-webpack-plugin&quot;)
-var ExtractTextPlugin = require(&#39;extract-text-webpack-plugin&#39;)
-var lessRules = {
-  use: [
-    {loader: &#39;css-loader&#39;},
-    {loader: &#39;less-loader&#39;}
-  ]
-}
-module.exports = {
-  entry: {
-    main: &#39;./src/index.js&#39;
-  },
-  output: {
-    filename: &#39;[name].js&#39;,
-    path: path.resolve(&#39;./build&#39;)
-  },
-  devServer: {
-    contentBase: &#39;/src&#39;,
-    historyApiFallback: true,
-    inline: true,
-    hot: true
-  },
-  module: {
-    rules: [
-      {test: /\.less$/, use: ExtractTextPlugin.extract(lessRules)}
-    ]
-  },
-  plugins: [
-    new ExtractTextPlugin(&#39;main.css&#39;)
-  ]
-}
-</code></pre>
-<h1 id="产品阶段的构建"><a href="#产品阶段的构建" class="headerlink" title="产品阶段的构建"></a>产品阶段的构建</h1><p>在产品阶段，还需要对资源进行别的<br>处理，例如压缩，优化，缓存，分离css和js。首先我们来定义产品环境</p>
-<pre><code class="javascript">var ENV = process.env.NODE_ENV
-var baseConfig = {
-  // ... 
-  plugins: [
-    new webpack.DefinePlugin({
-      &#39;process.env.NODE_ENV&#39;: JSON.stringify(ENV)
-    })
-  ]
-}
-</code></pre>
-<p>然后还需要修改我们的script命令</p>
-<pre><code class="javascript">&quot;scripts&quot;: {
-    &quot;start&quot;: &quot;NODE_ENV=development webpack-dev-server&quot;,
-    &quot;build&quot;: &quot;NODE_ENV=production webpack&quot;
-}
-</code></pre>
-<p>process.env.NODE_ENV 将被一个字符串替代，它运行压缩器排除那些不可到达的开发代码分支。<br>当你引入那些不会进行生产的代码，下面这个代码将非常有用。</p>
-<pre><code class="javascript">if (process.env.NODE_ENV === &#39;development&#39;) {
-  console.warn(&#39;这个警告会在生产阶段消失&#39;)
-}
-</code></pre>
-<h1 id="优化插件"><a href="#优化插件" class="headerlink" title="优化插件"></a>优化插件</h1><ul>
-<li>OccurenceOrderPlugin: 为组件分配ID,通过这个插件webpack可以分析和优先考虑使用最多 的模块，然后为他们分配最小的ID</li>
-<li>UglifyJsPlugin: 压缩代码</li>
-</ul>
-<p>使用方法</p>
-<pre><code class="javascript">var baseConfig = {
-  // ...
-  new webpack.optimize.OccurenceOrderPlugin()
-  new webpack.optimize.UglifyJsPlugin()
-}
-</code></pre>
-<p>然后在我们使用npm run build会发现代码是压缩的</p>
 ]]></content>
       
         <categories>
@@ -6130,9 +6115,7 @@ var baseConfig = {
         
         <tags>
             
-            <tag> web </tag>
-            
-            <tag> webpack </tag>
+            <tag> JavaScript </tag>
             
         </tags>
         
@@ -6751,9 +6734,288 @@ h1 { color: green; }
         
         <tags>
             
+            <tag> web </tag>
+            
             <tag> less </tag>
             
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[webpack篇]]></title>
+      <url>/2017/10/02/%E5%89%8D%E7%AB%AF/%E6%9E%84%E5%BB%BA%E7%94%9F%E6%80%81/webpack%E7%AF%87/</url>
+      <content type="html"><![CDATA[<p>本文介绍webpack结构</p>
+<a id="more"></a>
+<h1 id="webpack篇"><a href="#webpack篇" class="headerlink" title="webpack篇"></a>webpack篇</h1><h1 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h1><p>不像大多数的模块打包机，webpack是收把项目当作一个整体，通过一个给定的的主文件，webpack将从这个文件开始找到你的项目的所有依赖文件，使用loaders处理它们，最后打包成一个或多个浏览器可识别的js文件</p>
+<h1 id="install"><a href="#install" class="headerlink" title="install"></a>install</h1><p>webpack是我们需要的模块打包机，webpack-dev-server用来创建本地服务器，监听你的代码修改，并自动刷新修改后的结果。这些是有关<strong>devServer的配置</strong></p>
+<pre><code class="javascript">contentBase,  // 为文件提供本地服务器
+port, // 监听端口，默认8080
+inline, // 设置为true,源文件发生改变自动刷新页面
+historyApiFallback  // 依赖HTML5 history API,如果设置为true,所有的页面跳转指向index.html
+
+devServer:{
+    contentBase: &#39;./src&#39; // 本地服务器所加载的页面所在的目录
+    historyApiFallback: true, // 不跳转
+    inline: true // 实时刷新
+}
+</code></pre>
+<p>然后我们在根目录下创建一个’webpack.config.js’，在’package.json’添加两个命令用于本地开发和生产发布</p>
+<pre><code class="javascript">&quot;scripts&quot;: {
+      &quot;start&quot;: &quot;webpack-dev-server&quot;,
+    &quot;build&quot;: &quot;webpack&quot;
+}
+</code></pre>
+<h1 id="webpack-config-js"><a href="#webpack-config-js" class="headerlink" title="webpack.config.js"></a>webpack.config.js</h1><h2 id="entry"><a href="#entry" class="headerlink" title="entry"></a>entry</h2><p>entry: 用来写入口文件，它将是整个依赖关系的根，当我们需要多个入口文件的时候，可以把entry写成一个对象</p>
+<pre><code class="javascript">var baseConfig = {
+        entry: {
+            main: &#39;./src/index.js&#39;
+        }
+    }
+</code></pre>
+<h2 id="output"><a href="#output" class="headerlink" title="output"></a>output</h2><p>output: 即使入口文件有多个，但是只有一个输出配置</p>
+<pre><code class="javascript">var path = require(&#39;path&#39;)
+var baseConfig = {
+    entry: {
+        main: &#39;./src/index.js&#39;
+    },
+    output: {
+        filename: &#39;main.js&#39;,
+        path: path.resolve(&#39;./build&#39;)
+    }
+}
+module.exports = baseConfig
+</code></pre>
+<p>如果你定义的入口文件有多个，那么我们需要使用<strong>占位符</strong>来确保输出文件的唯一性</p>
+<pre><code class="javascript">output: {
+      filename: &#39;[name].js&#39;,
+    path: path.resolve(&#39;./build&#39;)
+}
+</code></pre>
+<p>注：filename应该比较好理解，就是对应于entry里面生成出来的文件名。</p>
+<h2 id="Loader"><a href="#Loader" class="headerlink" title="Loader"></a>Loader</h2><p><strong>loader的作用</strong>： </p>
+<ol>
+<li>实现对不同格式的文件的处理，比如说将scss转换为css，或者typescript转化为js</li>
+<li>转换这些文件，从而使其能够被添加到依赖图中</li>
+</ol>
+<p>loader是webpack最重要的部分之一，通过使用不同的Loader，我们能够调用外部的脚本或者工具，实现对不同格式文件的处理，loader需要在webpack.config.js里边单独用module进行配置，需要的loader需要通过npm 进行安装。配置如下：</p>
+<pre><code class="javascript">var baseConfig = {
+  // ...
+  module: {
+    rules: [
+      {
+        test: /*匹配文件后缀名的正则*/,
+        use: [
+        loader: /*loader名字*/,
+        query: /*额外配置*/
+        ]
+      }
+    ]
+  }
+}
+</code></pre>
+<p>几个常用的loader：</p>
+<ul>
+<li>babel-loader： 让下一代的js文件转换成现代浏览器能够支持的JS文件。babel有些复杂，所以大多数都会新建一个.babelrc进行配置</li>
+<li>css-loader,style-loader:两个建议配合使用，用来解析css文件，能够解释@import,url()如果需要解析less就在后面加一个less-loader</li>
+<li>file-loader: 生成的文件名就是文件内容的MD5哈希值并会保留所引用资源的原始扩展名</li>
+<li>url-loader: 功能类似 file-loader,但是文件大小低于指定的限制时，可以返回一个DataURL事实上，在使用less,scss,stylus这些的时候，npm会提示你差什么插件，差什么，你就安上就行了</li>
+</ul>
+<h2 id="Plugins"><a href="#Plugins" class="headerlink" title="Plugins"></a>Plugins</h2><p><strong>plugins和loader区别</strong></p>
+<p><strong>loaders负责的是处理源文件的如css、jsx，一次处理一个文件。而plugins并不是直接操作单个文件，</strong>它直接对整个构建过程起作用。下面列举了一些我们常用的plugins和他的用法</p>
+<ul>
+<li>ExtractTextWebpackPlugin: 它会将入口中引用css文件，都打包都独立的css文件中，而不是内嵌在js打包文件中。</li>
+<li>HtmlWebpackPlugin:它依据一个简单的index.html模版，生成一个自动引用你打包后的js文件的新index.html</li>
+<li>HotModuleReplacementPlugin: 它允许你在修改组件代码时，自动刷新实时预览修改后的结果注意永远不要在生产环境中使用HMR。这儿说一下一般情况分为开发环境，测试环境，生产环境。</li>
+</ul>
+<p>Case.webapck.config.js的全部内容:</p>
+<pre><code class="javascript">const webpack = require(&quot;webpack&quot;)
+const HtmlWebpackPlugin = require(&quot;html-webpack-plugin&quot;)
+var ExtractTextPlugin = require(&#39;extract-text-webpack-plugin&#39;)
+var lessRules = {
+  use: [
+    {loader: &#39;css-loader&#39;},
+    {loader: &#39;less-loader&#39;}
+  ]
+}
+module.exports = {
+  entry: {
+    main: &#39;./src/index.js&#39;
+  },
+  output: {
+    filename: &#39;[name].js&#39;,
+    path: path.resolve(&#39;./build&#39;)
+  },
+  devServer: {
+    contentBase: &#39;/src&#39;,
+    historyApiFallback: true,
+    inline: true,
+    hot: true
+  },
+  module: {
+    rules: [
+      {test: /\.less$/, use: ExtractTextPlugin.extract(lessRules)}
+    ]
+  },
+  plugins: [
+    new ExtractTextPlugin(&#39;main.css&#39;)
+  ]
+}
+</code></pre>
+<h1 id="产品阶段的构建"><a href="#产品阶段的构建" class="headerlink" title="产品阶段的构建"></a>产品阶段的构建</h1><p>在产品阶段，还需要对资源进行别的<br>处理，例如压缩，优化，缓存，分离css和js。首先我们来定义产品环境</p>
+<pre><code class="javascript">var ENV = process.env.NODE_ENV
+var baseConfig = {
+  // ... 
+  plugins: [
+    new webpack.DefinePlugin({
+      &#39;process.env.NODE_ENV&#39;: JSON.stringify(ENV)
+    })
+  ]
+}
+</code></pre>
+<p>然后还需要修改我们的script命令</p>
+<pre><code class="javascript">&quot;scripts&quot;: {
+    &quot;start&quot;: &quot;NODE_ENV=development webpack-dev-server&quot;,
+    &quot;build&quot;: &quot;NODE_ENV=production webpack&quot;
+}
+</code></pre>
+<p>process.env.NODE_ENV 将被一个字符串替代，它运行压缩器排除那些不可到达的开发代码分支。<br>当你引入那些不会进行生产的代码，下面这个代码将非常有用。</p>
+<pre><code class="javascript">if (process.env.NODE_ENV === &#39;development&#39;) {
+  console.warn(&#39;这个警告会在生产阶段消失&#39;)
+}
+</code></pre>
+<h1 id="优化插件"><a href="#优化插件" class="headerlink" title="优化插件"></a>优化插件</h1><ul>
+<li>OccurenceOrderPlugin: 为组件分配ID,通过这个插件webpack可以分析和优先考虑使用最多 的模块，然后为他们分配最小的ID</li>
+<li>UglifyJsPlugin: 压缩代码</li>
+</ul>
+<p>使用方法</p>
+<pre><code class="javascript">var baseConfig = {
+  // ...
+  new webpack.optimize.OccurenceOrderPlugin()
+  new webpack.optimize.UglifyJsPlugin()
+}
+</code></pre>
+<p>然后在我们使用npm run build会发现代码是压缩的</p>
+]]></content>
+      
+        <categories>
+            
+            <category> 技术栈 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
             <tag> web </tag>
+            
+            <tag> webpack </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[HTML基础]]></title>
+      <url>/2017/01/26/%E5%89%8D%E7%AB%AF/%E5%9F%BA%E7%A1%80/HTML/HTML%E5%9F%BA%E7%A1%80/</url>
+      <content type="html"><![CDATA[<p>HTML的一些基础概念理解。</p>
+<a id="more"></a>
+<h1 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h1><h2 id="对Web标准的理解"><a href="#对Web标准的理解" class="headerlink" title="对Web标准的理解"></a>对Web标准的理解</h2><ol>
+<li>结构：</li>
+</ol>
+<ul>
+<li>标签字母要小写</li>
+<li>标签要闭合</li>
+<li>标签不允许随意嵌套</li>
+</ul>
+<p>2.css和js:</p>
+<ul>
+<li>尽量使用外链css样式表和js脚本。</li>
+<li>样式尽量少用行间样式表，使结构与表现分离，标签的id和class等属性命名要做到见文知义，标签越少，加载越快。</li>
+<li>不需要变动页面内容，便可提供打印版本而不需要复制内容，提高网站易用性。</li>
+</ul>
+<h2 id="浏览器内核"><a href="#浏览器内核" class="headerlink" title="浏览器内核"></a>浏览器内核</h2><h3 id="浏览器内核的理解"><a href="#浏览器内核的理解" class="headerlink" title="浏览器内核的理解"></a>浏览器内核的理解</h3><p>渲染引擎 + JS引擎</p>
+<h3 id="常见的浏览器内核有哪些？"><a href="#常见的浏览器内核有哪些？" class="headerlink" title="常见的浏览器内核有哪些？"></a>常见的浏览器内核有哪些？</h3><ul>
+<li>Trident内核：IE，360，搜狗浏览器；</li>
+<li>Gecko内核：Netscape6及以上版本，Mozilla FireFox(火狐浏览器)</li>
+<li>Presto内核：Opera</li>
+<li>Blink内核：Opera；</li>
+<li>Webkit内核：Safari，Chrome</li>
+</ul>
+<h3 id="优缺点"><a href="#优缺点" class="headerlink" title="优缺点"></a>优缺点</h3><ul>
+<li><strong>Trident内核</strong>：和W3C标准脱节，大量Bug等安全问题</li>
+<li><strong>Presto内核</strong>：速度最快，缺点是兼容性。</li>
+<li><strong>Gecko内核</strong>：功能强大，消耗很多的资源。</li>
+<li><strong>Webkit内核</strong>：速度较快，兼容性较低</li>
+</ul>
+<h2 id="HTML语义化"><a href="#HTML语义化" class="headerlink" title="HTML语义化"></a>HTML语义化</h2><h3 id="为什么要语义化"><a href="#为什么要语义化" class="headerlink" title="为什么要语义化"></a>为什么要语义化</h3><ul>
+<li>有利于seo</li>
+<li>方便其他设备监听 屏幕阅读设备 盲人阅读器</li>
+<li>方便团队协作开发</li>
+</ul>
+<h3 id="语义化元素"><a href="#语义化元素" class="headerlink" title="语义化元素"></a>语义化元素</h3><ul>
+<li>header, footer, hgroup, nav, article, section</li>
+</ul>
+<h1 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h1><h2 id="文档模式"><a href="#文档模式" class="headerlink" title="文档模式"></a>文档模式</h2><h3 id="Doctype作用？标准模式与兼容模式各有什么区别"><a href="#Doctype作用？标准模式与兼容模式各有什么区别" class="headerlink" title="Doctype作用？标准模式与兼容模式各有什么区别?"></a>Doctype作用？标准模式与兼容模式各有什么区别?</h3><p>告知浏览器的解析器用什么文档标准解析这个文档。DOCTYPE不存在或格式不正确会导致文档以兼容模式呈现。</p>
+<p>标准模式的排版和JS运作模式都是以该浏览器支持的最高标准运行。在兼容模式中，页面以宽松的向后兼容的方式显示。</p>
+<h3 id="HTML5为什么只需要写-lt-DOCTYPE-HTML-gt-？"><a href="#HTML5为什么只需要写-lt-DOCTYPE-HTML-gt-？" class="headerlink" title="HTML5为什么只需要写&lt;!DOCTYPE HTML&gt;？"></a>HTML5为什么只需要写&lt;!DOCTYPE HTML&gt;？</h3><p>HTML5 不基于 SGML，因此不需要对DTD进行引用，但是需要doctype来规范浏览器的行为；</p>
+<p>而HTML4.01基于SGML，所以需要对DTD进行引用，才能告知浏览器文档所使用的文档类型。</p>
+<h2 id="加载顺序"><a href="#加载顺序" class="headerlink" title="加载顺序"></a>加载顺序</h2><h3 id="html加载顺序"><a href="#html加载顺序" class="headerlink" title="html加载顺序"></a>html加载顺序</h3><p>正常的网页加载流程是这样的。</p>
+<ol>
+<li>浏览器一边下载HTML网页，一边开始解析</li>
+<li>解析过程中，发现<code>&lt;script&gt;</code>标签</li>
+<li>暂停解析，网页渲染的控制权转交给JavaScript引擎</li>
+<li>如果<code>&lt;script&gt;</code>标签引用了外部脚本，就下载该脚本，否则就直接执行</li>
+<li>执行完毕，控制权交还渲染引擎，恢复往下解析HTML网页</li>
+</ol>
+<h3 id="js放在网页尾部加载"><a href="#js放在网页尾部加载" class="headerlink" title="js放在网页尾部加载"></a>js放在网页尾部加载</h3><ul>
+<li>js放在head中会立即执行，阻塞后续的资源下载与执行。</li>
+<li>因为js有可能会修改dom，如果不阻塞后续的资源下载，dom的操作顺序不可控。在DOM结构生成之前就调用DOM，JavaScript会报错</li>
+</ul>
+<h3 id="加载优化"><a href="#加载优化" class="headerlink" title="加载优化"></a>加载优化</h3><p>1.css需要分块，首页的css独立，其余的css需要动态加载，因为html的绘制会被css阻塞，这样可以减少首次进入时的白屏时间。</p>
+<blockquote>
+<p>js的执行依赖前面的样式。即只有前面的样式全部下载完成后才会执行js，但是此时外链css和外链js是并行下载的。</p>
+</blockquote>
+<p>2.defer=”true”属性，将会并行加载js，到页面全部加载完成后才会执行，会按顺序执行。</p>
+<blockquote>
+<p>对于内置而不是连接外部脚本的script标签，以及动态生成的script标签，<code>defer</code>属性不起作用。</p>
+</blockquote>
+<h2 id="代码分析"><a href="#代码分析" class="headerlink" title="代码分析"></a>代码分析</h2><h3 id="DOCTYPE"><a href="#DOCTYPE" class="headerlink" title="DOCTYPE"></a>DOCTYPE</h3><blockquote>
+<p><code>DOCTYPE html</code></p>
+</blockquote>
+<p>IE6+兼容，都是标准模式，IE6-是怪异模式</p>
+<h3 id="xmlns"><a href="#xmlns" class="headerlink" title="xmlns"></a>xmlns</h3><blockquote>
+<p><code>&lt;html xmlns=&quot;http://www.w3.org/1999/xhtml&quot;&gt;</code></p>
+</blockquote>
+<p>xmlns是XHTML namespace的缩写。</p>
+<p>作用：xml采用名字空间声明，通过网址来识别标记。</p>
+<p>XHTML是HTML先xml过度的标记语言，它需要符合xml文档规则，因此，也需要定义名字空间，又因为XHTML1.0不能自定义标识，所以，它的名字空间都相同</p>
+<h3 id="webkit"><a href="#webkit" class="headerlink" title="webkit"></a>webkit</h3><blockquote>
+<p><code>&lt;meta name=&quot;renderer&quot; content=&quot;webkit&quot;&gt;</code></p>
+</blockquote>
+<p>对于双核浏览器，如果用户手动调节成兼容模式，那么无法切换为极速模式</p>
+<h3 id="X-UA-Compatible"><a href="#X-UA-Compatible" class="headerlink" title="X-UA-Compatible"></a>X-UA-Compatible</h3><blockquote>
+<p><code>&lt;meta http-equiv=&quot;X-UA-Compatible&quot; content=&quot;IE=edge,chrome=1&quot;&gt;</code></p>
+</blockquote>
+<p>IE8的专用标记，指定IE8去模拟某个版本IE浏览器的渲染方式(比如IE6)，以此来解决部分兼容问题</p>
+<p>谷歌做了个外挂：Google Chrome Frame(谷歌内嵌浏览器框架GCF)。这个插件可以让用户的IE浏览器外不变，但用户在浏览网页时，实际上使用的是Google Chrome浏览器内核，而且支持IE6、7、8等多个版本的IE浏览器。</p>
+<p>这样写可以达到的效果是如果安装了GCF，则使用GCF来渲染页面，如果为安装GCF，则使用最高版本的IE内核进行渲染。</p>
+<h3 id="icon"><a href="#icon" class="headerlink" title="icon"></a>icon</h3><blockquote>
+<p><code>&lt;link rel=&quot;shortcut icon&quot; href=&quot;...&quot; type=&quot;image/x-icon&quot; /&gt;</code></p>
+</blockquote>
+<p>固定写法，定义网站图标</p>
+]]></content>
+      
+        <categories>
+            
+            <category> 大前端 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> HTML </tag>
             
         </tags>
         
@@ -7447,219 +7709,6 @@ numbers.sort((a,b)=&gt;(a-b))
                 movingCountSum(threshold,m+1,n,rows,cols,visited);
     }
   }
-}
-</code></pre>
-<h1 id="算法"><a href="#算法" class="headerlink" title="算法"></a>算法</h1><h2 id="快排"><a href="#快排" class="headerlink" title="快排"></a>快排</h2><pre><code class="javascript">function quickSort(arr){
-  if(arr.length&lt;=1){return arr;}
-  var pivotIndex=Math.floor(arr.length/2);
-  //找基准，并把基准从原数组删除
-  var pivot=arr.splice(pivotIndex,1)[0];
-  //定义左右数组
-  var left=[];
-  var right=[];
-
-  //比基准小的放在left，比基准大的放在right
-  for(var i=0;i&lt;arr.length;i++){
-    if(arr[i]&lt;=pivot){
-      left.push(arr[i]);
-    }
-    else{
-      right.push(arr[i]);
-    }
-  }
-  //递归
-  return quickSort(left).concat([pivot],quickSort(right));
-}
-</code></pre>
-<h2 id="二叉树"><a href="#二叉树" class="headerlink" title="二叉树"></a>二叉树</h2><h3 id="节点个数"><a href="#节点个数" class="headerlink" title="节点个数"></a>节点个数</h3><p>递归解法：</p>
-<ol>
-<li>如果二叉树为空，节点个数为0</li>
-<li>如果二叉树不为空，二叉树节点个数 = 左子树节点个数 + 右子树节点个数 + 1</li>
-</ol>
-<pre><code class="c++">int GetNodeNum(BinaryTreeNode * pRoot)  
-{  
-    if(pRoot == NULL) // 递归出口  
-        return 0;  
-    return GetNodeNum(pRoot-&gt;m_pLeft) + GetNodeNum(pRoot-&gt;m_pRight) + 1;  
-}
-</code></pre>
-<h3 id="二叉树的深度"><a href="#二叉树的深度" class="headerlink" title="二叉树的深度"></a>二叉树的深度</h3><p>递归解法：</p>
-<ol>
-<li>如果二叉树为空，二叉树的深度为0</li>
-<li>如果二叉树不为空，二叉树的深度 = max(左子树深度， 右子树深度) + 1</li>
-</ol>
-<pre><code class="c++">int GetDepth(BinaryTreeNode * pRoot)  
-{  
-    if(pRoot == NULL) // 递归出口  
-        return 0;  
-    int depthLeft = GetDepth(pRoot-&gt;m_pLeft);  
-    int depthRight = GetDepth(pRoot-&gt;m_pRight);  
-    return depthLeft &gt; depthRight ? (depthLeft + 1) : (depthRight + 1);   
-}
-</code></pre>
-<h3 id="前序遍历，中序遍历，后序遍历"><a href="#前序遍历，中序遍历，后序遍历" class="headerlink" title="前序遍历，中序遍历，后序遍历"></a>前序遍历，中序遍历，后序遍历</h3><p>前序遍历递归解法：</p>
-<ol>
-<li>如果二叉树为空，空操作</li>
-<li>如果二叉树不为空，访问根节点，前序遍历左子树，前序遍历右子树</li>
-</ol>
-<pre><code class="javascript">void PreOrderTraverse(BinaryTreeNode * pRoot)  
-{  
-    if(pRoot == NULL)  
-        return;  
-    Visit(pRoot); // 访问根节点  
-    PreOrderTraverse(pRoot-&gt;m_pLeft); // 前序遍历左子树  
-    PreOrderTraverse(pRoot-&gt;m_pRight); // 前序遍历右子树  
-}
-</code></pre>
-<p>中序遍历递归解法</p>
-<ol>
-<li>如果二叉树为空，空操作。</li>
-<li>如果二叉树不为空，中序遍历左子树，访问根节点，中序遍历右子树</li>
-</ol>
-<pre><code class="javascript">void InOrderTraverse(BinaryTreeNode * pRoot)  
-{  
-    if(pRoot == NULL)  
-        return;  
-    InOrderTraverse(pRoot-&gt;m_pLeft); // 中序遍历左子树  
-    Visit(pRoot); // 访问根节点  
-    InOrderTraverse(pRoot-&gt;m_pRight); // 中序遍历右子树  
-}
-</code></pre>
-<p>后序遍历递归解法</p>
-<ol>
-<li>如果二叉树为空，空操作</li>
-<li>如果二叉树不为空，后序遍历左子树，后序遍历右子树，访问根节点</li>
-</ol>
-<pre><code class="javascript">void PostOrderTraverse(BinaryTreeNode * pRoot)  
-{  
-    if(pRoot == NULL)  
-        return;  
-    PostOrderTraverse(pRoot-&gt;m_pLeft); // 后序遍历左子树  
-    PostOrderTraverse(pRoot-&gt;m_pRight); // 后序遍历右子树  
-    Visit(pRoot); // 访问根节点  
-}
-</code></pre>
-<h3 id="分层遍历二叉树（按层次从上往下，从左往右）"><a href="#分层遍历二叉树（按层次从上往下，从左往右）" class="headerlink" title="分层遍历二叉树（按层次从上往下，从左往右）"></a>分层遍历二叉树（按层次从上往下，从左往右）</h3><p>相当于广度优先搜索，使用队列实现。队列初始化，将根节点压入队列。当队列不为空，进行如下操作：弹出一个节点，访问，若左子节点或右子节点不为空，将其压入队列。</p>
-<pre><code class="C++">void LevelTraverse(BinaryTreeNode * pRoot)  
-{  
-    if(pRoot == NULL)  
-        return;  
-    queue&lt;BinaryTreeNode *&gt; q;  
-    q.push(pRoot);  
-    while(!q.empty())  
-    {  
-        BinaryTreeNode * pNode = q.front();  
-        q.pop();  
-        Visit(pNode); // 访问节点  
-        if(pNode-&gt;m_pLeft != NULL)  
-            q.push(pNode-&gt;m_pLeft);  
-        if(pNode-&gt;m_pRight != NULL)  
-            q.push(pNode-&gt;m_pRight);  
-    }  
-    return;  
-}
-</code></pre>
-<h3 id="求二叉树第K层的节点个数"><a href="#求二叉树第K层的节点个数" class="headerlink" title="求二叉树第K层的节点个数"></a>求二叉树第K层的节点个数</h3><p>递归解法：</p>
-<ol>
-<li>如果二叉树为空或者k&lt;1返回0</li>
-</ol>
-<ol>
-<li>如果二叉树不为空并且k==1，返回1</li>
-<li>如果二叉树不为空且k&gt;1，返回左子树中k-1层的节点个数与右子树k-1层节点个数之和</li>
-</ol>
-<pre><code class="c++">int GetNodeNumKthLevel(BinaryTreeNode * pRoot, int k)  
-{  
-    if(pRoot == NULL || k &lt; 1)  
-        return 0;  
-    if(k == 1)  
-        return 1;  
-    int numLeft = GetNodeNumKthLevel(pRoot-&gt;m_pLeft, k-1); // 左子树中k-1层的节点个数  
-    int numRight = GetNodeNumKthLevel(pRoot-&gt;m_pRight, k-1); // 右子树中k-1层的节点个数  
-    return (numLeft + numRight);  
-}
-</code></pre>
-<h3 id="求二叉树中叶子节点的个数"><a href="#求二叉树中叶子节点的个数" class="headerlink" title="求二叉树中叶子节点的个数"></a>求二叉树中叶子节点的个数</h3><p>递归解法：</p>
-<ol>
-<li>如果二叉树为空，返回0</li>
-</ol>
-<ol>
-<li>如果二叉树不为空且左右子树为空，返回1</li>
-<li>如果二叉树不为空，且左右子树不同时为空，返回左子树中叶子节点个数加上右子树中叶子节点个数</li>
-</ol>
-<pre><code class="c++">int GetLeafNodeNum(BinaryTreeNode * pRoot)  
-{  
-    if(pRoot == NULL)  
-        return 0;  
-    if(pRoot-&gt;m_pLeft == NULL &amp;&amp; pRoot-&gt;m_pRight == NULL)  
-        return 1;  
-    int numLeft = GetLeafNodeNum(pRoot-&gt;m_pLeft); // 左子树中叶节点的个数  
-    int numRight = GetLeafNodeNum(pRoot-&gt;m_pRight); // 右子树中叶节点的个数  
-    return (numLeft + numRight);  
-}
-</code></pre>
-<h3 id="求二叉树的镜像"><a href="#求二叉树的镜像" class="headerlink" title="求二叉树的镜像"></a>求二叉树的镜像</h3><p>递归解法：</p>
-<ol>
-<li>如果二叉树为空，返回空</li>
-<li>如果二叉树不为空，求左子树和右子树的镜像，然后交换左子树和右子树</li>
-</ol>
-<pre><code class="C++">BinaryTreeNode * Mirror(BinaryTreeNode * pRoot)  
-{  
-    if(pRoot == NULL) // 返回NULL  
-        return NULL;  
-    BinaryTreeNode * pLeft = Mirror(pRoot-&gt;m_pLeft); // 求左子树镜像  
-    BinaryTreeNode * pRight = Mirror(pRoot-&gt;m_pRight); // 求右子树镜像  
-        // 交换左子树和右子树  
-    pRoot-&gt;m_pLeft = pRight;  
-    pRoot-&gt;m_pRight = pLeft;  
-    return pRoot;  
-}
-</code></pre>
-<h3 id="判断二叉树是不是平衡二叉树"><a href="#判断二叉树是不是平衡二叉树" class="headerlink" title="判断二叉树是不是平衡二叉树"></a>判断二叉树是不是平衡二叉树</h3><p>递归解法：</p>
-<ol>
-<li>如果二叉树为空，返回真</li>
-<li>如果二叉树不为空，如果左子树和右子树都是AVL树并且左子树和右子树高度相差不大于1，返回真，其他返回假</li>
-</ol>
-<pre><code class="c++">bool IsAVL(BinaryTreeNode * pRoot, int &amp; height)  
-{  
-    if(pRoot == NULL) // 空树，返回真  
-    {  
-        height = 0;  
-        return true;  
-    }  
-    int heightLeft;  
-    bool resultLeft = IsAVL(pRoot-&gt;m_pLeft, heightLeft);  
-    int heightRight;  
-    bool resultRight = IsAVL(pRoot-&gt;m_pRight, heightRight);  
-    if(resultLeft &amp;&amp; resultRight &amp;&amp; abs(heightLeft - heightRight) &lt;= 1) // 左子树和右子树都是AVL，并且高度相差不大于1，返回真  
-    {  
-        height = max(heightLeft, heightRight) + 1;  
-        return true;  
-    }  
-    else  
-    {  
-        height = max(heightLeft, heightRight) + 1;  
-        return false;  
-    }  
-}
-</code></pre>
-<h3 id="由前序遍历序列和中序遍历序列重建二叉树"><a href="#由前序遍历序列和中序遍历序列重建二叉树" class="headerlink" title="由前序遍历序列和中序遍历序列重建二叉树"></a>由前序遍历序列和中序遍历序列重建二叉树</h3><p>递归解法：</p>
-<ol>
-<li>如果前序遍历为空或中序遍历为空或节点个数小于等于0，返回NULL。</li>
-<li>创建根节点。前序遍历的第一个数据就是根节点的数据，在中序遍历中找到根节点的位置，可分别得知左子树和右子树的前序和中序遍历序列，重建左右子树。</li>
-</ol>
-<pre><code class="javascript">function reConstructBinaryTree(pre, vin)
-{
-    // write code here
-    if(pre.length==0 || vin.length==0) return null;
-    var index=vin.indexOf(pre[0]);
-    var left=vin.slice(0,index);//中序左子树
-    var right=vin.slice(index+1);//中序右子树
-    return {
-        val:pre[0],
-        //递归左右子树的前序，中序 
-        left:reConstructBinaryTree(pre.slice(1,index+1),left),
-        right:reConstructBinaryTree(pre.slice(index+1),right)
-     }; 
 }
 </code></pre>
 ]]></content>
