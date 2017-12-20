@@ -3,6 +3,40 @@
   
     
     <entry>
+      <title><![CDATA[Diary_2017.12.20]]></title>
+      <url>/2017/12/20/%E6%97%A5%E8%AE%B0/Diary_2017.12.20/</url>
+      <content type="html"><![CDATA[<p>12.20，周三，晴</p>
+<a id="more"></a>
+<p>短暂的求职之旅，也即将到达尾声。这期间收获的不仅仅是offer，更多的是一种心态的转变与成长。</p>
+<p>在大学的日子也学，也不是很努力。在工作的两年努力，也没什么方向。而这一周多的时间，让我收获的是方向的认知和自我驱动力。知道自己要做什么，知道自己怎么做最好，努力去做的更好，也许一些东西都不明确，但我愿意去尝试去学，去珍惜时间。</p>
+<p>调整作息，自我驱动，把学习看成一种享受，总结和研究作为一种乐趣，反而视频游戏索然无味，这在以前是完全做不到的，只能说早点撕破伪装，直面淋漓的现实，早点自愈并自我驱动，早点踏上一条承担责任的道路，勇敢的走下去，痛并快乐着。</p>
+<p>尝试了几家面试，对自己的不足有了比较清晰的认识。收offer不一定是自己的实力多高，也可能是一半运气的帮助。但我相信如果实力可以凌驾于运气，那么这一定不是什么困难事。接下来就是要把握工作的机会，感恩公司，为了公司和自己的发展，努力的工作与提高，早日达到实力可以凌驾于运气的那一天。</p>
+<p>再写点什么吧，说说自己怎么去学技术的一点理解</p>
+<p>[看文档] 最快的学习方法。我的想法是不要细读空想看demo，快速通读一遍，有一个直观的理解，然后对比项目的框架平台，看看具体的使用细节，考虑是否可以优化，没用到的文档内容是否有价值，是否可以应用到项目中，能否解决现有的一些问题。 </p>
+<p>[读源码] 深入研究的唯一途径。读源码有几大好处，一是可以对底层的实现有个更深刻的理解，知道这东西是这么做的，为什么要这么做，二是对功能有个清晰的认识，知道这个实现应用在这个地方合适，在那个地方不合适，有什么优点或缺陷，三是一种思想的传承与归纳，也许实现细节不同，但是好的思想可以总结和归纳，有利于对这门技术有更深刻的认识。</p>
+<p>[做东西] 折腾这件事，其实是必不可少的。我之前学习的一个很大的弊端是，看的文档很多，但是做的东西很少，知道API，但没有用过，以为自己会了，其实然并卵。折腾其实是一个踩坑的过程，也就一定要做笔记，分析思考总结，记录哪些坑，怎么走最优。这是一个经验化的东西，不怕踩的坑多，就怕一马平川，做完反而没太多收获。</p>
+<p>其他一些学习的策略，比如深度和广度，我的理解是：</p>
+<p>如果未找到兴趣方向，可以适当开发广度，多一点认识，多挖掘一点兴趣</p>
+<p>如果找到了兴趣方向，那么就要适时摒弃广度，把兴趣点挖深，吃透这个点，思想、实现、优化，然后跟踪后续的一个发展，这其实是非常有价值的。挖深的一个好处是，类似的方向的思想是相同的，比如几种设计模式，面向对象的思想，经典的算法，不同语言都有涉及，大牛完全可以举一反三，事半功倍的去学习，而不是广度学习的囫囵吞枣。</p>
+<p>反正，加油。</p>
+]]></content>
+      
+        <categories>
+            
+            <category> 流水账 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> diary </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
       <title></title>
       <url>/2017/12/16/%E9%9D%A2%E8%AF%95/%E7%AE%97%E6%B3%95/%E5%9F%BA%E7%A1%80%E7%AE%97%E6%B3%95/</url>
       <content type="html"><![CDATA[<h1 id="算法"><a href="#算法" class="headerlink" title="算法"></a>算法</h1><h2 id="快排"><a href="#快排" class="headerlink" title="快排"></a>快排</h2><pre><code class="javascript">function quickSort(arr){
@@ -953,298 +987,6 @@ main();
     </entry>
     
     <entry>
-      <title><![CDATA[es6]]></title>
-      <url>/2017/12/04/%E5%89%8D%E7%AB%AF/%E6%A1%86%E6%9E%B6%E4%B8%8E%E7%BB%84%E4%BB%B6/es6/</url>
-      <content type="html"><![CDATA[<p>ES6知识点整理。</p>
-<p>ES6给我的感觉主要是一个简化的工具，一是将作用域、继承、原型这些JS比较难理解的概念做抽象，二是对对象、数组这些不太方便使用的方法增加方法，三是对函数模型做简化，默认值、Rest这些，四是对模块交互上做简化，比如Modules。有点C向C++过渡的意思。</p>
-<a id="more"></a>
-<h1 id="知识点"><a href="#知识点" class="headerlink" title="知识点"></a>知识点</h1><h2 id="let-const"><a href="#let-const" class="headerlink" title="let/const"></a>let/const</h2><p><code>let</code> 和 <code>const</code> 语句不会造成声明提升。</p>
-<p><code>let</code> 和 <code>const</code> 是块级作用域语句。</p>
-<p>使用 <code>let</code> 声明一个变量，使用 <code>const</code> 来声明一个不可改变的常量。</p>
-<h2 id="立即执行函数"><a href="#立即执行函数" class="headerlink" title="立即执行函数"></a>立即执行函数</h2><p>ES6支持块级作用域，可以通过创建一个代码块（Block）来实现，不必通过创建一个函数来实现</p>
-<h2 id="箭头函数"><a href="#箭头函数" class="headerlink" title="箭头函数"></a>箭头函数</h2><p>一些时候，我们在函数嵌套中需要访问上下文中的 <code>this</code>。</p>
-<ul>
-<li>一种通用的方式是把上下文中的 <code>this</code> 保存在一个变量里</li>
-<li>也可以把 <code>this</code> 通过属性传进去</li>
-<li>还可以直接使用 <code>bind</code></li>
-<li>使用 <strong>箭头函数</strong></li>
-</ul>
-<h3 id="箭头函数需要注意的地方"><a href="#箭头函数需要注意的地方" class="headerlink" title="箭头函数需要注意的地方"></a>箭头函数需要注意的地方</h3><p>当要求动态上下文的时候，就不能够使用箭头函数。也就是this的固定化</p>
-<ol>
-<li>在使用=&gt;定义函数的时候，<strong>this的指向是定义时所在的对象</strong>，而不是使用时所在的对象</li>
-<li>不能够用作构造函数，这就是说，不能够使用new命令，否则就会抛出一个错误</li>
-<li>不能够使用arguments对象</li>
-<li>不能使用yield命令</li>
-</ol>
-<h2 id="字符串拓展"><a href="#字符串拓展" class="headerlink" title="字符串拓展"></a>字符串拓展</h2><h3 id="includes"><a href="#includes" class="headerlink" title=".includes( )"></a>.includes( )</h3><p>替代以往判断内容<code>.indexOf(xxx) &gt; -1</code> 的方式。</p>
-<h3 id="repeat"><a href="#repeat" class="headerlink" title=".repeat( )"></a>.repeat( )</h3><p>实现重复字符：</p>
-<pre><code class="javascript">&#39;meow&#39;.repeat(3); // &#39;meowmeowmeow&#39;
-</code></pre>
-<h3 id="contains"><a href="#contains" class="headerlink" title=".contains()"></a>.contains()</h3><p>返回布尔值，表示是否找到了参数字符串</p>
-<h3 id="startsWith"><a href="#startsWith" class="headerlink" title=".startsWith()"></a>.startsWith()</h3><p>返回布尔值，表示参数字符串是否在源字符串的头部</p>
-<h3 id="endsWith"><a href="#endsWith" class="headerlink" title=".endsWith()"></a>.endsWith()</h3><p>返回布尔值，表示参数字符串是否在源字符串的尾部</p>
-<h3 id="字符串模板字面量"><a href="#字符串模板字面量" class="headerlink" title="字符串模板字面量"></a>字符串模板字面量</h3><ul>
-<li>在字符串中直接使用特殊字符，而不用转义。</li>
-<li>支持直接插入变量</li>
-<li>直接换行</li>
-<li>内部可以使用表达式</li>
-</ul>
-<pre><code class="javascript">let text = ( `cat
-    dog
-    nickelodeon`
-);
-string${varible}string
-</code></pre>
-<h2 id="数组的拓展"><a href="#数组的拓展" class="headerlink" title="数组的拓展"></a>数组的拓展</h2><p><strong>Array.from()用于将两类对象转为真正的数组：</strong>类似数组的对象（array-like object）和可遍历（iterable）的对象，其中包括ES6新增的Set和Map结构。</p>
-<p><strong>【重点】find()和findIndex()</strong>，意义较大，如下：</p>
-<pre><code class="javascript">[1,5,10,15].find( function(value, index, arr){ return value &gt; 9; } ); // 返回10
-[1,5,10,15].findIndex( function(value, index, arr){ return value &gt; 9; } ); // 返回2
-</code></pre>
-<p><strong>fill()使用给定值，填充一个数组：</strong></p>
-<pre><code class="javascript">newArray(3).fill(7)
-</code></pre>
-<h2 id="Maps"><a href="#Maps" class="headerlink" title="Maps"></a>Maps</h2><p><strong>Maps</strong> 是一个JavaScript中很重要（迫切需要）的数据结构。</p>
-<p>Maps让我们使用 <code>set</code>，<code>get</code> 和 <code>search</code> 操作数据。</p>
-<p>Maps最强大的地方在于我们不必只能使用字符串来做key了，现在可以使用任何类型来当作key，而且key不会被强制类型转换为字符串。</p>
-<pre><code class="javascript">let map = new Map();
-&gt; map.set(&#39;name&#39;, &#39;david&#39;);
-&gt; map.get(&#39;name&#39;); // david
-&gt; map.has(&#39;name&#39;); // true
-</code></pre>
-<p><strong>遍历：</strong></p>
-<pre><code class="javascript">for (let key of map.keys()) {
-for (let [key, value] of map.entries()) {
-</code></pre>
-<p><strong>ES6提供三个新的方法：entries()，keys()和values()用于遍历数组</strong>。</p>
-<p>可以用for…of循环进行遍历，唯一的区别是keys()是对键名的遍历、values()是对键值的遍历，entries()是对键值对的遍历</p>
-<h2 id="Object"><a href="#Object" class="headerlink" title="Object"></a>Object</h2><h3 id="Object-setPrototypeOf-，Object-getPrototypeOf"><a href="#Object-setPrototypeOf-，Object-getPrototypeOf" class="headerlink" title="Object.setPrototypeOf()，Object.getPrototypeOf()"></a>Object.setPrototypeOf()，Object.getPrototypeOf()</h3><h2 id="for…of循环"><a href="#for…of循环" class="headerlink" title="for…of循环"></a>for…of循环</h2><p>for…of循环可以代替数组实例的forEach方法</p>
-<p><strong>和for…in的区别</strong></p>
-<ul>
-<li>for…of可以遍历键与值，for…in只能遍历键名</li>
-<li>对于普通的对象，for…of结构不能直接使用，会报错，必须部署了iterator接口后才能使用。但是，这样情况下，for…in循环依然可以用来遍历键名</li>
-</ul>
-<h2 id="WeakMaps"><a href="#WeakMaps" class="headerlink" title="WeakMaps"></a>WeakMaps</h2><p>使用WeakMaps来保存我们私有数据的理由之一是不会暴露出属性名</p>
-<p>通常情况下，在涉及DOM元素存储和缓存的情况下，使用WeakMaps是非常有效的。</p>
-<h2 id="解构"><a href="#解构" class="headerlink" title="解构"></a>解构</h2><pre><code class="javascript">let [a, b, c, d] = [1, 2, 3, 4];    //数组
-let luke = { occupation: &#39;jedi&#39;, father: &#39;anakin&#39; };    //对象
-let {occupation, father} = luke;
-</code></pre>
-<p>该特性更多的用处是在遍历Map结构的时候，可以如下：</p>
-<pre><code class="javascript">for( let [ key,value] of map ) 
-{ console.log ( key +&#39;:&#39;+ value);}
-</code></pre>
-<h2 id="Modules"><a href="#Modules" class="headerlink" title="Modules"></a>Modules</h2><h3 id="export"><a href="#export" class="headerlink" title="export"></a>export</h3><pre><code class="javascript">export default api;
-</code></pre>
-<p>总是在模块的 <strong>最后</strong> 使用 <code>export default</code> 方法。它让模块的出口更清晰明了，节省了阅读整个模块来寻找出口的时间。</p>
-<h3 id="import"><a href="#import" class="headerlink" title="import"></a>import</h3><pre><code class="javascript">import * as content from &#39;./content&#39;
-</code></pre>
-<p><strong>注意</strong>：被导出的值是被 <strong>绑定的（原文：bingdings）</strong>，而不是引用。<br>所以，改变一个模块中的值的话，会影响其他引用本模块的代码，一定要避免此种改动发生。</p>
-<h2 id="参数默认值"><a href="#参数默认值" class="headerlink" title="参数默认值"></a>参数默认值</h2><pre><code class="javascript">function addTwoNumbers(x=0, y=0) {
-    return x + y;
-}
-</code></pre>
-<h2 id="Rest"><a href="#Rest" class="headerlink" title="Rest"></a>Rest</h2><p>使用 <strong>rest</strong> 操作符，我们可以给函数传入一个不确定数量的参数列表：</p>
-<pre><code class="javascript">function logArguments(...args) {
-    for (let arg of args) {
-        console.log(arg);
-    }
-}
-</code></pre>
-<h2 id="Class"><a href="#Class" class="headerlink" title="Class"></a>Class</h2><p>class语法相对原型、构造函数、继承更接近传统语法</p>
-<pre><code class="javascript">class Animal {
-    constructor () {
-        this.type = &#39;animal&#39;
-    }
-    says(say) {
-        console.log(this.type + &#39;says&#39; + say)
-    }
-}
- let animal = new Animal()
- animal.says(&#39;hello&#39;) // animal says hello
-
- class Cat extends Animal {
-     constructor() {
-         super()
-         this.type = &#39;cat&#39;
-     }
- }
- let cat = new Cat()
- cat.says(&#39;hello&#39;) // cat says hello
-</code></pre>
-<p>contructor内部定义的方法和属性是实例对象自己的，不能通过extends 进行继承。</p>
-<p>在ES6中，子类的构造函数必须含有super函数，super表示的是调用父类的构造函数，虽然是父类的构造函数，但是this指向的却是cat</p>
-<h2 id="Object-assign"><a href="#Object-assign" class="headerlink" title="Object.assign()"></a>Object.assign()</h2><p>Object.assign方法用来将源对象（source）的所有可枚举属性，复制到目标对象（target）</p>
-<pre><code class="javascript">var target = { a:1};
-var source1 = { b:2};
-var source2 = { c:3};
-Object.assign(target, source1, source2);
-target// {a:1, b:2, c:3}
-
-var n = Object.assign(a,b,c)向n中添加a,b,c的属性
-</code></pre>
-<p><strong>应用</strong></p>
-<ul>
-<li>为对象添加属性</li>
-<li>为对象添加方法</li>
-</ul>
-<ul>
-<li>克隆对象</li>
-<li>为属性指定默认值</li>
-</ul>
-<h2 id="Symbol"><a href="#Symbol" class="headerlink" title="Symbol"></a>Symbol</h2><p>ES6引入了一种新的原始数据类型Symbol，表示独一无二的ID。它通过Symbol函数生成。</p>
-<p>Symbols常用的一个使用场景，尤其是使用 <code>Symbol.for(key)</code> 方法，是用于实现代码间的互操作。</p>
-<h2 id="Promise"><a href="#Promise" class="headerlink" title="Promise"></a>Promise</h2><p>它的思想是，每一个异步任务返回一个Promise对象，该对象有一个then方法，允许指定回调函数。比如，f1的回调函数f2,可以写成：</p>
-<pre><code class="javascript">f1().then(f2);
-f1().then(f2).then(f3);
-f1().then(f2).fail(f3);
-</code></pre>
-<p>如果一个任务已经完成，再添加回调函数，该回调函数会立即执行。</p>
-<p>API:</p>
-<pre><code class="javascript">new Promise((resolve, reject) =&gt;
-    reject(new Error(&#39;Failed to fulfill Promise&#39;)))
-        .catch(reason =&gt; console.log(reason));
-</code></pre>
-<p>这里有两个处理函数，<strong>resolve</strong>（当Promise执行成功完毕时调用的回调函数） 和 <strong>reject</strong> （当Promise执行不接受时调用的回调函数）</p>
-<p><strong>Promises的好处</strong>：</p>
-<ul>
-<li>大量嵌套错误处理回调函数会使代码变得难以阅读理解。使用Promises，我们可以通过清晰的路径将错误事件让上传递，并且适当地处理它们。</li>
-</ul>
-<p>此外，Promise处理后的值，无论是解决（resolved）还是拒绝（rejected）的结果值，都是不可改变的。</p>
-<h3 id="1-什么是promise对象，它能干什么？"><a href="#1-什么是promise对象，它能干什么？" class="headerlink" title="1. 什么是promise对象，它能干什么？"></a>1. 什么是promise对象，它能干什么？</h3><p><strong>Promise</strong> 对象用于延迟(deferred) 计算和异步(asynchronous ) 计算.。一个Promise对象代表着一个还未完成，但预期将来会完成的操作。</p>
-<p><strong>Promise</strong> 对象是一个返回值的代理，这个返回值在promise对象创建时未必已知。它允许你为异步操作的成功或失败指定处理方法。 这使得异步方法可以像同步方法那样返回值：异步方法会返回一个包含了原返回值的 promise 对象来替代原返回值。</p>
-<p><strong>Promise</strong> 对象有以下几种状态:</p>
-<ul>
-<li><em>pending</em>: 表示一个初始状态, 非 fulfilled 或 rejected。</li>
-<li><em>fulfilled</em>: 成功的操作。</li>
-<li><em>rejected</em>: 失败的操作。</li>
-</ul>
-<p>每一个异步任务都会返回一个Promise对象，该对象有一个then方法，允许指定回调函数。可以根据Promise对象的状态相应的去执行对应的回调函数。</p>
-<h2 id="2-常用的API"><a href="#2-常用的API" class="headerlink" title="2. 常用的API"></a>2. 常用的API</h2><h4 id="1-Promise-prototype-then"><a href="#1-Promise-prototype-then" class="headerlink" title="1.Promise.prototype.then()"></a>1.Promise.prototype.then()</h4><p>它的作用是为promise实例添加状态改变时的回调函数。</p>
-<p>then()方法的第一个参数是resolved状态的回调函数，第二个参数（可选）是rejected状态的回调函数。then方法返回的是一个新的promise实例。</p>
-<p>then方法的第二个参数一般不推荐写。有以下两个原因：</p>
-<ul>
-<li>由于是链式操作，这个then方法之后还可能会有其他操作，如果此时把错误捕捉的函数放在后面方法前边的话，并且之后再无错误捕获方法，then之后的错误就会捕捉不到。</li>
-<li>在then方法里面，两个参数都是回调函数写了一大堆，这样结构看起来比较混乱。</li>
-</ul>
-<pre><code class="javascript">var p=new Promise(function(resolve, reject){
-    resolve(&quot;ok&quot;);    
-});
-p.then(function(value){console.log(val)},
- function(err)(console.log(err))       
-);
-</code></pre>
-<h4 id="2-Promise-prototype-catch"><a href="#2-Promise-prototype-catch" class="headerlink" title="2.Promise.prototype.catch()"></a>2.Promise.prototype.catch()</h4><p>这个方法是.then(null,rejection)的别名，这也能看出这个方法是专门只能用来捕获错误信息，用于指定发生错误时的回调函数。</p>
-<p>要注意一下几点：</p>
-<ul>
-<li>当promise状态已经变成resolved的时候，再抛出错误时是无效的。</li>
-<li>尽量将catch方法写在链式操作的最后。错误会一直冒泡到最后，catch放在最后会捕捉到所有错误。</li>
-<li>当没有使用catch方法指定错误处理函数的回调函数时，promise对象里面抛出的错误不会传递到外层的代码。</li>
-</ul>
-<h4 id="3-Promise-resolve"><a href="#3-Promise-resolve" class="headerlink" title="3. Promise.resolve()"></a>3. Promise.resolve()</h4><p>这个方法的作用就是将现有的对象转化为Promise对象，进而可以执行这些方法。</p>
-<pre><code class="javascript">Promise.resolve(&quot;foo&quot;);
-</code></pre>
-<h4 id="4-Promise-all"><a href="#4-Promise-all" class="headerlink" title="4. Promise.all()"></a>4. Promise.all()</h4><p>这个方法用于将多个promise实例，包装成一个新的promise实例。</p>
-<pre><code class="javascript">var p=Promise.all([p1,p2,p3]);
-</code></pre>
-<p>要注意一下两点：</p>
-<ul>
-<li>只有当p1,p2,p3状态都变为fulfilled之后，p的状态才会变为fulfilled。</li>
-<li>只要p1.p2,p3中有任意一个状态变为rejected，p的状态就会变为rejected。</li>
-</ul>
-<h3 id="3-实现异步编程的原理"><a href="#3-实现异步编程的原理" class="headerlink" title="3. 实现异步编程的原理"></a>3. 实现异步编程的原理</h3><p>Promise对象相当于是一个状态机，在其内部使用resolve方法，使其由初始状态变为成功时的fulfilled状态或者执行失败后的rejected状态。这时内部的工作就完成了，开始由外部监听其内部的状态的改变，调用then()方法（catch()方法相当于then内部的第二个参数方法）对应的状态调用对应的处理函数。</p>
-<h1 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h1><h2 id="Case1-promise执行顺序"><a href="#Case1-promise执行顺序" class="headerlink" title="Case1.promise执行顺序"></a>Case1.promise执行顺序</h2><pre><code class="javascript">setTimeout(function(){
-    console.log(1);
-}, 0)
-
-new Promise(function executor(resolve){
-    console.log(2);
-    for(var i = 0; i &lt; 1000; i++){
-        i = 9999 &amp;&amp; resolve();
-    }
-    console.log(3);
-}).then(function(){
-    console.log(4);
-})
-
-console.log(5);
-// 2， 3， 5， 4， 1
-</code></pre>
-<ul>
-<li>在定时器，事件，ajax等操作的时候，<strong>会使一个异步操作，会把该操作放到一个task queue里，需要等当前主线程的任务完成后，会读取任务队列(task queue)中的是事件。</strong></li>
-<li>promise中的then操作是放在执行栈，也就是主线程的最后。 </li>
-</ul>
-<h2 id="Case2-promise的原理？jquery的ajax返回的是promise对象吗？"><a href="#Case2-promise的原理？jquery的ajax返回的是promise对象吗？" class="headerlink" title="Case2.promise的原理？jquery的ajax返回的是promise对象吗？"></a>Case2.promise的原理？jquery的ajax返回的是promise对象吗？</h2><p>jquery的ajax返回的是<strong>deferred对象</strong>，通过<strong>promise的resolve()方</strong>法将其转换为promise对象。</p>
-<pre><code class="javascript">var jsPromise = Promise.resolve($.ajax(&#39;/whatever.json&#39;));
-</code></pre>
-<h2 id="Case3-promise对象捕获错误"><a href="#Case3-promise对象捕获错误" class="headerlink" title="Case3.promise对象捕获错误"></a>Case3.promise对象捕获错误</h2><pre><code class="javascript">//使用throw添加错误事件
-var p = new Promise(function(resolve, reject) {
-    resolve(&quot;ok&quot;);
-    throw new Error(&#39;error0&#39;);
-    //setTimeout(function() { throw new Error(&#39;error1&#39;) }, 0);
-});
-p.then(function(value){
-    console.log(value) 
-　})
- .catch(function(err){
-    console.log(err)
-    });
-process.on(&#39;unhandledRejection&#39;, function (err, p) { console.error(&#39;catch exception:&#39;,err.stack) });
-
-//设置定时器来抛出错误事件
-var p = new Promise(function(resolve, reject) {
-    resolve(&quot;ok&quot;);
-    //throw new Error(&#39;error0&#39;);
-    setTimeout(function() { throw new Error(&#39;error1&#39;) }, 0);
-});
-p.then(function(value){
-    console.log(value) 
-　})
- .catch(function(err){
-    console.log(err)
-    });
-process.on(&#39;unhandledRejection&#39;, function (err, p) { console.error(&#39;catch exception:&#39;,err.stack) });
-
-//同时添加错误事件
-var p = new Promise(function(resolve, reject) {
-    resolve(&quot;ok&quot;);
-    throw new Error(&#39;error0&#39;);
-    setTimeout(function() { throw new Error(&#39;error1&#39;) }, 0);
-});
-p.then(function(value){
-    console.log(value) 
-　})
- .catch(function(err){
-    console.log(err)
-    });
-process.on(&#39;unhandledRejection&#39;, function (err, p) { console.error(&#39;catch exception:&#39;,err.stack) });
-</code></pre>
-<p>第一个只会打印出 “ok”。状态被设定为fulfilled之后，再进行抛出错误处理，错误也不会被后续的catch方法捕获到。</p>
-<p>第二个先打印出“ok”，之后抛出process里面定义的错误。虽然状态已经变为fulfilled，但是定时器抛出的错误属于异步抛出的错误，无法被try catch捕获到，因此和Promise对象无关，所以错误可以正常的抛出来</p>
-<p>第三个只打印出“ok”。当执行throw之后，虽然错误未被外部函数捕获处理，但这也是个实实在在存在的错误啊，对于javascript来说，有错就不会继续往下面执行了。所以并不会执行到定时器抛出错误就停止了</p>
-<h1 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h1><ul>
-<li><a href="https://segmentfault.com/a/1190000011344301" target="_blank" rel="external">前端面试之ES6篇（高产似母猪）</a></li>
-<li><a href="http://www.jianshu.com/p/c4ba3b25ca0d" target="_blank" rel="external">ECMAScript 6重点一览——基础篇</a></li>
-<li><a href="http://blog.csdn.net/shuidinaozhongyan/article/details/77864182" target="_blank" rel="external">面试考察之Promise对象</a></li>
-<li>​</li>
-</ul>
-]]></content>
-      
-        <categories>
-            
-            <category> 大前端 </category>
-            
-        </categories>
-        
-        
-        <tags>
-            
-            <tag> JavaScript </tag>
-            
-        </tags>
-        
-    </entry>
-    
-    <entry>
       <title><![CDATA[jquery]]></title>
       <url>/2017/12/04/%E5%89%8D%E7%AB%AF/%E6%A1%86%E6%9E%B6%E4%B8%8E%E7%BB%84%E4%BB%B6/jquery/</url>
       <content type="html"><![CDATA[<p>jquery知识点整理。</p>
@@ -1452,246 +1194,6 @@ $(document).ready(function() {
         <tags>
             
             <tag> JavaScript </tag>
-            
-        </tags>
-        
-    </entry>
-    
-    <entry>
-      <title><![CDATA[WEB安全]]></title>
-      <url>/2017/12/02/%E5%89%8D%E7%AB%AF/%E8%B6%8B%E5%8A%BF%E6%8A%80%E6%9C%AF/WEB%E5%AE%89%E5%85%A8/</url>
-      <content type="html"><![CDATA[<p>本文介绍web安全。</p>
-<p>工作中有接触过一部分，系统整理一下。后续需要补上攻防代码。</p>
-<a id="more"></a>
-<h1 id="知识点"><a href="#知识点" class="headerlink" title="知识点"></a>知识点</h1><h2 id="Crypto"><a href="#Crypto" class="headerlink" title="Crypto"></a>Crypto</h2><p>Node.js 的 <code>crypto</code> 模块封装了诸多的加密功能, 包括 OpenSSL 的哈希、HMAC、加密、解密、签名和验证函数等.</p>
-<p>在客户端加密, 是增加传输的过程中被第三方嗅探到密码后破解的成本. 对于游戏, 在客户端加密是防止外挂/破解等. 在服务端加密 (如 md5) 是避免管理数据库的 DBA 或者攻击者攻击数据库之后直接拿到明文密码, 从而提高安全性.</p>
-<h2 id="TLS-SSL"><a href="#TLS-SSL" class="headerlink" title="TLS/SSL"></a>TLS/SSL</h2><p> SSL (Secure Socket Layer)的主要用途是:</p>
-<ol>
-<li>认证用户和服务器, 确保数据发送到正确的客户机和服务器;</li>
-<li>加密数据以防止数据中途被窃取;</li>
-<li>维护数据的完整性, 确保数据在传输过程中不被改变.</li>
-</ol>
-<p>存在三个特性:</p>
-<ul>
-<li>机密性：SSL协议使用密钥加密通信数据</li>
-<li>可靠性：服务器和客户都会被认证, 客户的认证是可选的</li>
-<li><p>完整性：SSL协议会对传送的数据进行完整性检查</p>
-<p>IETF 把 SSL 标准化/强化. 标准化之后的名称改为传输层安全协议 (Transport Layer Security, TLS). 很多相关的文章都把这两者并列称呼 (TLS/SSL), 因为这两者可以视作同一个东西的不同阶段.</p>
-</li>
-</ul>
-<h2 id="HTTPS"><a href="#HTTPS" class="headerlink" title="HTTPS"></a>HTTPS</h2><p>公钥基础设施 (Public Key Infrastructure, PKI) 是一种遵循标准的, 利用公钥加密技术为电子商务的开展提供一套安全基础平台的技术和规范. 其基础建置包含认证中心 (Certification Authority, CA) 、注册中心 (Register Authority, RA) 、目录服务 (Directory Service, DS) 服务器.</p>
-<p>由 RA 统筹、审核用户的证书申请, 将证书申请送至 CA 处理后发出证书, 并将证书公告至 DS 中. 在使用证书的过程中, 除了对证书的信任关系与证书本身的正确性做检查外, 并透过产生和发布证书废止列表 (Certificate Revocation List, CRL) 对证书的状态做确认检查, 了解证书是否因某种原因而遭废弃. 证书就像是个人的身分证, 其内容包括证书序号、用户名称、公开金钥 (Public Key) 、证书有效期限等.</p>
-<p>在 TLS/SLL 中你可以使用 OpenSSL 来生成 TLS/SSL 传输时用来认证的 public/private key. 不过这个 public/private key 是自己生成的, 而通过 PKI 基础设施可以获得权威的第三方证书 (key) 从而加密 HTTP 传输安全. 目前博客圈子里比较流行的是 <a href="https://imququ.com/post/letsencrypt-certificate.html" target="_blank" rel="external">Let’s Encrypt 签发免费的 HTTPS 证书</a>.</p>
-<p>需要注意的是, 如果 PKI 受到攻击, 那么 HTTPS 也一样不安全.</p>
-<p>此外有的 CA 机构以邮件方式认证, 那么当某个网站的邮件服务收到攻击/渗透, 那么攻击者也可能以此从 CA 机构获取权威的正确的证书.</p>
-<h3 id="CA工作原理"><a href="#CA工作原理" class="headerlink" title="CA工作原理"></a>CA工作原理</h3><p>现在假设客户A向银行B传送数字信息，为了保证信息传送的真实性、完整性和不可否认性，需要对要传送的信息进行数字加密和数字签名，其传送过程如下： </p>
-<ul>
-<li>客户A准备好要传送的数字信息（明文）。（<strong>准备明文</strong>） </li>
-</ul>
-<ul>
-<li>客户A对数字信息进行哈希（hash）运算，得到一个信息摘要。（<strong>准备摘要</strong>） </li>
-</ul>
-<ul>
-<li>客户A用自己的私钥（SK）对信息摘要进行加密得到客户A的数字签名，并将其附在数字信息上。（<strong>用私钥对数字信息进行数字签名</strong>）　 </li>
-<li>客户A随机产生一个加密密钥（DES密钥），并用此密钥对要发送的信息进行加密，形成密文。（<strong>生成密文</strong>） </li>
-<li>客户A用双方共有的公钥（PK）对刚才随机产生的加密密钥进行加密，将加密后的DES密钥连同密文一起传送给乙。（<strong>用公钥对DES密钥进行加密</strong>）　　 </li>
-<li>银行B收到客户A传送过来的密文和加过密的DES密钥，先用自己的私钥（SK）对加密的DES密钥进行解密，得到DES密钥。（<strong>用私钥对DES密钥解密</strong>）　　 </li>
-<li>银行B然后用DES密钥对收到的密文进行解密，得到明文的数字信息，然后将DES密钥抛弃（即DES密钥作废）。（<strong>解密文</strong>）　　 </li>
-<li>银行B用双方共有的公钥（PK）对客户A的数字签名进行解密，得到信息摘要。银行B用相同的hash算法对收到的明文再进行一次hash运算，得到一个新的信息摘要。　　 （<strong>用公钥解密数字签名</strong>） </li>
-<li>银行B将收到的信息摘要和新产生的信息摘要进行比较，如果一致，说明收到的信息没有被修改过。（<strong>对比信息摘要和信息</strong>） </li>
-</ul>
-<h2 id="XSS"><a href="#XSS" class="headerlink" title="XSS"></a>XSS</h2><h3 id="是什么？"><a href="#是什么？" class="headerlink" title="是什么？"></a>是什么？</h3><p>跨站脚本 (Cross-Site Scripting, XSS) 是一种代码注入方式， 其注入方式很简单包括但不限于 JavaScript / VBScript / CSS / Flash 等.</p>
-<p>当其他用户浏览到这些网页时, 就会执行这些恶意脚本, 对用户进行 Cookie 窃取/会话劫持/钓鱼欺骗等各种攻击. 其原理, 如使用 js 脚本收集当前用户环境的信息 (Cookie 等), 然后通过 img.src, Ajax, onclick/onload/onerror 事件等方式将用户数据传递到攻击者的服务器上. </p>
-<h3 id="类型"><a href="#类型" class="headerlink" title="类型"></a>类型</h3><ul>
-<li><strong>反射型XSS</strong>:非持久化，欺骗用户去点击链接,攻击代码包含在url中,被用户点击之后执行攻击代码.</li>
-<li><strong>存储型XSS</strong>:持久型,攻击提交恶意代码到服务器，服务器存储该段代码,这样当其他用户请求后，服务器返回并发给用户，用户浏览此类页面时就可能受到攻击。例如:恶意用户的HTML或JS输入服务器-&gt;进入数据库-&gt;服务器响应时查询数据库-&gt;用户浏览器。</li>
-</ul>
-<h3 id="防范与过滤"><a href="#防范与过滤" class="headerlink" title="防范与过滤"></a>防范与过滤</h3><ul>
-<li>输入编码过滤:对于每一个输入，在客户端和服务器端验证是否合法字符，长度是否合法，格式是否正确,对字符进行转义.非法字符过滤.</li>
-<li>输出编码过滤:对所有要动态输出到页面的内容，<strong>进行相关的编码和转义</strong>.主要有HTML字符过滤和转义, JS脚本转义过滤. url转义过滤.</li>
-<li>设置http-only,避免攻击脚本读取cookie.</li>
-</ul>
-<h3 id="攻防流程"><a href="#攻防流程" class="headerlink" title="攻防流程"></a>攻防流程</h3><h4 id="升级攻击"><a href="#升级攻击" class="headerlink" title="升级攻击"></a>升级攻击</h4><h5 id="append的利用"><a href="#append的利用" class="headerlink" title="append的利用"></a>append的利用</h5><p>直接给innerHTML赋值一段js，是无法被执行的。但是，jquery的append可以做到，究其原因，就是因为jquery会在将append元素变为fragment的时候，找到其中的script标签，再使用eval执行一遍。jquery的append使用的方式也是innerHTML。而innerHTML是会将unicode码转换为字符实体的。</p>
-<p><strong>Case</strong></p>
-<pre><code class="php+HTML">&lt;?php
-    $username=&quot;\u003cscript\u003ealert(&#39;okok&#39;);&quot;;
-?&gt;
-$(&#39;#username_info&#39;).append(&quot;&lt;?php echo htmlentities($username);?&gt;&quot;);
-</code></pre>
-<p>虽然进行了转义，注入的代码还是会再次被执行。</p>
-<h5 id="img标签的再次利用"><a href="#img标签的再次利用" class="headerlink" title="img标签的再次利用"></a>img标签的再次利用</h5><p>img标签，在加载图片失败的时候，会调用该元素上的onerror事件。我们正可以利用这种方式来进行攻击。</p>
-<p><strong>Case</strong></p>
-<pre><code class="php">&lt;?php
-    $imgsrc=&quot;\&quot; onerror=\&quot;javascript:alert(&#39;侯医生&#39;);\&quot;&quot;;
-?&gt;
-</code></pre>
-<p>解决方法：接着进行转义</p>
-<pre><code class="javascript">&lt;img src=&quot;&lt;?php echo htmlentities($imgsrc);?&gt;&quot; /&gt;
-</code></pre>
-<h5 id="组合使用"><a href="#组合使用" class="headerlink" title="组合使用"></a>组合使用</h5><p>innerHTML赋值的script标签，不会被执行，但是innerHTML赋值一个img标签是可以被识别的。我们把img标签的左右尖括号，使用unicode进行伪装，让转义方法认不出来，即使innerHTML也可以利用上了</p>
-<p><strong>Case</strong></p>
-<pre><code class="php+HTML">&lt;?php
-    $username=&quot;\u003cimg src=\&#39;\&#39; onerror=javascript:alert(\&#39;okok\&#39;);\u003e&quot;;
-?&gt;
-&lt;script&gt;
-      document.getElementById(&#39;username_info&#39;).innerHTML = &quot;&lt;?php echo htmlentities($username);?&gt;&quot;;
-&lt;/script&gt;
-</code></pre>
-<h4 id="升级防御"><a href="#升级防御" class="headerlink" title="升级防御"></a>升级防御</h4><p>将输出的字符串中的<code>\</code>反斜杠进行转义(json转义)。这样，<code>\</code>就不会被当做unicode码的开头来被处理了。</p>
-<p><strong>Case</strong></p>
-<pre><code class="javascript">document.getElementById(&#39;username_info&#39;).innerHTML = &lt;?php echo json_encode(htmlentities($username));?&gt;;
-</code></pre>
-<h4 id="XSS再升级"><a href="#XSS再升级" class="headerlink" title="XSS再升级"></a>XSS再升级</h4><p>有的时候，会有一些习惯，拿URL上的get参数去构建网页。好比说，直接拿url上的用户名去展示啦，拿url上的一些回跳地址之类的。但是url上的参数，我们是无法提前对其进行转义的。</p>
-<p><strong>Case</strong></p>
-<pre><code class="html">&lt;script&gt;
-  var param = /=(.+)$/.exec(location.search);
-  var value = decodeURIComponent(param[1]);
-  $(&#39;#username_info&#39;).append(value);
-&lt;/script&gt;
-</code></pre>
-<h4 id="防御再次升级"><a href="#防御再次升级" class="headerlink" title="防御再次升级"></a>防御再次升级</h4><p>这种从url中获取的信息，最好由后端获取，在前端转义后再行输出</p>
-<p>使用url中的参数的时候要小心，更不要拿URL中的参数去eval。</p>
-<p><strong>Case</strong></p>
-<pre><code class="javascript">&lt;script&gt;
-    var value = decodeURIComponent(&quot;&lt;?php echo htmlentities($_GET[&#39;username&#39;]);?&gt;&quot;);
-    $(&#39;#username_info&#39;).append(value);
-&lt;/script&gt;
-</code></pre>
-<h4 id="保护好你的cookie"><a href="#保护好你的cookie" class="headerlink" title="保护好你的cookie"></a>保护好你的cookie</h4><p>使用cookie的HttpOnly属性，加上了这个属性的cookie字段，js是无法进行读写的。</p>
-<h3 id="CPS-策略"><a href="#CPS-策略" class="headerlink" title="CPS 策略"></a>CPS 策略</h3><p>计算脚本的 hashes 值，设置 CSP 头</p>
-<p>策略指令可以参见 <a href="https://developer.mozilla.org/en-US/docs/Web/Security/CSP/CSP_policy_directives" target="_blank" rel="external">CSP Policy Directives</a>以及<a href="http://www.ruanyifeng.com/blog/2016/09/csp.html" target="_blank" rel="external">阮一峰的博文</a>, <a href="https://imququ.com/post/content-security-policy-reference.html" target="_blank" rel="external">屈大神的博文</a></p>
-<h2 id="CSRF"><a href="#CSRF" class="headerlink" title="CSRF"></a>CSRF</h2><h3 id="什么是CSRF攻击？"><a href="#什么是CSRF攻击？" class="headerlink" title="什么是CSRF攻击？"></a>什么是CSRF攻击？</h3><p>跨站请求伪造 (Cross-Site Request Forgery) 是一种伪造跨站请求的攻击方式.</p>
-<p>例如利用你在 A 站 (攻击目标) 的 cookie / 权限等, 在 B 站 (恶意/钓鱼网站) 拼装 A 站的请求.</p>
-<h3 id="如何攻击？"><a href="#如何攻击？" class="headerlink" title="如何攻击？"></a>如何攻击？</h3><h4 id="要合理使用post与get"><a href="#要合理使用post与get" class="headerlink" title="要合理使用post与get"></a>要合理使用post与get</h4><p>通常我们会为了省事儿，把一些应当提交的数据，做成get请求。殊不知，这不仅仅是违反了http的标准而已，也同样会被黑客所利用。</p>
-<p><strong>Case</strong></p>
-<p>你开发的网站中，有一个购买商品的操作，而商品ID图个省事儿，就使用了url中的get参数。</p>
-<pre><code class="php+HTML">&lt;?php
-// 从cookie中获取用户名，看似稳妥
-$username = $_COOKIE[&#39;username&#39;];
-$productId = $_GET[&#39;pid&#39;];
-?&gt;
-
-&lt;?php
-echo $username . &#39;买入商品：&#39; . $productId;
-?&gt;
-
-//黑客的网站
-&lt;img src=&quot;http://localhost:8082/lab/xsrflab/submit.php?pid=1&quot; /&gt;
-</code></pre>
-<p>所以，我们日常的开发，还是要遵循提交业务，严格按照post请求去做的。更不要使用jsonp去做提交型的接口，这样非常的危险。</p>
-<h4 id="csrf攻击升级"><a href="#csrf攻击升级" class="headerlink" title="csrf攻击升级"></a>csrf攻击升级</h4><p>如果你使用了post请求来处理关键业务的，还是有办法可以破解的。</p>
-<p><strong>Case</strong></p>
-<pre><code class="php+HTML">&lt;?php
-$username = $_COOKIE[&#39;username&#39;];
-// 换为post了，可以规避黑客直接的提交
-$productId = $_POST[&#39;pid&#39;];
-?&gt;
-
-&lt;?php
-echo $username . &#39;买入商品：&#39; . $productId;
-?&gt;
-
-//黑客的网站
-&lt;button id=&quot;clickme&quot;&gt;点我看相册&lt;/button&gt;
-&lt;script&gt;
-  $(&#39;#clickme&#39;).on(&#39;click&#39;, function () {
-    // 用户再不知情的情况下，提交了表单，服务器这边也会以为是用户提交过来的。
-    $(&#39;#myform&#39;).submit();
-  });
-&lt;/script&gt;
-&lt;form id=&quot;myform&quot; style=&quot;display:none;&quot; target=&quot;myformer&quot; method=&quot;post&quot; action=&quot;http://myhost:8082/lab/xsrflab/submit.php&quot;&gt;
-  &lt;input type=&quot;hidden&quot; name=&quot;pid&quot; value=&quot;1&quot;&gt;
-&lt;/form&gt;
-&lt;iframe name=&quot;myformer&quot; style=&quot;display:none;&quot;&gt;&lt;/iframe&gt;
-</code></pre>
-<p><strong>这种情况如何防御？</strong></p>
-<p>最简单的办法就是加<strong>验证码</strong>，这样除了用户，黑客的网站是获取不到用户本次session的验证码的。但是这样也会降低用户的提交体验，特别是有些经常性的操作</p>
-<p>另一种方式，就是在用访问的页面中，都种下验证用的<strong>token</strong>，用户所有的提交都必须带上本次页面中生成的token，这种方式的本质和使用验证码没什么两样，但是这种方式，整个页面每一次的session，使用同一个token就行，很多post操作，开发者就可以自动带上当前页面的token。如果token校验不通过，则证明此次提交并非从本站发送来，则终止提交过程。如果token确实为本网站生成的话，则可以通过。</p>
-<h3 id="预防"><a href="#预防" class="headerlink" title="预防"></a>预防</h3><ol>
-<li>在 HTTP 头中自定义属性并验证</li>
-<li>检查 CSRF token.</li>
-<li>cookie中加入hash随机数.</li>
-<li>通过检查来过滤简单的 CSRF 攻击, 主要检查一下两个 header:</li>
-</ol>
-<ul>
-<li><p>Origin Header</p>
-</li>
-<li><p>Referer Header</p>
-</li>
-</ul>
-<h2 id="中间人攻击"><a href="#中间人攻击" class="headerlink" title="中间人攻击"></a>中间人攻击</h2><p>中间人 (Man-in-the-middle attack, MITM) 是指攻击者与通讯的两端分别创建独立的联系, 并交换其所收到的数据, 使通讯的两端认为他们正在通过一个私密的连接与对方直接对话, 但事实上整个会话都被攻击者完全控制. 在中间人攻击中, 攻击者可以拦截通讯双方的通话并插入新的内容.</p>
-<p>目前比较常见的是在公共场所放置精心准备的免费 wifi, 劫持/监控通过该 wifi 的流量. 或者攻击路由器, 连上你家 wifi 攻破你家 wifi 之后在上面劫持流量等.</p>
-<p>对于通信过程中的 MITM, 常见的方案是通过 PKI / TLS 预防, 及时是通过存在第三方中间人的 wifi 你通过 HTTPS 访问的页面依旧是安全的. 而 HTTP 协议是明文传输, 则没有任何防护可言.</p>
-<p>如果你的网站还没有进行https加密的化，则在表单提交部分，最好进行非对称加密–即客户端加密，只有服务端能解开。这样中间的劫持者便无法获取加密内容的真实信息了。</p>
-<p>不常见的还有强力的互相认证, 你确认他之后, 他也确认你一下; 延迟测试, 统计传输时间, 如果通讯延迟过高则认为可能存在第三方中间人; 等等.</p>
-<h2 id="SQL-NoSQL-注入"><a href="#SQL-NoSQL-注入" class="headerlink" title="SQL/NoSQL 注入"></a>SQL/NoSQL 注入</h2><p>注入攻击是指当所执行的一些操作中有部分由用户传入时, 用户可以将其恶意逻辑注入到操作中. 当你使用 eval, new Function 等方式执行的字符串中有用户输入的部分时, 就可能被注入攻击. 上文中的 XSS 就属于一种注入攻击. </p>
-<h3 id="SQL"><a href="#SQL" class="headerlink" title="SQL"></a>SQL</h3><p>Sql 注入是网站常见的一种注入攻击方式. 其原因主要是由于登录时需要验证用户名/密码</p>
-<p><strong>Case</strong></p>
-<p>例如上传密码为 <code>&#39;; DROP TABLE users; --</code> 使得最终执行的内容为:</p>
-<pre><code class="sql">SELECT * FROM users WHERE usernae = &#39;myName&#39; AND password = &#39;&#39;; DROP TABLE users; --&#39;;
-</code></pre>
-<p>其能实现的功能, 包括但不限于删除数据 (经济损失), 篡改数据 (密码等), 窃取数据 (网站管理权限, 用户数据) 等. </p>
-<p>防治手段常见于:</p>
-<ul>
-<li>给表名/字段名加前缀 (避免被猜到)</li>
-<li>报错隐藏表信息 (避免被看到, 12306 早起就出现过的问题)</li>
-<li>过滤可以拼接 SQL 的关键字符</li>
-<li>对用户输入进行转义</li>
-<li>验证用户输入的类型 (避免 limit, order by 等注入)</li>
-<li>等…</li>
-</ul>
-<h3 id="NoSQL"><a href="#NoSQL" class="headerlink" title="NoSQL"></a>NoSQL</h3><p><strong>Case</strong></p>
-<pre><code class="javascript">let {user, pass, age} = ctx.query;
-
-db.collection.find({
-  user, pass,
-  $where: `this.age &gt;= ${age}`
-})
-</code></pre>
-<h2 id="DDOS"><a href="#DDOS" class="headerlink" title="DDOS"></a>DDOS</h2><blockquote>
-<p>DDoS即Distributed Denial of Service，分布式拒绝服务。也就是攻击者借助或者利用服务器技术，将多个计算机（肉鸡或僵尸机）联合起来作为攻击平台，对一个或者多个目标服务器，同一时间发送大量垃圾信息，或利用某种干扰信息的方式，导致目标服务器无法及时响应正常用户正常请求，或者直接导致目标服务器宕机，从而无法为正常用户提供服务的一种攻击行为。</p>
-</blockquote>
-<p>攻击方式:</p>
-<ul>
-<li>端口扫描攻击</li>
-<li>ping洪水（flooding）攻击</li>
-<li>SYN洪水（flooding）攻击</li>
-<li>FTP跳转攻击</li>
-</ul>
-<p>防范手段:</p>
-<ul>
-<li>保证服务器系统的安全,确保服务器软件没有任何漏洞，防止攻击者入侵。</li>
-<li>确保服务器采用最新系统，并打上安全补丁。</li>
-<li>在服务器上删除未使用的服务，关闭未使用的端口。</li>
-<li>对于服务器上运行的网站，确保其打了最新的补丁，没有安全漏洞。</li>
-<li>隐藏服务器的真实IP地址</li>
-</ul>
-<h2 id="通用防范措施"><a href="#通用防范措施" class="headerlink" title="通用防范措施"></a>通用防范措施</h2><ol>
-<li>开发时要提防用户产生的内容，要对用户输入的信息进行层层检测</li>
-<li>要注意对用户的输出内容进行过滤(进行转义等)</li>
-<li>重要的内容记得要加密传输(无论是利用https也好，自己加密也好)</li>
-<li>get请求与post请求，要严格遵守规范，不要混用，不要将一些危险的提交使用jsonp完成。</li>
-<li>对于URL上携带的信息，要谨慎使用。</li>
-</ol>
-<h1 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h1><h2 id="Case1"><a href="#Case1" class="headerlink" title="Case1."></a>Case1.</h2><h1 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h1><ul>
-<li><a href="https://segmentfault.com/a/1190000010913697" target="_blank" rel="external">前端需要知道的web安全知识</a></li>
-<li><a href="http://wlh269.iteye.com/blog/733398" target="_blank" rel="external">CA认证简单介绍和工作流程</a></li>
-<li><a href="https://segmentfault.com/a/1190000006672214" target="_blank" rel="external">[聊一聊系列]聊一聊WEB前端安全那些事儿</a></li>
-</ul>
-]]></content>
-      
-        <categories>
-            
-            <category> 技术栈 </category>
-            
-        </categories>
-        
-        
-        <tags>
-            
-            <tag> web </tag>
-            
-            <tag> 安全 </tag>
             
         </tags>
         
@@ -2299,6 +1801,298 @@ with(person.wife){
     </entry>
     
     <entry>
+      <title><![CDATA[es6]]></title>
+      <url>/2017/11/04/%E5%89%8D%E7%AB%AF/%E6%A1%86%E6%9E%B6%E4%B8%8E%E7%BB%84%E4%BB%B6/es6/</url>
+      <content type="html"><![CDATA[<p>ES6知识点整理。</p>
+<p>ES6给我的感觉主要是一个简化的工具，一是将作用域、继承、原型这些JS比较难理解的概念做抽象，二是对对象、数组这些不太方便使用的方法增加方法，三是对函数模型做简化，默认值、Rest这些，四是对模块交互上做简化，比如Modules。有点C向C++过渡的意思。</p>
+<a id="more"></a>
+<h1 id="知识点"><a href="#知识点" class="headerlink" title="知识点"></a>知识点</h1><h2 id="let-const"><a href="#let-const" class="headerlink" title="let/const"></a>let/const</h2><p><code>let</code> 和 <code>const</code> 语句不会造成声明提升。会报错ReferenceError</p>
+<p><code>let</code> 和 <code>const</code> 是块级作用域语句。</p>
+<p>使用 <code>let</code> 声明一个变量，使用 <code>const</code> 来声明一个不可改变的常量。</p>
+<h2 id="块级立即执行函数"><a href="#块级立即执行函数" class="headerlink" title="块级立即执行函数"></a>块级立即执行函数</h2><p>ES6支持块级作用域，可以通过创建一个代码块（Block）来实现，不必通过创建一个函数来实现</p>
+<h2 id="箭头函数"><a href="#箭头函数" class="headerlink" title="箭头函数"></a>箭头函数</h2><p>一些时候，我们在函数嵌套中需要访问上下文中的 <code>this</code>。</p>
+<ul>
+<li>一种通用的方式是把上下文中的 <code>this</code> 保存在一个变量里</li>
+<li>也可以把 <code>this</code> 通过属性传进去</li>
+<li>还可以直接使用 <code>bind</code></li>
+<li>使用 <strong>箭头函数</strong></li>
+</ul>
+<h3 id="箭头函数需要注意的地方"><a href="#箭头函数需要注意的地方" class="headerlink" title="箭头函数需要注意的地方"></a>箭头函数需要注意的地方</h3><p>当要求动态上下文的时候，就不能够使用箭头函数。也就是this的固定化</p>
+<ol>
+<li>在使用=&gt;定义函数的时候，<strong>this的指向是定义时所在的对象</strong>，而不是使用时所在的对象</li>
+<li>不能够用作构造函数，这就是说，不能够使用new命令，否则就会抛出一个错误</li>
+<li>不能够使用arguments对象</li>
+<li>不能使用yield命令</li>
+</ol>
+<h2 id="字符串拓展"><a href="#字符串拓展" class="headerlink" title="字符串拓展"></a>字符串拓展</h2><h3 id="includes"><a href="#includes" class="headerlink" title=".includes( )"></a>.includes( )</h3><p>替代以往判断内容<code>.indexOf(xxx) &gt; -1</code> 的方式。</p>
+<h3 id="repeat"><a href="#repeat" class="headerlink" title=".repeat( )"></a>.repeat( )</h3><p>实现重复字符：</p>
+<pre><code class="javascript">&#39;meow&#39;.repeat(3); // &#39;meowmeowmeow&#39;
+</code></pre>
+<h3 id="contains"><a href="#contains" class="headerlink" title=".contains()"></a>.contains()</h3><p>返回布尔值，表示是否找到了参数字符串</p>
+<h3 id="startsWith"><a href="#startsWith" class="headerlink" title=".startsWith()"></a>.startsWith()</h3><p>返回布尔值，表示参数字符串是否在源字符串的头部</p>
+<h3 id="endsWith"><a href="#endsWith" class="headerlink" title=".endsWith()"></a>.endsWith()</h3><p>返回布尔值，表示参数字符串是否在源字符串的尾部</p>
+<h3 id="字符串模板字面量"><a href="#字符串模板字面量" class="headerlink" title="字符串模板字面量"></a>字符串模板字面量</h3><ul>
+<li>在字符串中直接使用特殊字符，而不用转义。</li>
+<li>支持直接插入变量</li>
+<li>直接换行</li>
+<li>内部可以使用表达式</li>
+</ul>
+<pre><code class="javascript">let text = ( `cat
+    dog
+    nickelodeon`
+);
+string${varible}string
+</code></pre>
+<h2 id="数组的拓展"><a href="#数组的拓展" class="headerlink" title="数组的拓展"></a>数组的拓展</h2><p><strong>Array.from()用于将两类对象转为真正的数组：</strong>类似数组的对象（array-like object）和可遍历（iterable）的对象，其中包括ES6新增的Set和Map结构。</p>
+<p><strong>【重点】find()和findIndex()</strong>，意义较大，如下：</p>
+<pre><code class="javascript">[1,5,10,15].find( function(value, index, arr){ return value &gt; 9; } ); // 返回10
+[1,5,10,15].findIndex( function(value, index, arr){ return value &gt; 9; } ); // 返回2
+</code></pre>
+<p><strong>fill()使用给定值，填充一个数组：</strong></p>
+<pre><code class="javascript">newArray(3).fill(7)
+</code></pre>
+<h2 id="Maps"><a href="#Maps" class="headerlink" title="Maps"></a>Maps</h2><p><strong>Maps</strong> 是一个JavaScript中很重要（迫切需要）的数据结构。</p>
+<p>Maps让我们使用 <code>set</code>，<code>get</code> 和 <code>search</code> 操作数据。</p>
+<p>Maps最强大的地方在于我们不必只能使用字符串来做key了，现在可以使用任何类型来当作key，而且key不会被强制类型转换为字符串。</p>
+<pre><code class="javascript">let map = new Map();
+&gt; map.set(&#39;name&#39;, &#39;david&#39;);
+&gt; map.get(&#39;name&#39;); // david
+&gt; map.has(&#39;name&#39;); // true
+</code></pre>
+<p><strong>遍历：</strong></p>
+<pre><code class="javascript">for (let key of map.keys()) {
+for (let [key, value] of map.entries()) {
+</code></pre>
+<p><strong>ES6提供三个新的方法：entries()，keys()和values()用于遍历数组</strong>。</p>
+<p>可以用for…of循环进行遍历，唯一的区别是keys()是对键名的遍历、values()是对键值的遍历，entries()是对键值对的遍历</p>
+<h2 id="Object"><a href="#Object" class="headerlink" title="Object"></a>Object</h2><h3 id="Object-setPrototypeOf-，Object-getPrototypeOf"><a href="#Object-setPrototypeOf-，Object-getPrototypeOf" class="headerlink" title="Object.setPrototypeOf()，Object.getPrototypeOf()"></a>Object.setPrototypeOf()，Object.getPrototypeOf()</h3><h2 id="for…of循环"><a href="#for…of循环" class="headerlink" title="for…of循环"></a>for…of循环</h2><p>for…of循环可以代替数组实例的forEach方法</p>
+<p><strong>和for…in的区别</strong></p>
+<ul>
+<li>for…of可以遍历键与值，for…in只能遍历键名</li>
+<li>对于普通的对象，for…of结构不能直接使用，会报错，必须部署了iterator接口后才能使用。但是，这样情况下，for…in循环依然可以用来遍历键名</li>
+</ul>
+<h2 id="WeakMaps"><a href="#WeakMaps" class="headerlink" title="WeakMaps"></a>WeakMaps</h2><p>使用WeakMaps来保存我们私有数据的理由之一是不会暴露出属性名</p>
+<p>通常情况下，在涉及DOM元素存储和缓存的情况下，使用WeakMaps是非常有效的。</p>
+<h2 id="解构"><a href="#解构" class="headerlink" title="解构"></a>解构</h2><pre><code class="javascript">let [a, b, c, d] = [1, 2, 3, 4];    //数组
+let luke = { occupation: &#39;jedi&#39;, father: &#39;anakin&#39; };    //对象
+let {occupation, father} = luke;
+</code></pre>
+<p>该特性更多的用处是在遍历Map结构的时候，可以如下：</p>
+<pre><code class="javascript">for( let [ key,value] of map ) 
+{ console.log ( key +&#39;:&#39;+ value);}
+</code></pre>
+<h2 id="Modules"><a href="#Modules" class="headerlink" title="Modules"></a>Modules</h2><h3 id="export"><a href="#export" class="headerlink" title="export"></a>export</h3><pre><code class="javascript">export default api;
+</code></pre>
+<p>总是在模块的 <strong>最后</strong> 使用 <code>export default</code> 方法。它让模块的出口更清晰明了，节省了阅读整个模块来寻找出口的时间。</p>
+<h3 id="import"><a href="#import" class="headerlink" title="import"></a>import</h3><pre><code class="javascript">import * as content from &#39;./content&#39;
+</code></pre>
+<p><strong>注意</strong>：被导出的值是被 <strong>绑定的（原文：bingdings）</strong>，而不是引用。<br>所以，改变一个模块中的值的话，会影响其他引用本模块的代码，一定要避免此种改动发生。</p>
+<h2 id="参数默认值"><a href="#参数默认值" class="headerlink" title="参数默认值"></a>参数默认值</h2><pre><code class="javascript">function addTwoNumbers(x=0, y=0) {
+    return x + y;
+}
+</code></pre>
+<h2 id="Rest"><a href="#Rest" class="headerlink" title="Rest"></a>Rest</h2><p>使用 <strong>rest</strong> 操作符，我们可以给函数传入一个不确定数量的参数列表：</p>
+<pre><code class="javascript">function logArguments(...args) {
+    for (let arg of args) {
+        console.log(arg);
+    }
+}
+</code></pre>
+<h2 id="Class"><a href="#Class" class="headerlink" title="Class"></a>Class</h2><p>class语法相对原型、构造函数、继承更接近传统语法</p>
+<pre><code class="javascript">class Animal {
+    constructor () {
+        this.type = &#39;animal&#39;
+    }
+    says(say) {
+        console.log(this.type + &#39;says&#39; + say)
+    }
+}
+ let animal = new Animal()
+ animal.says(&#39;hello&#39;) // animal says hello
+
+ class Cat extends Animal {
+     constructor() {
+         super()
+         this.type = &#39;cat&#39;
+     }
+ }
+ let cat = new Cat()
+ cat.says(&#39;hello&#39;) // cat says hello
+</code></pre>
+<p>contructor内部定义的方法和属性是实例对象自己的，不能通过extends 进行继承。</p>
+<p>在ES6中，子类的构造函数必须含有super函数，super表示的是调用父类的构造函数，虽然是父类的构造函数，但是this指向的却是cat</p>
+<h2 id="Object-assign"><a href="#Object-assign" class="headerlink" title="Object.assign()"></a>Object.assign()</h2><p>Object.assign方法用来将源对象（source）的所有可枚举属性，复制到目标对象（target）</p>
+<pre><code class="javascript">var target = { a:1};
+var source1 = { b:2};
+var source2 = { c:3};
+Object.assign(target, source1, source2);
+target// {a:1, b:2, c:3}
+
+var n = Object.assign(a,b,c)向n中添加a,b,c的属性
+</code></pre>
+<p><strong>应用</strong></p>
+<ul>
+<li>为对象添加属性</li>
+<li>为对象添加方法</li>
+</ul>
+<ul>
+<li>克隆对象</li>
+<li>为属性指定默认值</li>
+</ul>
+<h2 id="Symbol"><a href="#Symbol" class="headerlink" title="Symbol"></a>Symbol</h2><p>ES6引入了一种新的原始数据类型Symbol，表示独一无二的ID。它通过Symbol函数生成。</p>
+<p>Symbols常用的一个使用场景，尤其是使用 <code>Symbol.for(key)</code> 方法，是用于实现代码间的互操作。</p>
+<h2 id="Promise"><a href="#Promise" class="headerlink" title="Promise"></a>Promise</h2><p>它的思想是，每一个异步任务返回一个Promise对象，该对象有一个then方法，允许指定回调函数。比如，f1的回调函数f2,可以写成：</p>
+<pre><code class="javascript">f1().then(f2);
+f1().then(f2).then(f3);
+f1().then(f2).fail(f3);
+</code></pre>
+<p>如果一个任务已经完成，再添加回调函数，该回调函数会立即执行。</p>
+<p>API:</p>
+<pre><code class="javascript">new Promise((resolve, reject) =&gt;
+    reject(new Error(&#39;Failed to fulfill Promise&#39;)))
+        .catch(reason =&gt; console.log(reason));
+</code></pre>
+<p>这里有两个处理函数，<strong>resolve</strong>（当Promise执行成功完毕时调用的回调函数） 和 <strong>reject</strong> （当Promise执行不接受时调用的回调函数）</p>
+<p><strong>Promises的好处</strong>：</p>
+<ul>
+<li>大量嵌套错误处理回调函数会使代码变得难以阅读理解。使用Promises，我们可以通过清晰的路径将错误事件让上传递，并且适当地处理它们。</li>
+</ul>
+<p>此外，Promise处理后的值，无论是解决（resolved）还是拒绝（rejected）的结果值，都是不可改变的。</p>
+<h3 id="1-什么是promise对象，它能干什么？"><a href="#1-什么是promise对象，它能干什么？" class="headerlink" title="1. 什么是promise对象，它能干什么？"></a>1. 什么是promise对象，它能干什么？</h3><p><strong>Promise</strong> 对象用于延迟(deferred) 计算和异步(asynchronous ) 计算。一个Promise对象代表着一个还未完成，但预期将来会完成的操作。</p>
+<p><strong>Promise</strong> 对象是一个返回值的代理，这个返回值在promise对象创建时未必已知。它允许你为异步操作的成功或失败指定处理方法。 这使得异步方法可以像同步方法那样返回值：异步方法会返回一个包含了原返回值的 promise 对象来替代原返回值。</p>
+<p><strong>Promise</strong> 对象有以下几种状态:</p>
+<ul>
+<li><em>pending</em>: 表示一个初始状态, 非 fulfilled 或 rejected。</li>
+<li><em>fulfilled</em>: 成功的操作。</li>
+<li><em>rejected</em>: 失败的操作。</li>
+</ul>
+<p>每一个异步任务都会返回一个Promise对象，该对象有一个then方法，允许指定回调函数。可以根据Promise对象的状态相应的去执行对应的回调函数。</p>
+<h3 id="2-常用的API"><a href="#2-常用的API" class="headerlink" title="2. 常用的API"></a>2. 常用的API</h3><h4 id="1-Promise-prototype-then"><a href="#1-Promise-prototype-then" class="headerlink" title="1.Promise.prototype.then()"></a>1.Promise.prototype.then()</h4><p>它的作用是为promise实例添加状态改变时的回调函数。</p>
+<p>then()方法的第一个参数是resolved状态的回调函数，第二个参数（可选）是rejected状态的回调函数。then方法返回的是一个新的promise实例。</p>
+<p>then方法的第二个参数一般不推荐写。有以下两个原因：</p>
+<ul>
+<li>由于是链式操作，这个then方法之后还可能会有其他操作，如果此时把错误捕捉的函数放在后面方法前边的话，并且之后再无错误捕获方法，then之后的错误就会捕捉不到。</li>
+<li>在then方法里面，两个参数都是回调函数写了一大堆，这样结构看起来比较混乱。</li>
+</ul>
+<pre><code class="javascript">var p=new Promise(function(resolve, reject){
+    resolve(&quot;ok&quot;);    
+});
+p.then(function(value){console.log(val)},
+ function(err)(console.log(err))       
+);
+</code></pre>
+<h4 id="2-Promise-prototype-catch"><a href="#2-Promise-prototype-catch" class="headerlink" title="2.Promise.prototype.catch()"></a>2.Promise.prototype.catch()</h4><p>这个方法是.then(null,rejection)的别名，这也能看出这个方法是专门只能用来捕获错误信息，用于指定发生错误时的回调函数。</p>
+<p>要注意一下几点：</p>
+<ul>
+<li>当promise状态已经变成resolved的时候，再抛出错误时是无效的。</li>
+<li>尽量将catch方法写在链式操作的最后。错误会一直冒泡到最后，catch放在最后会捕捉到所有错误。</li>
+<li>当没有使用catch方法指定错误处理函数的回调函数时，promise对象里面抛出的错误不会传递到外层的代码。</li>
+</ul>
+<h4 id="3-Promise-resolve"><a href="#3-Promise-resolve" class="headerlink" title="3. Promise.resolve()"></a>3. Promise.resolve()</h4><p>这个方法的作用就是将现有的对象转化为Promise对象，进而可以执行这些方法。</p>
+<pre><code class="javascript">Promise.resolve(&quot;foo&quot;);
+</code></pre>
+<h4 id="4-Promise-all"><a href="#4-Promise-all" class="headerlink" title="4. Promise.all()"></a>4. Promise.all()</h4><p>这个方法用于将多个promise实例，包装成一个新的promise实例。</p>
+<pre><code class="javascript">var p=Promise.all([p1,p2,p3]);
+</code></pre>
+<p>要注意一下两点：</p>
+<ul>
+<li>只有当p1,p2,p3状态都变为fulfilled之后，p的状态才会变为fulfilled。</li>
+<li>只要p1.p2,p3中有任意一个状态变为rejected，p的状态就会变为rejected。</li>
+</ul>
+<h3 id="3-实现异步编程的原理"><a href="#3-实现异步编程的原理" class="headerlink" title="3. 实现异步编程的原理"></a>3. 实现异步编程的原理</h3><p>Promise对象相当于是一个状态机，在其内部使用resolve方法，使其由初始状态变为成功时的fulfilled状态或者执行失败后的rejected状态。这时内部的工作就完成了，开始由外部监听其内部的状态的改变，调用then()方法（catch()方法相当于then内部的第二个参数方法）对应的状态调用对应的处理函数。</p>
+<h1 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h1><h2 id="Case1-promise执行顺序"><a href="#Case1-promise执行顺序" class="headerlink" title="Case1.promise执行顺序"></a>Case1.promise执行顺序</h2><pre><code class="javascript">setTimeout(function(){
+    console.log(1);
+}, 0)
+
+new Promise(function executor(resolve){
+    console.log(2);
+    for(var i = 0; i &lt; 1000; i++){
+        i = 9999 &amp;&amp; resolve();
+    }
+    console.log(3);
+}).then(function(){
+    console.log(4);
+})
+
+console.log(5);
+// 2， 3， 5， 4， 1
+</code></pre>
+<ul>
+<li>在定时器，事件，ajax等操作的时候，<strong>会使一个异步操作，会把该操作放到一个task queue里，需要等当前主线程的任务完成后，会读取任务队列(task queue)中的是事件。</strong></li>
+<li>promise中的then操作是放在执行栈，也就是主线程的最后。 </li>
+</ul>
+<h2 id="Case2-promise的原理？jquery的ajax返回的是promise对象吗？"><a href="#Case2-promise的原理？jquery的ajax返回的是promise对象吗？" class="headerlink" title="Case2.promise的原理？jquery的ajax返回的是promise对象吗？"></a>Case2.promise的原理？jquery的ajax返回的是promise对象吗？</h2><p>jquery的ajax返回的是<strong>deferred对象</strong>，通过<strong>promise的resolve()方</strong>法将其转换为promise对象。</p>
+<pre><code class="javascript">var jsPromise = Promise.resolve($.ajax(&#39;/whatever.json&#39;));
+</code></pre>
+<h2 id="Case3-promise对象捕获错误"><a href="#Case3-promise对象捕获错误" class="headerlink" title="Case3.promise对象捕获错误"></a>Case3.promise对象捕获错误</h2><pre><code class="javascript">//使用throw添加错误事件
+var p = new Promise(function(resolve, reject) {
+    resolve(&quot;ok&quot;);
+    throw new Error(&#39;error0&#39;);
+    //setTimeout(function() { throw new Error(&#39;error1&#39;) }, 0);
+});
+p.then(function(value){
+    console.log(value) 
+　})
+ .catch(function(err){
+    console.log(err)
+    });
+process.on(&#39;unhandledRejection&#39;, function (err, p) { console.error(&#39;catch exception:&#39;,err.stack) });
+
+//设置定时器来抛出错误事件
+var p = new Promise(function(resolve, reject) {
+    resolve(&quot;ok&quot;);
+    //throw new Error(&#39;error0&#39;);
+    setTimeout(function() { throw new Error(&#39;error1&#39;) }, 0);
+});
+p.then(function(value){
+    console.log(value) 
+　})
+ .catch(function(err){
+    console.log(err)
+    });
+process.on(&#39;unhandledRejection&#39;, function (err, p) { console.error(&#39;catch exception:&#39;,err.stack) });
+
+//同时添加错误事件
+var p = new Promise(function(resolve, reject) {
+    resolve(&quot;ok&quot;);
+    throw new Error(&#39;error0&#39;);
+    setTimeout(function() { throw new Error(&#39;error1&#39;) }, 0);
+});
+p.then(function(value){
+    console.log(value) 
+　})
+ .catch(function(err){
+    console.log(err)
+    });
+process.on(&#39;unhandledRejection&#39;, function (err, p) { console.error(&#39;catch exception:&#39;,err.stack) });
+</code></pre>
+<p>第一个只会打印出 “ok”。状态被设定为fulfilled之后，再进行抛出错误处理，错误也不会被后续的catch方法捕获到。</p>
+<p>第二个先打印出“ok”，之后抛出process里面定义的错误。虽然状态已经变为fulfilled，但是定时器抛出的错误属于异步抛出的错误，无法被try catch捕获到，因此和Promise对象无关，所以错误可以正常的抛出来</p>
+<p>第三个只打印出“ok”。当执行throw之后，虽然错误未被外部函数捕获处理，但这也是个实实在在存在的错误啊，对于javascript来说，有错就不会继续往下面执行了。所以并不会执行到定时器抛出错误就停止了</p>
+<h1 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h1><ul>
+<li><a href="https://segmentfault.com/a/1190000011344301" target="_blank" rel="external">前端面试之ES6篇（高产似母猪）</a></li>
+<li><a href="http://www.jianshu.com/p/c4ba3b25ca0d" target="_blank" rel="external">ECMAScript 6重点一览——基础篇</a></li>
+<li><a href="http://blog.csdn.net/shuidinaozhongyan/article/details/77864182" target="_blank" rel="external">面试考察之Promise对象</a></li>
+<li>​</li>
+</ul>
+]]></content>
+      
+        <categories>
+            
+            <category> 大前端 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> JavaScript </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[前端大纲]]></title>
       <url>/2017/11/01/%E5%89%8D%E7%AB%AF/%E5%89%8D%E7%AB%AF%E5%A4%A7%E7%BA%B2/</url>
       <content type="html"><![CDATA[<p>做总结有三个目的：</p>
@@ -2632,9 +2426,9 @@ var baseConfig = {
         
         <tags>
             
-            <tag> webpack </tag>
-            
             <tag> web </tag>
+            
+            <tag> webpack </tag>
             
         </tags>
         
@@ -3253,9 +3047,9 @@ h1 { color: green; }
         
         <tags>
             
-            <tag> web </tag>
-            
             <tag> less </tag>
+            
+            <tag> web </tag>
             
         </tags>
         
@@ -3638,6 +3432,246 @@ xhr.setRequestHeader(&quot;Cache-Control&quot;,&quot;no-cache&quot;);
         <tags>
             
             <tag> JavaScript </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[WEB安全]]></title>
+      <url>/2017/08/02/%E5%89%8D%E7%AB%AF/%E8%B6%8B%E5%8A%BF%E6%8A%80%E6%9C%AF/WEB%E5%AE%89%E5%85%A8/</url>
+      <content type="html"><![CDATA[<p>本文介绍web安全。</p>
+<p>工作中有接触过一部分，系统整理一下。后续需要补上攻防代码。</p>
+<a id="more"></a>
+<h1 id="知识点"><a href="#知识点" class="headerlink" title="知识点"></a>知识点</h1><h2 id="Crypto"><a href="#Crypto" class="headerlink" title="Crypto"></a>Crypto</h2><p>Node.js 的 <code>crypto</code> 模块封装了诸多的加密功能, 包括 OpenSSL 的哈希、HMAC、加密、解密、签名和验证函数等.</p>
+<p>在客户端加密, 是增加传输的过程中被第三方嗅探到密码后破解的成本. 对于游戏, 在客户端加密是防止外挂/破解等. 在服务端加密 (如 md5) 是避免管理数据库的 DBA 或者攻击者攻击数据库之后直接拿到明文密码, 从而提高安全性.</p>
+<h2 id="TLS-SSL"><a href="#TLS-SSL" class="headerlink" title="TLS/SSL"></a>TLS/SSL</h2><p> SSL (Secure Socket Layer)的主要用途是:</p>
+<ol>
+<li>认证用户和服务器, 确保数据发送到正确的客户机和服务器;</li>
+<li>加密数据以防止数据中途被窃取;</li>
+<li>维护数据的完整性, 确保数据在传输过程中不被改变.</li>
+</ol>
+<p>存在三个特性:</p>
+<ul>
+<li>机密性：SSL协议使用密钥加密通信数据</li>
+<li>可靠性：服务器和客户都会被认证, 客户的认证是可选的</li>
+<li><p>完整性：SSL协议会对传送的数据进行完整性检查</p>
+<p>IETF 把 SSL 标准化/强化. 标准化之后的名称改为传输层安全协议 (Transport Layer Security, TLS). 很多相关的文章都把这两者并列称呼 (TLS/SSL), 因为这两者可以视作同一个东西的不同阶段.</p>
+</li>
+</ul>
+<h2 id="HTTPS"><a href="#HTTPS" class="headerlink" title="HTTPS"></a>HTTPS</h2><p>公钥基础设施 (Public Key Infrastructure, PKI) 是一种遵循标准的, 利用公钥加密技术为电子商务的开展提供一套安全基础平台的技术和规范. 其基础建置包含认证中心 (Certification Authority, CA) 、注册中心 (Register Authority, RA) 、目录服务 (Directory Service, DS) 服务器.</p>
+<p>由 RA 统筹、审核用户的证书申请, 将证书申请送至 CA 处理后发出证书, 并将证书公告至 DS 中. 在使用证书的过程中, 除了对证书的信任关系与证书本身的正确性做检查外, 并透过产生和发布证书废止列表 (Certificate Revocation List, CRL) 对证书的状态做确认检查, 了解证书是否因某种原因而遭废弃. 证书就像是个人的身分证, 其内容包括证书序号、用户名称、公开金钥 (Public Key) 、证书有效期限等.</p>
+<p>在 TLS/SLL 中你可以使用 OpenSSL 来生成 TLS/SSL 传输时用来认证的 public/private key. 不过这个 public/private key 是自己生成的, 而通过 PKI 基础设施可以获得权威的第三方证书 (key) 从而加密 HTTP 传输安全. 目前博客圈子里比较流行的是 <a href="https://imququ.com/post/letsencrypt-certificate.html" target="_blank" rel="external">Let’s Encrypt 签发免费的 HTTPS 证书</a>.</p>
+<p>需要注意的是, 如果 PKI 受到攻击, 那么 HTTPS 也一样不安全.</p>
+<p>此外有的 CA 机构以邮件方式认证, 那么当某个网站的邮件服务收到攻击/渗透, 那么攻击者也可能以此从 CA 机构获取权威的正确的证书.</p>
+<h3 id="CA工作原理"><a href="#CA工作原理" class="headerlink" title="CA工作原理"></a>CA工作原理</h3><p>现在假设客户A向银行B传送数字信息，为了保证信息传送的真实性、完整性和不可否认性，需要对要传送的信息进行数字加密和数字签名，其传送过程如下： </p>
+<ul>
+<li>客户A准备好要传送的数字信息（明文）。（<strong>准备明文</strong>） </li>
+</ul>
+<ul>
+<li>客户A对数字信息进行哈希（hash）运算，得到一个信息摘要。（<strong>准备摘要</strong>） </li>
+</ul>
+<ul>
+<li>客户A用自己的私钥（SK）对信息摘要进行加密得到客户A的数字签名，并将其附在数字信息上。（<strong>用私钥对数字信息进行数字签名</strong>）　 </li>
+<li>客户A随机产生一个加密密钥（DES密钥），并用此密钥对要发送的信息进行加密，形成密文。（<strong>生成密文</strong>） </li>
+<li>客户A用双方共有的公钥（PK）对刚才随机产生的加密密钥进行加密，将加密后的DES密钥连同密文一起传送给乙。（<strong>用公钥对DES密钥进行加密</strong>）　　 </li>
+<li>银行B收到客户A传送过来的密文和加过密的DES密钥，先用自己的私钥（SK）对加密的DES密钥进行解密，得到DES密钥。（<strong>用私钥对DES密钥解密</strong>）　　 </li>
+<li>银行B然后用DES密钥对收到的密文进行解密，得到明文的数字信息，然后将DES密钥抛弃（即DES密钥作废）。（<strong>解密文</strong>）　　 </li>
+<li>银行B用双方共有的公钥（PK）对客户A的数字签名进行解密，得到信息摘要。银行B用相同的hash算法对收到的明文再进行一次hash运算，得到一个新的信息摘要。　　 （<strong>用公钥解密数字签名</strong>） </li>
+<li>银行B将收到的信息摘要和新产生的信息摘要进行比较，如果一致，说明收到的信息没有被修改过。（<strong>对比信息摘要和信息</strong>） </li>
+</ul>
+<h2 id="XSS"><a href="#XSS" class="headerlink" title="XSS"></a>XSS</h2><h3 id="是什么？"><a href="#是什么？" class="headerlink" title="是什么？"></a>是什么？</h3><p>跨站脚本 (Cross-Site Scripting, XSS) 是一种代码注入方式， 其注入方式很简单包括但不限于 JavaScript / VBScript / CSS / Flash 等.</p>
+<p>当其他用户浏览到这些网页时, 就会执行这些恶意脚本, 对用户进行 Cookie 窃取/会话劫持/钓鱼欺骗等各种攻击. 其原理, 如使用 js 脚本收集当前用户环境的信息 (Cookie 等), 然后通过 img.src, Ajax, onclick/onload/onerror 事件等方式将用户数据传递到攻击者的服务器上. </p>
+<h3 id="类型"><a href="#类型" class="headerlink" title="类型"></a>类型</h3><ul>
+<li><strong>反射型XSS</strong>:非持久化，欺骗用户去点击链接,攻击代码包含在url中,被用户点击之后执行攻击代码.</li>
+<li><strong>存储型XSS</strong>:持久型,攻击提交恶意代码到服务器，服务器存储该段代码,这样当其他用户请求后，服务器返回并发给用户，用户浏览此类页面时就可能受到攻击。例如:恶意用户的HTML或JS输入服务器-&gt;进入数据库-&gt;服务器响应时查询数据库-&gt;用户浏览器。</li>
+</ul>
+<h3 id="防范与过滤"><a href="#防范与过滤" class="headerlink" title="防范与过滤"></a>防范与过滤</h3><ul>
+<li>输入编码过滤:对于每一个输入，在客户端和服务器端验证是否合法字符，长度是否合法，格式是否正确,对字符进行转义.非法字符过滤.</li>
+<li>输出编码过滤:对所有要动态输出到页面的内容，<strong>进行相关的编码和转义</strong>.主要有HTML字符过滤和转义, JS脚本转义过滤. url转义过滤.</li>
+<li>设置http-only,避免攻击脚本读取cookie.</li>
+</ul>
+<h3 id="攻防流程"><a href="#攻防流程" class="headerlink" title="攻防流程"></a>攻防流程</h3><h4 id="升级攻击"><a href="#升级攻击" class="headerlink" title="升级攻击"></a>升级攻击</h4><h5 id="append的利用"><a href="#append的利用" class="headerlink" title="append的利用"></a>append的利用</h5><p>直接给innerHTML赋值一段js，是无法被执行的。但是，jquery的append可以做到，究其原因，就是因为jquery会在将append元素变为fragment的时候，找到其中的script标签，再使用eval执行一遍。jquery的append使用的方式也是innerHTML。而innerHTML是会将unicode码转换为字符实体的。</p>
+<p><strong>Case</strong></p>
+<pre><code class="php+HTML">&lt;?php
+    $username=&quot;\u003cscript\u003ealert(&#39;okok&#39;);&quot;;
+?&gt;
+$(&#39;#username_info&#39;).append(&quot;&lt;?php echo htmlentities($username);?&gt;&quot;);
+</code></pre>
+<p>虽然进行了转义，注入的代码还是会再次被执行。</p>
+<h5 id="img标签的再次利用"><a href="#img标签的再次利用" class="headerlink" title="img标签的再次利用"></a>img标签的再次利用</h5><p>img标签，在加载图片失败的时候，会调用该元素上的onerror事件。我们正可以利用这种方式来进行攻击。</p>
+<p><strong>Case</strong></p>
+<pre><code class="php">&lt;?php
+    $imgsrc=&quot;\&quot; onerror=\&quot;javascript:alert(&#39;侯医生&#39;);\&quot;&quot;;
+?&gt;
+</code></pre>
+<p>解决方法：接着进行转义</p>
+<pre><code class="javascript">&lt;img src=&quot;&lt;?php echo htmlentities($imgsrc);?&gt;&quot; /&gt;
+</code></pre>
+<h5 id="组合使用"><a href="#组合使用" class="headerlink" title="组合使用"></a>组合使用</h5><p>innerHTML赋值的script标签，不会被执行，但是innerHTML赋值一个img标签是可以被识别的。我们把img标签的左右尖括号，使用unicode进行伪装，让转义方法认不出来，即使innerHTML也可以利用上了</p>
+<p><strong>Case</strong></p>
+<pre><code class="php+HTML">&lt;?php
+    $username=&quot;\u003cimg src=\&#39;\&#39; onerror=javascript:alert(\&#39;okok\&#39;);\u003e&quot;;
+?&gt;
+&lt;script&gt;
+      document.getElementById(&#39;username_info&#39;).innerHTML = &quot;&lt;?php echo htmlentities($username);?&gt;&quot;;
+&lt;/script&gt;
+</code></pre>
+<h4 id="升级防御"><a href="#升级防御" class="headerlink" title="升级防御"></a>升级防御</h4><p>将输出的字符串中的<code>\</code>反斜杠进行转义(json转义)。这样，<code>\</code>就不会被当做unicode码的开头来被处理了。</p>
+<p><strong>Case</strong></p>
+<pre><code class="javascript">document.getElementById(&#39;username_info&#39;).innerHTML = &lt;?php echo json_encode(htmlentities($username));?&gt;;
+</code></pre>
+<h4 id="XSS再升级"><a href="#XSS再升级" class="headerlink" title="XSS再升级"></a>XSS再升级</h4><p>有的时候，会有一些习惯，拿URL上的get参数去构建网页。好比说，直接拿url上的用户名去展示啦，拿url上的一些回跳地址之类的。但是url上的参数，我们是无法提前对其进行转义的。</p>
+<p><strong>Case</strong></p>
+<pre><code class="html">&lt;script&gt;
+  var param = /=(.+)$/.exec(location.search);
+  var value = decodeURIComponent(param[1]);
+  $(&#39;#username_info&#39;).append(value);
+&lt;/script&gt;
+</code></pre>
+<h4 id="防御再次升级"><a href="#防御再次升级" class="headerlink" title="防御再次升级"></a>防御再次升级</h4><p>这种从url中获取的信息，最好由后端获取，在前端转义后再行输出</p>
+<p>使用url中的参数的时候要小心，更不要拿URL中的参数去eval。</p>
+<p><strong>Case</strong></p>
+<pre><code class="javascript">&lt;script&gt;
+    var value = decodeURIComponent(&quot;&lt;?php echo htmlentities($_GET[&#39;username&#39;]);?&gt;&quot;);
+    $(&#39;#username_info&#39;).append(value);
+&lt;/script&gt;
+</code></pre>
+<h4 id="保护好你的cookie"><a href="#保护好你的cookie" class="headerlink" title="保护好你的cookie"></a>保护好你的cookie</h4><p>使用cookie的HttpOnly属性，加上了这个属性的cookie字段，js是无法进行读写的。</p>
+<h3 id="CPS-策略"><a href="#CPS-策略" class="headerlink" title="CPS 策略"></a>CPS 策略</h3><p>计算脚本的 hashes 值，设置 CSP 头</p>
+<p>策略指令可以参见 <a href="https://developer.mozilla.org/en-US/docs/Web/Security/CSP/CSP_policy_directives" target="_blank" rel="external">CSP Policy Directives</a>以及<a href="http://www.ruanyifeng.com/blog/2016/09/csp.html" target="_blank" rel="external">阮一峰的博文</a>, <a href="https://imququ.com/post/content-security-policy-reference.html" target="_blank" rel="external">屈大神的博文</a></p>
+<h2 id="CSRF"><a href="#CSRF" class="headerlink" title="CSRF"></a>CSRF</h2><h3 id="什么是CSRF攻击？"><a href="#什么是CSRF攻击？" class="headerlink" title="什么是CSRF攻击？"></a>什么是CSRF攻击？</h3><p>跨站请求伪造 (Cross-Site Request Forgery) 是一种伪造跨站请求的攻击方式.</p>
+<p>例如利用你在 A 站 (攻击目标) 的 cookie / 权限等, 在 B 站 (恶意/钓鱼网站) 拼装 A 站的请求.</p>
+<h3 id="如何攻击？"><a href="#如何攻击？" class="headerlink" title="如何攻击？"></a>如何攻击？</h3><h4 id="要合理使用post与get"><a href="#要合理使用post与get" class="headerlink" title="要合理使用post与get"></a>要合理使用post与get</h4><p>通常我们会为了省事儿，把一些应当提交的数据，做成get请求。殊不知，这不仅仅是违反了http的标准而已，也同样会被黑客所利用。</p>
+<p><strong>Case</strong></p>
+<p>你开发的网站中，有一个购买商品的操作，而商品ID图个省事儿，就使用了url中的get参数。</p>
+<pre><code class="php+HTML">&lt;?php
+// 从cookie中获取用户名，看似稳妥
+$username = $_COOKIE[&#39;username&#39;];
+$productId = $_GET[&#39;pid&#39;];
+?&gt;
+
+&lt;?php
+echo $username . &#39;买入商品：&#39; . $productId;
+?&gt;
+
+//黑客的网站
+&lt;img src=&quot;http://localhost:8082/lab/xsrflab/submit.php?pid=1&quot; /&gt;
+</code></pre>
+<p>所以，我们日常的开发，还是要遵循提交业务，严格按照post请求去做的。更不要使用jsonp去做提交型的接口，这样非常的危险。</p>
+<h4 id="csrf攻击升级"><a href="#csrf攻击升级" class="headerlink" title="csrf攻击升级"></a>csrf攻击升级</h4><p>如果你使用了post请求来处理关键业务的，还是有办法可以破解的。</p>
+<p><strong>Case</strong></p>
+<pre><code class="php+HTML">&lt;?php
+$username = $_COOKIE[&#39;username&#39;];
+// 换为post了，可以规避黑客直接的提交
+$productId = $_POST[&#39;pid&#39;];
+?&gt;
+
+&lt;?php
+echo $username . &#39;买入商品：&#39; . $productId;
+?&gt;
+
+//黑客的网站
+&lt;button id=&quot;clickme&quot;&gt;点我看相册&lt;/button&gt;
+&lt;script&gt;
+  $(&#39;#clickme&#39;).on(&#39;click&#39;, function () {
+    // 用户再不知情的情况下，提交了表单，服务器这边也会以为是用户提交过来的。
+    $(&#39;#myform&#39;).submit();
+  });
+&lt;/script&gt;
+&lt;form id=&quot;myform&quot; style=&quot;display:none;&quot; target=&quot;myformer&quot; method=&quot;post&quot; action=&quot;http://myhost:8082/lab/xsrflab/submit.php&quot;&gt;
+  &lt;input type=&quot;hidden&quot; name=&quot;pid&quot; value=&quot;1&quot;&gt;
+&lt;/form&gt;
+&lt;iframe name=&quot;myformer&quot; style=&quot;display:none;&quot;&gt;&lt;/iframe&gt;
+</code></pre>
+<p><strong>这种情况如何防御？</strong></p>
+<p>最简单的办法就是加<strong>验证码</strong>，这样除了用户，黑客的网站是获取不到用户本次session的验证码的。但是这样也会降低用户的提交体验，特别是有些经常性的操作</p>
+<p>另一种方式，就是在用访问的页面中，都种下验证用的<strong>token</strong>，用户所有的提交都必须带上本次页面中生成的token，这种方式的本质和使用验证码没什么两样，但是这种方式，整个页面每一次的session，使用同一个token就行，很多post操作，开发者就可以自动带上当前页面的token。如果token校验不通过，则证明此次提交并非从本站发送来，则终止提交过程。如果token确实为本网站生成的话，则可以通过。</p>
+<h3 id="预防"><a href="#预防" class="headerlink" title="预防"></a>预防</h3><ol>
+<li>在 HTTP 头中自定义属性并验证</li>
+<li>检查 CSRF token.</li>
+<li>cookie中加入hash随机数.</li>
+<li>通过检查来过滤简单的 CSRF 攻击, 主要检查一下两个 header:</li>
+</ol>
+<ul>
+<li><p>Origin Header</p>
+</li>
+<li><p>Referer Header</p>
+</li>
+</ul>
+<h2 id="中间人攻击"><a href="#中间人攻击" class="headerlink" title="中间人攻击"></a>中间人攻击</h2><p>中间人 (Man-in-the-middle attack, MITM) 是指攻击者与通讯的两端分别创建独立的联系, 并交换其所收到的数据, 使通讯的两端认为他们正在通过一个私密的连接与对方直接对话, 但事实上整个会话都被攻击者完全控制. 在中间人攻击中, 攻击者可以拦截通讯双方的通话并插入新的内容.</p>
+<p>目前比较常见的是在公共场所放置精心准备的免费 wifi, 劫持/监控通过该 wifi 的流量. 或者攻击路由器, 连上你家 wifi 攻破你家 wifi 之后在上面劫持流量等.</p>
+<p>对于通信过程中的 MITM, 常见的方案是通过 PKI / TLS 预防, 及时是通过存在第三方中间人的 wifi 你通过 HTTPS 访问的页面依旧是安全的. 而 HTTP 协议是明文传输, 则没有任何防护可言.</p>
+<p>如果你的网站还没有进行https加密的化，则在表单提交部分，最好进行非对称加密–即客户端加密，只有服务端能解开。这样中间的劫持者便无法获取加密内容的真实信息了。</p>
+<p>不常见的还有强力的互相认证, 你确认他之后, 他也确认你一下; 延迟测试, 统计传输时间, 如果通讯延迟过高则认为可能存在第三方中间人; 等等.</p>
+<h2 id="SQL-NoSQL-注入"><a href="#SQL-NoSQL-注入" class="headerlink" title="SQL/NoSQL 注入"></a>SQL/NoSQL 注入</h2><p>注入攻击是指当所执行的一些操作中有部分由用户传入时, 用户可以将其恶意逻辑注入到操作中. 当你使用 eval, new Function 等方式执行的字符串中有用户输入的部分时, 就可能被注入攻击. 上文中的 XSS 就属于一种注入攻击. </p>
+<h3 id="SQL"><a href="#SQL" class="headerlink" title="SQL"></a>SQL</h3><p>Sql 注入是网站常见的一种注入攻击方式. 其原因主要是由于登录时需要验证用户名/密码</p>
+<p><strong>Case</strong></p>
+<p>例如上传密码为 <code>&#39;; DROP TABLE users; --</code> 使得最终执行的内容为:</p>
+<pre><code class="sql">SELECT * FROM users WHERE usernae = &#39;myName&#39; AND password = &#39;&#39;; DROP TABLE users; --&#39;;
+</code></pre>
+<p>其能实现的功能, 包括但不限于删除数据 (经济损失), 篡改数据 (密码等), 窃取数据 (网站管理权限, 用户数据) 等. </p>
+<p>防治手段常见于:</p>
+<ul>
+<li>给表名/字段名加前缀 (避免被猜到)</li>
+<li>报错隐藏表信息 (避免被看到, 12306 早起就出现过的问题)</li>
+<li>过滤可以拼接 SQL 的关键字符</li>
+<li>对用户输入进行转义</li>
+<li>验证用户输入的类型 (避免 limit, order by 等注入)</li>
+<li>等…</li>
+</ul>
+<h3 id="NoSQL"><a href="#NoSQL" class="headerlink" title="NoSQL"></a>NoSQL</h3><p><strong>Case</strong></p>
+<pre><code class="javascript">let {user, pass, age} = ctx.query;
+
+db.collection.find({
+  user, pass,
+  $where: `this.age &gt;= ${age}`
+})
+</code></pre>
+<h2 id="DDOS"><a href="#DDOS" class="headerlink" title="DDOS"></a>DDOS</h2><blockquote>
+<p>DDoS即Distributed Denial of Service，分布式拒绝服务。也就是攻击者借助或者利用服务器技术，将多个计算机（肉鸡或僵尸机）联合起来作为攻击平台，对一个或者多个目标服务器，同一时间发送大量垃圾信息，或利用某种干扰信息的方式，导致目标服务器无法及时响应正常用户正常请求，或者直接导致目标服务器宕机，从而无法为正常用户提供服务的一种攻击行为。</p>
+</blockquote>
+<p>攻击方式:</p>
+<ul>
+<li>端口扫描攻击</li>
+<li>ping洪水（flooding）攻击</li>
+<li>SYN洪水（flooding）攻击</li>
+<li>FTP跳转攻击</li>
+</ul>
+<p>防范手段:</p>
+<ul>
+<li>保证服务器系统的安全,确保服务器软件没有任何漏洞，防止攻击者入侵。</li>
+<li>确保服务器采用最新系统，并打上安全补丁。</li>
+<li>在服务器上删除未使用的服务，关闭未使用的端口。</li>
+<li>对于服务器上运行的网站，确保其打了最新的补丁，没有安全漏洞。</li>
+<li>隐藏服务器的真实IP地址</li>
+</ul>
+<h2 id="通用防范措施"><a href="#通用防范措施" class="headerlink" title="通用防范措施"></a>通用防范措施</h2><ol>
+<li>开发时要提防用户产生的内容，要对用户输入的信息进行层层检测</li>
+<li>要注意对用户的输出内容进行过滤(进行转义等)</li>
+<li>重要的内容记得要加密传输(无论是利用https也好，自己加密也好)</li>
+<li>get请求与post请求，要严格遵守规范，不要混用，不要将一些危险的提交使用jsonp完成。</li>
+<li>对于URL上携带的信息，要谨慎使用。</li>
+</ol>
+<h1 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h1><h1 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h1><ul>
+<li><a href="https://segmentfault.com/a/1190000010913697" target="_blank" rel="external">前端需要知道的web安全知识</a></li>
+<li><a href="http://wlh269.iteye.com/blog/733398" target="_blank" rel="external">CA认证简单介绍和工作流程</a></li>
+<li><a href="https://segmentfault.com/a/1190000006672214" target="_blank" rel="external">[聊一聊系列]聊一聊WEB前端安全那些事儿</a></li>
+</ul>
+]]></content>
+      
+        <categories>
+            
+            <category> 大前端 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> 前端 </tag>
+            
+            <tag> 安全 </tag>
             
         </tags>
         
@@ -6594,7 +6628,7 @@ align-items: center;
 <h1 id="剑指offer"><a href="#剑指offer" class="headerlink" title="剑指offer"></a>剑指offer</h1><blockquote>
 <p>A：完全不理解写不出，B：思想理解写不出，C：思想不理解提示能写出</p>
 </blockquote>
-<h3 id="1-二维数组中的查找-C"><a href="#1-二维数组中的查找-C" class="headerlink" title="1. 二维数组中的查找(C)"></a>1. 二维数组中的查找(C)</h3><blockquote>
+<h2 id="一刷"><a href="#一刷" class="headerlink" title="一刷"></a>一刷</h2><h3 id="1-二维数组中的查找-C"><a href="#1-二维数组中的查找-C" class="headerlink" title="1. 二维数组中的查找(C)"></a>1. 二维数组中的查找(C)</h3><blockquote>
 <p>在一个二维数组中，每一行都按照从左到右递增的顺序排序，每一列都按照从上到下递增的顺序排序。请完成一个函数，输入这样的一个二维数组和一个整数，判断数组中是否含有该整数。</p>
 </blockquote>
 <p>思路：因为矩阵的特殊性，所以先从<strong>第一列最后一行</strong>开始比较，小于则向上查找，大于则向后查找</p>
@@ -6892,6 +6926,12 @@ return input.slice(0,k);
 <p>在古老的一维模式识别中,常常需要计算连续子向量的最大和,当向量全为正数的时候,问题很好解决。但是,如果向量中包含负数,是否应该包含某个负数,并期望旁边的正数会弥补它呢？例如:{6,-3,-2,7,-15,1,2,2},连续子向量的最大和为8(从第0个开始,到第3个为止)。你会不会被他忽悠住？(子向量的长度至少是1)</p>
 </blockquote>
 <p>思路：<strong>如果和为负数，则重新开始，如果和为正数，则继续加</strong>，然后比较大小，选出最大和即可。</p>
+<pre><code class="javascript">var tempSum=0,sum=-Number.MAX_VALUE;
+array.map(function(a){
+    tempSum=(tempSum&lt;0)?a:tempSum+a;
+    sum=(sum&lt;tempSum)?tempSum:sum;
+})
+</code></pre>
 <h3 id="31-整数中1出现的次数-C"><a href="#31-整数中1出现的次数-C" class="headerlink" title="31.整数中1出现的次数(C)"></a>31.整数中1出现的次数(C)</h3><blockquote>
 <p>求出1~13的整数中1出现的次数,并算出100~1300的整数中1出现的次数？为此他特别数了一下1~13中包含1的数字有1、10、11、12、13因此共出现6次,但是对于后面问题他就没辙了。求出任意非负整数区间中1出现的次数</p>
 </blockquote>
@@ -6964,7 +7004,7 @@ for(var i in count)
 <p>输入一棵二叉树，求该树的深度。从根结点到叶结点依次经过的结点（含根、叶结点）形成树的一条路径，最长路径的长度为树的深度。</p>
 </blockquote>
 <p>思路：递归求左子树和右子树深度，然后比较，最终返回最大值加1</p>
-<h3 id="39-平衡二叉树"><a href="#39-平衡二叉树" class="headerlink" title="39.平衡二叉树"></a>39.平衡二叉树</h3><blockquote>
+<h3 id="39-平衡二叉树-B"><a href="#39-平衡二叉树-B" class="headerlink" title="39.平衡二叉树(B)"></a>39.平衡二叉树(B)</h3><blockquote>
 <p>输入一棵二叉树，判断该二叉树是否是平衡二叉树。</p>
 </blockquote>
 <p>思路：它是一棵空树或它的左右两个子树的高度差的绝对值不超过1，并且左右两个子树都是一棵平衡二叉树。遍历左子树和右子树的深度，然后比较二者差值</p>
@@ -7008,6 +7048,9 @@ return array.reverse().join(&#39; &#39;);
 <li>模拟报数，将报数的人踢出数组，<strong>注意要少1个序号</strong>。</li>
 <li>直到数组只剩1个</li>
 </ol>
+<blockquote>
+<p>注意：for循环中i为1开始</p>
+</blockquote>
 <pre><code class="javascript">for(var i=0;i&lt;n;i++) arr.push(i);
 var idx = 0;
 while(arr.length &gt; 1){
@@ -7054,7 +7097,7 @@ duplication.shift();
 //2.排序
 numbers.sort((a,b)=&gt;(a-b))
 </code></pre>
-<h3 id="51-构建乘积数组-C"><a href="#51-构建乘积数组-C" class="headerlink" title="51.构建乘积数组(C)"></a>51.构建乘积数组(C)</h3><blockquote>
+<h3 id="51-构建乘积数组-B"><a href="#51-构建乘积数组-B" class="headerlink" title="51.构建乘积数组(B)"></a>51.构建乘积数组(B)</h3><blockquote>
 <p>给定一个数组A[0,1,…,n-1],请构建一个数组B[0,1,…,n-1],其中B中的元素<code>B[i]=A[0]*A[1]*…*A[i-1]*A[i+1]*…*A[n-1]</code>。不能使用除法。</p>
 </blockquote>
 <p>思路：</p>
@@ -7063,6 +7106,16 @@ numbers.sort((a,b)=&gt;(a-b))
 <li>构建<strong>后向乘积数组</strong><code>D[i]=A[n-1]A[n-2]…A[n-i+1]</code>，<strong>即D[i]=D[i+1]*A[i+1]；</strong></li>
 <li>通过C[i],D[i]来求B[i]：<strong>B[i]=C[i]*D[i]</strong></li>
 </ul>
+<pre><code class="javascript">for(var i=1;i&lt;len;i++)
+{
+  arr[i]=arr[i-1]*array[i-1];
+}
+for(var i=len-2;i&gt;=0;i--)
+{
+  temp*=array[i+1];
+  arr[i]*=temp;
+}
+</code></pre>
 <h3 id="52-正则表达式匹配-A"><a href="#52-正则表达式匹配-A" class="headerlink" title="52.正则表达式匹配(A)"></a>52.正则表达式匹配(A)</h3><blockquote>
 <p>请实现一个函数用来匹配包括<code>’.’和’*‘</code>的正则表达式。模式中的字符’.’表示任意一个字符，而’<em>‘表示它前面的字符可以出现任意次（包含0次）。 在本题中，匹配是指字符串的所有字符匹配整个模式。例如，字符串”aaa”与模式”a.a”和”ab</em>ac<em>a”匹配，但是与”aa.a”和”ab</em>a”均不匹配</p>
 </blockquote>
@@ -7096,7 +7149,7 @@ numbers.sort((a,b)=&gt;(a-b))
 <p>一个链表中包含环，请找出该链表的环的入口结点。</p>
 </blockquote>
 <p>思路：<strong>通过map来存储每次访问的结点</strong>，如果有重复，则是链表入口结点。</p>
-<h3 id="56-删除链表中重复的结点"><a href="#56-删除链表中重复的结点" class="headerlink" title="56.删除链表中重复的结点"></a>56.删除链表中重复的结点</h3><blockquote>
+<h3 id="56-删除链表中重复的结点-B"><a href="#56-删除链表中重复的结点-B" class="headerlink" title="56.删除链表中重复的结点(B)"></a>56.删除链表中重复的结点(B)</h3><blockquote>
 <p>在一个排序的链表中，存在重复的结点，请删除该链表中重复的结点，重复的结点不保留，返回链表头指针。 例如，链表1-&gt;2-&gt;3-&gt;3-&gt;4-&gt;4-&gt;5 处理后为 1-&gt;2-&gt;5</p>
 </blockquote>
 <p>思路：<strong>需要三个指针</strong>，<strong>第一个指针first的next指向头结点，第二个指针pre指向first，确保每次指向的是重复结点的前一个结点，第三个指针head来遍历</strong>，遇到重复结点，则向后，直到找到当前结点不等于下一个结点时，将pre的next指向head。</p>
@@ -7211,7 +7264,7 @@ numbers.sort((a,b)=&gt;(a-b))
     return result;
 }
 </code></pre>
-<h3 id="61-序列化二叉树"><a href="#61-序列化二叉树" class="headerlink" title="61.序列化二叉树"></a>61.序列化二叉树</h3><blockquote>
+<h3 id="61-序列化二叉树-B"><a href="#61-序列化二叉树-B" class="headerlink" title="61.序列化二叉树(B)"></a>61.序列化二叉树(B)</h3><blockquote>
 <p>请实现两个函数，分别用来序列化和反序列化二叉树</p>
 </blockquote>
 <p>思路：</p>
@@ -7276,7 +7329,77 @@ numbers.sort((a,b)=&gt;(a-b))
   }
 }
 </code></pre>
-]]></content>
+<h2 id="二刷"><a href="#二刷" class="headerlink" title="二刷"></a>二刷</h2><h3 id="2-替换空格-B-1"><a href="#2-替换空格-B-1" class="headerlink" title="2.替换空格(B)"></a>2.替换空格(B)</h3><blockquote>
+<p>\s+代表多个空格，？则表示取尽可能少的空格</p>
+</blockquote>
+<h3 id="4-重建二叉树-B-1"><a href="#4-重建二叉树-B-1" class="headerlink" title="4.重建二叉树(B)"></a>4.重建二叉树(B)</h3><h3 id="11-二进制中1的个数-B"><a href="#11-二进制中1的个数-B" class="headerlink" title="11.二进制中1的个数(B)"></a>11.二进制中1的个数(B)</h3><h3 id="12-数值的整数次方-B"><a href="#12-数值的整数次方-B" class="headerlink" title="12.数值的整数次方(B)"></a>12.数值的整数次方(B)</h3><h3 id="16-合并两个排序的链表-A"><a href="#16-合并两个排序的链表-A" class="headerlink" title="16.合并两个排序的链表(A)"></a>16.合并两个排序的链表(A)</h3><pre><code class="javascript">function Merge(pHead1, pHead2)
+{
+    if(pHead1==null) return pHead2;
+    if(pHead2==null) return pHead1;
+
+    if(pHead1.val &lt;= pHead2.val)
+    {
+        pHead1.next = Merge(pHead1.next,pHead2);
+        return pHead1;
+    }
+    else
+    {
+        pHead2.next = Merge(pHead1,pHead2.next);
+        return pHead2;
+    }
+}
+</code></pre>
+<h3 id="17-树的子结构-B"><a href="#17-树的子结构-B" class="headerlink" title="17.树的子结构(B)"></a>17.树的子结构(B)</h3><blockquote>
+<p>输入两棵二叉树A，B，判断B是不是A的子结构。（ps：我们约定空树不是任意一个树的子结构）</p>
+</blockquote>
+<p>思路：比较B是不是A的子树，B是不是A的右子树的子树，B是不是A的左子树的子树。如果根元素相同，则开始判断左子树和右子树</p>
+<blockquote>
+<p>注意：</p>
+<p>isSubtree中pRoot2要在pRoot1上面判断</p>
+</blockquote>
+<pre><code class="javascript">function isSubtree(pRoot1,pRoot2){
+    if (pRoot2 == null) return true;//pRoot2为null，表示子树已经遍历完
+    if (pRoot1 == null) return false;
+    if(pRoot1.val==pRoot2.val){
+        return isSubtree(pRoot1.left,pRoot2.left) &amp;&amp; isSubtree(pRoot1.right,pRoot2.right);
+    }else{
+        return false;
+    }
+}
+
+function HasSubtree(pRoot1, pRoot2)
+{
+    if(pRoot1==null||pRoot2==null) return false;   
+    return isSubtree(pRoot1,pRoot2)||HasSubtree(pRoot1.left,pRoot2)||HasSubtree(pRoot1.right,pRoot2);
+}
+</code></pre>
+<h3 id="18-二叉树镜像-B"><a href="#18-二叉树镜像-B" class="headerlink" title="18.二叉树镜像(B)"></a>18.二叉树镜像(B)</h3><pre><code class="javascript">function Mirror(root)
+{
+    if(root == null) return;
+    var left = Mirror(root.left);
+    var right = Mirror(root.right);
+    root.left = right;
+    root.right = left;
+    return root;
+}
+</code></pre>
+<h3 id="19-顺时针打印矩阵"><a href="#19-顺时针打印矩阵" class="headerlink" title="19.顺时针打印矩阵(?)"></a>19.顺时针打印矩阵(?)</h3><h3 id="21-栈的压入、弹出-B"><a href="#21-栈的压入、弹出-B" class="headerlink" title="21.栈的压入、弹出(B)"></a>21.栈的压入、弹出(B)</h3><p>思路：设置辅助栈，压入元素，<strong>判断栈顶元素是否等于出栈第一个，相同则出栈</strong>，不同则继续入栈</p>
+<h3 id="22-从上往下打印二叉树-B"><a href="#22-从上往下打印二叉树-B" class="headerlink" title="22.从上往下打印二叉树(B)"></a>22.从上往下打印二叉树(B)</h3><blockquote>
+<p>从上往下打印出二叉树的每个节点，同层节点从左至右打印。</p>
+</blockquote>
+<p>思路：采用<strong>队列</strong>方法，先将<strong>根节点放入队列</strong>中，然后打印，接着<strong>将左右节点加入队列</strong>中。</p>
+<pre><code class="javascript">while (queue.length) {
+  var temp = queue.shift();
+  result.push(temp.val);
+  if (temp.left) {
+    queue.push(temp.left);
+  }
+  if (temp.right) {
+    queue.push(temp.right);
+  }
+}
+</code></pre>
+<h3 id="23-二叉搜索树的后序遍历-A-1"><a href="#23-二叉搜索树的后序遍历-A-1" class="headerlink" title="23.二叉搜索树的后序遍历(A)"></a>23.二叉搜索树的后序遍历(A)</h3><h3 id="24-二叉树中和为某一值的路径"><a href="#24-二叉树中和为某一值的路径" class="headerlink" title="24.二叉树中和为某一值的路径"></a>24.二叉树中和为某一值的路径</h3><h3 id="25-复杂链表的复制-B"><a href="#25-复杂链表的复制-B" class="headerlink" title="25.复杂链表的复制(B)"></a>25.复杂链表的复制(B)</h3><h3 id="26-二叉搜索树与双向链表-A-1"><a href="#26-二叉搜索树与双向链表-A-1" class="headerlink" title="26.二叉搜索树与双向链表(A)"></a>26.二叉搜索树与双向链表(A)</h3><h3 id="27-字符串排列-A"><a href="#27-字符串排列-A" class="headerlink" title="27.字符串排列(A)"></a>27.字符串排列(A)</h3><h3 id="32-把数组排成最小的数-C"><a href="#32-把数组排成最小的数-C" class="headerlink" title="32.把数组排成最小的数(C)"></a>32.把数组排成最小的数(C)</h3><h3 id="35-数组中的逆序对-A-1"><a href="#35-数组中的逆序对-A-1" class="headerlink" title="35.数组中的逆序对(A)"></a>35.数组中的逆序对(A)</h3><h3 id="56-删除链表中重复的结点-B-1"><a href="#56-删除链表中重复的结点-B-1" class="headerlink" title="56.删除链表中重复的结点(B)"></a>56.删除链表中重复的结点(B)</h3>]]></content>
       
         <categories>
             
