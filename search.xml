@@ -3,31 +3,7 @@
   
     
     <entry>
-      <title><![CDATA[Diary_2017.12.21]]></title>
-      <url>/2017/12/21/%E6%97%A5%E8%AE%B0/Diary_2017.12.21/</url>
-      <content type="html"><![CDATA[<p>12.21，周四，晴</p>
-<a id="more"></a>
-<p>面试到了尾声，反思自己的不足，大部分是在项目上吃了亏。其实项目不仅仅是web方向，对于一整套的服务器框架也是参与实现并很清楚，然而可能更多的关注点不在上面，也没怎么提及，现在想想其实这块不就是封装层吗。</p>
-<p>趁着清晨，简单的回顾了一下项目的前后端分离实践，希望能对以后的工作有帮助。</p>
-]]></content>
-      
-        <categories>
-            
-            <category> 流水账 </category>
-            
-        </categories>
-        
-        
-        <tags>
-            
-            <tag> diary </tag>
-            
-        </tags>
-        
-    </entry>
-    
-    <entry>
-      <title><![CDATA[Diary_2017.12.21]]></title>
+      <title><![CDATA[IPC项目框架研究]]></title>
       <url>/2017/12/21/%E9%A1%B9%E7%9B%AE/IPC%E9%A1%B9%E7%9B%AE%E6%A1%86%E6%9E%B6%E7%A0%94%E7%A9%B6/</url>
       <content type="html"><![CDATA[<p>简单总结一下项目框架的一些实践</p>
 <a id="more"></a>
@@ -67,6 +43,30 @@
         <tags>
             
             <tag> IPC </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[Diary_2017.12.21]]></title>
+      <url>/2017/12/21/%E6%97%A5%E8%AE%B0/Diary_2017.12.21/</url>
+      <content type="html"><![CDATA[<p>12.21，周四，晴</p>
+<a id="more"></a>
+<p>面试到了尾声，反思自己的不足，大部分是在项目上吃了亏。其实项目不仅仅是web方向，对于一整套的服务器框架也是参与实现并很清楚，然而可能更多的关注点不在上面，也没怎么提及，现在想想其实这块不就是封装层吗。</p>
+<p>趁着清晨，简单的回顾了一下项目的前后端分离实践，希望能对以后的工作有帮助。</p>
+]]></content>
+      
+        <categories>
+            
+            <category> 流水账 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> diary </tag>
             
         </tags>
         
@@ -127,219 +127,6 @@
         <tags>
             
             <tag> diary </tag>
-            
-        </tags>
-        
-    </entry>
-    
-    <entry>
-      <title><![CDATA[jquery]]></title>
-      <url>/2017/12/04/%E5%89%8D%E7%AB%AF/%E6%A1%86%E6%9E%B6%E4%B8%8E%E7%BB%84%E4%BB%B6/jquery/</url>
-      <content type="html"><![CDATA[<p>jquery知识点整理。</p>
-<p>jquery ajax没整理。</p>
-<a id="more"></a>
-<h1 id="知识点"><a href="#知识点" class="headerlink" title="知识点"></a>知识点</h1><h2 id=""><a href="#" class="headerlink" title="$()"></a>$()</h2><p>$()函数是JQuery函数的别名</p>
-<p>$()函数用于将任何对象包裹成jQuery对象</p>
-<h2 id="jQuery入口函数与Js入口函数的区别"><a href="#jQuery入口函数与Js入口函数的区别" class="headerlink" title="jQuery入口函数与Js入口函数的区别"></a>jQuery入口函数与Js入口函数的区别</h2><p>js入口函数指的是：window.onload = function(){};</p>
-<p>jQuery入口函数是：$(document).ready()</p>
-<table>
-<thead>
-<tr>
-<th>window.onload</th>
-<th></th>
-<th>$(document).ready()</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>必须等待网页中所有的内容加载完毕后（包括图片）才能执行</td>
-<td>执行时机</td>
-<td>网页中所有DOM结构绘制完毕后就执行，可能DOM元素关联的东西并没有加载完</td>
-</tr>
-<tr>
-<td>不能同时编写多个 ，出现多次会存在事件覆盖的问题。</td>
-<td>编写个数</td>
-<td>能同时编写多个</td>
-</tr>
-<tr>
-<td>无</td>
-<td>简化写法</td>
-<td>$(document).ready(function(){});可以简写成$(function(){});</td>
-</tr>
-<tr>
-<td>很差</td>
-<td>兼容性</td>
-<td>好</td>
-</tr>
-</tbody>
-</table>
-<h2 id="jQuery选择器"><a href="#jQuery选择器" class="headerlink" title="jQuery选择器"></a>jQuery选择器</h2><h3 id="基本选择器"><a href="#基本选择器" class="headerlink" title="基本选择器"></a>基本选择器</h3><ul>
-<li>ID选择器：#</li>
-<li>类选择器： .</li>
-<li>标签选择器： element</li>
-</ul>
-<h3 id="层级选择器"><a href="#层级选择器" class="headerlink" title="层级选择器"></a>层级选择器</h3><ul>
-<li>后代选择器：空格</li>
-<li>子代选择器：&gt;</li>
-</ul>
-<h3 id="基本过滤选择器"><a href="#基本过滤选择器" class="headerlink" title="基本过滤选择器"></a>基本过滤选择器</h3><p>索引号为index：<strong>:eq(index)</strong></p>
-<p>索引号为奇数：<strong>:odd</strong></p>
-<p>索引号为偶数：<strong>:even</strong></p>
-<h2 id="jQuery操作"><a href="#jQuery操作" class="headerlink" title="jQuery操作"></a>jQuery操作</h2><h3 id="筛选"><a href="#筛选" class="headerlink" title="筛选"></a>筛选</h3><p>查找指定元素的所有后代元素（子子孙孙）：find(selector)</p>
-<p>查找指定元素的直接子元素（亲儿子元素）：children()</p>
-<p>查找所有兄弟元素（不包括自己）：siblings()</p>
-<p>查找父元素（亲的）：parent()</p>
-<p>查找指定元素的第index个元素，index是索引号，从0开始：eq(index)</p>
-<h3 id="选择网页元素"><a href="#选择网页元素" class="headerlink" title="选择网页元素"></a>选择网页元素</h3><pre><code class="javascript">$(&#39;a:first&#39;)//选择网页中第一个a元素  
-$(&#39;tr:odd&#39;)//选择表格的奇数行  
-$(&#39;#myForm :input&#39;)//选择表单中的input元素  
-$(&#39;div:visible&#39;) //选择可见的div元素  
-$(&#39;div:gt(2)&#39;)//选择所有的div元素，除了前三个  
-$(&#39;div:animated&#39;)//选择当前处于动画状态的div元素
-</code></pre>
-<h3 id="改变结果集"><a href="#改变结果集" class="headerlink" title="改变结果集"></a>改变结果集</h3><pre><code class="javascript">$(&#39;div&#39;).has(&#39;p&#39;); //选择包含p元素的div元素  
-$(&#39;div&#39;).not(&#39;.myClass&#39;); //选择class不等于myClass的div元素  
-$(&#39;div&#39;).filter(&#39;.myClass&#39;); //选择class等于myClass的div元素  
-$(&#39;div&#39;).first(); //选择第1个div元素  
-$(&#39;div&#39;).eq(5); //选择第6个div元素  
-$(&#39;div&#39;).next(&#39;p&#39;); //选择div元素后面的第一个p元素  
-$(&#39;div&#39;).parent(); //选择div元素的父元素  
-$(&#39;div&#39;).closest(&#39;form&#39;); //选择离div最近的那个form父元素  
-$(&#39;div&#39;).children(); //选择div的所有子元素  
-$(&#39;div&#39;).siblings(); //选择div的同级元素
-</code></pre>
-<h3 id="链式操作"><a href="#链式操作" class="headerlink" title="链式操作"></a>链式操作</h3><p>.end()：回到最近的一个”破坏性”操作之前。如果之前没有破坏性操作，则返回一个空集。所谓的”破坏性”就是指任何改变所匹配的jQuery元素的操作。</p>
-<h3 id="元素的操作：取值和赋值"><a href="#元素的操作：取值和赋值" class="headerlink" title="元素的操作：取值和赋值"></a>元素的操作：取值和赋值</h3><p>常见的取值和赋值函数如下：</p>
-<ol>
-<li>html() 返回或设置被选元素的内容 (inner HTML)    </li>
-<li>text() 取出或设置text内容      </li>
-<li><strong>attr()</strong> 取出或设置某个属性的值    </li>
-<li>width() 取出或设置某个元素的宽度    </li>
-<li>height() 取出或设置某个元素的高度  </li>
-<li>val() 取出或设置html内容 取出某个表单元素的值  </li>
-<li>css() 设置css样式</li>
-</ol>
-<p>需要注意的是，如果结果集包含多个元素，那么赋值的时候，将对其中所有的元素赋值；取值的时候，则是只取出第一个元素的值（.text()例外，它取出所有元素的text内容）。</p>
-<h3 id="元素的操作：移动"><a href="#元素的操作：移动" class="headerlink" title="元素的操作：移动"></a>元素的操作：移动</h3><ol>
-<li>.insertAfter()和.after()：在现存元素的外部，从后面插入元素  </li>
-<li>.insertBefore()和.before()：在现存元素的外部，从前面插入元素  </li>
-<li>.appendTo()和.append()：在现存元素的内部，从后面插入元素  </li>
-<li>.prependTo()和.prepend()  ：在现存元素的内部，从前面插入元素</li>
-</ol>
-<h3 id="元素的操作：复制、删除和创建"><a href="#元素的操作：复制、删除和创建" class="headerlink" title="元素的操作：复制、删除和创建"></a>元素的操作：复制、删除和创建</h3><p>复制元素使用.clone()</p>
-<p>删除元素使用.remove()和.detach()。两者的区别在于，<strong>前者不保留被删除元素的事件，后者保留，有利于重新插入文档时使用。</strong></p>
-<p>清空元素内容（但是不删除该元素）使用.empty()。</p>
-<h3 id="工具方法"><a href="#工具方法" class="headerlink" title="工具方法"></a>工具方法</h3><p> $.trim() 去除字符串两端的空格。<br> $.each() 遍历一个数组或对象。<br> $.inArray() 返回一个值在数组中的索引位置。如果该值不在数组中，则返回-1。<br> $.grep() 返回数组中符合某种标准的元素。<br> $.extend() 将多个对象，合并到第一个对象。<br> $.makeArray() 将对象转化为数组。<br> $.type() 判断对象的类别（函数对象、日期对象、数组对象、正则对象等等）。<br> $.isArray() 判断某个参数是否为数组。<br> $.isEmptyObject() 判断某个对象是否为空（不含有任何属性）。<br> $.isFunction() 判断某个参数是否为函数。<br> $.isPlainObject() 判断某个参数是否为用”{}”或”new Object”建立的对象。<br> $.support() 判断浏览器是否支持某个特性。 </p>
-<h3 id="事件操作"><a href="#事件操作" class="headerlink" title="事件操作"></a>事件操作</h3><p> .blur() 表单元素失去焦点。<br> .change() 表单元素的值发生变化<br> .click() 鼠标单击<br> .dblclick() 鼠标双击<br> .focus() 表单元素获得焦点<br> .focusin() 子元素获得焦点<br> .focusout() 子元素失去焦点<br> .hover() 同时为mouseenter和mouseleave事件指定处理函数<br> .keydown() 按下键盘（长时间按键，只返回一个事件）<br> .keypress() 按下键盘（长时间按键，将返回多个事件）<br> .keyup() 松开键盘<br> .load() 元素加载完毕<br> .mousedown() 按下鼠标<br> .mouseenter() 鼠标进入（进入子元素不触发）<br> .mouseleave() 鼠标离开（离开子元素不触发）<br> .mousemove() 鼠标在元素内部移动<br> .mouseout() 鼠标离开（离开子元素也触发）<br> .mouseover() 鼠标进入（进入子元素也触发）<br> .mouseup() 松开鼠标<br> .ready() DOM加载完成<br> .resize() 浏览器窗口的大小发生改变<br> .scroll() 滚动条的位置发生变化<br> .select() 用户选中文本框中的内容<br> .submit() 用户递交表单<br> .toggle() 根据鼠标点击的次数，依次运行多个函数<br> .unload()  用户离开页面  </p>
-<p><strong>特别的</strong></p>
-<ul>
-<li>.bind()：以上这些事件在jQuery内部，都是.bind()的便捷方式。使用.bind()可以更灵活地控制事件</li>
-<li>.one()：只想让事件运行一次</li>
-<li>.unbind()：解除事件绑定</li>
-</ul>
-<p>所有的事件处理函数，都可以接受一个事件对象(event object)作为参数，这个事件对象有一些很有用的属性和方法：</p>
-<p>event.pageX 事件发生时，鼠标距离网页左上角的水平距离 　　<br>event.pageY 事件发生时，鼠标距离网页左上角的垂直距离<br>event.type 事件的类型（比如click） 　　<br>event.which 按下了哪一个键 　　<br>event.data在事件对象上绑定数据，然后传入事件处理函数 　　<br>event.target 事件针对的网页元素<br>event.preventDefault() 阻止事件的默认行为（比如点击链接，会自动打开新页面）<br>event.stopPropagation() 停止事件向上层元素冒泡</p>
-<p>有两种方法，可以自动触发一个事件。一种是直接使用事件函数，另一种是使用.trigger()或.triggerHandler()。</p>
-<pre><code class="javascript">$(&#39;a&#39;).click();
-$(&#39;a&#39;).trigger(&#39;click&#39;);
-</code></pre>
-<h3 id="特殊效果"><a href="#特殊效果" class="headerlink" title="特殊效果"></a>特殊效果</h3><p>.fadeIn() 淡入<br>.fadeOut() 淡出<br>.fadeTo() 调整透明度<br>.hide() 隐藏元素<br>.show() 显示元素<br>.slideDown() 向下展开<br>.slideUp() 向上卷起<br>.slideToggle() 依次展开或卷起某个元素<br>.toggle() 依次展示或隐藏某个元素</p>
-<p>除了.show()和.hide()，所有其他特效的默认执行时间都是400ms(毫秒)，但是你可以改变这个设置。</p>
-<p>更复杂的特效，可以用.animate()自定义。</p>
-<p>.stop()和.delay()用来停止或延缓特效的执行。</p>
-<p>$.fx.off如果设置为true，则关闭所有网页特效。</p>
-<p>几个常见的筛选选择器：</p>
-<p>filter()：筛选出与指定表达式匹配的元素集合。这个方法用于缩小匹配的范围。用逗号分隔多个表达式</p>
-<pre><code class="javascript">//保留子元素中不含有ol的元素。
-//&lt;p&gt;&lt;ol&gt;&lt;li&gt;Hello&lt;/li&gt;&lt;/ol&gt;&lt;/p&gt;&lt;p&gt;How are you?&lt;/p&gt;
-$(&quot;p&quot;).filter(function(index) {
- return $(&quot;ol&quot;, this).length == 0;
-});
-//&lt;p&gt;How are you?&lt;/p&gt;
-</code></pre>
-<p>silce()：选取一个匹配的子集</p>
-<pre><code class="javascript">//选择第一个p元素
-//&lt;p&gt;Hello&lt;/p&gt;&lt;p&gt;cruel&lt;/p&gt;&lt;p&gt;World&lt;/p&gt;
-$(&quot;p&quot;).slice(0, 1).wrapInner(&quot;&lt;b&gt;&lt;/b&gt;&quot;);
-//&lt;p&gt;&lt;b&gt;Hello&lt;/b&gt;&lt;/p&gt;
-</code></pre>
-<h1 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h1><h2 id="Case1-jQuery对象和DOM对象的相互转换"><a href="#Case1-jQuery对象和DOM对象的相互转换" class="headerlink" title="Case1.jQuery对象和DOM对象的相互转换"></a>Case1.jQuery对象和DOM对象的相互转换</h2><pre><code class="javascript">var btn = document.getElementById(“btnShow”);
-var $btn = $(“#btnShow”); // $btn就是一个jQuery对象
-
-//DOM对象转换成jQuery对象
-var $btn1 = $(btn);
-
-//jQuery对象转换成DOM对象
-var btn1 = $btn[0]; 
-var btn2 = $btn.get(0);
-</code></pre>
-<h2 id="Case2-如何找到所有-HTML-select-标签的选中项？"><a href="#Case2-如何找到所有-HTML-select-标签的选中项？" class="headerlink" title="Case2.如何找到所有 HTML select 标签的选中项？"></a>Case2.如何找到所有 HTML select 标签的选中项？</h2><pre><code class="javascript">$(&#39;[name=NameOfSelectedTag] :selected&#39;)
-</code></pre>
-<h2 id="Case3-jQuery-里的-each-是什么函数？你是如何使用它的？"><a href="#Case3-jQuery-里的-each-是什么函数？你是如何使用它的？" class="headerlink" title="Case3. jQuery 里的 each() 是什么函数？你是如何使用它的？"></a>Case3. jQuery 里的 each() 是什么函数？你是如何使用它的？</h2><p>each() 函数就像是 Java 里的一个 Iterator，它允许你遍历一个元素集合。你可以传一个函数给 each() 方法，被调用的 jQuery 对象会在其每个元素上执行传入的函数。</p>
-<pre><code class="javascript">$(&#39;[name=NameOfSelectedTag] :selected&#39;).each(function(selected) {
-    alert($(selected).text());
-});
-</code></pre>
-<h2 id="Case4-this-和-this-关键字在-jQuery-中有何不同？"><a href="#Case4-this-和-this-关键字在-jQuery-中有何不同？" class="headerlink" title="Case4.$(this) 和 this 关键字在 jQuery 中有何不同？"></a>Case4.$(this) 和 this 关键字在 jQuery 中有何不同？</h2><p>$(this) 返回一个 jQuery 对象，你可以对它调用多个 jQuery 方法</p>
-<p>而 this 代表当前元素，它是 JavaScript 关键词中的一个，表示上下文中的当前 DOM 元素。</p>
-<h2 id="Case5-你如何使用jQuery来提取一个HTML-标记的属性-例如-链接的href"><a href="#Case5-你如何使用jQuery来提取一个HTML-标记的属性-例如-链接的href" class="headerlink" title="Case5.你如何使用jQuery来提取一个HTML 标记的属性 例如. 链接的href?"></a>Case5.你如何使用jQuery来提取一个HTML 标记的属性 例如. 链接的href?</h2><pre><code class="javascript">$(&#39;a&#39;).each(function(){
-   alert($(this).attr(&#39;href&#39;));
-});
-</code></pre>
-<h2 id="Case6-jQuery中-detach-和-remove-方法的区别是什么"><a href="#Case6-jQuery中-detach-和-remove-方法的区别是什么" class="headerlink" title="Case6.jQuery中 detach() 和 remove() 方法的区别是什么?"></a>Case6.jQuery中 detach() 和 remove() 方法的区别是什么?</h2><p>尽管 detach() 和 remove() 方法都被用来移除一个DOM元素, 两者之间的主要不同在于 detach() 会保持对过去被解除元素的跟踪, 因此它可以被取消解除, 而 remove() 方法则会保持过去被移除对象的引用. </p>
-<h2 id="Case7-你如何利用jQuery来向一个元素中添加和移除CSS类"><a href="#Case7-你如何利用jQuery来向一个元素中添加和移除CSS类" class="headerlink" title="Case7.你如何利用jQuery来向一个元素中添加和移除CSS类?"></a>Case7.你如何利用jQuery来向一个元素中添加和移除CSS类?</h2><p>利用 addClass() 和 removeClass() 这两个 jQuery 方法。</p>
-<h2 id="Case8-使用-CDN-加载-jQuery-库的主要优势是什么"><a href="#Case8-使用-CDN-加载-jQuery-库的主要优势是什么" class="headerlink" title="Case8.使用 CDN 加载 jQuery 库的主要优势是什么 ?"></a>Case8.使用 CDN 加载 jQuery 库的主要优势是什么 ?</h2><ul>
-<li>节省服务器带宽</li>
-<li>更快的下载速度</li>
-<li>只需要下载一次。如果浏览器已经从同一个CDN下载类相同的 jQuery 版本, 那么它就不会再去下载它一次.</li>
-</ul>
-<h2 id="Case9-jQuery-get-和-jQuery-ajax-方法之间的区别是什么"><a href="#Case9-jQuery-get-和-jQuery-ajax-方法之间的区别是什么" class="headerlink" title="Case9.jQuery.get() 和 jQuery.ajax() 方法之间的区别是什么?"></a>Case9.jQuery.get() 和 jQuery.ajax() 方法之间的区别是什么?</h2><p>ajax() 方法更强大，更具可配置性, 让你可以指定等待多久，以及如何处理错误。get() 方法是一个只获取一些数据的专门化方法。</p>
-<h3 id="Case10-要是在一个-jQuery-事件处理程序里返回了-false-会怎样？"><a href="#Case10-要是在一个-jQuery-事件处理程序里返回了-false-会怎样？" class="headerlink" title="Case10. 要是在一个 jQuery 事件处理程序里返回了 false 会怎样？"></a>Case10. 要是在一个 jQuery 事件处理程序里返回了 false 会怎样？</h3><p>通常用于阻止事件向上冒泡。</p>
-<h3 id="Case11-哪种方式更高效：document-getElementbyId-“myId”-还是-“-myId”-？"><a href="#Case11-哪种方式更高效：document-getElementbyId-“myId”-还是-“-myId”-？" class="headerlink" title="Case11. 哪种方式更高效：document.getElementbyId(“myId”) 还是 $(“#myId”)？"></a>Case11. 哪种方式更高效：document.getElementbyId(“myId”) 还是 $(“#myId”)？</h3><p>第一种，因为它直接调用了 JavaScript 引擎。</p>
-<h2 id="Case12-当CDN上的jQuery文件不可用时，该怎么办？"><a href="#Case12-当CDN上的jQuery文件不可用时，该怎么办？" class="headerlink" title="Case12.当CDN上的jQuery文件不可用时，该怎么办？"></a>Case12.当CDN上的jQuery文件不可用时，该怎么办？</h2><pre><code class="javascript">&lt;script type=&quot;text/javascript&quot; language=&quot;Javascript&quot; src=&quot;http://ajax.aspnetcdn.com/ajax/jquery/jquery-1.4.1.min.js &quot;&gt;&lt;/script&gt;
-
-&lt;script type=&#39;text/javascript&#39;&gt;//&lt;![CDATA[
-if (typeof jQuery == &#39;undefined&#39;) {
-document.write(unescape(&quot;%3Cscript src=&#39;/Script/jquery-1.4.1.min.js&#39; type=&#39;text/javascript&#39; %3E%3C/script%3E&quot;));
-}//]]&gt;
-&lt;/script&gt;
-</code></pre>
-<h2 id="Case13-jQuery中的Delegate-函数有什么作用？"><a href="#Case13-jQuery中的Delegate-函数有什么作用？" class="headerlink" title="Case13.jQuery中的Delegate()函数有什么作用？"></a>Case13.jQuery中的Delegate()函数有什么作用？</h2><p>delegate()会在以下两个情况下使用到：</p>
-<ol>
-<li>如果你有一个父元素，需要给其下的子元素添加事件，这时你可以使用delegate()了，代码如下：</li>
-</ol>
-<pre><code class="javascript">$(&quot;ul&quot;).delegate(&quot;li&quot;, &quot;click&quot;, function(){
-    $(this).hide();
-});
-</code></pre>
-<p>2、当元素在当前页面中不可用时，可以使用delegate()</p>
-<h2 id="Case14-jQuery编码和解码URL？"><a href="#Case14-jQuery编码和解码URL？" class="headerlink" title="Case14.jQuery编码和解码URL？"></a>Case14.jQuery编码和解码URL？</h2><p>encodeURIComponent(url) and decodeURIComponent(url)</p>
-<h3 id="Case15-如何用jQuery禁用浏览器的前进后退按钮？"><a href="#Case15-如何用jQuery禁用浏览器的前进后退按钮？" class="headerlink" title="Case15. 如何用jQuery禁用浏览器的前进后退按钮？"></a>Case15. 如何用jQuery禁用浏览器的前进后退按钮？</h3><pre><code class="javascript">&lt;script type=&quot;text/javascript&quot; language=&quot;javascript&quot;&gt;
-$(document).ready(function() {
-     window.history.forward(1);    // 原理就是产生一个“前进”的动作，以抵消后退功能
-     //OR
-     window.history.forward(-1);
-});
-&lt;/script&gt;
-</code></pre>
-<h1 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h1><ul>
-<li><a href="http://www.jb51.net/article/85471.htm" target="_blank" rel="external">jQuery基础知识点总结(必看)</a></li>
-<li><a href="http://www.jb51.net/article/54745.htm" target="_blank" rel="external">jquery学习总结（超级详细）</a></li>
-<li><a href="http://www.cnblogs.com/mehjb/p/6095230.html" target="_blank" rel="external">最常见的 20 个 jQuery 面试问题及答案</a></li>
-<li><a href="http://www.cnblogs.com/vanone/p/5257157.html" target="_blank" rel="external">jQuery经典面试题及答案精选</a></li>
-</ul>
-]]></content>
-      
-        <categories>
-            
-            <category> 技术栈 </category>
-            
-        </categories>
-        
-        
-        <tags>
-            
-            <tag> JavaScript </tag>
             
         </tags>
         
@@ -1031,6 +818,219 @@ main();
 </code></pre>
 <p>它们看上去和Generators很像。我（作者）强烈推荐使用 <code>async await</code> 来替代Generators + Promises的写法。<br><a href="http://masnun.com/2015/11/11/using-es7-asyncawait-today-with-babel.html" target="_blank" rel="external">这里</a>是个很好的学习资源，让我们学习和使用这项ES7中的新功能。</p>
 <p><sup><a href="#table-of-contents">(回到目录)</a></sup></p>
+]]></content>
+      
+        <categories>
+            
+            <category> 技术栈 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> JavaScript </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[jquery]]></title>
+      <url>/2017/12/04/%E5%89%8D%E7%AB%AF/%E6%A1%86%E6%9E%B6%E4%B8%8E%E7%BB%84%E4%BB%B6/jquery/</url>
+      <content type="html"><![CDATA[<p>jquery知识点整理。</p>
+<p>jquery ajax没整理。</p>
+<a id="more"></a>
+<h1 id="知识点"><a href="#知识点" class="headerlink" title="知识点"></a>知识点</h1><h2 id=""><a href="#" class="headerlink" title="$()"></a>$()</h2><p>$()函数是JQuery函数的别名</p>
+<p>$()函数用于将任何对象包裹成jQuery对象</p>
+<h2 id="jQuery入口函数与Js入口函数的区别"><a href="#jQuery入口函数与Js入口函数的区别" class="headerlink" title="jQuery入口函数与Js入口函数的区别"></a>jQuery入口函数与Js入口函数的区别</h2><p>js入口函数指的是：window.onload = function(){};</p>
+<p>jQuery入口函数是：$(document).ready()</p>
+<table>
+<thead>
+<tr>
+<th>window.onload</th>
+<th></th>
+<th>$(document).ready()</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>必须等待网页中所有的内容加载完毕后（包括图片）才能执行</td>
+<td>执行时机</td>
+<td>网页中所有DOM结构绘制完毕后就执行，可能DOM元素关联的东西并没有加载完</td>
+</tr>
+<tr>
+<td>不能同时编写多个 ，出现多次会存在事件覆盖的问题。</td>
+<td>编写个数</td>
+<td>能同时编写多个</td>
+</tr>
+<tr>
+<td>无</td>
+<td>简化写法</td>
+<td>$(document).ready(function(){});可以简写成$(function(){});</td>
+</tr>
+<tr>
+<td>很差</td>
+<td>兼容性</td>
+<td>好</td>
+</tr>
+</tbody>
+</table>
+<h2 id="jQuery选择器"><a href="#jQuery选择器" class="headerlink" title="jQuery选择器"></a>jQuery选择器</h2><h3 id="基本选择器"><a href="#基本选择器" class="headerlink" title="基本选择器"></a>基本选择器</h3><ul>
+<li>ID选择器：#</li>
+<li>类选择器： .</li>
+<li>标签选择器： element</li>
+</ul>
+<h3 id="层级选择器"><a href="#层级选择器" class="headerlink" title="层级选择器"></a>层级选择器</h3><ul>
+<li>后代选择器：空格</li>
+<li>子代选择器：&gt;</li>
+</ul>
+<h3 id="基本过滤选择器"><a href="#基本过滤选择器" class="headerlink" title="基本过滤选择器"></a>基本过滤选择器</h3><p>索引号为index：<strong>:eq(index)</strong></p>
+<p>索引号为奇数：<strong>:odd</strong></p>
+<p>索引号为偶数：<strong>:even</strong></p>
+<h2 id="jQuery操作"><a href="#jQuery操作" class="headerlink" title="jQuery操作"></a>jQuery操作</h2><h3 id="筛选"><a href="#筛选" class="headerlink" title="筛选"></a>筛选</h3><p>查找指定元素的所有后代元素（子子孙孙）：find(selector)</p>
+<p>查找指定元素的直接子元素（亲儿子元素）：children()</p>
+<p>查找所有兄弟元素（不包括自己）：siblings()</p>
+<p>查找父元素（亲的）：parent()</p>
+<p>查找指定元素的第index个元素，index是索引号，从0开始：eq(index)</p>
+<h3 id="选择网页元素"><a href="#选择网页元素" class="headerlink" title="选择网页元素"></a>选择网页元素</h3><pre><code class="javascript">$(&#39;a:first&#39;)//选择网页中第一个a元素  
+$(&#39;tr:odd&#39;)//选择表格的奇数行  
+$(&#39;#myForm :input&#39;)//选择表单中的input元素  
+$(&#39;div:visible&#39;) //选择可见的div元素  
+$(&#39;div:gt(2)&#39;)//选择所有的div元素，除了前三个  
+$(&#39;div:animated&#39;)//选择当前处于动画状态的div元素
+</code></pre>
+<h3 id="改变结果集"><a href="#改变结果集" class="headerlink" title="改变结果集"></a>改变结果集</h3><pre><code class="javascript">$(&#39;div&#39;).has(&#39;p&#39;); //选择包含p元素的div元素  
+$(&#39;div&#39;).not(&#39;.myClass&#39;); //选择class不等于myClass的div元素  
+$(&#39;div&#39;).filter(&#39;.myClass&#39;); //选择class等于myClass的div元素  
+$(&#39;div&#39;).first(); //选择第1个div元素  
+$(&#39;div&#39;).eq(5); //选择第6个div元素  
+$(&#39;div&#39;).next(&#39;p&#39;); //选择div元素后面的第一个p元素  
+$(&#39;div&#39;).parent(); //选择div元素的父元素  
+$(&#39;div&#39;).closest(&#39;form&#39;); //选择离div最近的那个form父元素  
+$(&#39;div&#39;).children(); //选择div的所有子元素  
+$(&#39;div&#39;).siblings(); //选择div的同级元素
+</code></pre>
+<h3 id="链式操作"><a href="#链式操作" class="headerlink" title="链式操作"></a>链式操作</h3><p>.end()：回到最近的一个”破坏性”操作之前。如果之前没有破坏性操作，则返回一个空集。所谓的”破坏性”就是指任何改变所匹配的jQuery元素的操作。</p>
+<h3 id="元素的操作：取值和赋值"><a href="#元素的操作：取值和赋值" class="headerlink" title="元素的操作：取值和赋值"></a>元素的操作：取值和赋值</h3><p>常见的取值和赋值函数如下：</p>
+<ol>
+<li>html() 返回或设置被选元素的内容 (inner HTML)    </li>
+<li>text() 取出或设置text内容      </li>
+<li><strong>attr()</strong> 取出或设置某个属性的值    </li>
+<li>width() 取出或设置某个元素的宽度    </li>
+<li>height() 取出或设置某个元素的高度  </li>
+<li>val() 取出或设置html内容 取出某个表单元素的值  </li>
+<li>css() 设置css样式</li>
+</ol>
+<p>需要注意的是，如果结果集包含多个元素，那么赋值的时候，将对其中所有的元素赋值；取值的时候，则是只取出第一个元素的值（.text()例外，它取出所有元素的text内容）。</p>
+<h3 id="元素的操作：移动"><a href="#元素的操作：移动" class="headerlink" title="元素的操作：移动"></a>元素的操作：移动</h3><ol>
+<li>.insertAfter()和.after()：在现存元素的外部，从后面插入元素  </li>
+<li>.insertBefore()和.before()：在现存元素的外部，从前面插入元素  </li>
+<li>.appendTo()和.append()：在现存元素的内部，从后面插入元素  </li>
+<li>.prependTo()和.prepend()  ：在现存元素的内部，从前面插入元素</li>
+</ol>
+<h3 id="元素的操作：复制、删除和创建"><a href="#元素的操作：复制、删除和创建" class="headerlink" title="元素的操作：复制、删除和创建"></a>元素的操作：复制、删除和创建</h3><p>复制元素使用.clone()</p>
+<p>删除元素使用.remove()和.detach()。两者的区别在于，<strong>前者不保留被删除元素的事件，后者保留，有利于重新插入文档时使用。</strong></p>
+<p>清空元素内容（但是不删除该元素）使用.empty()。</p>
+<h3 id="工具方法"><a href="#工具方法" class="headerlink" title="工具方法"></a>工具方法</h3><p> $.trim() 去除字符串两端的空格。<br> $.each() 遍历一个数组或对象。<br> $.inArray() 返回一个值在数组中的索引位置。如果该值不在数组中，则返回-1。<br> $.grep() 返回数组中符合某种标准的元素。<br> $.extend() 将多个对象，合并到第一个对象。<br> $.makeArray() 将对象转化为数组。<br> $.type() 判断对象的类别（函数对象、日期对象、数组对象、正则对象等等）。<br> $.isArray() 判断某个参数是否为数组。<br> $.isEmptyObject() 判断某个对象是否为空（不含有任何属性）。<br> $.isFunction() 判断某个参数是否为函数。<br> $.isPlainObject() 判断某个参数是否为用”{}”或”new Object”建立的对象。<br> $.support() 判断浏览器是否支持某个特性。 </p>
+<h3 id="事件操作"><a href="#事件操作" class="headerlink" title="事件操作"></a>事件操作</h3><p> .blur() 表单元素失去焦点。<br> .change() 表单元素的值发生变化<br> .click() 鼠标单击<br> .dblclick() 鼠标双击<br> .focus() 表单元素获得焦点<br> .focusin() 子元素获得焦点<br> .focusout() 子元素失去焦点<br> .hover() 同时为mouseenter和mouseleave事件指定处理函数<br> .keydown() 按下键盘（长时间按键，只返回一个事件）<br> .keypress() 按下键盘（长时间按键，将返回多个事件）<br> .keyup() 松开键盘<br> .load() 元素加载完毕<br> .mousedown() 按下鼠标<br> .mouseenter() 鼠标进入（进入子元素不触发）<br> .mouseleave() 鼠标离开（离开子元素不触发）<br> .mousemove() 鼠标在元素内部移动<br> .mouseout() 鼠标离开（离开子元素也触发）<br> .mouseover() 鼠标进入（进入子元素也触发）<br> .mouseup() 松开鼠标<br> .ready() DOM加载完成<br> .resize() 浏览器窗口的大小发生改变<br> .scroll() 滚动条的位置发生变化<br> .select() 用户选中文本框中的内容<br> .submit() 用户递交表单<br> .toggle() 根据鼠标点击的次数，依次运行多个函数<br> .unload()  用户离开页面  </p>
+<p><strong>特别的</strong></p>
+<ul>
+<li>.bind()：以上这些事件在jQuery内部，都是.bind()的便捷方式。使用.bind()可以更灵活地控制事件</li>
+<li>.one()：只想让事件运行一次</li>
+<li>.unbind()：解除事件绑定</li>
+</ul>
+<p>所有的事件处理函数，都可以接受一个事件对象(event object)作为参数，这个事件对象有一些很有用的属性和方法：</p>
+<p>event.pageX 事件发生时，鼠标距离网页左上角的水平距离 　　<br>event.pageY 事件发生时，鼠标距离网页左上角的垂直距离<br>event.type 事件的类型（比如click） 　　<br>event.which 按下了哪一个键 　　<br>event.data在事件对象上绑定数据，然后传入事件处理函数 　　<br>event.target 事件针对的网页元素<br>event.preventDefault() 阻止事件的默认行为（比如点击链接，会自动打开新页面）<br>event.stopPropagation() 停止事件向上层元素冒泡</p>
+<p>有两种方法，可以自动触发一个事件。一种是直接使用事件函数，另一种是使用.trigger()或.triggerHandler()。</p>
+<pre><code class="javascript">$(&#39;a&#39;).click();
+$(&#39;a&#39;).trigger(&#39;click&#39;);
+</code></pre>
+<h3 id="特殊效果"><a href="#特殊效果" class="headerlink" title="特殊效果"></a>特殊效果</h3><p>.fadeIn() 淡入<br>.fadeOut() 淡出<br>.fadeTo() 调整透明度<br>.hide() 隐藏元素<br>.show() 显示元素<br>.slideDown() 向下展开<br>.slideUp() 向上卷起<br>.slideToggle() 依次展开或卷起某个元素<br>.toggle() 依次展示或隐藏某个元素</p>
+<p>除了.show()和.hide()，所有其他特效的默认执行时间都是400ms(毫秒)，但是你可以改变这个设置。</p>
+<p>更复杂的特效，可以用.animate()自定义。</p>
+<p>.stop()和.delay()用来停止或延缓特效的执行。</p>
+<p>$.fx.off如果设置为true，则关闭所有网页特效。</p>
+<p>几个常见的筛选选择器：</p>
+<p>filter()：筛选出与指定表达式匹配的元素集合。这个方法用于缩小匹配的范围。用逗号分隔多个表达式</p>
+<pre><code class="javascript">//保留子元素中不含有ol的元素。
+//&lt;p&gt;&lt;ol&gt;&lt;li&gt;Hello&lt;/li&gt;&lt;/ol&gt;&lt;/p&gt;&lt;p&gt;How are you?&lt;/p&gt;
+$(&quot;p&quot;).filter(function(index) {
+ return $(&quot;ol&quot;, this).length == 0;
+});
+//&lt;p&gt;How are you?&lt;/p&gt;
+</code></pre>
+<p>silce()：选取一个匹配的子集</p>
+<pre><code class="javascript">//选择第一个p元素
+//&lt;p&gt;Hello&lt;/p&gt;&lt;p&gt;cruel&lt;/p&gt;&lt;p&gt;World&lt;/p&gt;
+$(&quot;p&quot;).slice(0, 1).wrapInner(&quot;&lt;b&gt;&lt;/b&gt;&quot;);
+//&lt;p&gt;&lt;b&gt;Hello&lt;/b&gt;&lt;/p&gt;
+</code></pre>
+<h1 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h1><h2 id="Case1-jQuery对象和DOM对象的相互转换"><a href="#Case1-jQuery对象和DOM对象的相互转换" class="headerlink" title="Case1.jQuery对象和DOM对象的相互转换"></a>Case1.jQuery对象和DOM对象的相互转换</h2><pre><code class="javascript">var btn = document.getElementById(“btnShow”);
+var $btn = $(“#btnShow”); // $btn就是一个jQuery对象
+
+//DOM对象转换成jQuery对象
+var $btn1 = $(btn);
+
+//jQuery对象转换成DOM对象
+var btn1 = $btn[0]; 
+var btn2 = $btn.get(0);
+</code></pre>
+<h2 id="Case2-如何找到所有-HTML-select-标签的选中项？"><a href="#Case2-如何找到所有-HTML-select-标签的选中项？" class="headerlink" title="Case2.如何找到所有 HTML select 标签的选中项？"></a>Case2.如何找到所有 HTML select 标签的选中项？</h2><pre><code class="javascript">$(&#39;[name=NameOfSelectedTag] :selected&#39;)
+</code></pre>
+<h2 id="Case3-jQuery-里的-each-是什么函数？你是如何使用它的？"><a href="#Case3-jQuery-里的-each-是什么函数？你是如何使用它的？" class="headerlink" title="Case3. jQuery 里的 each() 是什么函数？你是如何使用它的？"></a>Case3. jQuery 里的 each() 是什么函数？你是如何使用它的？</h2><p>each() 函数就像是 Java 里的一个 Iterator，它允许你遍历一个元素集合。你可以传一个函数给 each() 方法，被调用的 jQuery 对象会在其每个元素上执行传入的函数。</p>
+<pre><code class="javascript">$(&#39;[name=NameOfSelectedTag] :selected&#39;).each(function(selected) {
+    alert($(selected).text());
+});
+</code></pre>
+<h2 id="Case4-this-和-this-关键字在-jQuery-中有何不同？"><a href="#Case4-this-和-this-关键字在-jQuery-中有何不同？" class="headerlink" title="Case4.$(this) 和 this 关键字在 jQuery 中有何不同？"></a>Case4.$(this) 和 this 关键字在 jQuery 中有何不同？</h2><p>$(this) 返回一个 jQuery 对象，你可以对它调用多个 jQuery 方法</p>
+<p>而 this 代表当前元素，它是 JavaScript 关键词中的一个，表示上下文中的当前 DOM 元素。</p>
+<h2 id="Case5-你如何使用jQuery来提取一个HTML-标记的属性-例如-链接的href"><a href="#Case5-你如何使用jQuery来提取一个HTML-标记的属性-例如-链接的href" class="headerlink" title="Case5.你如何使用jQuery来提取一个HTML 标记的属性 例如. 链接的href?"></a>Case5.你如何使用jQuery来提取一个HTML 标记的属性 例如. 链接的href?</h2><pre><code class="javascript">$(&#39;a&#39;).each(function(){
+   alert($(this).attr(&#39;href&#39;));
+});
+</code></pre>
+<h2 id="Case6-jQuery中-detach-和-remove-方法的区别是什么"><a href="#Case6-jQuery中-detach-和-remove-方法的区别是什么" class="headerlink" title="Case6.jQuery中 detach() 和 remove() 方法的区别是什么?"></a>Case6.jQuery中 detach() 和 remove() 方法的区别是什么?</h2><p>尽管 detach() 和 remove() 方法都被用来移除一个DOM元素, 两者之间的主要不同在于 detach() 会保持对过去被解除元素的跟踪, 因此它可以被取消解除, 而 remove() 方法则会保持过去被移除对象的引用. </p>
+<h2 id="Case7-你如何利用jQuery来向一个元素中添加和移除CSS类"><a href="#Case7-你如何利用jQuery来向一个元素中添加和移除CSS类" class="headerlink" title="Case7.你如何利用jQuery来向一个元素中添加和移除CSS类?"></a>Case7.你如何利用jQuery来向一个元素中添加和移除CSS类?</h2><p>利用 addClass() 和 removeClass() 这两个 jQuery 方法。</p>
+<h2 id="Case8-使用-CDN-加载-jQuery-库的主要优势是什么"><a href="#Case8-使用-CDN-加载-jQuery-库的主要优势是什么" class="headerlink" title="Case8.使用 CDN 加载 jQuery 库的主要优势是什么 ?"></a>Case8.使用 CDN 加载 jQuery 库的主要优势是什么 ?</h2><ul>
+<li>节省服务器带宽</li>
+<li>更快的下载速度</li>
+<li>只需要下载一次。如果浏览器已经从同一个CDN下载类相同的 jQuery 版本, 那么它就不会再去下载它一次.</li>
+</ul>
+<h2 id="Case9-jQuery-get-和-jQuery-ajax-方法之间的区别是什么"><a href="#Case9-jQuery-get-和-jQuery-ajax-方法之间的区别是什么" class="headerlink" title="Case9.jQuery.get() 和 jQuery.ajax() 方法之间的区别是什么?"></a>Case9.jQuery.get() 和 jQuery.ajax() 方法之间的区别是什么?</h2><p>ajax() 方法更强大，更具可配置性, 让你可以指定等待多久，以及如何处理错误。get() 方法是一个只获取一些数据的专门化方法。</p>
+<h3 id="Case10-要是在一个-jQuery-事件处理程序里返回了-false-会怎样？"><a href="#Case10-要是在一个-jQuery-事件处理程序里返回了-false-会怎样？" class="headerlink" title="Case10. 要是在一个 jQuery 事件处理程序里返回了 false 会怎样？"></a>Case10. 要是在一个 jQuery 事件处理程序里返回了 false 会怎样？</h3><p>通常用于阻止事件向上冒泡。</p>
+<h3 id="Case11-哪种方式更高效：document-getElementbyId-“myId”-还是-“-myId”-？"><a href="#Case11-哪种方式更高效：document-getElementbyId-“myId”-还是-“-myId”-？" class="headerlink" title="Case11. 哪种方式更高效：document.getElementbyId(“myId”) 还是 $(“#myId”)？"></a>Case11. 哪种方式更高效：document.getElementbyId(“myId”) 还是 $(“#myId”)？</h3><p>第一种，因为它直接调用了 JavaScript 引擎。</p>
+<h2 id="Case12-当CDN上的jQuery文件不可用时，该怎么办？"><a href="#Case12-当CDN上的jQuery文件不可用时，该怎么办？" class="headerlink" title="Case12.当CDN上的jQuery文件不可用时，该怎么办？"></a>Case12.当CDN上的jQuery文件不可用时，该怎么办？</h2><pre><code class="javascript">&lt;script type=&quot;text/javascript&quot; language=&quot;Javascript&quot; src=&quot;http://ajax.aspnetcdn.com/ajax/jquery/jquery-1.4.1.min.js &quot;&gt;&lt;/script&gt;
+
+&lt;script type=&#39;text/javascript&#39;&gt;//&lt;![CDATA[
+if (typeof jQuery == &#39;undefined&#39;) {
+document.write(unescape(&quot;%3Cscript src=&#39;/Script/jquery-1.4.1.min.js&#39; type=&#39;text/javascript&#39; %3E%3C/script%3E&quot;));
+}//]]&gt;
+&lt;/script&gt;
+</code></pre>
+<h2 id="Case13-jQuery中的Delegate-函数有什么作用？"><a href="#Case13-jQuery中的Delegate-函数有什么作用？" class="headerlink" title="Case13.jQuery中的Delegate()函数有什么作用？"></a>Case13.jQuery中的Delegate()函数有什么作用？</h2><p>delegate()会在以下两个情况下使用到：</p>
+<ol>
+<li>如果你有一个父元素，需要给其下的子元素添加事件，这时你可以使用delegate()了，代码如下：</li>
+</ol>
+<pre><code class="javascript">$(&quot;ul&quot;).delegate(&quot;li&quot;, &quot;click&quot;, function(){
+    $(this).hide();
+});
+</code></pre>
+<p>2、当元素在当前页面中不可用时，可以使用delegate()</p>
+<h2 id="Case14-jQuery编码和解码URL？"><a href="#Case14-jQuery编码和解码URL？" class="headerlink" title="Case14.jQuery编码和解码URL？"></a>Case14.jQuery编码和解码URL？</h2><p>encodeURIComponent(url) and decodeURIComponent(url)</p>
+<h3 id="Case15-如何用jQuery禁用浏览器的前进后退按钮？"><a href="#Case15-如何用jQuery禁用浏览器的前进后退按钮？" class="headerlink" title="Case15. 如何用jQuery禁用浏览器的前进后退按钮？"></a>Case15. 如何用jQuery禁用浏览器的前进后退按钮？</h3><pre><code class="javascript">&lt;script type=&quot;text/javascript&quot; language=&quot;javascript&quot;&gt;
+$(document).ready(function() {
+     window.history.forward(1);    // 原理就是产生一个“前进”的动作，以抵消后退功能
+     //OR
+     window.history.forward(-1);
+});
+&lt;/script&gt;
+</code></pre>
+<h1 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h1><ul>
+<li><a href="http://www.jb51.net/article/85471.htm" target="_blank" rel="external">jQuery基础知识点总结(必看)</a></li>
+<li><a href="http://www.jb51.net/article/54745.htm" target="_blank" rel="external">jquery学习总结（超级详细）</a></li>
+<li><a href="http://www.cnblogs.com/mehjb/p/6095230.html" target="_blank" rel="external">最常见的 20 个 jQuery 面试问题及答案</a></li>
+<li><a href="http://www.cnblogs.com/vanone/p/5257157.html" target="_blank" rel="external">jQuery经典面试题及答案精选</a></li>
+</ul>
 ]]></content>
       
         <categories>
@@ -2019,6 +2019,179 @@ process.on(&#39;unhandledRejection&#39;, function (err, p) { console.error(&#39;
     </entry>
     
     <entry>
+      <title><![CDATA[webpack篇]]></title>
+      <url>/2017/10/02/%E5%89%8D%E7%AB%AF/%E6%9E%84%E5%BB%BA%E7%94%9F%E6%80%81/webpack%E7%AF%87/</url>
+      <content type="html"><![CDATA[<p>本文介绍webpack结构</p>
+<a id="more"></a>
+<h1 id="webpack篇"><a href="#webpack篇" class="headerlink" title="webpack篇"></a>webpack篇</h1><h1 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h1><p>不像大多数的模块打包机，webpack是收把项目当作一个整体，通过一个给定的的主文件，webpack将从这个文件开始找到你的项目的所有依赖文件，使用loaders处理它们，最后打包成一个或多个浏览器可识别的js文件</p>
+<h1 id="install"><a href="#install" class="headerlink" title="install"></a>install</h1><p>webpack是我们需要的模块打包机，webpack-dev-server用来创建本地服务器，监听你的代码修改，并自动刷新修改后的结果。这些是有关<strong>devServer的配置</strong></p>
+<pre><code class="javascript">contentBase,  // 为文件提供本地服务器
+port, // 监听端口，默认8080
+inline, // 设置为true,源文件发生改变自动刷新页面
+historyApiFallback  // 依赖HTML5 history API,如果设置为true,所有的页面跳转指向index.html
+
+devServer:{
+    contentBase: &#39;./src&#39; // 本地服务器所加载的页面所在的目录
+    historyApiFallback: true, // 不跳转
+    inline: true // 实时刷新
+}
+</code></pre>
+<p>然后我们在根目录下创建一个’webpack.config.js’，在’package.json’添加两个命令用于本地开发和生产发布</p>
+<pre><code class="javascript">&quot;scripts&quot;: {
+      &quot;start&quot;: &quot;webpack-dev-server&quot;,
+    &quot;build&quot;: &quot;webpack&quot;
+}
+</code></pre>
+<h1 id="webpack-config-js"><a href="#webpack-config-js" class="headerlink" title="webpack.config.js"></a>webpack.config.js</h1><h2 id="entry"><a href="#entry" class="headerlink" title="entry"></a>entry</h2><p>entry: 用来写入口文件，它将是整个依赖关系的根，当我们需要多个入口文件的时候，可以把entry写成一个对象</p>
+<pre><code class="javascript">var baseConfig = {
+        entry: {
+            main: &#39;./src/index.js&#39;
+        }
+    }
+</code></pre>
+<h2 id="output"><a href="#output" class="headerlink" title="output"></a>output</h2><p>output: 即使入口文件有多个，但是只有一个输出配置</p>
+<pre><code class="javascript">var path = require(&#39;path&#39;)
+var baseConfig = {
+    entry: {
+        main: &#39;./src/index.js&#39;
+    },
+    output: {
+        filename: &#39;main.js&#39;,
+        path: path.resolve(&#39;./build&#39;)
+    }
+}
+module.exports = baseConfig
+</code></pre>
+<p>如果你定义的入口文件有多个，那么我们需要使用<strong>占位符</strong>来确保输出文件的唯一性</p>
+<pre><code class="javascript">output: {
+      filename: &#39;[name].js&#39;,
+    path: path.resolve(&#39;./build&#39;)
+}
+</code></pre>
+<p>注：filename应该比较好理解，就是对应于entry里面生成出来的文件名。</p>
+<h2 id="Loader"><a href="#Loader" class="headerlink" title="Loader"></a>Loader</h2><p><strong>loader的作用</strong>： </p>
+<ol>
+<li>实现对不同格式的文件的处理，比如说将scss转换为css，或者typescript转化为js</li>
+<li>转换这些文件，从而使其能够被添加到依赖图中</li>
+</ol>
+<p>loader是webpack最重要的部分之一，通过使用不同的Loader，我们能够调用外部的脚本或者工具，实现对不同格式文件的处理，loader需要在webpack.config.js里边单独用module进行配置，需要的loader需要通过npm 进行安装。配置如下：</p>
+<pre><code class="javascript">var baseConfig = {
+  // ...
+  module: {
+    rules: [
+      {
+        test: /*匹配文件后缀名的正则*/,
+        use: [
+        loader: /*loader名字*/,
+        query: /*额外配置*/
+        ]
+      }
+    ]
+  }
+}
+</code></pre>
+<p>几个常用的loader：</p>
+<ul>
+<li>babel-loader： 让下一代的js文件转换成现代浏览器能够支持的JS文件。babel有些复杂，所以大多数都会新建一个.babelrc进行配置</li>
+<li>css-loader,style-loader:两个建议配合使用，用来解析css文件，能够解释@import,url()如果需要解析less就在后面加一个less-loader</li>
+<li>file-loader: 生成的文件名就是文件内容的MD5哈希值并会保留所引用资源的原始扩展名</li>
+<li>url-loader: 功能类似 file-loader,但是文件大小低于指定的限制时，可以返回一个DataURL事实上，在使用less,scss,stylus这些的时候，npm会提示你差什么插件，差什么，你就安上就行了</li>
+</ul>
+<h2 id="Plugins"><a href="#Plugins" class="headerlink" title="Plugins"></a>Plugins</h2><p><strong>plugins和loader区别</strong></p>
+<p><strong>loaders负责的是处理源文件的如css、jsx，一次处理一个文件。而plugins并不是直接操作单个文件，</strong>它直接对整个构建过程起作用。下面列举了一些我们常用的plugins和他的用法</p>
+<ul>
+<li>ExtractTextWebpackPlugin: 它会将入口中引用css文件，都打包都独立的css文件中，而不是内嵌在js打包文件中。</li>
+<li>HtmlWebpackPlugin:它依据一个简单的index.html模版，生成一个自动引用你打包后的js文件的新index.html</li>
+<li>HotModuleReplacementPlugin: 它允许你在修改组件代码时，自动刷新实时预览修改后的结果注意永远不要在生产环境中使用HMR。这儿说一下一般情况分为开发环境，测试环境，生产环境。</li>
+</ul>
+<p>Case.webapck.config.js的全部内容:</p>
+<pre><code class="javascript">const webpack = require(&quot;webpack&quot;)
+const HtmlWebpackPlugin = require(&quot;html-webpack-plugin&quot;)
+var ExtractTextPlugin = require(&#39;extract-text-webpack-plugin&#39;)
+var lessRules = {
+  use: [
+    {loader: &#39;css-loader&#39;},
+    {loader: &#39;less-loader&#39;}
+  ]
+}
+module.exports = {
+  entry: {
+    main: &#39;./src/index.js&#39;
+  },
+  output: {
+    filename: &#39;[name].js&#39;,
+    path: path.resolve(&#39;./build&#39;)
+  },
+  devServer: {
+    contentBase: &#39;/src&#39;,
+    historyApiFallback: true,
+    inline: true,
+    hot: true
+  },
+  module: {
+    rules: [
+      {test: /\.less$/, use: ExtractTextPlugin.extract(lessRules)}
+    ]
+  },
+  plugins: [
+    new ExtractTextPlugin(&#39;main.css&#39;)
+  ]
+}
+</code></pre>
+<h1 id="产品阶段的构建"><a href="#产品阶段的构建" class="headerlink" title="产品阶段的构建"></a>产品阶段的构建</h1><p>在产品阶段，还需要对资源进行别的<br>处理，例如压缩，优化，缓存，分离css和js。首先我们来定义产品环境</p>
+<pre><code class="javascript">var ENV = process.env.NODE_ENV
+var baseConfig = {
+  // ... 
+  plugins: [
+    new webpack.DefinePlugin({
+      &#39;process.env.NODE_ENV&#39;: JSON.stringify(ENV)
+    })
+  ]
+}
+</code></pre>
+<p>然后还需要修改我们的script命令</p>
+<pre><code class="javascript">&quot;scripts&quot;: {
+    &quot;start&quot;: &quot;NODE_ENV=development webpack-dev-server&quot;,
+    &quot;build&quot;: &quot;NODE_ENV=production webpack&quot;
+}
+</code></pre>
+<p>process.env.NODE_ENV 将被一个字符串替代，它运行压缩器排除那些不可到达的开发代码分支。<br>当你引入那些不会进行生产的代码，下面这个代码将非常有用。</p>
+<pre><code class="javascript">if (process.env.NODE_ENV === &#39;development&#39;) {
+  console.warn(&#39;这个警告会在生产阶段消失&#39;)
+}
+</code></pre>
+<h1 id="优化插件"><a href="#优化插件" class="headerlink" title="优化插件"></a>优化插件</h1><ul>
+<li>OccurenceOrderPlugin: 为组件分配ID,通过这个插件webpack可以分析和优先考虑使用最多 的模块，然后为他们分配最小的ID</li>
+<li>UglifyJsPlugin: 压缩代码</li>
+</ul>
+<p>使用方法</p>
+<pre><code class="javascript">var baseConfig = {
+  // ...
+  new webpack.optimize.OccurenceOrderPlugin()
+  new webpack.optimize.UglifyJsPlugin()
+}
+</code></pre>
+<p>然后在我们使用npm run build会发现代码是压缩的</p>
+]]></content>
+      
+        <categories>
+            
+            <category> 技术栈 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> web </tag>
+            
+            <tag> webpack </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[Less语言特性]]></title>
       <url>/2017/10/02/%E5%89%8D%E7%AB%AF/%E6%9E%84%E5%BB%BA%E7%94%9F%E6%80%81/Less%E8%AF%AD%E8%A8%80%E7%89%B9%E6%80%A7/</url>
       <content type="html"><![CDATA[<p>本文介绍Less语言特性</p>
@@ -2631,180 +2804,7 @@ h1 { color: green; }
         
         <tags>
             
-            <tag> web </tag>
-            
             <tag> less </tag>
-            
-        </tags>
-        
-    </entry>
-    
-    <entry>
-      <title><![CDATA[webpack篇]]></title>
-      <url>/2017/10/02/%E5%89%8D%E7%AB%AF/%E6%9E%84%E5%BB%BA%E7%94%9F%E6%80%81/webpack%E7%AF%87/</url>
-      <content type="html"><![CDATA[<p>本文介绍webpack结构</p>
-<a id="more"></a>
-<h1 id="webpack篇"><a href="#webpack篇" class="headerlink" title="webpack篇"></a>webpack篇</h1><h1 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h1><p>不像大多数的模块打包机，webpack是收把项目当作一个整体，通过一个给定的的主文件，webpack将从这个文件开始找到你的项目的所有依赖文件，使用loaders处理它们，最后打包成一个或多个浏览器可识别的js文件</p>
-<h1 id="install"><a href="#install" class="headerlink" title="install"></a>install</h1><p>webpack是我们需要的模块打包机，webpack-dev-server用来创建本地服务器，监听你的代码修改，并自动刷新修改后的结果。这些是有关<strong>devServer的配置</strong></p>
-<pre><code class="javascript">contentBase,  // 为文件提供本地服务器
-port, // 监听端口，默认8080
-inline, // 设置为true,源文件发生改变自动刷新页面
-historyApiFallback  // 依赖HTML5 history API,如果设置为true,所有的页面跳转指向index.html
-
-devServer:{
-    contentBase: &#39;./src&#39; // 本地服务器所加载的页面所在的目录
-    historyApiFallback: true, // 不跳转
-    inline: true // 实时刷新
-}
-</code></pre>
-<p>然后我们在根目录下创建一个’webpack.config.js’，在’package.json’添加两个命令用于本地开发和生产发布</p>
-<pre><code class="javascript">&quot;scripts&quot;: {
-      &quot;start&quot;: &quot;webpack-dev-server&quot;,
-    &quot;build&quot;: &quot;webpack&quot;
-}
-</code></pre>
-<h1 id="webpack-config-js"><a href="#webpack-config-js" class="headerlink" title="webpack.config.js"></a>webpack.config.js</h1><h2 id="entry"><a href="#entry" class="headerlink" title="entry"></a>entry</h2><p>entry: 用来写入口文件，它将是整个依赖关系的根，当我们需要多个入口文件的时候，可以把entry写成一个对象</p>
-<pre><code class="javascript">var baseConfig = {
-        entry: {
-            main: &#39;./src/index.js&#39;
-        }
-    }
-</code></pre>
-<h2 id="output"><a href="#output" class="headerlink" title="output"></a>output</h2><p>output: 即使入口文件有多个，但是只有一个输出配置</p>
-<pre><code class="javascript">var path = require(&#39;path&#39;)
-var baseConfig = {
-    entry: {
-        main: &#39;./src/index.js&#39;
-    },
-    output: {
-        filename: &#39;main.js&#39;,
-        path: path.resolve(&#39;./build&#39;)
-    }
-}
-module.exports = baseConfig
-</code></pre>
-<p>如果你定义的入口文件有多个，那么我们需要使用<strong>占位符</strong>来确保输出文件的唯一性</p>
-<pre><code class="javascript">output: {
-      filename: &#39;[name].js&#39;,
-    path: path.resolve(&#39;./build&#39;)
-}
-</code></pre>
-<p>注：filename应该比较好理解，就是对应于entry里面生成出来的文件名。</p>
-<h2 id="Loader"><a href="#Loader" class="headerlink" title="Loader"></a>Loader</h2><p><strong>loader的作用</strong>： </p>
-<ol>
-<li>实现对不同格式的文件的处理，比如说将scss转换为css，或者typescript转化为js</li>
-<li>转换这些文件，从而使其能够被添加到依赖图中</li>
-</ol>
-<p>loader是webpack最重要的部分之一，通过使用不同的Loader，我们能够调用外部的脚本或者工具，实现对不同格式文件的处理，loader需要在webpack.config.js里边单独用module进行配置，需要的loader需要通过npm 进行安装。配置如下：</p>
-<pre><code class="javascript">var baseConfig = {
-  // ...
-  module: {
-    rules: [
-      {
-        test: /*匹配文件后缀名的正则*/,
-        use: [
-        loader: /*loader名字*/,
-        query: /*额外配置*/
-        ]
-      }
-    ]
-  }
-}
-</code></pre>
-<p>几个常用的loader：</p>
-<ul>
-<li>babel-loader： 让下一代的js文件转换成现代浏览器能够支持的JS文件。babel有些复杂，所以大多数都会新建一个.babelrc进行配置</li>
-<li>css-loader,style-loader:两个建议配合使用，用来解析css文件，能够解释@import,url()如果需要解析less就在后面加一个less-loader</li>
-<li>file-loader: 生成的文件名就是文件内容的MD5哈希值并会保留所引用资源的原始扩展名</li>
-<li>url-loader: 功能类似 file-loader,但是文件大小低于指定的限制时，可以返回一个DataURL事实上，在使用less,scss,stylus这些的时候，npm会提示你差什么插件，差什么，你就安上就行了</li>
-</ul>
-<h2 id="Plugins"><a href="#Plugins" class="headerlink" title="Plugins"></a>Plugins</h2><p><strong>plugins和loader区别</strong></p>
-<p><strong>loaders负责的是处理源文件的如css、jsx，一次处理一个文件。而plugins并不是直接操作单个文件，</strong>它直接对整个构建过程起作用。下面列举了一些我们常用的plugins和他的用法</p>
-<ul>
-<li>ExtractTextWebpackPlugin: 它会将入口中引用css文件，都打包都独立的css文件中，而不是内嵌在js打包文件中。</li>
-<li>HtmlWebpackPlugin:它依据一个简单的index.html模版，生成一个自动引用你打包后的js文件的新index.html</li>
-<li>HotModuleReplacementPlugin: 它允许你在修改组件代码时，自动刷新实时预览修改后的结果注意永远不要在生产环境中使用HMR。这儿说一下一般情况分为开发环境，测试环境，生产环境。</li>
-</ul>
-<p>Case.webapck.config.js的全部内容:</p>
-<pre><code class="javascript">const webpack = require(&quot;webpack&quot;)
-const HtmlWebpackPlugin = require(&quot;html-webpack-plugin&quot;)
-var ExtractTextPlugin = require(&#39;extract-text-webpack-plugin&#39;)
-var lessRules = {
-  use: [
-    {loader: &#39;css-loader&#39;},
-    {loader: &#39;less-loader&#39;}
-  ]
-}
-module.exports = {
-  entry: {
-    main: &#39;./src/index.js&#39;
-  },
-  output: {
-    filename: &#39;[name].js&#39;,
-    path: path.resolve(&#39;./build&#39;)
-  },
-  devServer: {
-    contentBase: &#39;/src&#39;,
-    historyApiFallback: true,
-    inline: true,
-    hot: true
-  },
-  module: {
-    rules: [
-      {test: /\.less$/, use: ExtractTextPlugin.extract(lessRules)}
-    ]
-  },
-  plugins: [
-    new ExtractTextPlugin(&#39;main.css&#39;)
-  ]
-}
-</code></pre>
-<h1 id="产品阶段的构建"><a href="#产品阶段的构建" class="headerlink" title="产品阶段的构建"></a>产品阶段的构建</h1><p>在产品阶段，还需要对资源进行别的<br>处理，例如压缩，优化，缓存，分离css和js。首先我们来定义产品环境</p>
-<pre><code class="javascript">var ENV = process.env.NODE_ENV
-var baseConfig = {
-  // ... 
-  plugins: [
-    new webpack.DefinePlugin({
-      &#39;process.env.NODE_ENV&#39;: JSON.stringify(ENV)
-    })
-  ]
-}
-</code></pre>
-<p>然后还需要修改我们的script命令</p>
-<pre><code class="javascript">&quot;scripts&quot;: {
-    &quot;start&quot;: &quot;NODE_ENV=development webpack-dev-server&quot;,
-    &quot;build&quot;: &quot;NODE_ENV=production webpack&quot;
-}
-</code></pre>
-<p>process.env.NODE_ENV 将被一个字符串替代，它运行压缩器排除那些不可到达的开发代码分支。<br>当你引入那些不会进行生产的代码，下面这个代码将非常有用。</p>
-<pre><code class="javascript">if (process.env.NODE_ENV === &#39;development&#39;) {
-  console.warn(&#39;这个警告会在生产阶段消失&#39;)
-}
-</code></pre>
-<h1 id="优化插件"><a href="#优化插件" class="headerlink" title="优化插件"></a>优化插件</h1><ul>
-<li>OccurenceOrderPlugin: 为组件分配ID,通过这个插件webpack可以分析和优先考虑使用最多 的模块，然后为他们分配最小的ID</li>
-<li>UglifyJsPlugin: 压缩代码</li>
-</ul>
-<p>使用方法</p>
-<pre><code class="javascript">var baseConfig = {
-  // ...
-  new webpack.optimize.OccurenceOrderPlugin()
-  new webpack.optimize.UglifyJsPlugin()
-}
-</code></pre>
-<p>然后在我们使用npm run build会发现代码是压缩的</p>
-]]></content>
-      
-        <categories>
-            
-            <category> 技术栈 </category>
-            
-        </categories>
-        
-        
-        <tags>
-            
-            <tag> webpack </tag>
             
             <tag> web </tag>
             
@@ -5968,9 +5968,9 @@ result=匿名函数();//返回匿名函数的执行结果
         
         <tags>
             
-            <tag> 前端基础 </tag>
-            
             <tag> HTML </tag>
+            
+            <tag> 前端基础 </tag>
             
         </tags>
         
@@ -6402,6 +6402,241 @@ align-items: center;
             <tag> 前端基础 </tag>
             
             <tag> CSS </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[基础算法]]></title>
+      <url>/2017/01/02/%E9%9D%A2%E8%AF%95/%E7%AE%97%E6%B3%95/%E5%9F%BA%E7%A1%80%E7%AE%97%E6%B3%95/</url>
+      <content type="html"><![CDATA[<p>面试的基础算法整理总结</p>
+<a id="more"></a>
+<h1 id="算法"><a href="#算法" class="headerlink" title="算法"></a>算法</h1><h2 id="快排"><a href="#快排" class="headerlink" title="快排"></a>快排</h2><pre><code class="javascript">function quickSort(arr){
+  if(arr.length&lt;=1){return arr;}
+  var pivotIndex=Math.floor(arr.length/2);
+  //找基准，并把基准从原数组删除
+  var pivot=arr.splice(pivotIndex,1)[0];
+  //定义左右数组
+  var left=[];
+  var right=[];
+
+  //比基准小的放在left，比基准大的放在right
+  for(var i=0;i&lt;arr.length;i++){
+    if(arr[i]&lt;=pivot){
+      left.push(arr[i]);
+    }
+    else{
+      right.push(arr[i]);
+    }
+  }
+  //递归
+  return quickSort(left).concat([pivot],quickSort(right));
+}
+</code></pre>
+<h2 id="二叉树"><a href="#二叉树" class="headerlink" title="二叉树"></a>二叉树</h2><h3 id="节点个数"><a href="#节点个数" class="headerlink" title="节点个数"></a>节点个数</h3><p>递归解法：</p>
+<ol>
+<li>如果二叉树为空，节点个数为0</li>
+<li>如果二叉树不为空，二叉树节点个数 = 左子树节点个数 + 右子树节点个数 + 1</li>
+</ol>
+<pre><code class="c++">int GetNodeNum(BinaryTreeNode * pRoot)  
+{  
+    if(pRoot == NULL) // 递归出口  
+        return 0;  
+    return GetNodeNum(pRoot-&gt;m_pLeft) + GetNodeNum(pRoot-&gt;m_pRight) + 1;  
+}
+</code></pre>
+<h3 id="二叉树的深度"><a href="#二叉树的深度" class="headerlink" title="二叉树的深度"></a>二叉树的深度</h3><p>递归解法：</p>
+<ol>
+<li>如果二叉树为空，二叉树的深度为0</li>
+<li>如果二叉树不为空，二叉树的深度 = max(左子树深度， 右子树深度) + 1</li>
+</ol>
+<pre><code class="c++">int GetDepth(BinaryTreeNode * pRoot)  
+{  
+    if(pRoot == NULL) // 递归出口  
+        return 0;  
+    int depthLeft = GetDepth(pRoot-&gt;m_pLeft);  
+    int depthRight = GetDepth(pRoot-&gt;m_pRight);  
+    return depthLeft &gt; depthRight ? (depthLeft + 1) : (depthRight + 1);   
+}
+</code></pre>
+<h3 id="前序遍历，中序遍历，后序遍历"><a href="#前序遍历，中序遍历，后序遍历" class="headerlink" title="前序遍历，中序遍历，后序遍历"></a>前序遍历，中序遍历，后序遍历</h3><p>前序遍历递归解法：</p>
+<ol>
+<li>如果二叉树为空，空操作</li>
+<li>如果二叉树不为空，访问根节点，前序遍历左子树，前序遍历右子树</li>
+</ol>
+<pre><code class="javascript">void PreOrderTraverse(BinaryTreeNode * pRoot)  
+{  
+    if(pRoot == NULL)  
+        return;  
+    Visit(pRoot); // 访问根节点  
+    PreOrderTraverse(pRoot-&gt;m_pLeft); // 前序遍历左子树  
+    PreOrderTraverse(pRoot-&gt;m_pRight); // 前序遍历右子树  
+}
+</code></pre>
+<p>中序遍历递归解法</p>
+<ol>
+<li>如果二叉树为空，空操作。</li>
+<li>如果二叉树不为空，中序遍历左子树，访问根节点，中序遍历右子树</li>
+</ol>
+<pre><code class="javascript">void InOrderTraverse(BinaryTreeNode * pRoot)  
+{  
+    if(pRoot == NULL)  
+        return;  
+    InOrderTraverse(pRoot-&gt;m_pLeft); // 中序遍历左子树  
+    Visit(pRoot); // 访问根节点  
+    InOrderTraverse(pRoot-&gt;m_pRight); // 中序遍历右子树  
+}
+</code></pre>
+<p>后序遍历递归解法</p>
+<ol>
+<li>如果二叉树为空，空操作</li>
+<li>如果二叉树不为空，后序遍历左子树，后序遍历右子树，访问根节点</li>
+</ol>
+<pre><code class="javascript">void PostOrderTraverse(BinaryTreeNode * pRoot)  
+{  
+    if(pRoot == NULL)  
+        return;  
+    PostOrderTraverse(pRoot-&gt;m_pLeft); // 后序遍历左子树  
+    PostOrderTraverse(pRoot-&gt;m_pRight); // 后序遍历右子树  
+    Visit(pRoot); // 访问根节点  
+}
+</code></pre>
+<h3 id="分层遍历二叉树（按层次从上往下，从左往右）"><a href="#分层遍历二叉树（按层次从上往下，从左往右）" class="headerlink" title="分层遍历二叉树（按层次从上往下，从左往右）"></a>分层遍历二叉树（按层次从上往下，从左往右）</h3><p>相当于广度优先搜索，使用队列实现。队列初始化，将根节点压入队列。当队列不为空，进行如下操作：弹出一个节点，访问，若左子节点或右子节点不为空，将其压入队列。</p>
+<pre><code class="c++">void LevelTraverse(BinaryTreeNode * pRoot)  
+{  
+    if(pRoot == NULL)  
+        return;  
+    queue&lt;BinaryTreeNode *&gt; q;  
+    q.push(pRoot);  
+    while(!q.empty())  
+    {  
+        BinaryTreeNode * pNode = q.front();  
+        q.pop();  
+        Visit(pNode); // 访问节点  
+        if(pNode-&gt;m_pLeft != NULL)  
+            q.push(pNode-&gt;m_pLeft);  
+        if(pNode-&gt;m_pRight != NULL)  
+            q.push(pNode-&gt;m_pRight);  
+    }  
+    return;  
+}
+</code></pre>
+<h3 id="求二叉树第K层的节点个数"><a href="#求二叉树第K层的节点个数" class="headerlink" title="求二叉树第K层的节点个数"></a>求二叉树第K层的节点个数</h3><p>递归解法：</p>
+<ol>
+<li>如果二叉树为空或者k&lt;1返回0</li>
+</ol>
+<ol>
+<li>如果二叉树不为空并且k==1，返回1</li>
+<li>如果二叉树不为空且k&gt;1，返回左子树中k-1层的节点个数与右子树k-1层节点个数之和</li>
+</ol>
+<pre><code class="c++">int GetNodeNumKthLevel(BinaryTreeNode * pRoot, int k)  
+{  
+    if(pRoot == NULL || k &lt; 1)  
+        return 0;  
+    if(k == 1)  
+        return 1;  
+    int numLeft = GetNodeNumKthLevel(pRoot-&gt;m_pLeft, k-1); // 左子树中k-1层的节点个数  
+    int numRight = GetNodeNumKthLevel(pRoot-&gt;m_pRight, k-1); // 右子树中k-1层的节点个数  
+    return (numLeft + numRight);  
+}
+</code></pre>
+<h3 id="求二叉树中叶子节点的个数"><a href="#求二叉树中叶子节点的个数" class="headerlink" title="求二叉树中叶子节点的个数"></a>求二叉树中叶子节点的个数</h3><p>递归解法：</p>
+<ol>
+<li>如果二叉树为空，返回0</li>
+</ol>
+<ol>
+<li>如果二叉树不为空且左右子树为空，返回1</li>
+<li>如果二叉树不为空，且左右子树不同时为空，返回左子树中叶子节点个数加上右子树中叶子节点个数</li>
+</ol>
+<pre><code class="c++">int GetLeafNodeNum(BinaryTreeNode * pRoot)  
+{  
+    if(pRoot == NULL)  
+        return 0;  
+    if(pRoot-&gt;m_pLeft == NULL &amp;&amp; pRoot-&gt;m_pRight == NULL)  
+        return 1;  
+    int numLeft = GetLeafNodeNum(pRoot-&gt;m_pLeft); // 左子树中叶节点的个数  
+    int numRight = GetLeafNodeNum(pRoot-&gt;m_pRight); // 右子树中叶节点的个数  
+    return (numLeft + numRight);  
+}
+</code></pre>
+<h3 id="求二叉树的镜像"><a href="#求二叉树的镜像" class="headerlink" title="求二叉树的镜像"></a>求二叉树的镜像</h3><p>递归解法：</p>
+<ol>
+<li>如果二叉树为空，返回空</li>
+<li>如果二叉树不为空，求左子树和右子树的镜像，然后交换左子树和右子树</li>
+</ol>
+<pre><code class="c++">BinaryTreeNode * Mirror(BinaryTreeNode * pRoot)  
+{  
+    if(pRoot == NULL) // 返回NULL  
+        return NULL;  
+    BinaryTreeNode * pLeft = Mirror(pRoot-&gt;m_pLeft); // 求左子树镜像  
+    BinaryTreeNode * pRight = Mirror(pRoot-&gt;m_pRight); // 求右子树镜像  
+        // 交换左子树和右子树  
+    pRoot-&gt;m_pLeft = pRight;  
+    pRoot-&gt;m_pRight = pLeft;  
+    return pRoot;  
+}
+</code></pre>
+<h3 id="判断二叉树是不是平衡二叉树"><a href="#判断二叉树是不是平衡二叉树" class="headerlink" title="判断二叉树是不是平衡二叉树"></a>判断二叉树是不是平衡二叉树</h3><p>递归解法：</p>
+<ol>
+<li>如果二叉树为空，返回真</li>
+<li>如果二叉树不为空，如果左子树和右子树都是AVL树并且左子树和右子树高度相差不大于1，返回真，其他返回假</li>
+</ol>
+<pre><code class="c++">bool IsAVL(BinaryTreeNode * pRoot, int &amp; height)  
+{  
+    if(pRoot == NULL) // 空树，返回真  
+    {  
+        height = 0;  
+        return true;  
+    }  
+    int heightLeft;  
+    bool resultLeft = IsAVL(pRoot-&gt;m_pLeft, heightLeft);  
+    int heightRight;  
+    bool resultRight = IsAVL(pRoot-&gt;m_pRight, heightRight);  
+    if(resultLeft &amp;&amp; resultRight &amp;&amp; abs(heightLeft - heightRight) &lt;= 1) // 左子树和右子树都是AVL，并且高度相差不大于1，返回真  
+    {  
+        height = max(heightLeft, heightRight) + 1;  
+        return true;  
+    }  
+    else  
+    {  
+        height = max(heightLeft, heightRight) + 1;  
+        return false;  
+    }  
+}
+</code></pre>
+<h3 id="由前序遍历序列和中序遍历序列重建二叉树"><a href="#由前序遍历序列和中序遍历序列重建二叉树" class="headerlink" title="由前序遍历序列和中序遍历序列重建二叉树"></a>由前序遍历序列和中序遍历序列重建二叉树</h3><p>递归解法：</p>
+<ol>
+<li>如果前序遍历为空或中序遍历为空或节点个数小于等于0，返回NULL。</li>
+<li>创建根节点。前序遍历的第一个数据就是根节点的数据，在中序遍历中找到根节点的位置，可分别得知左子树和右子树的前序和中序遍历序列，重建左右子树。</li>
+</ol>
+<pre><code class="javascript">function reConstructBinaryTree(pre, vin)
+{
+    // write code here
+    if(pre.length==0 || vin.length==0) return null;
+    var index=vin.indexOf(pre[0]);
+    var left=vin.slice(0,index);//中序左子树
+    var right=vin.slice(index+1);//中序右子树
+    return {
+        val:pre[0],
+        //递归左右子树的前序，中序 
+        left:reConstructBinaryTree(pre.slice(1,index+1),left),
+        right:reConstructBinaryTree(pre.slice(index+1),right)
+     }; 
+}
+</code></pre>
+]]></content>
+      
+        <categories>
+            
+            <category> 算法题 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> 算法 </tag>
             
         </tags>
         
@@ -7204,241 +7439,6 @@ function HasSubtree(pRoot1, pRoot2)
     </entry>
     
     <entry>
-      <title><![CDATA[基础算法]]></title>
-      <url>/2017/01/02/%E9%9D%A2%E8%AF%95/%E7%AE%97%E6%B3%95/%E5%9F%BA%E7%A1%80%E7%AE%97%E6%B3%95/</url>
-      <content type="html"><![CDATA[<p>面试的基础算法整理总结</p>
-<a id="more"></a>
-<h1 id="算法"><a href="#算法" class="headerlink" title="算法"></a>算法</h1><h2 id="快排"><a href="#快排" class="headerlink" title="快排"></a>快排</h2><pre><code class="javascript">function quickSort(arr){
-  if(arr.length&lt;=1){return arr;}
-  var pivotIndex=Math.floor(arr.length/2);
-  //找基准，并把基准从原数组删除
-  var pivot=arr.splice(pivotIndex,1)[0];
-  //定义左右数组
-  var left=[];
-  var right=[];
-
-  //比基准小的放在left，比基准大的放在right
-  for(var i=0;i&lt;arr.length;i++){
-    if(arr[i]&lt;=pivot){
-      left.push(arr[i]);
-    }
-    else{
-      right.push(arr[i]);
-    }
-  }
-  //递归
-  return quickSort(left).concat([pivot],quickSort(right));
-}
-</code></pre>
-<h2 id="二叉树"><a href="#二叉树" class="headerlink" title="二叉树"></a>二叉树</h2><h3 id="节点个数"><a href="#节点个数" class="headerlink" title="节点个数"></a>节点个数</h3><p>递归解法：</p>
-<ol>
-<li>如果二叉树为空，节点个数为0</li>
-<li>如果二叉树不为空，二叉树节点个数 = 左子树节点个数 + 右子树节点个数 + 1</li>
-</ol>
-<pre><code class="c++">int GetNodeNum(BinaryTreeNode * pRoot)  
-{  
-    if(pRoot == NULL) // 递归出口  
-        return 0;  
-    return GetNodeNum(pRoot-&gt;m_pLeft) + GetNodeNum(pRoot-&gt;m_pRight) + 1;  
-}
-</code></pre>
-<h3 id="二叉树的深度"><a href="#二叉树的深度" class="headerlink" title="二叉树的深度"></a>二叉树的深度</h3><p>递归解法：</p>
-<ol>
-<li>如果二叉树为空，二叉树的深度为0</li>
-<li>如果二叉树不为空，二叉树的深度 = max(左子树深度， 右子树深度) + 1</li>
-</ol>
-<pre><code class="c++">int GetDepth(BinaryTreeNode * pRoot)  
-{  
-    if(pRoot == NULL) // 递归出口  
-        return 0;  
-    int depthLeft = GetDepth(pRoot-&gt;m_pLeft);  
-    int depthRight = GetDepth(pRoot-&gt;m_pRight);  
-    return depthLeft &gt; depthRight ? (depthLeft + 1) : (depthRight + 1);   
-}
-</code></pre>
-<h3 id="前序遍历，中序遍历，后序遍历"><a href="#前序遍历，中序遍历，后序遍历" class="headerlink" title="前序遍历，中序遍历，后序遍历"></a>前序遍历，中序遍历，后序遍历</h3><p>前序遍历递归解法：</p>
-<ol>
-<li>如果二叉树为空，空操作</li>
-<li>如果二叉树不为空，访问根节点，前序遍历左子树，前序遍历右子树</li>
-</ol>
-<pre><code class="javascript">void PreOrderTraverse(BinaryTreeNode * pRoot)  
-{  
-    if(pRoot == NULL)  
-        return;  
-    Visit(pRoot); // 访问根节点  
-    PreOrderTraverse(pRoot-&gt;m_pLeft); // 前序遍历左子树  
-    PreOrderTraverse(pRoot-&gt;m_pRight); // 前序遍历右子树  
-}
-</code></pre>
-<p>中序遍历递归解法</p>
-<ol>
-<li>如果二叉树为空，空操作。</li>
-<li>如果二叉树不为空，中序遍历左子树，访问根节点，中序遍历右子树</li>
-</ol>
-<pre><code class="javascript">void InOrderTraverse(BinaryTreeNode * pRoot)  
-{  
-    if(pRoot == NULL)  
-        return;  
-    InOrderTraverse(pRoot-&gt;m_pLeft); // 中序遍历左子树  
-    Visit(pRoot); // 访问根节点  
-    InOrderTraverse(pRoot-&gt;m_pRight); // 中序遍历右子树  
-}
-</code></pre>
-<p>后序遍历递归解法</p>
-<ol>
-<li>如果二叉树为空，空操作</li>
-<li>如果二叉树不为空，后序遍历左子树，后序遍历右子树，访问根节点</li>
-</ol>
-<pre><code class="javascript">void PostOrderTraverse(BinaryTreeNode * pRoot)  
-{  
-    if(pRoot == NULL)  
-        return;  
-    PostOrderTraverse(pRoot-&gt;m_pLeft); // 后序遍历左子树  
-    PostOrderTraverse(pRoot-&gt;m_pRight); // 后序遍历右子树  
-    Visit(pRoot); // 访问根节点  
-}
-</code></pre>
-<h3 id="分层遍历二叉树（按层次从上往下，从左往右）"><a href="#分层遍历二叉树（按层次从上往下，从左往右）" class="headerlink" title="分层遍历二叉树（按层次从上往下，从左往右）"></a>分层遍历二叉树（按层次从上往下，从左往右）</h3><p>相当于广度优先搜索，使用队列实现。队列初始化，将根节点压入队列。当队列不为空，进行如下操作：弹出一个节点，访问，若左子节点或右子节点不为空，将其压入队列。</p>
-<pre><code class="c++">void LevelTraverse(BinaryTreeNode * pRoot)  
-{  
-    if(pRoot == NULL)  
-        return;  
-    queue&lt;BinaryTreeNode *&gt; q;  
-    q.push(pRoot);  
-    while(!q.empty())  
-    {  
-        BinaryTreeNode * pNode = q.front();  
-        q.pop();  
-        Visit(pNode); // 访问节点  
-        if(pNode-&gt;m_pLeft != NULL)  
-            q.push(pNode-&gt;m_pLeft);  
-        if(pNode-&gt;m_pRight != NULL)  
-            q.push(pNode-&gt;m_pRight);  
-    }  
-    return;  
-}
-</code></pre>
-<h3 id="求二叉树第K层的节点个数"><a href="#求二叉树第K层的节点个数" class="headerlink" title="求二叉树第K层的节点个数"></a>求二叉树第K层的节点个数</h3><p>递归解法：</p>
-<ol>
-<li>如果二叉树为空或者k&lt;1返回0</li>
-</ol>
-<ol>
-<li>如果二叉树不为空并且k==1，返回1</li>
-<li>如果二叉树不为空且k&gt;1，返回左子树中k-1层的节点个数与右子树k-1层节点个数之和</li>
-</ol>
-<pre><code class="c++">int GetNodeNumKthLevel(BinaryTreeNode * pRoot, int k)  
-{  
-    if(pRoot == NULL || k &lt; 1)  
-        return 0;  
-    if(k == 1)  
-        return 1;  
-    int numLeft = GetNodeNumKthLevel(pRoot-&gt;m_pLeft, k-1); // 左子树中k-1层的节点个数  
-    int numRight = GetNodeNumKthLevel(pRoot-&gt;m_pRight, k-1); // 右子树中k-1层的节点个数  
-    return (numLeft + numRight);  
-}
-</code></pre>
-<h3 id="求二叉树中叶子节点的个数"><a href="#求二叉树中叶子节点的个数" class="headerlink" title="求二叉树中叶子节点的个数"></a>求二叉树中叶子节点的个数</h3><p>递归解法：</p>
-<ol>
-<li>如果二叉树为空，返回0</li>
-</ol>
-<ol>
-<li>如果二叉树不为空且左右子树为空，返回1</li>
-<li>如果二叉树不为空，且左右子树不同时为空，返回左子树中叶子节点个数加上右子树中叶子节点个数</li>
-</ol>
-<pre><code class="c++">int GetLeafNodeNum(BinaryTreeNode * pRoot)  
-{  
-    if(pRoot == NULL)  
-        return 0;  
-    if(pRoot-&gt;m_pLeft == NULL &amp;&amp; pRoot-&gt;m_pRight == NULL)  
-        return 1;  
-    int numLeft = GetLeafNodeNum(pRoot-&gt;m_pLeft); // 左子树中叶节点的个数  
-    int numRight = GetLeafNodeNum(pRoot-&gt;m_pRight); // 右子树中叶节点的个数  
-    return (numLeft + numRight);  
-}
-</code></pre>
-<h3 id="求二叉树的镜像"><a href="#求二叉树的镜像" class="headerlink" title="求二叉树的镜像"></a>求二叉树的镜像</h3><p>递归解法：</p>
-<ol>
-<li>如果二叉树为空，返回空</li>
-<li>如果二叉树不为空，求左子树和右子树的镜像，然后交换左子树和右子树</li>
-</ol>
-<pre><code class="c++">BinaryTreeNode * Mirror(BinaryTreeNode * pRoot)  
-{  
-    if(pRoot == NULL) // 返回NULL  
-        return NULL;  
-    BinaryTreeNode * pLeft = Mirror(pRoot-&gt;m_pLeft); // 求左子树镜像  
-    BinaryTreeNode * pRight = Mirror(pRoot-&gt;m_pRight); // 求右子树镜像  
-        // 交换左子树和右子树  
-    pRoot-&gt;m_pLeft = pRight;  
-    pRoot-&gt;m_pRight = pLeft;  
-    return pRoot;  
-}
-</code></pre>
-<h3 id="判断二叉树是不是平衡二叉树"><a href="#判断二叉树是不是平衡二叉树" class="headerlink" title="判断二叉树是不是平衡二叉树"></a>判断二叉树是不是平衡二叉树</h3><p>递归解法：</p>
-<ol>
-<li>如果二叉树为空，返回真</li>
-<li>如果二叉树不为空，如果左子树和右子树都是AVL树并且左子树和右子树高度相差不大于1，返回真，其他返回假</li>
-</ol>
-<pre><code class="c++">bool IsAVL(BinaryTreeNode * pRoot, int &amp; height)  
-{  
-    if(pRoot == NULL) // 空树，返回真  
-    {  
-        height = 0;  
-        return true;  
-    }  
-    int heightLeft;  
-    bool resultLeft = IsAVL(pRoot-&gt;m_pLeft, heightLeft);  
-    int heightRight;  
-    bool resultRight = IsAVL(pRoot-&gt;m_pRight, heightRight);  
-    if(resultLeft &amp;&amp; resultRight &amp;&amp; abs(heightLeft - heightRight) &lt;= 1) // 左子树和右子树都是AVL，并且高度相差不大于1，返回真  
-    {  
-        height = max(heightLeft, heightRight) + 1;  
-        return true;  
-    }  
-    else  
-    {  
-        height = max(heightLeft, heightRight) + 1;  
-        return false;  
-    }  
-}
-</code></pre>
-<h3 id="由前序遍历序列和中序遍历序列重建二叉树"><a href="#由前序遍历序列和中序遍历序列重建二叉树" class="headerlink" title="由前序遍历序列和中序遍历序列重建二叉树"></a>由前序遍历序列和中序遍历序列重建二叉树</h3><p>递归解法：</p>
-<ol>
-<li>如果前序遍历为空或中序遍历为空或节点个数小于等于0，返回NULL。</li>
-<li>创建根节点。前序遍历的第一个数据就是根节点的数据，在中序遍历中找到根节点的位置，可分别得知左子树和右子树的前序和中序遍历序列，重建左右子树。</li>
-</ol>
-<pre><code class="javascript">function reConstructBinaryTree(pre, vin)
-{
-    // write code here
-    if(pre.length==0 || vin.length==0) return null;
-    var index=vin.indexOf(pre[0]);
-    var left=vin.slice(0,index);//中序左子树
-    var right=vin.slice(index+1);//中序右子树
-    return {
-        val:pre[0],
-        //递归左右子树的前序，中序 
-        left:reConstructBinaryTree(pre.slice(1,index+1),left),
-        right:reConstructBinaryTree(pre.slice(index+1),right)
-     }; 
-}
-</code></pre>
-]]></content>
-      
-        <categories>
-            
-            <category> 算法题 </category>
-            
-        </categories>
-        
-        
-        <tags>
-            
-            <tag> 算法 </tag>
-            
-        </tags>
-        
-    </entry>
-    
-    <entry>
       <title><![CDATA[HTML5总结]]></title>
       <url>/2017/01/01/%E5%89%8D%E7%AB%AF/%E5%9F%BA%E7%A1%80/HTML/HTML5/</url>
       <content type="html"><![CDATA[<p>总结H5。后续补上demo。</p>
@@ -8027,9 +8027,9 @@ Response.Flush()
         
         <tags>
             
-            <tag> HTML5 </tag>
-            
             <tag> 前端基础 </tag>
+            
+            <tag> HTML5 </tag>
             
         </tags>
         
