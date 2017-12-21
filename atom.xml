@@ -17,28 +17,6 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>IPC项目框架研究</title>
-    <link href="http://janebt.github.io/2017/12/21/%E9%A1%B9%E7%9B%AE/IPC%E9%A1%B9%E7%9B%AE%E6%A1%86%E6%9E%B6%E7%A0%94%E7%A9%B6/"/>
-    <id>http://janebt.github.io/2017/12/21/项目/IPC项目框架研究/</id>
-    <published>2017-12-21T00:37:34.000Z</published>
-    <updated>2017-12-21T00:37:34.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>简单总结一下项目框架的一些实践</p><a id="more"></a><h2 id="从MVC到前后端分离"><a href="#从MVC到前后端分离" class="headerlink" title="从MVC到前后端分离"></a>从MVC到前后端分离</h2><h3 id="MVC模式的优点与不足"><a href="#MVC模式的优点与不足" class="headerlink" title="MVC模式的优点与不足"></a>MVC模式的优点与不足</h3><p>传统MVC至少有以下三点不足：</p><ol><li>每次请求必须经过“控制器-&gt;模型-&gt;视图”这个流程，用户才能看到最终的展现的界面，这个过程似乎有些复杂。</li><li>实际上视图是依赖于模型的，换句话说，如果没有模型，视图也无法呈现出最终的效果。</li><li>渲染视图的过程是在服务端来完成的，最终呈现给浏览器的是带有模型的视图页面，性能无法得到很好的优化。</li></ol><p>REST前端关注界面展现，后端关注业务逻辑，</p><p>虽然REST看起来还是很简单的，实际上我们往往需要提供一个REST框架，让其实现前后端分离架构，让开发人员将精力集中在业务上，而并非那些具体的技术细节。</p><h3 id="REST的实现"><a href="#REST的实现" class="headerlink" title="REST的实现"></a>REST的实现</h3><p>REST的实现，主要是一个框架搭建的过程</p><h4 id="统一请求结构"><a href="#统一请求结构" class="headerlink" title="统一请求结构"></a>统一请求结构</h4><p>对于ajax请求，采用自定义的GET、POST、DELETE、MODIFY、ADD字段进行处理。这边特别要注意MODIFY和ADD字段，这两个字段使用非常频繁，也对其的响应做了完整的封装，顾名思义，如果配置需要增加一个字段或修改一个字段，使用MODIFY和ADD能得到显著的语义化的效果，并且在Control的Lua脚本也会自动对其做一套代码请求格式和内容的审核。比如如果是不可写的值，那么有rw属性标示，对其进行MODIFY操作会直接返回指定错误码。</p><h4 id="统一响应结构"><a href="#统一响应结构" class="headerlink" title="统一响应结构"></a>统一响应结构</h4><p>首先，返回的JSON响应结构是统一的，前端可以直接对其做一套模版的解析，直接拿到其中的callback数据。其中，错误吗直接在第一层json中展示，data的json层级按照协议标准（参考通用标准制定）可以得到一个经验化的解析方式。</p><h4 id="对象序列化"><a href="#对象序列化" class="headerlink" title="对象序列化"></a>对象序列化</h4><p>在lua中做了序列化和反序列化的操作，收到json会直接判断是否是一个格式正确的json，是否包含上述的五种头，如果包含，进行解包，lua自带序列化和反序列化的函数</p><h4 id="统一处理模式"><a href="#统一处理模式" class="headerlink" title="统一处理模式"></a>统一处理模式</h4><p>lua中不是对每个原包做解析处理，这样效率太低，也不利于工业生产。我们的做法是如果是请求静态资源，在服务器端就进行处理，不需要传入lua，如果是动态json请求，那么上述也有说过，根据业务逻辑分为GET、POST、DELETE、MODIFY、ADD，这五种情况可以解决绝大部分的需求，并且符合REST的思想。在lua层收到了这个包，lua直接会走一遍流程，这个流程是一个dispatch的过程，详细来说是进行拆包，根据请求的动作进行分发，每种动作都会有安全策略，同时也会对请求的模块进行自定义安全策略检查，然后分发到处理函数。</p><p>处理函数相当于接收A对象，然后返回B对象，其中请求字段的模块和函数都已经具名，所以这块也是被统一处理了，结果就非常简单，只要完成这个函数逻辑就可以了，完成后返回的对象会自动组包返回成json格式</p><h4 id="支持参数验证"><a href="#支持参数验证" class="headerlink" title="支持参数验证"></a>支持参数验证</h4><p>这一点在统一处理模式中有提及，有两层处理，一是统一处理，根据请求类型、根据请求报文的type字段可以做统一处理，比如如果是number，会有一个min和max的设定，二是对具体的一些项做特殊处理，</p><h4 id="处理异常行为"><a href="#处理异常行为" class="headerlink" title="处理异常行为"></a>处理异常行为</h4><p>如果参数不合法或是返回的格式不符合预期，那么会中断并返回err_code来对应具体的问题，前后端实现一套err_code，并在前端进行了一个翻译的过程。</p><h4 id="提供安全机制"><a href="#提供安全机制" class="headerlink" title="提供安全机制"></a>提供安全机制</h4><p>这块内容相对多一点，比如说敏感字段过滤、token防范csrf等。</p><p>对于token校验流程：</p><ol><li>当用户登录成功后，在服务端生成一个token，并将其放入内存中，同时将该token返回到客户端。</li><li>在客户端中将返回的token写入cookie中，并且每次请求时都将token随请求头一起发送到服务端。</li><li>提供一个AOP切面，用于拦截所有的Controller方法，在切面中判断token的有效性。</li><li>当登出时，只需清理掉cookie中的token即可，服务端token可设置过期时间，使其自行移除。</li></ol>]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;简单总结一下项目框架的一些实践&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="项目集" scheme="http://janebt.github.io/categories/%E9%A1%B9%E7%9B%AE%E9%9B%86/"/>
-    
-    
-      <category term="IPC" scheme="http://janebt.github.io/tags/IPC/"/>
-    
-  </entry>
-  
-  <entry>
     <title>Diary_2017.12.21</title>
     <link href="http://janebt.github.io/2017/12/21/%E6%97%A5%E8%AE%B0/Diary_2017.12.21/"/>
     <id>http://janebt.github.io/2017/12/21/日记/Diary_2017.12.21/</id>
@@ -57,6 +35,28 @@
     
     
       <category term="diary" scheme="http://janebt.github.io/tags/diary/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>IPC项目框架研究</title>
+    <link href="http://janebt.github.io/2017/12/21/%E9%A1%B9%E7%9B%AE/IPC%E9%A1%B9%E7%9B%AE%E6%A1%86%E6%9E%B6%E7%A0%94%E7%A9%B6/"/>
+    <id>http://janebt.github.io/2017/12/21/项目/IPC项目框架研究/</id>
+    <published>2017-12-21T00:37:34.000Z</published>
+    <updated>2017-12-21T00:37:34.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>简单总结一下项目框架的一些实践</p><a id="more"></a><h2 id="从MVC到前后端分离"><a href="#从MVC到前后端分离" class="headerlink" title="从MVC到前后端分离"></a>从MVC到前后端分离</h2><h3 id="MVC模式的优点与不足"><a href="#MVC模式的优点与不足" class="headerlink" title="MVC模式的优点与不足"></a>MVC模式的优点与不足</h3><p>传统MVC至少有以下三点不足：</p><ol><li>每次请求必须经过“控制器-&gt;模型-&gt;视图”这个流程，用户才能看到最终的展现的界面，这个过程似乎有些复杂。</li><li>实际上视图是依赖于模型的，换句话说，如果没有模型，视图也无法呈现出最终的效果。</li><li>渲染视图的过程是在服务端来完成的，最终呈现给浏览器的是带有模型的视图页面，性能无法得到很好的优化。</li></ol><p>REST前端关注界面展现，后端关注业务逻辑，</p><p>虽然REST看起来还是很简单的，实际上我们往往需要提供一个REST框架，让其实现前后端分离架构，让开发人员将精力集中在业务上，而并非那些具体的技术细节。</p><h3 id="REST的实现"><a href="#REST的实现" class="headerlink" title="REST的实现"></a>REST的实现</h3><p>REST的实现，主要是一个框架搭建的过程</p><h4 id="统一请求结构"><a href="#统一请求结构" class="headerlink" title="统一请求结构"></a>统一请求结构</h4><p>对于ajax请求，采用自定义的GET、POST、DELETE、MODIFY、ADD字段进行处理。这边特别要注意MODIFY和ADD字段，这两个字段使用非常频繁，也对其的响应做了完整的封装，顾名思义，如果配置需要增加一个字段或修改一个字段，使用MODIFY和ADD能得到显著的语义化的效果，并且在Control的Lua脚本也会自动对其做一套代码请求格式和内容的审核。比如如果是不可写的值，那么有rw属性标示，对其进行MODIFY操作会直接返回指定错误码。</p><h4 id="统一响应结构"><a href="#统一响应结构" class="headerlink" title="统一响应结构"></a>统一响应结构</h4><p>首先，返回的JSON响应结构是统一的，前端可以直接对其做一套模版的解析，直接拿到其中的callback数据。其中，错误吗直接在第一层json中展示，data的json层级按照协议标准（参考通用标准制定）可以得到一个经验化的解析方式。</p><h4 id="对象序列化"><a href="#对象序列化" class="headerlink" title="对象序列化"></a>对象序列化</h4><p>在lua中做了序列化和反序列化的操作，收到json会直接判断是否是一个格式正确的json，是否包含上述的五种头，如果包含，进行解包，lua自带序列化和反序列化的函数</p><h4 id="统一处理模式"><a href="#统一处理模式" class="headerlink" title="统一处理模式"></a>统一处理模式</h4><p>lua中不是对每个原包做解析处理，这样效率太低，也不利于工业生产。我们的做法是如果是请求静态资源，在服务器端就进行处理，不需要传入lua，如果是动态json请求，那么上述也有说过，根据业务逻辑分为GET、POST、DELETE、MODIFY、ADD，这五种情况可以解决绝大部分的需求，并且符合REST的思想。在lua层收到了这个包，lua直接会走一遍流程，这个流程是一个dispatch的过程，详细来说是进行拆包，根据请求的动作进行分发，每种动作都会有安全策略，同时也会对请求的模块进行自定义安全策略检查，然后分发到处理函数。</p><p>处理函数相当于接收A对象，然后返回B对象，其中请求字段的模块和函数都已经具名，所以这块也是被统一处理了，结果就非常简单，只要完成这个函数逻辑就可以了，完成后返回的对象会自动组包返回成json格式</p><h4 id="支持参数验证"><a href="#支持参数验证" class="headerlink" title="支持参数验证"></a>支持参数验证</h4><p>这一点在统一处理模式中有提及，有两层处理，一是统一处理，根据请求类型、根据请求报文的type字段可以做统一处理，比如如果是number，会有一个min和max的设定，二是对具体的一些项做特殊处理，</p><h4 id="处理异常行为"><a href="#处理异常行为" class="headerlink" title="处理异常行为"></a>处理异常行为</h4><p>如果参数不合法或是返回的格式不符合预期，那么会中断并返回err_code来对应具体的问题，前后端实现一套err_code，并在前端进行了一个翻译的过程。</p><h4 id="提供安全机制"><a href="#提供安全机制" class="headerlink" title="提供安全机制"></a>提供安全机制</h4><p>这块内容相对多一点，比如说敏感字段过滤、token防范csrf等。</p><p>对于token校验流程：</p><ol><li>当用户登录成功后，在服务端生成一个token，并将其放入内存中，同时将该token返回到客户端。</li><li>在客户端中将返回的token写入cookie中，并且每次请求时都将token随请求头一起发送到服务端。</li><li>提供一个AOP切面，用于拦截所有的Controller方法，在切面中判断token的有效性。</li><li>当登出时，只需清理掉cookie中的token即可，服务端token可设置过期时间，使其自行移除。</li></ol>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;简单总结一下项目框架的一些实践&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="项目集" scheme="http://janebt.github.io/categories/%E9%A1%B9%E7%9B%AE%E9%9B%86/"/>
+    
+    
+      <category term="IPC" scheme="http://janebt.github.io/tags/IPC/"/>
     
   </entry>
   
@@ -255,30 +255,6 @@
   </entry>
   
   <entry>
-    <title>webpack篇</title>
-    <link href="http://janebt.github.io/2017/10/02/%E5%89%8D%E7%AB%AF/%E6%9E%84%E5%BB%BA%E7%94%9F%E6%80%81/webpack%E7%AF%87/"/>
-    <id>http://janebt.github.io/2017/10/02/前端/构建生态/webpack篇/</id>
-    <published>2017-10-02T01:57:34.000Z</published>
-    <updated>2017-10-02T01:57:34.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>本文介绍webpack结构</p><a id="more"></a><h1 id="webpack篇"><a href="#webpack篇" class="headerlink" title="webpack篇"></a>webpack篇</h1><h1 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h1><p>不像大多数的模块打包机，webpack是收把项目当作一个整体，通过一个给定的的主文件，webpack将从这个文件开始找到你的项目的所有依赖文件，使用loaders处理它们，最后打包成一个或多个浏览器可识别的js文件</p><h1 id="install"><a href="#install" class="headerlink" title="install"></a>install</h1><p>webpack是我们需要的模块打包机，webpack-dev-server用来创建本地服务器，监听你的代码修改，并自动刷新修改后的结果。这些是有关<strong>devServer的配置</strong></p><pre><code class="javascript">contentBase,  // 为文件提供本地服务器port, // 监听端口，默认8080inline, // 设置为true,源文件发生改变自动刷新页面historyApiFallback  // 依赖HTML5 history API,如果设置为true,所有的页面跳转指向index.htmldevServer:{    contentBase: &#39;./src&#39; // 本地服务器所加载的页面所在的目录    historyApiFallback: true, // 不跳转    inline: true // 实时刷新}</code></pre><p>然后我们在根目录下创建一个’webpack.config.js’，在’package.json’添加两个命令用于本地开发和生产发布</p><pre><code class="javascript">&quot;scripts&quot;: {      &quot;start&quot;: &quot;webpack-dev-server&quot;,    &quot;build&quot;: &quot;webpack&quot;}</code></pre><h1 id="webpack-config-js"><a href="#webpack-config-js" class="headerlink" title="webpack.config.js"></a>webpack.config.js</h1><h2 id="entry"><a href="#entry" class="headerlink" title="entry"></a>entry</h2><p>entry: 用来写入口文件，它将是整个依赖关系的根，当我们需要多个入口文件的时候，可以把entry写成一个对象</p><pre><code class="javascript">var baseConfig = {        entry: {            main: &#39;./src/index.js&#39;        }    }</code></pre><h2 id="output"><a href="#output" class="headerlink" title="output"></a>output</h2><p>output: 即使入口文件有多个，但是只有一个输出配置</p><pre><code class="javascript">var path = require(&#39;path&#39;)var baseConfig = {    entry: {        main: &#39;./src/index.js&#39;    },    output: {        filename: &#39;main.js&#39;,        path: path.resolve(&#39;./build&#39;)    }}module.exports = baseConfig</code></pre><p>如果你定义的入口文件有多个，那么我们需要使用<strong>占位符</strong>来确保输出文件的唯一性</p><pre><code class="javascript">output: {      filename: &#39;[name].js&#39;,    path: path.resolve(&#39;./build&#39;)}</code></pre><p>注：filename应该比较好理解，就是对应于entry里面生成出来的文件名。</p><h2 id="Loader"><a href="#Loader" class="headerlink" title="Loader"></a>Loader</h2><p><strong>loader的作用</strong>： </p><ol><li>实现对不同格式的文件的处理，比如说将scss转换为css，或者typescript转化为js</li><li>转换这些文件，从而使其能够被添加到依赖图中</li></ol><p>loader是webpack最重要的部分之一，通过使用不同的Loader，我们能够调用外部的脚本或者工具，实现对不同格式文件的处理，loader需要在webpack.config.js里边单独用module进行配置，需要的loader需要通过npm 进行安装。配置如下：</p><pre><code class="javascript">var baseConfig = {  // ...  module: {    rules: [      {        test: /*匹配文件后缀名的正则*/,        use: [        loader: /*loader名字*/,        query: /*额外配置*/        ]      }    ]  }}</code></pre><p>几个常用的loader：</p><ul><li>babel-loader： 让下一代的js文件转换成现代浏览器能够支持的JS文件。babel有些复杂，所以大多数都会新建一个.babelrc进行配置</li><li>css-loader,style-loader:两个建议配合使用，用来解析css文件，能够解释@import,url()如果需要解析less就在后面加一个less-loader</li><li>file-loader: 生成的文件名就是文件内容的MD5哈希值并会保留所引用资源的原始扩展名</li><li>url-loader: 功能类似 file-loader,但是文件大小低于指定的限制时，可以返回一个DataURL事实上，在使用less,scss,stylus这些的时候，npm会提示你差什么插件，差什么，你就安上就行了</li></ul><h2 id="Plugins"><a href="#Plugins" class="headerlink" title="Plugins"></a>Plugins</h2><p><strong>plugins和loader区别</strong></p><p><strong>loaders负责的是处理源文件的如css、jsx，一次处理一个文件。而plugins并不是直接操作单个文件，</strong>它直接对整个构建过程起作用。下面列举了一些我们常用的plugins和他的用法</p><ul><li>ExtractTextWebpackPlugin: 它会将入口中引用css文件，都打包都独立的css文件中，而不是内嵌在js打包文件中。</li><li>HtmlWebpackPlugin:它依据一个简单的index.html模版，生成一个自动引用你打包后的js文件的新index.html</li><li>HotModuleReplacementPlugin: 它允许你在修改组件代码时，自动刷新实时预览修改后的结果注意永远不要在生产环境中使用HMR。这儿说一下一般情况分为开发环境，测试环境，生产环境。</li></ul><p>Case.webapck.config.js的全部内容:</p><pre><code class="javascript">const webpack = require(&quot;webpack&quot;)const HtmlWebpackPlugin = require(&quot;html-webpack-plugin&quot;)var ExtractTextPlugin = require(&#39;extract-text-webpack-plugin&#39;)var lessRules = {  use: [    {loader: &#39;css-loader&#39;},    {loader: &#39;less-loader&#39;}  ]}module.exports = {  entry: {    main: &#39;./src/index.js&#39;  },  output: {    filename: &#39;[name].js&#39;,    path: path.resolve(&#39;./build&#39;)  },  devServer: {    contentBase: &#39;/src&#39;,    historyApiFallback: true,    inline: true,    hot: true  },  module: {    rules: [      {test: /\.less$/, use: ExtractTextPlugin.extract(lessRules)}    ]  },  plugins: [    new ExtractTextPlugin(&#39;main.css&#39;)  ]}</code></pre><h1 id="产品阶段的构建"><a href="#产品阶段的构建" class="headerlink" title="产品阶段的构建"></a>产品阶段的构建</h1><p>在产品阶段，还需要对资源进行别的<br>处理，例如压缩，优化，缓存，分离css和js。首先我们来定义产品环境</p><pre><code class="javascript">var ENV = process.env.NODE_ENVvar baseConfig = {  // ...   plugins: [    new webpack.DefinePlugin({      &#39;process.env.NODE_ENV&#39;: JSON.stringify(ENV)    })  ]}</code></pre><p>然后还需要修改我们的script命令</p><pre><code class="javascript">&quot;scripts&quot;: {    &quot;start&quot;: &quot;NODE_ENV=development webpack-dev-server&quot;,    &quot;build&quot;: &quot;NODE_ENV=production webpack&quot;}</code></pre><p>process.env.NODE_ENV 将被一个字符串替代，它运行压缩器排除那些不可到达的开发代码分支。<br>当你引入那些不会进行生产的代码，下面这个代码将非常有用。</p><pre><code class="javascript">if (process.env.NODE_ENV === &#39;development&#39;) {  console.warn(&#39;这个警告会在生产阶段消失&#39;)}</code></pre><h1 id="优化插件"><a href="#优化插件" class="headerlink" title="优化插件"></a>优化插件</h1><ul><li>OccurenceOrderPlugin: 为组件分配ID,通过这个插件webpack可以分析和优先考虑使用最多 的模块，然后为他们分配最小的ID</li><li>UglifyJsPlugin: 压缩代码</li></ul><p>使用方法</p><pre><code class="javascript">var baseConfig = {  // ...  new webpack.optimize.OccurenceOrderPlugin()  new webpack.optimize.UglifyJsPlugin()}</code></pre><p>然后在我们使用npm run build会发现代码是压缩的</p>]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;本文介绍webpack结构&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="技术栈" scheme="http://janebt.github.io/categories/%E6%8A%80%E6%9C%AF%E6%A0%88/"/>
-    
-    
-      <category term="web" scheme="http://janebt.github.io/tags/web/"/>
-    
-      <category term="webpack" scheme="http://janebt.github.io/tags/webpack/"/>
-    
-  </entry>
-  
-  <entry>
     <title>Less语言特性</title>
     <link href="http://janebt.github.io/2017/10/02/%E5%89%8D%E7%AB%AF/%E6%9E%84%E5%BB%BA%E7%94%9F%E6%80%81/Less%E8%AF%AD%E8%A8%80%E7%89%B9%E6%80%A7/"/>
     <id>http://janebt.github.io/2017/10/02/前端/构建生态/Less语言特性/</id>
@@ -299,6 +275,30 @@
       <category term="less" scheme="http://janebt.github.io/tags/less/"/>
     
       <category term="web" scheme="http://janebt.github.io/tags/web/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>webpack篇</title>
+    <link href="http://janebt.github.io/2017/10/02/%E5%89%8D%E7%AB%AF/%E6%9E%84%E5%BB%BA%E7%94%9F%E6%80%81/webpack%E7%AF%87/"/>
+    <id>http://janebt.github.io/2017/10/02/前端/构建生态/webpack篇/</id>
+    <published>2017-10-02T01:57:34.000Z</published>
+    <updated>2017-10-02T01:57:34.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>本文介绍webpack结构</p><a id="more"></a><h1 id="webpack篇"><a href="#webpack篇" class="headerlink" title="webpack篇"></a>webpack篇</h1><h1 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h1><p>不像大多数的模块打包机，webpack是收把项目当作一个整体，通过一个给定的的主文件，webpack将从这个文件开始找到你的项目的所有依赖文件，使用loaders处理它们，最后打包成一个或多个浏览器可识别的js文件</p><h1 id="install"><a href="#install" class="headerlink" title="install"></a>install</h1><p>webpack是我们需要的模块打包机，webpack-dev-server用来创建本地服务器，监听你的代码修改，并自动刷新修改后的结果。这些是有关<strong>devServer的配置</strong></p><pre><code class="javascript">contentBase,  // 为文件提供本地服务器port, // 监听端口，默认8080inline, // 设置为true,源文件发生改变自动刷新页面historyApiFallback  // 依赖HTML5 history API,如果设置为true,所有的页面跳转指向index.htmldevServer:{    contentBase: &#39;./src&#39; // 本地服务器所加载的页面所在的目录    historyApiFallback: true, // 不跳转    inline: true // 实时刷新}</code></pre><p>然后我们在根目录下创建一个’webpack.config.js’，在’package.json’添加两个命令用于本地开发和生产发布</p><pre><code class="javascript">&quot;scripts&quot;: {      &quot;start&quot;: &quot;webpack-dev-server&quot;,    &quot;build&quot;: &quot;webpack&quot;}</code></pre><h1 id="webpack-config-js"><a href="#webpack-config-js" class="headerlink" title="webpack.config.js"></a>webpack.config.js</h1><h2 id="entry"><a href="#entry" class="headerlink" title="entry"></a>entry</h2><p>entry: 用来写入口文件，它将是整个依赖关系的根，当我们需要多个入口文件的时候，可以把entry写成一个对象</p><pre><code class="javascript">var baseConfig = {        entry: {            main: &#39;./src/index.js&#39;        }    }</code></pre><h2 id="output"><a href="#output" class="headerlink" title="output"></a>output</h2><p>output: 即使入口文件有多个，但是只有一个输出配置</p><pre><code class="javascript">var path = require(&#39;path&#39;)var baseConfig = {    entry: {        main: &#39;./src/index.js&#39;    },    output: {        filename: &#39;main.js&#39;,        path: path.resolve(&#39;./build&#39;)    }}module.exports = baseConfig</code></pre><p>如果你定义的入口文件有多个，那么我们需要使用<strong>占位符</strong>来确保输出文件的唯一性</p><pre><code class="javascript">output: {      filename: &#39;[name].js&#39;,    path: path.resolve(&#39;./build&#39;)}</code></pre><p>注：filename应该比较好理解，就是对应于entry里面生成出来的文件名。</p><h2 id="Loader"><a href="#Loader" class="headerlink" title="Loader"></a>Loader</h2><p><strong>loader的作用</strong>： </p><ol><li>实现对不同格式的文件的处理，比如说将scss转换为css，或者typescript转化为js</li><li>转换这些文件，从而使其能够被添加到依赖图中</li></ol><p>loader是webpack最重要的部分之一，通过使用不同的Loader，我们能够调用外部的脚本或者工具，实现对不同格式文件的处理，loader需要在webpack.config.js里边单独用module进行配置，需要的loader需要通过npm 进行安装。配置如下：</p><pre><code class="javascript">var baseConfig = {  // ...  module: {    rules: [      {        test: /*匹配文件后缀名的正则*/,        use: [        loader: /*loader名字*/,        query: /*额外配置*/        ]      }    ]  }}</code></pre><p>几个常用的loader：</p><ul><li>babel-loader： 让下一代的js文件转换成现代浏览器能够支持的JS文件。babel有些复杂，所以大多数都会新建一个.babelrc进行配置</li><li>css-loader,style-loader:两个建议配合使用，用来解析css文件，能够解释@import,url()如果需要解析less就在后面加一个less-loader</li><li>file-loader: 生成的文件名就是文件内容的MD5哈希值并会保留所引用资源的原始扩展名</li><li>url-loader: 功能类似 file-loader,但是文件大小低于指定的限制时，可以返回一个DataURL事实上，在使用less,scss,stylus这些的时候，npm会提示你差什么插件，差什么，你就安上就行了</li></ul><h2 id="Plugins"><a href="#Plugins" class="headerlink" title="Plugins"></a>Plugins</h2><p><strong>plugins和loader区别</strong></p><p><strong>loaders负责的是处理源文件的如css、jsx，一次处理一个文件。而plugins并不是直接操作单个文件，</strong>它直接对整个构建过程起作用。下面列举了一些我们常用的plugins和他的用法</p><ul><li>ExtractTextWebpackPlugin: 它会将入口中引用css文件，都打包都独立的css文件中，而不是内嵌在js打包文件中。</li><li>HtmlWebpackPlugin:它依据一个简单的index.html模版，生成一个自动引用你打包后的js文件的新index.html</li><li>HotModuleReplacementPlugin: 它允许你在修改组件代码时，自动刷新实时预览修改后的结果注意永远不要在生产环境中使用HMR。这儿说一下一般情况分为开发环境，测试环境，生产环境。</li></ul><p>Case.webapck.config.js的全部内容:</p><pre><code class="javascript">const webpack = require(&quot;webpack&quot;)const HtmlWebpackPlugin = require(&quot;html-webpack-plugin&quot;)var ExtractTextPlugin = require(&#39;extract-text-webpack-plugin&#39;)var lessRules = {  use: [    {loader: &#39;css-loader&#39;},    {loader: &#39;less-loader&#39;}  ]}module.exports = {  entry: {    main: &#39;./src/index.js&#39;  },  output: {    filename: &#39;[name].js&#39;,    path: path.resolve(&#39;./build&#39;)  },  devServer: {    contentBase: &#39;/src&#39;,    historyApiFallback: true,    inline: true,    hot: true  },  module: {    rules: [      {test: /\.less$/, use: ExtractTextPlugin.extract(lessRules)}    ]  },  plugins: [    new ExtractTextPlugin(&#39;main.css&#39;)  ]}</code></pre><h1 id="产品阶段的构建"><a href="#产品阶段的构建" class="headerlink" title="产品阶段的构建"></a>产品阶段的构建</h1><p>在产品阶段，还需要对资源进行别的<br>处理，例如压缩，优化，缓存，分离css和js。首先我们来定义产品环境</p><pre><code class="javascript">var ENV = process.env.NODE_ENVvar baseConfig = {  // ...   plugins: [    new webpack.DefinePlugin({      &#39;process.env.NODE_ENV&#39;: JSON.stringify(ENV)    })  ]}</code></pre><p>然后还需要修改我们的script命令</p><pre><code class="javascript">&quot;scripts&quot;: {    &quot;start&quot;: &quot;NODE_ENV=development webpack-dev-server&quot;,    &quot;build&quot;: &quot;NODE_ENV=production webpack&quot;}</code></pre><p>process.env.NODE_ENV 将被一个字符串替代，它运行压缩器排除那些不可到达的开发代码分支。<br>当你引入那些不会进行生产的代码，下面这个代码将非常有用。</p><pre><code class="javascript">if (process.env.NODE_ENV === &#39;development&#39;) {  console.warn(&#39;这个警告会在生产阶段消失&#39;)}</code></pre><h1 id="优化插件"><a href="#优化插件" class="headerlink" title="优化插件"></a>优化插件</h1><ul><li>OccurenceOrderPlugin: 为组件分配ID,通过这个插件webpack可以分析和优先考虑使用最多 的模块，然后为他们分配最小的ID</li><li>UglifyJsPlugin: 压缩代码</li></ul><p>使用方法</p><pre><code class="javascript">var baseConfig = {  // ...  new webpack.optimize.OccurenceOrderPlugin()  new webpack.optimize.UglifyJsPlugin()}</code></pre><p>然后在我们使用npm run build会发现代码是压缩的</p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;本文介绍webpack结构&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="技术栈" scheme="http://janebt.github.io/categories/%E6%8A%80%E6%9C%AF%E6%A0%88/"/>
+    
+    
+      <category term="web" scheme="http://janebt.github.io/tags/web/"/>
+    
+      <category term="webpack" scheme="http://janebt.github.io/tags/webpack/"/>
     
   </entry>
   

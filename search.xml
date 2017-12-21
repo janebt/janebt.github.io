@@ -3,6 +3,30 @@
   
     
     <entry>
+      <title><![CDATA[Diary_2017.12.21]]></title>
+      <url>/2017/12/21/%E6%97%A5%E8%AE%B0/Diary_2017.12.21/</url>
+      <content type="html"><![CDATA[<p>12.21，周四，晴</p>
+<a id="more"></a>
+<p>面试到了尾声，反思自己的不足，大部分是在项目上吃了亏。其实项目不仅仅是web方向，对于一整套的服务器框架也是参与实现并很清楚，然而可能更多的关注点不在上面，也没怎么提及，现在想想其实这块不就是封装层吗。</p>
+<p>趁着清晨，简单的回顾了一下项目的前后端分离实践，希望能对以后的工作有帮助。</p>
+]]></content>
+      
+        <categories>
+            
+            <category> 流水账 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> diary </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[IPC项目框架研究]]></title>
       <url>/2017/12/21/%E9%A1%B9%E7%9B%AE/IPC%E9%A1%B9%E7%9B%AE%E6%A1%86%E6%9E%B6%E7%A0%94%E7%A9%B6/</url>
       <content type="html"><![CDATA[<p>简单总结一下项目框架的一些实践</p>
@@ -43,30 +67,6 @@
         <tags>
             
             <tag> IPC </tag>
-            
-        </tags>
-        
-    </entry>
-    
-    <entry>
-      <title><![CDATA[Diary_2017.12.21]]></title>
-      <url>/2017/12/21/%E6%97%A5%E8%AE%B0/Diary_2017.12.21/</url>
-      <content type="html"><![CDATA[<p>12.21，周四，晴</p>
-<a id="more"></a>
-<p>面试到了尾声，反思自己的不足，大部分是在项目上吃了亏。其实项目不仅仅是web方向，对于一整套的服务器框架也是参与实现并很清楚，然而可能更多的关注点不在上面，也没怎么提及，现在想想其实这块不就是封装层吗。</p>
-<p>趁着清晨，简单的回顾了一下项目的前后端分离实践，希望能对以后的工作有帮助。</p>
-]]></content>
-      
-        <categories>
-            
-            <category> 流水账 </category>
-            
-        </categories>
-        
-        
-        <tags>
-            
-            <tag> diary </tag>
             
         </tags>
         
@@ -2019,179 +2019,6 @@ process.on(&#39;unhandledRejection&#39;, function (err, p) { console.error(&#39;
     </entry>
     
     <entry>
-      <title><![CDATA[webpack篇]]></title>
-      <url>/2017/10/02/%E5%89%8D%E7%AB%AF/%E6%9E%84%E5%BB%BA%E7%94%9F%E6%80%81/webpack%E7%AF%87/</url>
-      <content type="html"><![CDATA[<p>本文介绍webpack结构</p>
-<a id="more"></a>
-<h1 id="webpack篇"><a href="#webpack篇" class="headerlink" title="webpack篇"></a>webpack篇</h1><h1 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h1><p>不像大多数的模块打包机，webpack是收把项目当作一个整体，通过一个给定的的主文件，webpack将从这个文件开始找到你的项目的所有依赖文件，使用loaders处理它们，最后打包成一个或多个浏览器可识别的js文件</p>
-<h1 id="install"><a href="#install" class="headerlink" title="install"></a>install</h1><p>webpack是我们需要的模块打包机，webpack-dev-server用来创建本地服务器，监听你的代码修改，并自动刷新修改后的结果。这些是有关<strong>devServer的配置</strong></p>
-<pre><code class="javascript">contentBase,  // 为文件提供本地服务器
-port, // 监听端口，默认8080
-inline, // 设置为true,源文件发生改变自动刷新页面
-historyApiFallback  // 依赖HTML5 history API,如果设置为true,所有的页面跳转指向index.html
-
-devServer:{
-    contentBase: &#39;./src&#39; // 本地服务器所加载的页面所在的目录
-    historyApiFallback: true, // 不跳转
-    inline: true // 实时刷新
-}
-</code></pre>
-<p>然后我们在根目录下创建一个’webpack.config.js’，在’package.json’添加两个命令用于本地开发和生产发布</p>
-<pre><code class="javascript">&quot;scripts&quot;: {
-      &quot;start&quot;: &quot;webpack-dev-server&quot;,
-    &quot;build&quot;: &quot;webpack&quot;
-}
-</code></pre>
-<h1 id="webpack-config-js"><a href="#webpack-config-js" class="headerlink" title="webpack.config.js"></a>webpack.config.js</h1><h2 id="entry"><a href="#entry" class="headerlink" title="entry"></a>entry</h2><p>entry: 用来写入口文件，它将是整个依赖关系的根，当我们需要多个入口文件的时候，可以把entry写成一个对象</p>
-<pre><code class="javascript">var baseConfig = {
-        entry: {
-            main: &#39;./src/index.js&#39;
-        }
-    }
-</code></pre>
-<h2 id="output"><a href="#output" class="headerlink" title="output"></a>output</h2><p>output: 即使入口文件有多个，但是只有一个输出配置</p>
-<pre><code class="javascript">var path = require(&#39;path&#39;)
-var baseConfig = {
-    entry: {
-        main: &#39;./src/index.js&#39;
-    },
-    output: {
-        filename: &#39;main.js&#39;,
-        path: path.resolve(&#39;./build&#39;)
-    }
-}
-module.exports = baseConfig
-</code></pre>
-<p>如果你定义的入口文件有多个，那么我们需要使用<strong>占位符</strong>来确保输出文件的唯一性</p>
-<pre><code class="javascript">output: {
-      filename: &#39;[name].js&#39;,
-    path: path.resolve(&#39;./build&#39;)
-}
-</code></pre>
-<p>注：filename应该比较好理解，就是对应于entry里面生成出来的文件名。</p>
-<h2 id="Loader"><a href="#Loader" class="headerlink" title="Loader"></a>Loader</h2><p><strong>loader的作用</strong>： </p>
-<ol>
-<li>实现对不同格式的文件的处理，比如说将scss转换为css，或者typescript转化为js</li>
-<li>转换这些文件，从而使其能够被添加到依赖图中</li>
-</ol>
-<p>loader是webpack最重要的部分之一，通过使用不同的Loader，我们能够调用外部的脚本或者工具，实现对不同格式文件的处理，loader需要在webpack.config.js里边单独用module进行配置，需要的loader需要通过npm 进行安装。配置如下：</p>
-<pre><code class="javascript">var baseConfig = {
-  // ...
-  module: {
-    rules: [
-      {
-        test: /*匹配文件后缀名的正则*/,
-        use: [
-        loader: /*loader名字*/,
-        query: /*额外配置*/
-        ]
-      }
-    ]
-  }
-}
-</code></pre>
-<p>几个常用的loader：</p>
-<ul>
-<li>babel-loader： 让下一代的js文件转换成现代浏览器能够支持的JS文件。babel有些复杂，所以大多数都会新建一个.babelrc进行配置</li>
-<li>css-loader,style-loader:两个建议配合使用，用来解析css文件，能够解释@import,url()如果需要解析less就在后面加一个less-loader</li>
-<li>file-loader: 生成的文件名就是文件内容的MD5哈希值并会保留所引用资源的原始扩展名</li>
-<li>url-loader: 功能类似 file-loader,但是文件大小低于指定的限制时，可以返回一个DataURL事实上，在使用less,scss,stylus这些的时候，npm会提示你差什么插件，差什么，你就安上就行了</li>
-</ul>
-<h2 id="Plugins"><a href="#Plugins" class="headerlink" title="Plugins"></a>Plugins</h2><p><strong>plugins和loader区别</strong></p>
-<p><strong>loaders负责的是处理源文件的如css、jsx，一次处理一个文件。而plugins并不是直接操作单个文件，</strong>它直接对整个构建过程起作用。下面列举了一些我们常用的plugins和他的用法</p>
-<ul>
-<li>ExtractTextWebpackPlugin: 它会将入口中引用css文件，都打包都独立的css文件中，而不是内嵌在js打包文件中。</li>
-<li>HtmlWebpackPlugin:它依据一个简单的index.html模版，生成一个自动引用你打包后的js文件的新index.html</li>
-<li>HotModuleReplacementPlugin: 它允许你在修改组件代码时，自动刷新实时预览修改后的结果注意永远不要在生产环境中使用HMR。这儿说一下一般情况分为开发环境，测试环境，生产环境。</li>
-</ul>
-<p>Case.webapck.config.js的全部内容:</p>
-<pre><code class="javascript">const webpack = require(&quot;webpack&quot;)
-const HtmlWebpackPlugin = require(&quot;html-webpack-plugin&quot;)
-var ExtractTextPlugin = require(&#39;extract-text-webpack-plugin&#39;)
-var lessRules = {
-  use: [
-    {loader: &#39;css-loader&#39;},
-    {loader: &#39;less-loader&#39;}
-  ]
-}
-module.exports = {
-  entry: {
-    main: &#39;./src/index.js&#39;
-  },
-  output: {
-    filename: &#39;[name].js&#39;,
-    path: path.resolve(&#39;./build&#39;)
-  },
-  devServer: {
-    contentBase: &#39;/src&#39;,
-    historyApiFallback: true,
-    inline: true,
-    hot: true
-  },
-  module: {
-    rules: [
-      {test: /\.less$/, use: ExtractTextPlugin.extract(lessRules)}
-    ]
-  },
-  plugins: [
-    new ExtractTextPlugin(&#39;main.css&#39;)
-  ]
-}
-</code></pre>
-<h1 id="产品阶段的构建"><a href="#产品阶段的构建" class="headerlink" title="产品阶段的构建"></a>产品阶段的构建</h1><p>在产品阶段，还需要对资源进行别的<br>处理，例如压缩，优化，缓存，分离css和js。首先我们来定义产品环境</p>
-<pre><code class="javascript">var ENV = process.env.NODE_ENV
-var baseConfig = {
-  // ... 
-  plugins: [
-    new webpack.DefinePlugin({
-      &#39;process.env.NODE_ENV&#39;: JSON.stringify(ENV)
-    })
-  ]
-}
-</code></pre>
-<p>然后还需要修改我们的script命令</p>
-<pre><code class="javascript">&quot;scripts&quot;: {
-    &quot;start&quot;: &quot;NODE_ENV=development webpack-dev-server&quot;,
-    &quot;build&quot;: &quot;NODE_ENV=production webpack&quot;
-}
-</code></pre>
-<p>process.env.NODE_ENV 将被一个字符串替代，它运行压缩器排除那些不可到达的开发代码分支。<br>当你引入那些不会进行生产的代码，下面这个代码将非常有用。</p>
-<pre><code class="javascript">if (process.env.NODE_ENV === &#39;development&#39;) {
-  console.warn(&#39;这个警告会在生产阶段消失&#39;)
-}
-</code></pre>
-<h1 id="优化插件"><a href="#优化插件" class="headerlink" title="优化插件"></a>优化插件</h1><ul>
-<li>OccurenceOrderPlugin: 为组件分配ID,通过这个插件webpack可以分析和优先考虑使用最多 的模块，然后为他们分配最小的ID</li>
-<li>UglifyJsPlugin: 压缩代码</li>
-</ul>
-<p>使用方法</p>
-<pre><code class="javascript">var baseConfig = {
-  // ...
-  new webpack.optimize.OccurenceOrderPlugin()
-  new webpack.optimize.UglifyJsPlugin()
-}
-</code></pre>
-<p>然后在我们使用npm run build会发现代码是压缩的</p>
-]]></content>
-      
-        <categories>
-            
-            <category> 技术栈 </category>
-            
-        </categories>
-        
-        
-        <tags>
-            
-            <tag> web </tag>
-            
-            <tag> webpack </tag>
-            
-        </tags>
-        
-    </entry>
-    
-    <entry>
       <title><![CDATA[Less语言特性]]></title>
       <url>/2017/10/02/%E5%89%8D%E7%AB%AF/%E6%9E%84%E5%BB%BA%E7%94%9F%E6%80%81/Less%E8%AF%AD%E8%A8%80%E7%89%B9%E6%80%A7/</url>
       <content type="html"><![CDATA[<p>本文介绍Less语言特性</p>
@@ -2807,6 +2634,179 @@ h1 { color: green; }
             <tag> less </tag>
             
             <tag> web </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[webpack篇]]></title>
+      <url>/2017/10/02/%E5%89%8D%E7%AB%AF/%E6%9E%84%E5%BB%BA%E7%94%9F%E6%80%81/webpack%E7%AF%87/</url>
+      <content type="html"><![CDATA[<p>本文介绍webpack结构</p>
+<a id="more"></a>
+<h1 id="webpack篇"><a href="#webpack篇" class="headerlink" title="webpack篇"></a>webpack篇</h1><h1 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h1><p>不像大多数的模块打包机，webpack是收把项目当作一个整体，通过一个给定的的主文件，webpack将从这个文件开始找到你的项目的所有依赖文件，使用loaders处理它们，最后打包成一个或多个浏览器可识别的js文件</p>
+<h1 id="install"><a href="#install" class="headerlink" title="install"></a>install</h1><p>webpack是我们需要的模块打包机，webpack-dev-server用来创建本地服务器，监听你的代码修改，并自动刷新修改后的结果。这些是有关<strong>devServer的配置</strong></p>
+<pre><code class="javascript">contentBase,  // 为文件提供本地服务器
+port, // 监听端口，默认8080
+inline, // 设置为true,源文件发生改变自动刷新页面
+historyApiFallback  // 依赖HTML5 history API,如果设置为true,所有的页面跳转指向index.html
+
+devServer:{
+    contentBase: &#39;./src&#39; // 本地服务器所加载的页面所在的目录
+    historyApiFallback: true, // 不跳转
+    inline: true // 实时刷新
+}
+</code></pre>
+<p>然后我们在根目录下创建一个’webpack.config.js’，在’package.json’添加两个命令用于本地开发和生产发布</p>
+<pre><code class="javascript">&quot;scripts&quot;: {
+      &quot;start&quot;: &quot;webpack-dev-server&quot;,
+    &quot;build&quot;: &quot;webpack&quot;
+}
+</code></pre>
+<h1 id="webpack-config-js"><a href="#webpack-config-js" class="headerlink" title="webpack.config.js"></a>webpack.config.js</h1><h2 id="entry"><a href="#entry" class="headerlink" title="entry"></a>entry</h2><p>entry: 用来写入口文件，它将是整个依赖关系的根，当我们需要多个入口文件的时候，可以把entry写成一个对象</p>
+<pre><code class="javascript">var baseConfig = {
+        entry: {
+            main: &#39;./src/index.js&#39;
+        }
+    }
+</code></pre>
+<h2 id="output"><a href="#output" class="headerlink" title="output"></a>output</h2><p>output: 即使入口文件有多个，但是只有一个输出配置</p>
+<pre><code class="javascript">var path = require(&#39;path&#39;)
+var baseConfig = {
+    entry: {
+        main: &#39;./src/index.js&#39;
+    },
+    output: {
+        filename: &#39;main.js&#39;,
+        path: path.resolve(&#39;./build&#39;)
+    }
+}
+module.exports = baseConfig
+</code></pre>
+<p>如果你定义的入口文件有多个，那么我们需要使用<strong>占位符</strong>来确保输出文件的唯一性</p>
+<pre><code class="javascript">output: {
+      filename: &#39;[name].js&#39;,
+    path: path.resolve(&#39;./build&#39;)
+}
+</code></pre>
+<p>注：filename应该比较好理解，就是对应于entry里面生成出来的文件名。</p>
+<h2 id="Loader"><a href="#Loader" class="headerlink" title="Loader"></a>Loader</h2><p><strong>loader的作用</strong>： </p>
+<ol>
+<li>实现对不同格式的文件的处理，比如说将scss转换为css，或者typescript转化为js</li>
+<li>转换这些文件，从而使其能够被添加到依赖图中</li>
+</ol>
+<p>loader是webpack最重要的部分之一，通过使用不同的Loader，我们能够调用外部的脚本或者工具，实现对不同格式文件的处理，loader需要在webpack.config.js里边单独用module进行配置，需要的loader需要通过npm 进行安装。配置如下：</p>
+<pre><code class="javascript">var baseConfig = {
+  // ...
+  module: {
+    rules: [
+      {
+        test: /*匹配文件后缀名的正则*/,
+        use: [
+        loader: /*loader名字*/,
+        query: /*额外配置*/
+        ]
+      }
+    ]
+  }
+}
+</code></pre>
+<p>几个常用的loader：</p>
+<ul>
+<li>babel-loader： 让下一代的js文件转换成现代浏览器能够支持的JS文件。babel有些复杂，所以大多数都会新建一个.babelrc进行配置</li>
+<li>css-loader,style-loader:两个建议配合使用，用来解析css文件，能够解释@import,url()如果需要解析less就在后面加一个less-loader</li>
+<li>file-loader: 生成的文件名就是文件内容的MD5哈希值并会保留所引用资源的原始扩展名</li>
+<li>url-loader: 功能类似 file-loader,但是文件大小低于指定的限制时，可以返回一个DataURL事实上，在使用less,scss,stylus这些的时候，npm会提示你差什么插件，差什么，你就安上就行了</li>
+</ul>
+<h2 id="Plugins"><a href="#Plugins" class="headerlink" title="Plugins"></a>Plugins</h2><p><strong>plugins和loader区别</strong></p>
+<p><strong>loaders负责的是处理源文件的如css、jsx，一次处理一个文件。而plugins并不是直接操作单个文件，</strong>它直接对整个构建过程起作用。下面列举了一些我们常用的plugins和他的用法</p>
+<ul>
+<li>ExtractTextWebpackPlugin: 它会将入口中引用css文件，都打包都独立的css文件中，而不是内嵌在js打包文件中。</li>
+<li>HtmlWebpackPlugin:它依据一个简单的index.html模版，生成一个自动引用你打包后的js文件的新index.html</li>
+<li>HotModuleReplacementPlugin: 它允许你在修改组件代码时，自动刷新实时预览修改后的结果注意永远不要在生产环境中使用HMR。这儿说一下一般情况分为开发环境，测试环境，生产环境。</li>
+</ul>
+<p>Case.webapck.config.js的全部内容:</p>
+<pre><code class="javascript">const webpack = require(&quot;webpack&quot;)
+const HtmlWebpackPlugin = require(&quot;html-webpack-plugin&quot;)
+var ExtractTextPlugin = require(&#39;extract-text-webpack-plugin&#39;)
+var lessRules = {
+  use: [
+    {loader: &#39;css-loader&#39;},
+    {loader: &#39;less-loader&#39;}
+  ]
+}
+module.exports = {
+  entry: {
+    main: &#39;./src/index.js&#39;
+  },
+  output: {
+    filename: &#39;[name].js&#39;,
+    path: path.resolve(&#39;./build&#39;)
+  },
+  devServer: {
+    contentBase: &#39;/src&#39;,
+    historyApiFallback: true,
+    inline: true,
+    hot: true
+  },
+  module: {
+    rules: [
+      {test: /\.less$/, use: ExtractTextPlugin.extract(lessRules)}
+    ]
+  },
+  plugins: [
+    new ExtractTextPlugin(&#39;main.css&#39;)
+  ]
+}
+</code></pre>
+<h1 id="产品阶段的构建"><a href="#产品阶段的构建" class="headerlink" title="产品阶段的构建"></a>产品阶段的构建</h1><p>在产品阶段，还需要对资源进行别的<br>处理，例如压缩，优化，缓存，分离css和js。首先我们来定义产品环境</p>
+<pre><code class="javascript">var ENV = process.env.NODE_ENV
+var baseConfig = {
+  // ... 
+  plugins: [
+    new webpack.DefinePlugin({
+      &#39;process.env.NODE_ENV&#39;: JSON.stringify(ENV)
+    })
+  ]
+}
+</code></pre>
+<p>然后还需要修改我们的script命令</p>
+<pre><code class="javascript">&quot;scripts&quot;: {
+    &quot;start&quot;: &quot;NODE_ENV=development webpack-dev-server&quot;,
+    &quot;build&quot;: &quot;NODE_ENV=production webpack&quot;
+}
+</code></pre>
+<p>process.env.NODE_ENV 将被一个字符串替代，它运行压缩器排除那些不可到达的开发代码分支。<br>当你引入那些不会进行生产的代码，下面这个代码将非常有用。</p>
+<pre><code class="javascript">if (process.env.NODE_ENV === &#39;development&#39;) {
+  console.warn(&#39;这个警告会在生产阶段消失&#39;)
+}
+</code></pre>
+<h1 id="优化插件"><a href="#优化插件" class="headerlink" title="优化插件"></a>优化插件</h1><ul>
+<li>OccurenceOrderPlugin: 为组件分配ID,通过这个插件webpack可以分析和优先考虑使用最多 的模块，然后为他们分配最小的ID</li>
+<li>UglifyJsPlugin: 压缩代码</li>
+</ul>
+<p>使用方法</p>
+<pre><code class="javascript">var baseConfig = {
+  // ...
+  new webpack.optimize.OccurenceOrderPlugin()
+  new webpack.optimize.UglifyJsPlugin()
+}
+</code></pre>
+<p>然后在我们使用npm run build会发现代码是压缩的</p>
+]]></content>
+      
+        <categories>
+            
+            <category> 技术栈 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> web </tag>
+            
+            <tag> webpack </tag>
             
         </tags>
         
