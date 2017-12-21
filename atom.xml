@@ -17,28 +17,6 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>Diary_2017.12.21</title>
-    <link href="http://janebt.github.io/2017/12/21/%E6%97%A5%E8%AE%B0/Diary_2017.12.21/"/>
-    <id>http://janebt.github.io/2017/12/21/日记/Diary_2017.12.21/</id>
-    <published>2017-12-21T00:37:34.000Z</published>
-    <updated>2017-12-21T00:37:34.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>12.21，周四，晴</p><a id="more"></a><p>面试到了尾声，反思自己的不足，大部分是在项目上吃了亏。其实项目不仅仅是web方向，对于一整套的服务器框架也是参与实现并很清楚，然而可能更多的关注点不在上面，也没怎么提及，现在想想其实这块不就是封装层吗。</p><p>趁着清晨，简单的回顾了一下项目的前后端分离实践，希望能对以后的工作有帮助。</p>]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;12.21，周四，晴&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="流水账" scheme="http://janebt.github.io/categories/%E6%B5%81%E6%B0%B4%E8%B4%A6/"/>
-    
-    
-      <category term="diary" scheme="http://janebt.github.io/tags/diary/"/>
-    
-  </entry>
-  
-  <entry>
     <title>IPC项目框架研究</title>
     <link href="http://janebt.github.io/2017/12/21/%E9%A1%B9%E7%9B%AE/IPC%E9%A1%B9%E7%9B%AE%E6%A1%86%E6%9E%B6%E7%A0%94%E7%A9%B6/"/>
     <id>http://janebt.github.io/2017/12/21/项目/IPC项目框架研究/</id>
@@ -57,6 +35,28 @@
     
     
       <category term="IPC" scheme="http://janebt.github.io/tags/IPC/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Diary_2017.12.21</title>
+    <link href="http://janebt.github.io/2017/12/21/%E6%97%A5%E8%AE%B0/Diary_2017.12.21/"/>
+    <id>http://janebt.github.io/2017/12/21/日记/Diary_2017.12.21/</id>
+    <published>2017-12-21T00:37:34.000Z</published>
+    <updated>2017-12-21T00:37:34.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>12.21，周四，晴</p><a id="more"></a><p>面试到了尾声，反思自己的不足，大部分是在项目上吃了亏。其实项目不仅仅是web方向，对于一整套的服务器框架也是参与实现并很清楚，然而可能更多的关注点不在上面，也没怎么提及，现在想想其实这块不就是封装层吗。</p><p>趁着清晨，简单的回顾了一下项目的前后端分离实践，希望能对以后的工作有帮助。</p><p>走出公交车，回顾一下最近面试的感觉，蓦然一种天很蓝我很累世间两种人，一种是我一种是其他人的感受。仿佛我的双肩扛着一根金箍棒，逆着人流往上走。此刻我就是孙悟空，是永远无法成为齐天大圣的孙悟空。</p><p><img src="https://timgsa.baidu.com/timg?image&amp;quality=80&amp;size=b9999_10000&amp;sec=1513855921300&amp;di=8d1a2628e1cdaf6ecd781f90722ed1f4&amp;imgtype=0&amp;src=http%3A%2F%2Fstatic8.photo.sina.com.cn%2Fbmiddle%2F4544e89944699fe83b3c7" alt=""></p><p>你看，那个人好像一条狗哎</p><p><img src="https://pic3.zhimg.com/v2-0f355952e0bac92f2ed8e13cda8beaca_r.jpg" alt=""></p><p>十年前看周星驰大话西游，可以笑的没心没肺，而现在看着看着不知不觉就流泪了，想要救紫霞，就必须要打败牛魔王，想要打败牛魔王，就必须要变成孙悟空，想要变成孙悟空，就必须要忘掉七情六欲，看似简单，难的就是那一转身，正所谓不戴金箍，如何救你，戴了金箍，如何爱你，正如现实生活中，假如一个人不工作，如何供你，其实每一个人以前都是那个无忧无虑的至尊宝，只是随着年龄的增长，不得不戴上紧箍咒，拿起金箍棒，成为孙悟空，从而要去承担起所有的责任，再也回不到从前的至尊宝，《大话西游》的结尾有句话，“你看那个人，好奇怪哟，像一条狗”。像条狗的人 是放弃了人间的男女情欢、无欲无念、兢兢业业走在西天取经路上的至尊宝。他如你我这般，收起了脾气火气不再任性淘气，只为梦想奔波</p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;12.21，周四，晴&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="流水账" scheme="http://janebt.github.io/categories/%E6%B5%81%E6%B0%B4%E8%B4%A6/"/>
+    
+    
+      <category term="diary" scheme="http://janebt.github.io/tags/diary/"/>
     
   </entry>
   
@@ -658,9 +658,9 @@
       <category term="大前端" scheme="http://janebt.github.io/categories/%E5%A4%A7%E5%89%8D%E7%AB%AF/"/>
     
     
-      <category term="HTML" scheme="http://janebt.github.io/tags/HTML/"/>
-    
       <category term="前端基础" scheme="http://janebt.github.io/tags/%E5%89%8D%E7%AB%AF%E5%9F%BA%E7%A1%80/"/>
+    
+      <category term="HTML" scheme="http://janebt.github.io/tags/HTML/"/>
     
   </entry>
   
