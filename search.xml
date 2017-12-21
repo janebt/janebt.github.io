@@ -3,6 +3,76 @@
   
     
     <entry>
+      <title><![CDATA[Diary_2017.12.21]]></title>
+      <url>/2017/12/21/%E6%97%A5%E8%AE%B0/Diary_2017.12.21/</url>
+      <content type="html"><![CDATA[<p>12.21，周四，晴</p>
+<a id="more"></a>
+<p>面试到了尾声，反思自己的不足，大部分是在项目上吃了亏。其实项目不仅仅是web方向，对于一整套的服务器框架也是参与实现并很清楚，然而可能更多的关注点不在上面，也没怎么提及，现在想想其实这块不就是封装层吗。</p>
+<p>趁着清晨，简单的回顾了一下项目的前后端分离实践，希望能对以后的工作有帮助。</p>
+]]></content>
+      
+        <categories>
+            
+            <category> 流水账 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> diary </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[Diary_2017.12.21]]></title>
+      <url>/2017/12/21/%E9%A1%B9%E7%9B%AE/IPC%E9%A1%B9%E7%9B%AE%E6%A1%86%E6%9E%B6%E7%A0%94%E7%A9%B6/</url>
+      <content type="html"><![CDATA[<p>简单总结一下项目框架的一些实践</p>
+<a id="more"></a>
+<h2 id="从MVC到前后端分离"><a href="#从MVC到前后端分离" class="headerlink" title="从MVC到前后端分离"></a>从MVC到前后端分离</h2><h3 id="MVC模式的优点与不足"><a href="#MVC模式的优点与不足" class="headerlink" title="MVC模式的优点与不足"></a>MVC模式的优点与不足</h3><p>传统MVC至少有以下三点不足：</p>
+<ol>
+<li>每次请求必须经过“控制器-&gt;模型-&gt;视图”这个流程，用户才能看到最终的展现的界面，这个过程似乎有些复杂。</li>
+<li>实际上视图是依赖于模型的，换句话说，如果没有模型，视图也无法呈现出最终的效果。</li>
+<li>渲染视图的过程是在服务端来完成的，最终呈现给浏览器的是带有模型的视图页面，性能无法得到很好的优化。</li>
+</ol>
+<p>REST前端关注界面展现，后端关注业务逻辑，</p>
+<p>虽然REST看起来还是很简单的，实际上我们往往需要提供一个REST框架，让其实现前后端分离架构，让开发人员将精力集中在业务上，而并非那些具体的技术细节。</p>
+<h3 id="REST的实现"><a href="#REST的实现" class="headerlink" title="REST的实现"></a>REST的实现</h3><p>REST的实现，主要是一个框架搭建的过程</p>
+<h4 id="统一请求结构"><a href="#统一请求结构" class="headerlink" title="统一请求结构"></a>统一请求结构</h4><p>对于ajax请求，采用自定义的GET、POST、DELETE、MODIFY、ADD字段进行处理。这边特别要注意MODIFY和ADD字段，这两个字段使用非常频繁，也对其的响应做了完整的封装，顾名思义，如果配置需要增加一个字段或修改一个字段，使用MODIFY和ADD能得到显著的语义化的效果，并且在Control的Lua脚本也会自动对其做一套代码请求格式和内容的审核。比如如果是不可写的值，那么有rw属性标示，对其进行MODIFY操作会直接返回指定错误码。</p>
+<h4 id="统一响应结构"><a href="#统一响应结构" class="headerlink" title="统一响应结构"></a>统一响应结构</h4><p>首先，返回的JSON响应结构是统一的，前端可以直接对其做一套模版的解析，直接拿到其中的callback数据。其中，错误吗直接在第一层json中展示，data的json层级按照协议标准（参考通用标准制定）可以得到一个经验化的解析方式。</p>
+<h4 id="对象序列化"><a href="#对象序列化" class="headerlink" title="对象序列化"></a>对象序列化</h4><p>在lua中做了序列化和反序列化的操作，收到json会直接判断是否是一个格式正确的json，是否包含上述的五种头，如果包含，进行解包，lua自带序列化和反序列化的函数</p>
+<h4 id="统一处理模式"><a href="#统一处理模式" class="headerlink" title="统一处理模式"></a>统一处理模式</h4><p>lua中不是对每个原包做解析处理，这样效率太低，也不利于工业生产。我们的做法是如果是请求静态资源，在服务器端就进行处理，不需要传入lua，如果是动态json请求，那么上述也有说过，根据业务逻辑分为GET、POST、DELETE、MODIFY、ADD，这五种情况可以解决绝大部分的需求，并且符合REST的思想。在lua层收到了这个包，lua直接会走一遍流程，这个流程是一个dispatch的过程，详细来说是进行拆包，根据请求的动作进行分发，每种动作都会有安全策略，同时也会对请求的模块进行自定义安全策略检查，然后分发到处理函数。</p>
+<p>处理函数相当于接收A对象，然后返回B对象，其中请求字段的模块和函数都已经具名，所以这块也是被统一处理了，结果就非常简单，只要完成这个函数逻辑就可以了，完成后返回的对象会自动组包返回成json格式</p>
+<h4 id="支持参数验证"><a href="#支持参数验证" class="headerlink" title="支持参数验证"></a>支持参数验证</h4><p>这一点在统一处理模式中有提及，有两层处理，一是统一处理，根据请求类型、根据请求报文的type字段可以做统一处理，比如如果是number，会有一个min和max的设定，二是对具体的一些项做特殊处理，</p>
+<h4 id="处理异常行为"><a href="#处理异常行为" class="headerlink" title="处理异常行为"></a>处理异常行为</h4><p>如果参数不合法或是返回的格式不符合预期，那么会中断并返回err_code来对应具体的问题，前后端实现一套err_code，并在前端进行了一个翻译的过程。</p>
+<h4 id="提供安全机制"><a href="#提供安全机制" class="headerlink" title="提供安全机制"></a>提供安全机制</h4><p>这块内容相对多一点，比如说敏感字段过滤、token防范csrf等。</p>
+<p>对于token校验流程：</p>
+<ol>
+<li>当用户登录成功后，在服务端生成一个token，并将其放入内存中，同时将该token返回到客户端。</li>
+<li>在客户端中将返回的token写入cookie中，并且每次请求时都将token随请求头一起发送到服务端。</li>
+<li>提供一个AOP切面，用于拦截所有的Controller方法，在切面中判断token的有效性。</li>
+<li>当登出时，只需清理掉cookie中的token即可，服务端token可设置过期时间，使其自行移除。</li>
+</ol>
+]]></content>
+      
+        <categories>
+            
+            <category> 项目集 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> IPC </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[Diary_2017.12.20]]></title>
       <url>/2017/12/20/%E6%97%A5%E8%AE%B0/Diary_2017.12.20/</url>
       <content type="html"><![CDATA[<p>12.20，周三，晴</p>
@@ -57,6 +127,219 @@
         <tags>
             
             <tag> diary </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[jquery]]></title>
+      <url>/2017/12/04/%E5%89%8D%E7%AB%AF/%E6%A1%86%E6%9E%B6%E4%B8%8E%E7%BB%84%E4%BB%B6/jquery/</url>
+      <content type="html"><![CDATA[<p>jquery知识点整理。</p>
+<p>jquery ajax没整理。</p>
+<a id="more"></a>
+<h1 id="知识点"><a href="#知识点" class="headerlink" title="知识点"></a>知识点</h1><h2 id=""><a href="#" class="headerlink" title="$()"></a>$()</h2><p>$()函数是JQuery函数的别名</p>
+<p>$()函数用于将任何对象包裹成jQuery对象</p>
+<h2 id="jQuery入口函数与Js入口函数的区别"><a href="#jQuery入口函数与Js入口函数的区别" class="headerlink" title="jQuery入口函数与Js入口函数的区别"></a>jQuery入口函数与Js入口函数的区别</h2><p>js入口函数指的是：window.onload = function(){};</p>
+<p>jQuery入口函数是：$(document).ready()</p>
+<table>
+<thead>
+<tr>
+<th>window.onload</th>
+<th></th>
+<th>$(document).ready()</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>必须等待网页中所有的内容加载完毕后（包括图片）才能执行</td>
+<td>执行时机</td>
+<td>网页中所有DOM结构绘制完毕后就执行，可能DOM元素关联的东西并没有加载完</td>
+</tr>
+<tr>
+<td>不能同时编写多个 ，出现多次会存在事件覆盖的问题。</td>
+<td>编写个数</td>
+<td>能同时编写多个</td>
+</tr>
+<tr>
+<td>无</td>
+<td>简化写法</td>
+<td>$(document).ready(function(){});可以简写成$(function(){});</td>
+</tr>
+<tr>
+<td>很差</td>
+<td>兼容性</td>
+<td>好</td>
+</tr>
+</tbody>
+</table>
+<h2 id="jQuery选择器"><a href="#jQuery选择器" class="headerlink" title="jQuery选择器"></a>jQuery选择器</h2><h3 id="基本选择器"><a href="#基本选择器" class="headerlink" title="基本选择器"></a>基本选择器</h3><ul>
+<li>ID选择器：#</li>
+<li>类选择器： .</li>
+<li>标签选择器： element</li>
+</ul>
+<h3 id="层级选择器"><a href="#层级选择器" class="headerlink" title="层级选择器"></a>层级选择器</h3><ul>
+<li>后代选择器：空格</li>
+<li>子代选择器：&gt;</li>
+</ul>
+<h3 id="基本过滤选择器"><a href="#基本过滤选择器" class="headerlink" title="基本过滤选择器"></a>基本过滤选择器</h3><p>索引号为index：<strong>:eq(index)</strong></p>
+<p>索引号为奇数：<strong>:odd</strong></p>
+<p>索引号为偶数：<strong>:even</strong></p>
+<h2 id="jQuery操作"><a href="#jQuery操作" class="headerlink" title="jQuery操作"></a>jQuery操作</h2><h3 id="筛选"><a href="#筛选" class="headerlink" title="筛选"></a>筛选</h3><p>查找指定元素的所有后代元素（子子孙孙）：find(selector)</p>
+<p>查找指定元素的直接子元素（亲儿子元素）：children()</p>
+<p>查找所有兄弟元素（不包括自己）：siblings()</p>
+<p>查找父元素（亲的）：parent()</p>
+<p>查找指定元素的第index个元素，index是索引号，从0开始：eq(index)</p>
+<h3 id="选择网页元素"><a href="#选择网页元素" class="headerlink" title="选择网页元素"></a>选择网页元素</h3><pre><code class="javascript">$(&#39;a:first&#39;)//选择网页中第一个a元素  
+$(&#39;tr:odd&#39;)//选择表格的奇数行  
+$(&#39;#myForm :input&#39;)//选择表单中的input元素  
+$(&#39;div:visible&#39;) //选择可见的div元素  
+$(&#39;div:gt(2)&#39;)//选择所有的div元素，除了前三个  
+$(&#39;div:animated&#39;)//选择当前处于动画状态的div元素
+</code></pre>
+<h3 id="改变结果集"><a href="#改变结果集" class="headerlink" title="改变结果集"></a>改变结果集</h3><pre><code class="javascript">$(&#39;div&#39;).has(&#39;p&#39;); //选择包含p元素的div元素  
+$(&#39;div&#39;).not(&#39;.myClass&#39;); //选择class不等于myClass的div元素  
+$(&#39;div&#39;).filter(&#39;.myClass&#39;); //选择class等于myClass的div元素  
+$(&#39;div&#39;).first(); //选择第1个div元素  
+$(&#39;div&#39;).eq(5); //选择第6个div元素  
+$(&#39;div&#39;).next(&#39;p&#39;); //选择div元素后面的第一个p元素  
+$(&#39;div&#39;).parent(); //选择div元素的父元素  
+$(&#39;div&#39;).closest(&#39;form&#39;); //选择离div最近的那个form父元素  
+$(&#39;div&#39;).children(); //选择div的所有子元素  
+$(&#39;div&#39;).siblings(); //选择div的同级元素
+</code></pre>
+<h3 id="链式操作"><a href="#链式操作" class="headerlink" title="链式操作"></a>链式操作</h3><p>.end()：回到最近的一个”破坏性”操作之前。如果之前没有破坏性操作，则返回一个空集。所谓的”破坏性”就是指任何改变所匹配的jQuery元素的操作。</p>
+<h3 id="元素的操作：取值和赋值"><a href="#元素的操作：取值和赋值" class="headerlink" title="元素的操作：取值和赋值"></a>元素的操作：取值和赋值</h3><p>常见的取值和赋值函数如下：</p>
+<ol>
+<li>html() 返回或设置被选元素的内容 (inner HTML)    </li>
+<li>text() 取出或设置text内容      </li>
+<li><strong>attr()</strong> 取出或设置某个属性的值    </li>
+<li>width() 取出或设置某个元素的宽度    </li>
+<li>height() 取出或设置某个元素的高度  </li>
+<li>val() 取出或设置html内容 取出某个表单元素的值  </li>
+<li>css() 设置css样式</li>
+</ol>
+<p>需要注意的是，如果结果集包含多个元素，那么赋值的时候，将对其中所有的元素赋值；取值的时候，则是只取出第一个元素的值（.text()例外，它取出所有元素的text内容）。</p>
+<h3 id="元素的操作：移动"><a href="#元素的操作：移动" class="headerlink" title="元素的操作：移动"></a>元素的操作：移动</h3><ol>
+<li>.insertAfter()和.after()：在现存元素的外部，从后面插入元素  </li>
+<li>.insertBefore()和.before()：在现存元素的外部，从前面插入元素  </li>
+<li>.appendTo()和.append()：在现存元素的内部，从后面插入元素  </li>
+<li>.prependTo()和.prepend()  ：在现存元素的内部，从前面插入元素</li>
+</ol>
+<h3 id="元素的操作：复制、删除和创建"><a href="#元素的操作：复制、删除和创建" class="headerlink" title="元素的操作：复制、删除和创建"></a>元素的操作：复制、删除和创建</h3><p>复制元素使用.clone()</p>
+<p>删除元素使用.remove()和.detach()。两者的区别在于，<strong>前者不保留被删除元素的事件，后者保留，有利于重新插入文档时使用。</strong></p>
+<p>清空元素内容（但是不删除该元素）使用.empty()。</p>
+<h3 id="工具方法"><a href="#工具方法" class="headerlink" title="工具方法"></a>工具方法</h3><p> $.trim() 去除字符串两端的空格。<br> $.each() 遍历一个数组或对象。<br> $.inArray() 返回一个值在数组中的索引位置。如果该值不在数组中，则返回-1。<br> $.grep() 返回数组中符合某种标准的元素。<br> $.extend() 将多个对象，合并到第一个对象。<br> $.makeArray() 将对象转化为数组。<br> $.type() 判断对象的类别（函数对象、日期对象、数组对象、正则对象等等）。<br> $.isArray() 判断某个参数是否为数组。<br> $.isEmptyObject() 判断某个对象是否为空（不含有任何属性）。<br> $.isFunction() 判断某个参数是否为函数。<br> $.isPlainObject() 判断某个参数是否为用”{}”或”new Object”建立的对象。<br> $.support() 判断浏览器是否支持某个特性。 </p>
+<h3 id="事件操作"><a href="#事件操作" class="headerlink" title="事件操作"></a>事件操作</h3><p> .blur() 表单元素失去焦点。<br> .change() 表单元素的值发生变化<br> .click() 鼠标单击<br> .dblclick() 鼠标双击<br> .focus() 表单元素获得焦点<br> .focusin() 子元素获得焦点<br> .focusout() 子元素失去焦点<br> .hover() 同时为mouseenter和mouseleave事件指定处理函数<br> .keydown() 按下键盘（长时间按键，只返回一个事件）<br> .keypress() 按下键盘（长时间按键，将返回多个事件）<br> .keyup() 松开键盘<br> .load() 元素加载完毕<br> .mousedown() 按下鼠标<br> .mouseenter() 鼠标进入（进入子元素不触发）<br> .mouseleave() 鼠标离开（离开子元素不触发）<br> .mousemove() 鼠标在元素内部移动<br> .mouseout() 鼠标离开（离开子元素也触发）<br> .mouseover() 鼠标进入（进入子元素也触发）<br> .mouseup() 松开鼠标<br> .ready() DOM加载完成<br> .resize() 浏览器窗口的大小发生改变<br> .scroll() 滚动条的位置发生变化<br> .select() 用户选中文本框中的内容<br> .submit() 用户递交表单<br> .toggle() 根据鼠标点击的次数，依次运行多个函数<br> .unload()  用户离开页面  </p>
+<p><strong>特别的</strong></p>
+<ul>
+<li>.bind()：以上这些事件在jQuery内部，都是.bind()的便捷方式。使用.bind()可以更灵活地控制事件</li>
+<li>.one()：只想让事件运行一次</li>
+<li>.unbind()：解除事件绑定</li>
+</ul>
+<p>所有的事件处理函数，都可以接受一个事件对象(event object)作为参数，这个事件对象有一些很有用的属性和方法：</p>
+<p>event.pageX 事件发生时，鼠标距离网页左上角的水平距离 　　<br>event.pageY 事件发生时，鼠标距离网页左上角的垂直距离<br>event.type 事件的类型（比如click） 　　<br>event.which 按下了哪一个键 　　<br>event.data在事件对象上绑定数据，然后传入事件处理函数 　　<br>event.target 事件针对的网页元素<br>event.preventDefault() 阻止事件的默认行为（比如点击链接，会自动打开新页面）<br>event.stopPropagation() 停止事件向上层元素冒泡</p>
+<p>有两种方法，可以自动触发一个事件。一种是直接使用事件函数，另一种是使用.trigger()或.triggerHandler()。</p>
+<pre><code class="javascript">$(&#39;a&#39;).click();
+$(&#39;a&#39;).trigger(&#39;click&#39;);
+</code></pre>
+<h3 id="特殊效果"><a href="#特殊效果" class="headerlink" title="特殊效果"></a>特殊效果</h3><p>.fadeIn() 淡入<br>.fadeOut() 淡出<br>.fadeTo() 调整透明度<br>.hide() 隐藏元素<br>.show() 显示元素<br>.slideDown() 向下展开<br>.slideUp() 向上卷起<br>.slideToggle() 依次展开或卷起某个元素<br>.toggle() 依次展示或隐藏某个元素</p>
+<p>除了.show()和.hide()，所有其他特效的默认执行时间都是400ms(毫秒)，但是你可以改变这个设置。</p>
+<p>更复杂的特效，可以用.animate()自定义。</p>
+<p>.stop()和.delay()用来停止或延缓特效的执行。</p>
+<p>$.fx.off如果设置为true，则关闭所有网页特效。</p>
+<p>几个常见的筛选选择器：</p>
+<p>filter()：筛选出与指定表达式匹配的元素集合。这个方法用于缩小匹配的范围。用逗号分隔多个表达式</p>
+<pre><code class="javascript">//保留子元素中不含有ol的元素。
+//&lt;p&gt;&lt;ol&gt;&lt;li&gt;Hello&lt;/li&gt;&lt;/ol&gt;&lt;/p&gt;&lt;p&gt;How are you?&lt;/p&gt;
+$(&quot;p&quot;).filter(function(index) {
+ return $(&quot;ol&quot;, this).length == 0;
+});
+//&lt;p&gt;How are you?&lt;/p&gt;
+</code></pre>
+<p>silce()：选取一个匹配的子集</p>
+<pre><code class="javascript">//选择第一个p元素
+//&lt;p&gt;Hello&lt;/p&gt;&lt;p&gt;cruel&lt;/p&gt;&lt;p&gt;World&lt;/p&gt;
+$(&quot;p&quot;).slice(0, 1).wrapInner(&quot;&lt;b&gt;&lt;/b&gt;&quot;);
+//&lt;p&gt;&lt;b&gt;Hello&lt;/b&gt;&lt;/p&gt;
+</code></pre>
+<h1 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h1><h2 id="Case1-jQuery对象和DOM对象的相互转换"><a href="#Case1-jQuery对象和DOM对象的相互转换" class="headerlink" title="Case1.jQuery对象和DOM对象的相互转换"></a>Case1.jQuery对象和DOM对象的相互转换</h2><pre><code class="javascript">var btn = document.getElementById(“btnShow”);
+var $btn = $(“#btnShow”); // $btn就是一个jQuery对象
+
+//DOM对象转换成jQuery对象
+var $btn1 = $(btn);
+
+//jQuery对象转换成DOM对象
+var btn1 = $btn[0]; 
+var btn2 = $btn.get(0);
+</code></pre>
+<h2 id="Case2-如何找到所有-HTML-select-标签的选中项？"><a href="#Case2-如何找到所有-HTML-select-标签的选中项？" class="headerlink" title="Case2.如何找到所有 HTML select 标签的选中项？"></a>Case2.如何找到所有 HTML select 标签的选中项？</h2><pre><code class="javascript">$(&#39;[name=NameOfSelectedTag] :selected&#39;)
+</code></pre>
+<h2 id="Case3-jQuery-里的-each-是什么函数？你是如何使用它的？"><a href="#Case3-jQuery-里的-each-是什么函数？你是如何使用它的？" class="headerlink" title="Case3. jQuery 里的 each() 是什么函数？你是如何使用它的？"></a>Case3. jQuery 里的 each() 是什么函数？你是如何使用它的？</h2><p>each() 函数就像是 Java 里的一个 Iterator，它允许你遍历一个元素集合。你可以传一个函数给 each() 方法，被调用的 jQuery 对象会在其每个元素上执行传入的函数。</p>
+<pre><code class="javascript">$(&#39;[name=NameOfSelectedTag] :selected&#39;).each(function(selected) {
+    alert($(selected).text());
+});
+</code></pre>
+<h2 id="Case4-this-和-this-关键字在-jQuery-中有何不同？"><a href="#Case4-this-和-this-关键字在-jQuery-中有何不同？" class="headerlink" title="Case4.$(this) 和 this 关键字在 jQuery 中有何不同？"></a>Case4.$(this) 和 this 关键字在 jQuery 中有何不同？</h2><p>$(this) 返回一个 jQuery 对象，你可以对它调用多个 jQuery 方法</p>
+<p>而 this 代表当前元素，它是 JavaScript 关键词中的一个，表示上下文中的当前 DOM 元素。</p>
+<h2 id="Case5-你如何使用jQuery来提取一个HTML-标记的属性-例如-链接的href"><a href="#Case5-你如何使用jQuery来提取一个HTML-标记的属性-例如-链接的href" class="headerlink" title="Case5.你如何使用jQuery来提取一个HTML 标记的属性 例如. 链接的href?"></a>Case5.你如何使用jQuery来提取一个HTML 标记的属性 例如. 链接的href?</h2><pre><code class="javascript">$(&#39;a&#39;).each(function(){
+   alert($(this).attr(&#39;href&#39;));
+});
+</code></pre>
+<h2 id="Case6-jQuery中-detach-和-remove-方法的区别是什么"><a href="#Case6-jQuery中-detach-和-remove-方法的区别是什么" class="headerlink" title="Case6.jQuery中 detach() 和 remove() 方法的区别是什么?"></a>Case6.jQuery中 detach() 和 remove() 方法的区别是什么?</h2><p>尽管 detach() 和 remove() 方法都被用来移除一个DOM元素, 两者之间的主要不同在于 detach() 会保持对过去被解除元素的跟踪, 因此它可以被取消解除, 而 remove() 方法则会保持过去被移除对象的引用. </p>
+<h2 id="Case7-你如何利用jQuery来向一个元素中添加和移除CSS类"><a href="#Case7-你如何利用jQuery来向一个元素中添加和移除CSS类" class="headerlink" title="Case7.你如何利用jQuery来向一个元素中添加和移除CSS类?"></a>Case7.你如何利用jQuery来向一个元素中添加和移除CSS类?</h2><p>利用 addClass() 和 removeClass() 这两个 jQuery 方法。</p>
+<h2 id="Case8-使用-CDN-加载-jQuery-库的主要优势是什么"><a href="#Case8-使用-CDN-加载-jQuery-库的主要优势是什么" class="headerlink" title="Case8.使用 CDN 加载 jQuery 库的主要优势是什么 ?"></a>Case8.使用 CDN 加载 jQuery 库的主要优势是什么 ?</h2><ul>
+<li>节省服务器带宽</li>
+<li>更快的下载速度</li>
+<li>只需要下载一次。如果浏览器已经从同一个CDN下载类相同的 jQuery 版本, 那么它就不会再去下载它一次.</li>
+</ul>
+<h2 id="Case9-jQuery-get-和-jQuery-ajax-方法之间的区别是什么"><a href="#Case9-jQuery-get-和-jQuery-ajax-方法之间的区别是什么" class="headerlink" title="Case9.jQuery.get() 和 jQuery.ajax() 方法之间的区别是什么?"></a>Case9.jQuery.get() 和 jQuery.ajax() 方法之间的区别是什么?</h2><p>ajax() 方法更强大，更具可配置性, 让你可以指定等待多久，以及如何处理错误。get() 方法是一个只获取一些数据的专门化方法。</p>
+<h3 id="Case10-要是在一个-jQuery-事件处理程序里返回了-false-会怎样？"><a href="#Case10-要是在一个-jQuery-事件处理程序里返回了-false-会怎样？" class="headerlink" title="Case10. 要是在一个 jQuery 事件处理程序里返回了 false 会怎样？"></a>Case10. 要是在一个 jQuery 事件处理程序里返回了 false 会怎样？</h3><p>通常用于阻止事件向上冒泡。</p>
+<h3 id="Case11-哪种方式更高效：document-getElementbyId-“myId”-还是-“-myId”-？"><a href="#Case11-哪种方式更高效：document-getElementbyId-“myId”-还是-“-myId”-？" class="headerlink" title="Case11. 哪种方式更高效：document.getElementbyId(“myId”) 还是 $(“#myId”)？"></a>Case11. 哪种方式更高效：document.getElementbyId(“myId”) 还是 $(“#myId”)？</h3><p>第一种，因为它直接调用了 JavaScript 引擎。</p>
+<h2 id="Case12-当CDN上的jQuery文件不可用时，该怎么办？"><a href="#Case12-当CDN上的jQuery文件不可用时，该怎么办？" class="headerlink" title="Case12.当CDN上的jQuery文件不可用时，该怎么办？"></a>Case12.当CDN上的jQuery文件不可用时，该怎么办？</h2><pre><code class="javascript">&lt;script type=&quot;text/javascript&quot; language=&quot;Javascript&quot; src=&quot;http://ajax.aspnetcdn.com/ajax/jquery/jquery-1.4.1.min.js &quot;&gt;&lt;/script&gt;
+
+&lt;script type=&#39;text/javascript&#39;&gt;//&lt;![CDATA[
+if (typeof jQuery == &#39;undefined&#39;) {
+document.write(unescape(&quot;%3Cscript src=&#39;/Script/jquery-1.4.1.min.js&#39; type=&#39;text/javascript&#39; %3E%3C/script%3E&quot;));
+}//]]&gt;
+&lt;/script&gt;
+</code></pre>
+<h2 id="Case13-jQuery中的Delegate-函数有什么作用？"><a href="#Case13-jQuery中的Delegate-函数有什么作用？" class="headerlink" title="Case13.jQuery中的Delegate()函数有什么作用？"></a>Case13.jQuery中的Delegate()函数有什么作用？</h2><p>delegate()会在以下两个情况下使用到：</p>
+<ol>
+<li>如果你有一个父元素，需要给其下的子元素添加事件，这时你可以使用delegate()了，代码如下：</li>
+</ol>
+<pre><code class="javascript">$(&quot;ul&quot;).delegate(&quot;li&quot;, &quot;click&quot;, function(){
+    $(this).hide();
+});
+</code></pre>
+<p>2、当元素在当前页面中不可用时，可以使用delegate()</p>
+<h2 id="Case14-jQuery编码和解码URL？"><a href="#Case14-jQuery编码和解码URL？" class="headerlink" title="Case14.jQuery编码和解码URL？"></a>Case14.jQuery编码和解码URL？</h2><p>encodeURIComponent(url) and decodeURIComponent(url)</p>
+<h3 id="Case15-如何用jQuery禁用浏览器的前进后退按钮？"><a href="#Case15-如何用jQuery禁用浏览器的前进后退按钮？" class="headerlink" title="Case15. 如何用jQuery禁用浏览器的前进后退按钮？"></a>Case15. 如何用jQuery禁用浏览器的前进后退按钮？</h3><pre><code class="javascript">&lt;script type=&quot;text/javascript&quot; language=&quot;javascript&quot;&gt;
+$(document).ready(function() {
+     window.history.forward(1);    // 原理就是产生一个“前进”的动作，以抵消后退功能
+     //OR
+     window.history.forward(-1);
+});
+&lt;/script&gt;
+</code></pre>
+<h1 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h1><ul>
+<li><a href="http://www.jb51.net/article/85471.htm" target="_blank" rel="external">jQuery基础知识点总结(必看)</a></li>
+<li><a href="http://www.jb51.net/article/54745.htm" target="_blank" rel="external">jquery学习总结（超级详细）</a></li>
+<li><a href="http://www.cnblogs.com/mehjb/p/6095230.html" target="_blank" rel="external">最常见的 20 个 jQuery 面试问题及答案</a></li>
+<li><a href="http://www.cnblogs.com/vanone/p/5257157.html" target="_blank" rel="external">jQuery经典面试题及答案精选</a></li>
+</ul>
+]]></content>
+      
+        <categories>
+            
+            <category> 技术栈 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> JavaScript </tag>
             
         </tags>
         
@@ -748,219 +1031,6 @@ main();
 </code></pre>
 <p>它们看上去和Generators很像。我（作者）强烈推荐使用 <code>async await</code> 来替代Generators + Promises的写法。<br><a href="http://masnun.com/2015/11/11/using-es7-asyncawait-today-with-babel.html" target="_blank" rel="external">这里</a>是个很好的学习资源，让我们学习和使用这项ES7中的新功能。</p>
 <p><sup><a href="#table-of-contents">(回到目录)</a></sup></p>
-]]></content>
-      
-        <categories>
-            
-            <category> 技术栈 </category>
-            
-        </categories>
-        
-        
-        <tags>
-            
-            <tag> JavaScript </tag>
-            
-        </tags>
-        
-    </entry>
-    
-    <entry>
-      <title><![CDATA[jquery]]></title>
-      <url>/2017/12/04/%E5%89%8D%E7%AB%AF/%E6%A1%86%E6%9E%B6%E4%B8%8E%E7%BB%84%E4%BB%B6/jquery/</url>
-      <content type="html"><![CDATA[<p>jquery知识点整理。</p>
-<p>jquery ajax没整理。</p>
-<a id="more"></a>
-<h1 id="知识点"><a href="#知识点" class="headerlink" title="知识点"></a>知识点</h1><h2 id=""><a href="#" class="headerlink" title="$()"></a>$()</h2><p>$()函数是JQuery函数的别名</p>
-<p>$()函数用于将任何对象包裹成jQuery对象</p>
-<h2 id="jQuery入口函数与Js入口函数的区别"><a href="#jQuery入口函数与Js入口函数的区别" class="headerlink" title="jQuery入口函数与Js入口函数的区别"></a>jQuery入口函数与Js入口函数的区别</h2><p>js入口函数指的是：window.onload = function(){};</p>
-<p>jQuery入口函数是：$(document).ready()</p>
-<table>
-<thead>
-<tr>
-<th>window.onload</th>
-<th></th>
-<th>$(document).ready()</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>必须等待网页中所有的内容加载完毕后（包括图片）才能执行</td>
-<td>执行时机</td>
-<td>网页中所有DOM结构绘制完毕后就执行，可能DOM元素关联的东西并没有加载完</td>
-</tr>
-<tr>
-<td>不能同时编写多个 ，出现多次会存在事件覆盖的问题。</td>
-<td>编写个数</td>
-<td>能同时编写多个</td>
-</tr>
-<tr>
-<td>无</td>
-<td>简化写法</td>
-<td>$(document).ready(function(){});可以简写成$(function(){});</td>
-</tr>
-<tr>
-<td>很差</td>
-<td>兼容性</td>
-<td>好</td>
-</tr>
-</tbody>
-</table>
-<h2 id="jQuery选择器"><a href="#jQuery选择器" class="headerlink" title="jQuery选择器"></a>jQuery选择器</h2><h3 id="基本选择器"><a href="#基本选择器" class="headerlink" title="基本选择器"></a>基本选择器</h3><ul>
-<li>ID选择器：#</li>
-<li>类选择器： .</li>
-<li>标签选择器： element</li>
-</ul>
-<h3 id="层级选择器"><a href="#层级选择器" class="headerlink" title="层级选择器"></a>层级选择器</h3><ul>
-<li>后代选择器：空格</li>
-<li>子代选择器：&gt;</li>
-</ul>
-<h3 id="基本过滤选择器"><a href="#基本过滤选择器" class="headerlink" title="基本过滤选择器"></a>基本过滤选择器</h3><p>索引号为index：<strong>:eq(index)</strong></p>
-<p>索引号为奇数：<strong>:odd</strong></p>
-<p>索引号为偶数：<strong>:even</strong></p>
-<h2 id="jQuery操作"><a href="#jQuery操作" class="headerlink" title="jQuery操作"></a>jQuery操作</h2><h3 id="筛选"><a href="#筛选" class="headerlink" title="筛选"></a>筛选</h3><p>查找指定元素的所有后代元素（子子孙孙）：find(selector)</p>
-<p>查找指定元素的直接子元素（亲儿子元素）：children()</p>
-<p>查找所有兄弟元素（不包括自己）：siblings()</p>
-<p>查找父元素（亲的）：parent()</p>
-<p>查找指定元素的第index个元素，index是索引号，从0开始：eq(index)</p>
-<h3 id="选择网页元素"><a href="#选择网页元素" class="headerlink" title="选择网页元素"></a>选择网页元素</h3><pre><code class="javascript">$(&#39;a:first&#39;)//选择网页中第一个a元素  
-$(&#39;tr:odd&#39;)//选择表格的奇数行  
-$(&#39;#myForm :input&#39;)//选择表单中的input元素  
-$(&#39;div:visible&#39;) //选择可见的div元素  
-$(&#39;div:gt(2)&#39;)//选择所有的div元素，除了前三个  
-$(&#39;div:animated&#39;)//选择当前处于动画状态的div元素
-</code></pre>
-<h3 id="改变结果集"><a href="#改变结果集" class="headerlink" title="改变结果集"></a>改变结果集</h3><pre><code class="javascript">$(&#39;div&#39;).has(&#39;p&#39;); //选择包含p元素的div元素  
-$(&#39;div&#39;).not(&#39;.myClass&#39;); //选择class不等于myClass的div元素  
-$(&#39;div&#39;).filter(&#39;.myClass&#39;); //选择class等于myClass的div元素  
-$(&#39;div&#39;).first(); //选择第1个div元素  
-$(&#39;div&#39;).eq(5); //选择第6个div元素  
-$(&#39;div&#39;).next(&#39;p&#39;); //选择div元素后面的第一个p元素  
-$(&#39;div&#39;).parent(); //选择div元素的父元素  
-$(&#39;div&#39;).closest(&#39;form&#39;); //选择离div最近的那个form父元素  
-$(&#39;div&#39;).children(); //选择div的所有子元素  
-$(&#39;div&#39;).siblings(); //选择div的同级元素
-</code></pre>
-<h3 id="链式操作"><a href="#链式操作" class="headerlink" title="链式操作"></a>链式操作</h3><p>.end()：回到最近的一个”破坏性”操作之前。如果之前没有破坏性操作，则返回一个空集。所谓的”破坏性”就是指任何改变所匹配的jQuery元素的操作。</p>
-<h3 id="元素的操作：取值和赋值"><a href="#元素的操作：取值和赋值" class="headerlink" title="元素的操作：取值和赋值"></a>元素的操作：取值和赋值</h3><p>常见的取值和赋值函数如下：</p>
-<ol>
-<li>html() 返回或设置被选元素的内容 (inner HTML)    </li>
-<li>text() 取出或设置text内容      </li>
-<li><strong>attr()</strong> 取出或设置某个属性的值    </li>
-<li>width() 取出或设置某个元素的宽度    </li>
-<li>height() 取出或设置某个元素的高度  </li>
-<li>val() 取出或设置html内容 取出某个表单元素的值  </li>
-<li>css() 设置css样式</li>
-</ol>
-<p>需要注意的是，如果结果集包含多个元素，那么赋值的时候，将对其中所有的元素赋值；取值的时候，则是只取出第一个元素的值（.text()例外，它取出所有元素的text内容）。</p>
-<h3 id="元素的操作：移动"><a href="#元素的操作：移动" class="headerlink" title="元素的操作：移动"></a>元素的操作：移动</h3><ol>
-<li>.insertAfter()和.after()：在现存元素的外部，从后面插入元素  </li>
-<li>.insertBefore()和.before()：在现存元素的外部，从前面插入元素  </li>
-<li>.appendTo()和.append()：在现存元素的内部，从后面插入元素  </li>
-<li>.prependTo()和.prepend()  ：在现存元素的内部，从前面插入元素</li>
-</ol>
-<h3 id="元素的操作：复制、删除和创建"><a href="#元素的操作：复制、删除和创建" class="headerlink" title="元素的操作：复制、删除和创建"></a>元素的操作：复制、删除和创建</h3><p>复制元素使用.clone()</p>
-<p>删除元素使用.remove()和.detach()。两者的区别在于，<strong>前者不保留被删除元素的事件，后者保留，有利于重新插入文档时使用。</strong></p>
-<p>清空元素内容（但是不删除该元素）使用.empty()。</p>
-<h3 id="工具方法"><a href="#工具方法" class="headerlink" title="工具方法"></a>工具方法</h3><p> $.trim() 去除字符串两端的空格。<br> $.each() 遍历一个数组或对象。<br> $.inArray() 返回一个值在数组中的索引位置。如果该值不在数组中，则返回-1。<br> $.grep() 返回数组中符合某种标准的元素。<br> $.extend() 将多个对象，合并到第一个对象。<br> $.makeArray() 将对象转化为数组。<br> $.type() 判断对象的类别（函数对象、日期对象、数组对象、正则对象等等）。<br> $.isArray() 判断某个参数是否为数组。<br> $.isEmptyObject() 判断某个对象是否为空（不含有任何属性）。<br> $.isFunction() 判断某个参数是否为函数。<br> $.isPlainObject() 判断某个参数是否为用”{}”或”new Object”建立的对象。<br> $.support() 判断浏览器是否支持某个特性。 </p>
-<h3 id="事件操作"><a href="#事件操作" class="headerlink" title="事件操作"></a>事件操作</h3><p> .blur() 表单元素失去焦点。<br> .change() 表单元素的值发生变化<br> .click() 鼠标单击<br> .dblclick() 鼠标双击<br> .focus() 表单元素获得焦点<br> .focusin() 子元素获得焦点<br> .focusout() 子元素失去焦点<br> .hover() 同时为mouseenter和mouseleave事件指定处理函数<br> .keydown() 按下键盘（长时间按键，只返回一个事件）<br> .keypress() 按下键盘（长时间按键，将返回多个事件）<br> .keyup() 松开键盘<br> .load() 元素加载完毕<br> .mousedown() 按下鼠标<br> .mouseenter() 鼠标进入（进入子元素不触发）<br> .mouseleave() 鼠标离开（离开子元素不触发）<br> .mousemove() 鼠标在元素内部移动<br> .mouseout() 鼠标离开（离开子元素也触发）<br> .mouseover() 鼠标进入（进入子元素也触发）<br> .mouseup() 松开鼠标<br> .ready() DOM加载完成<br> .resize() 浏览器窗口的大小发生改变<br> .scroll() 滚动条的位置发生变化<br> .select() 用户选中文本框中的内容<br> .submit() 用户递交表单<br> .toggle() 根据鼠标点击的次数，依次运行多个函数<br> .unload()  用户离开页面  </p>
-<p><strong>特别的</strong></p>
-<ul>
-<li>.bind()：以上这些事件在jQuery内部，都是.bind()的便捷方式。使用.bind()可以更灵活地控制事件</li>
-<li>.one()：只想让事件运行一次</li>
-<li>.unbind()：解除事件绑定</li>
-</ul>
-<p>所有的事件处理函数，都可以接受一个事件对象(event object)作为参数，这个事件对象有一些很有用的属性和方法：</p>
-<p>event.pageX 事件发生时，鼠标距离网页左上角的水平距离 　　<br>event.pageY 事件发生时，鼠标距离网页左上角的垂直距离<br>event.type 事件的类型（比如click） 　　<br>event.which 按下了哪一个键 　　<br>event.data在事件对象上绑定数据，然后传入事件处理函数 　　<br>event.target 事件针对的网页元素<br>event.preventDefault() 阻止事件的默认行为（比如点击链接，会自动打开新页面）<br>event.stopPropagation() 停止事件向上层元素冒泡</p>
-<p>有两种方法，可以自动触发一个事件。一种是直接使用事件函数，另一种是使用.trigger()或.triggerHandler()。</p>
-<pre><code class="javascript">$(&#39;a&#39;).click();
-$(&#39;a&#39;).trigger(&#39;click&#39;);
-</code></pre>
-<h3 id="特殊效果"><a href="#特殊效果" class="headerlink" title="特殊效果"></a>特殊效果</h3><p>.fadeIn() 淡入<br>.fadeOut() 淡出<br>.fadeTo() 调整透明度<br>.hide() 隐藏元素<br>.show() 显示元素<br>.slideDown() 向下展开<br>.slideUp() 向上卷起<br>.slideToggle() 依次展开或卷起某个元素<br>.toggle() 依次展示或隐藏某个元素</p>
-<p>除了.show()和.hide()，所有其他特效的默认执行时间都是400ms(毫秒)，但是你可以改变这个设置。</p>
-<p>更复杂的特效，可以用.animate()自定义。</p>
-<p>.stop()和.delay()用来停止或延缓特效的执行。</p>
-<p>$.fx.off如果设置为true，则关闭所有网页特效。</p>
-<p>几个常见的筛选选择器：</p>
-<p>filter()：筛选出与指定表达式匹配的元素集合。这个方法用于缩小匹配的范围。用逗号分隔多个表达式</p>
-<pre><code class="javascript">//保留子元素中不含有ol的元素。
-//&lt;p&gt;&lt;ol&gt;&lt;li&gt;Hello&lt;/li&gt;&lt;/ol&gt;&lt;/p&gt;&lt;p&gt;How are you?&lt;/p&gt;
-$(&quot;p&quot;).filter(function(index) {
- return $(&quot;ol&quot;, this).length == 0;
-});
-//&lt;p&gt;How are you?&lt;/p&gt;
-</code></pre>
-<p>silce()：选取一个匹配的子集</p>
-<pre><code class="javascript">//选择第一个p元素
-//&lt;p&gt;Hello&lt;/p&gt;&lt;p&gt;cruel&lt;/p&gt;&lt;p&gt;World&lt;/p&gt;
-$(&quot;p&quot;).slice(0, 1).wrapInner(&quot;&lt;b&gt;&lt;/b&gt;&quot;);
-//&lt;p&gt;&lt;b&gt;Hello&lt;/b&gt;&lt;/p&gt;
-</code></pre>
-<h1 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h1><h2 id="Case1-jQuery对象和DOM对象的相互转换"><a href="#Case1-jQuery对象和DOM对象的相互转换" class="headerlink" title="Case1.jQuery对象和DOM对象的相互转换"></a>Case1.jQuery对象和DOM对象的相互转换</h2><pre><code class="javascript">var btn = document.getElementById(“btnShow”);
-var $btn = $(“#btnShow”); // $btn就是一个jQuery对象
-
-//DOM对象转换成jQuery对象
-var $btn1 = $(btn);
-
-//jQuery对象转换成DOM对象
-var btn1 = $btn[0]; 
-var btn2 = $btn.get(0);
-</code></pre>
-<h2 id="Case2-如何找到所有-HTML-select-标签的选中项？"><a href="#Case2-如何找到所有-HTML-select-标签的选中项？" class="headerlink" title="Case2.如何找到所有 HTML select 标签的选中项？"></a>Case2.如何找到所有 HTML select 标签的选中项？</h2><pre><code class="javascript">$(&#39;[name=NameOfSelectedTag] :selected&#39;)
-</code></pre>
-<h2 id="Case3-jQuery-里的-each-是什么函数？你是如何使用它的？"><a href="#Case3-jQuery-里的-each-是什么函数？你是如何使用它的？" class="headerlink" title="Case3. jQuery 里的 each() 是什么函数？你是如何使用它的？"></a>Case3. jQuery 里的 each() 是什么函数？你是如何使用它的？</h2><p>each() 函数就像是 Java 里的一个 Iterator，它允许你遍历一个元素集合。你可以传一个函数给 each() 方法，被调用的 jQuery 对象会在其每个元素上执行传入的函数。</p>
-<pre><code class="javascript">$(&#39;[name=NameOfSelectedTag] :selected&#39;).each(function(selected) {
-    alert($(selected).text());
-});
-</code></pre>
-<h2 id="Case4-this-和-this-关键字在-jQuery-中有何不同？"><a href="#Case4-this-和-this-关键字在-jQuery-中有何不同？" class="headerlink" title="Case4.$(this) 和 this 关键字在 jQuery 中有何不同？"></a>Case4.$(this) 和 this 关键字在 jQuery 中有何不同？</h2><p>$(this) 返回一个 jQuery 对象，你可以对它调用多个 jQuery 方法</p>
-<p>而 this 代表当前元素，它是 JavaScript 关键词中的一个，表示上下文中的当前 DOM 元素。</p>
-<h2 id="Case5-你如何使用jQuery来提取一个HTML-标记的属性-例如-链接的href"><a href="#Case5-你如何使用jQuery来提取一个HTML-标记的属性-例如-链接的href" class="headerlink" title="Case5.你如何使用jQuery来提取一个HTML 标记的属性 例如. 链接的href?"></a>Case5.你如何使用jQuery来提取一个HTML 标记的属性 例如. 链接的href?</h2><pre><code class="javascript">$(&#39;a&#39;).each(function(){
-   alert($(this).attr(&#39;href&#39;));
-});
-</code></pre>
-<h2 id="Case6-jQuery中-detach-和-remove-方法的区别是什么"><a href="#Case6-jQuery中-detach-和-remove-方法的区别是什么" class="headerlink" title="Case6.jQuery中 detach() 和 remove() 方法的区别是什么?"></a>Case6.jQuery中 detach() 和 remove() 方法的区别是什么?</h2><p>尽管 detach() 和 remove() 方法都被用来移除一个DOM元素, 两者之间的主要不同在于 detach() 会保持对过去被解除元素的跟踪, 因此它可以被取消解除, 而 remove() 方法则会保持过去被移除对象的引用. </p>
-<h2 id="Case7-你如何利用jQuery来向一个元素中添加和移除CSS类"><a href="#Case7-你如何利用jQuery来向一个元素中添加和移除CSS类" class="headerlink" title="Case7.你如何利用jQuery来向一个元素中添加和移除CSS类?"></a>Case7.你如何利用jQuery来向一个元素中添加和移除CSS类?</h2><p>利用 addClass() 和 removeClass() 这两个 jQuery 方法。</p>
-<h2 id="Case8-使用-CDN-加载-jQuery-库的主要优势是什么"><a href="#Case8-使用-CDN-加载-jQuery-库的主要优势是什么" class="headerlink" title="Case8.使用 CDN 加载 jQuery 库的主要优势是什么 ?"></a>Case8.使用 CDN 加载 jQuery 库的主要优势是什么 ?</h2><ul>
-<li>节省服务器带宽</li>
-<li>更快的下载速度</li>
-<li>只需要下载一次。如果浏览器已经从同一个CDN下载类相同的 jQuery 版本, 那么它就不会再去下载它一次.</li>
-</ul>
-<h2 id="Case9-jQuery-get-和-jQuery-ajax-方法之间的区别是什么"><a href="#Case9-jQuery-get-和-jQuery-ajax-方法之间的区别是什么" class="headerlink" title="Case9.jQuery.get() 和 jQuery.ajax() 方法之间的区别是什么?"></a>Case9.jQuery.get() 和 jQuery.ajax() 方法之间的区别是什么?</h2><p>ajax() 方法更强大，更具可配置性, 让你可以指定等待多久，以及如何处理错误。get() 方法是一个只获取一些数据的专门化方法。</p>
-<h3 id="Case10-要是在一个-jQuery-事件处理程序里返回了-false-会怎样？"><a href="#Case10-要是在一个-jQuery-事件处理程序里返回了-false-会怎样？" class="headerlink" title="Case10. 要是在一个 jQuery 事件处理程序里返回了 false 会怎样？"></a>Case10. 要是在一个 jQuery 事件处理程序里返回了 false 会怎样？</h3><p>通常用于阻止事件向上冒泡。</p>
-<h3 id="Case11-哪种方式更高效：document-getElementbyId-“myId”-还是-“-myId”-？"><a href="#Case11-哪种方式更高效：document-getElementbyId-“myId”-还是-“-myId”-？" class="headerlink" title="Case11. 哪种方式更高效：document.getElementbyId(“myId”) 还是 $(“#myId”)？"></a>Case11. 哪种方式更高效：document.getElementbyId(“myId”) 还是 $(“#myId”)？</h3><p>第一种，因为它直接调用了 JavaScript 引擎。</p>
-<h2 id="Case12-当CDN上的jQuery文件不可用时，该怎么办？"><a href="#Case12-当CDN上的jQuery文件不可用时，该怎么办？" class="headerlink" title="Case12.当CDN上的jQuery文件不可用时，该怎么办？"></a>Case12.当CDN上的jQuery文件不可用时，该怎么办？</h2><pre><code class="javascript">&lt;script type=&quot;text/javascript&quot; language=&quot;Javascript&quot; src=&quot;http://ajax.aspnetcdn.com/ajax/jquery/jquery-1.4.1.min.js &quot;&gt;&lt;/script&gt;
-
-&lt;script type=&#39;text/javascript&#39;&gt;//&lt;![CDATA[
-if (typeof jQuery == &#39;undefined&#39;) {
-document.write(unescape(&quot;%3Cscript src=&#39;/Script/jquery-1.4.1.min.js&#39; type=&#39;text/javascript&#39; %3E%3C/script%3E&quot;));
-}//]]&gt;
-&lt;/script&gt;
-</code></pre>
-<h2 id="Case13-jQuery中的Delegate-函数有什么作用？"><a href="#Case13-jQuery中的Delegate-函数有什么作用？" class="headerlink" title="Case13.jQuery中的Delegate()函数有什么作用？"></a>Case13.jQuery中的Delegate()函数有什么作用？</h2><p>delegate()会在以下两个情况下使用到：</p>
-<ol>
-<li>如果你有一个父元素，需要给其下的子元素添加事件，这时你可以使用delegate()了，代码如下：</li>
-</ol>
-<pre><code class="javascript">$(&quot;ul&quot;).delegate(&quot;li&quot;, &quot;click&quot;, function(){
-    $(this).hide();
-});
-</code></pre>
-<p>2、当元素在当前页面中不可用时，可以使用delegate()</p>
-<h2 id="Case14-jQuery编码和解码URL？"><a href="#Case14-jQuery编码和解码URL？" class="headerlink" title="Case14.jQuery编码和解码URL？"></a>Case14.jQuery编码和解码URL？</h2><p>encodeURIComponent(url) and decodeURIComponent(url)</p>
-<h3 id="Case15-如何用jQuery禁用浏览器的前进后退按钮？"><a href="#Case15-如何用jQuery禁用浏览器的前进后退按钮？" class="headerlink" title="Case15. 如何用jQuery禁用浏览器的前进后退按钮？"></a>Case15. 如何用jQuery禁用浏览器的前进后退按钮？</h3><pre><code class="javascript">&lt;script type=&quot;text/javascript&quot; language=&quot;javascript&quot;&gt;
-$(document).ready(function() {
-     window.history.forward(1);    // 原理就是产生一个“前进”的动作，以抵消后退功能
-     //OR
-     window.history.forward(-1);
-});
-&lt;/script&gt;
-</code></pre>
-<h1 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h1><ul>
-<li><a href="http://www.jb51.net/article/85471.htm" target="_blank" rel="external">jQuery基础知识点总结(必看)</a></li>
-<li><a href="http://www.jb51.net/article/54745.htm" target="_blank" rel="external">jquery学习总结（超级详细）</a></li>
-<li><a href="http://www.cnblogs.com/mehjb/p/6095230.html" target="_blank" rel="external">最常见的 20 个 jQuery 面试问题及答案</a></li>
-<li><a href="http://www.cnblogs.com/vanone/p/5257157.html" target="_blank" rel="external">jQuery经典面试题及答案精选</a></li>
-</ul>
 ]]></content>
       
         <categories>
@@ -1949,102 +2019,6 @@ process.on(&#39;unhandledRejection&#39;, function (err, p) { console.error(&#39;
     </entry>
     
     <entry>
-      <title><![CDATA[vue]]></title>
-      <url>/2017/10/24/%E5%89%8D%E7%AB%AF/%E6%A1%86%E6%9E%B6%E4%B8%8E%E7%BB%84%E4%BB%B6/vue/</url>
-      <content type="html"><![CDATA[<p>vue知识点整理。</p>
-<a id="more"></a>
-<h1 id="知识点"><a href="#知识点" class="headerlink" title="知识点"></a>知识点</h1><h1 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h1><h2 id="Case1-active-class是哪个组件的属性？嵌套路由怎么定义？"><a href="#Case1-active-class是哪个组件的属性？嵌套路由怎么定义？" class="headerlink" title="Case1.active-class是哪个组件的属性？嵌套路由怎么定义？"></a>Case1.active-class是哪个组件的属性？嵌套路由怎么定义？</h2><p>vue-router模块的router-link组件。</p>
-<h2 id="Case2-怎么定义vue-router的动态路由？怎么获取传过来的动态参数？"><a href="#Case2-怎么定义vue-router的动态路由？怎么获取传过来的动态参数？" class="headerlink" title="Case2.怎么定义vue-router的动态路由？怎么获取传过来的动态参数？"></a>Case2.怎么定义vue-router的动态路由？怎么获取传过来的动态参数？</h2><p>在router目录下的index.js文件中，对path属性加上/:id。  使用router对象的params.id</p>
-<h2 id="Case3-vue-router有哪几种导航钩子？"><a href="#Case3-vue-router有哪几种导航钩子？" class="headerlink" title="Case3.vue-router有哪几种导航钩子？"></a>Case3.vue-router有哪几种导航钩子？</h2><p>三种，一种是全局导航钩子：router.beforeEach(to,from,next)，作用：跳转前进行判断拦截。第二种：组件内的钩子；第三种：单独路由独享组件</p>
-<h2 id="Case4-scss是什么？安装使用的步骤是？有哪几大特性？"><a href="#Case4-scss是什么？安装使用的步骤是？有哪几大特性？" class="headerlink" title="Case4.scss是什么？安装使用的步骤是？有哪几大特性？"></a>Case4.scss是什么？安装使用的步骤是？有哪几大特性？</h2><p>css的预编译。</p>
-<p>使用步骤：</p>
-<p>第一步：用npm 下三个loader（sass-loader、css-loader、node-sass）</p>
-<p>第二步：在build目录找到webpack.base.config.js，在那个extends属性中加一个拓展.scss</p>
-<p>第三步：还是在同一个文件，配置一个module属性</p>
-<p>第四步：然后在组件的style标签加上lang属性 ，例如：lang=”scss”</p>
-<p>有哪几大特性:</p>
-<p>1、可以用变量，例如（$变量名称=值）；</p>
-<p>2、可以用混合器，例如（）</p>
-<p>3、可以嵌套</p>
-<h2 id="Case5-mint-ui是什么？怎么使用？说出至少三个组件使用方法？"><a href="#Case5-mint-ui是什么？怎么使用？说出至少三个组件使用方法？" class="headerlink" title="Case5.mint-ui是什么？怎么使用？说出至少三个组件使用方法？"></a>Case5.mint-ui是什么？怎么使用？说出至少三个组件使用方法？</h2><p>基于vue的前端组件库。</p>
-<p>npm安装，然后import样式和js，vue.use（mintUi）全局引入。在单个组件局部引入：import {Toast} from ‘mint-ui’。组件一：Toast(‘登录成功’)；组件二：mint-header；组件三：mint-swiper</p>
-<h2 id="Case6-v-model是什么？怎么使用？-vue中标签怎么绑定事件？"><a href="#Case6-v-model是什么？怎么使用？-vue中标签怎么绑定事件？" class="headerlink" title="Case6.v-model是什么？怎么使用？ vue中标签怎么绑定事件？"></a>Case6.v-model是什么？怎么使用？ vue中标签怎么绑定事件？</h2><p>可以实现双向绑定，指令（v-class、v-for、v-if、v-show、v-on）。vue的model层的data属性。绑定事件：<code>&lt;input @click=doLog() /&gt;</code></p>
-<h2 id="Case7-axios是什么？怎么使用？描述使用它实现登录功能的流程？"><a href="#Case7-axios是什么？怎么使用？描述使用它实现登录功能的流程？" class="headerlink" title="Case7.axios是什么？怎么使用？描述使用它实现登录功能的流程？"></a>Case7.axios是什么？怎么使用？描述使用它实现登录功能的流程？</h2><p>请求后台资源的模块。npm install axios -S装好，然后发送的是跨域，需在配置文件中config/index.js进行设置。后台如果是Tp5则定义一个资源路由。js中使用import进来，然后.get或.post。返回在.then函数中如果成功，失败则是在.catch函数中</p>
-<h2 id="Case8-axios-tp5进阶中，调用axios-post-‘api-user’-是进行的什么操作？axios-put-‘api-user-8′-呢？"><a href="#Case8-axios-tp5进阶中，调用axios-post-‘api-user’-是进行的什么操作？axios-put-‘api-user-8′-呢？" class="headerlink" title="Case8.axios+tp5进阶中，调用axios.post(‘api/user’)是进行的什么操作？axios.put(‘api/user/8′)呢？"></a>Case8.axios+tp5进阶中，调用axios.post(‘api/user’)是进行的什么操作？axios.put(‘api/user/8′)呢？</h2><p>跨域，添加用户操作，更新操作。</p>
-<h2 id="Case9-什么是RESTful-API？怎么使用"><a href="#Case9-什么是RESTful-API？怎么使用" class="headerlink" title="Case9.什么是RESTful API？怎么使用?"></a>Case9.什么是RESTful API？怎么使用?</h2><p>是一个api的标准，无状态请求。请求的路由地址是固定的，如果是tp5则先路由配置中把资源路由配置好。标准有：.post .put .delete</p>
-<h2 id="Case10-vuex是什么？怎么使用？哪种功能场景使用它？"><a href="#Case10-vuex是什么？怎么使用？哪种功能场景使用它？" class="headerlink" title="Case10.vuex是什么？怎么使用？哪种功能场景使用它？"></a>Case10.vuex是什么？怎么使用？哪种功能场景使用它？</h2><p>vue框架中状态管理。在main.js引入store，注入。新建了一个目录store，….. export 。场景有：单页应用中，组件之间的状态。音乐播放、登录状态、加入购物车</p>
-<h2 id="Case11-mvvm框架是什么？它和其它框架（jquery）的区别是什么？哪些场景适合？"><a href="#Case11-mvvm框架是什么？它和其它框架（jquery）的区别是什么？哪些场景适合？" class="headerlink" title="Case11.mvvm框架是什么？它和其它框架（jquery）的区别是什么？哪些场景适合？"></a>Case11.mvvm框架是什么？它和其它框架（jquery）的区别是什么？哪些场景适合？</h2><p>一个model+view+viewModel框架，数据模型model，viewModel连接两个</p>
-<p>区别：vue数据驱动，通过数据来显示视图层而不是节点操作。</p>
-<p>场景：数据操作比较多的场景，更加便捷</p>
-<h2 id="Case12-自定义指令（v-check、v-focus）的方法有哪些？它有哪些钩子函数？还有哪些钩子函数参数？"><a href="#Case12-自定义指令（v-check、v-focus）的方法有哪些？它有哪些钩子函数？还有哪些钩子函数参数？" class="headerlink" title="Case12.自定义指令（v-check、v-focus）的方法有哪些？它有哪些钩子函数？还有哪些钩子函数参数？"></a>Case12.自定义指令（v-check、v-focus）的方法有哪些？它有哪些钩子函数？还有哪些钩子函数参数？</h2><p>全局定义指令：在vue对象的directive方法里面有两个参数，一个是指令名称，另外一个是函数。组件内定义指令：directives</p>
-<p>钩子函数：bind（绑定事件触发）、inserted(节点插入的时候触发)、update（组件内相关更新）</p>
-<p>钩子函数参数：el、binding</p>
-<h2 id="Case13-说出至少4种vue当中的指令和它的用法？"><a href="#Case13-说出至少4种vue当中的指令和它的用法？" class="headerlink" title="Case13.说出至少4种vue当中的指令和它的用法？"></a>Case13.说出至少4种vue当中的指令和它的用法？</h2><p>v-if：判断是否隐藏；v-for：数据循环出来；v-bind:class：绑定一个属性；v-model：实现双向绑定</p>
-<h2 id="Case14-vue-router是什么？它有哪些组件？"><a href="#Case14-vue-router是什么？它有哪些组件？" class="headerlink" title="Case14.vue-router是什么？它有哪些组件？"></a>Case14.vue-router是什么？它有哪些组件？</h2><p>vue用来写路由一个插件。router-link、router-view</p>
-<h2 id="Case15-导航钩子有哪些？它们有哪些参数？"><a href="#Case15-导航钩子有哪些？它们有哪些参数？" class="headerlink" title="Case15.导航钩子有哪些？它们有哪些参数？"></a>Case15.导航钩子有哪些？它们有哪些参数？</h2><p>导航钩子有：a/全局钩子和组件内独享的钩子。b/beforeRouteEnter、afterEnter、beforeRouterUpdate、beforeRouteLeave</p>
-<p>参数：有to（去的那个路由）、from（离开的路由）、next（一定要用这个函数才能去到下一个路由，如果不用就拦截）最常用就这几种</p>
-<h2 id="Case16-Vue的双向数据绑定原理是什么？"><a href="#Case16-Vue的双向数据绑定原理是什么？" class="headerlink" title="Case16.Vue的双向数据绑定原理是什么？"></a>Case16.Vue的双向数据绑定原理是什么？</h2><p>vue.js 是采用数据劫持结合发布者-订阅者模式的方式，通过<code>Object.defineProperty()</code>来劫持各个属性的<code>setter</code>，<code>getter</code>，在数据变动时发布消息给订阅者，触发相应的监听回调。</p>
-<p><strong>具体步骤：</strong></p>
-<p><strong>第一步：需要observe的数据对象进行递归遍历</strong>，包括子属性对象的属性，都加上 <code>setter</code>和<code>getter</code><br>这样的话，给这个对象的某个值赋值，就会触发<code>setter</code>，那么就能监听到了数据变化</p>
-<p><strong>第二步：compile解析模板指令</strong>，将模板中的变量替换成数据，然后初始化渲染页面视图，并将每个指令对应的节点绑定更新函数，添加监听数据的订阅者，一旦数据有变动，收到通知，更新视图</p>
-<p><strong>第三步：Watcher订阅者是Observer和Compile之间通信的桥梁</strong>，主要做的事情是:<br>1、在自身实例化时往属性订阅器(dep)里面添加自己<br>2、自身必须有一个update()方法<br>3、待属性变动dep.notice()通知时，能调用自身的update()方法，并触发Compile中绑定的回调，则功成身退。</p>
-<p><strong>第四步：MVVM作为数据绑定的入口，整合Observer、Compile和Watcher三者</strong>，通过Observer来监听自己的model数据变化，通过Compile来解析编译模板指令，最终利用Watcher搭起Observer和Compile之间的通信桥梁，达到数据变化 -&gt; 视图更新；视图交互变化(input) -&gt; 数据model变更的双向绑定效果。</p>
-<p>ps：16题答案同样适合”<strong>vue data是怎么实现的？”</strong>此面试题。</p>
-<h2 id="Case17-请详细说下你对vue生命周期的理解？"><a href="#Case17-请详细说下你对vue生命周期的理解？" class="headerlink" title="Case17.请详细说下你对vue生命周期的理解？"></a>Case17.请详细说下你对vue生命周期的理解？</h2><p>答：总共分为8个阶段创建前/后，载入前/后，更新前/后，销毁前/后。</p>
-<p><strong>创建前/后：</strong> 在beforeCreated阶段，vue实例的挂载元素$el和数据对象data都为undefined，还未初始化。在created阶段，vue实例的数据对象data有了，$el还没有。</p>
-<p><strong>载入前/后：</strong>在beforeMount阶段，vue实例的$el和data都初始化了，但还是挂载之前为虚拟的dom节点，data.message还未替换。在mounted阶段，vue实例挂载完成，data.message成功渲染。</p>
-<p><strong>更新前/后：</strong>当data变化时，会触发beforeUpdate和updated方法。</p>
-<p><strong>销毁前/后：</strong>在执行destroy方法后，对data的改变不会再触发周期函数，说明此时vue实例已经解除了事件监听以及和dom的绑定，但是dom结构依然存在</p>
-<h2 id="Case18-请说下封装-vue-组件的过程？"><a href="#Case18-请说下封装-vue-组件的过程？" class="headerlink" title="Case18.请说下封装 vue 组件的过程？"></a>Case18.请说下封装 vue 组件的过程？</h2><p>答：首先，组件可以提升整个项目的开发效率。能够把页面抽象成多个相对独立的模块，解决了我们传统项目开发：<strong>效率低</strong>、<strong>难维护</strong>、<strong>复用性</strong>等问题。</p>
-<p>然后，使用Vue.extend方法创建一个组件，然后使用Vue.component方法注册组件。子组件需要数据，可以在props中接受定义。而子组件修改好数据后，想把数据传递给父组件。可以采用emit方法。</p>
-<h2 id="Case19-你是怎么认识vuex的？"><a href="#Case19-你是怎么认识vuex的？" class="headerlink" title="Case19.你是怎么认识vuex的？"></a>Case19.你是怎么认识vuex的？</h2><p>uex可以理解为一种开发模式或框架。比如PHP有thinkphp，java有spring等。<br>通过状态（数据源）集中管理驱动组件的变化（好比spring的IOC容器对bean进行集中管理）。</p>
-<p>应用级的状态集中放在store中； 改变状态的方式是提交mutations，这是个同步的事物； 异步逻辑应该封装在action中。</p>
-<h2 id="Case20-vue-loader是什么？使用它的用途有哪些？"><a href="#Case20-vue-loader是什么？使用它的用途有哪些？" class="headerlink" title="Case20.vue-loader是什么？使用它的用途有哪些？"></a>Case20.vue-loader是什么？使用它的用途有哪些？</h2><p>答：解析.vue文件的一个加载器，跟template/js/style转换成js模块。</p>
-<p>用途：js可以写es6、style样式可以scss或less、template可以加jade等</p>
-<h2 id="Case21-请说出vue-cli项目中src目录每个文件夹和文件的用法？"><a href="#Case21-请说出vue-cli项目中src目录每个文件夹和文件的用法？" class="headerlink" title="Case21.请说出vue.cli项目中src目录每个文件夹和文件的用法？"></a>Case21.<strong>请说出vue.cli项目中src目录每个文件夹和文件的用法？</strong></h2><p>答：assets文件夹是放静态资源；components是放组件；router是定义路由相关的配置;view视图；app.vue是一个应用主组件；main.js是入口文件</p>
-<h2 id="Case22-vue-cli中怎样使用自定义的组件？有遇到过哪些问题吗？"><a href="#Case22-vue-cli中怎样使用自定义的组件？有遇到过哪些问题吗？" class="headerlink" title="Case22.vue.cli中怎样使用自定义的组件？有遇到过哪些问题吗？"></a>Case22.vue.cli中怎样使用自定义的组件？有遇到过哪些问题吗？</h2><p>答：第一步：在components目录新建你的组件文件（smithButton.vue），script一定要export default {</p>
-<p>第二步：在需要用的页面（组件）中导入：import smithButton from ‘../components/smithButton.vue’</p>
-<p>第三步：注入到vue的子组件的components属性上面,components:{smithButton}</p>
-<p>第四步：在template视图view中使用，<smith-button>  </smith-button><br>问题有：smithButton命名，使用的时候则smith-button。</p>
-<h2 id="Case23-聊聊你对Vue-js的template编译的理解？"><a href="#Case23-聊聊你对Vue-js的template编译的理解？" class="headerlink" title="Case23.聊聊你对Vue.js的template编译的理解？"></a>Case23.聊聊你对Vue.js的template编译的理解？</h2><p>答：简而言之，就是先转化成AST树，再得到的render函数返回VNode（Vue的虚拟DOM节点）</p>
-<p>详情步骤：</p>
-<p>首先，通过compile编译器把template编译成AST语法树（abstract syntax tree 即 源代码的抽象语法结构的树状表现形式），compile是createCompiler的返回值，createCompiler是用以创建编译器的。另外compile还负责合并option。</p>
-<p>然后，AST会经过generate（将AST语法树转化成render funtion字符串的过程）得到render函数，render的返回值是VNode，VNode是Vue的虚拟DOM节点，里面有（标签名、子节点、文本等等）</p>
-<h2 id="Case24-请说下具体使用vue的理解？"><a href="#Case24-请说下具体使用vue的理解？" class="headerlink" title="Case24.请说下具体使用vue的理解？"></a>Case24.请说下具体使用vue的理解？</h2><p>答：1、使用vue不必担心布局更改和类名重复导致的js重写，因为它是靠数据驱动双向绑定，底层是通过Object.defineProperty() 定义的数据 set、get 函数原理实现。</p>
-<p>2、组件化开发，让项目的可拓展性、移植性更好，代码重用性更高，就好像农民工建房子，拿起自己的工具包就可以开工。项目经理坐等收楼就好。</p>
-<p>3、单页应用的体验零距离接触安卓原生应用，局部组件更新界面，让用户体验更快速省时。</p>
-<p>4、js的代码无形的规范，团队合作开发代码可阅读性更高。</p>
-<h3 id="Case25-你觉得哪些项目适合vue框架？"><a href="#Case25-你觉得哪些项目适合vue框架？" class="headerlink" title="Case25.你觉得哪些项目适合vue框架？"></a>Case25.你觉得哪些项目适合vue框架？</h3><p>答：1、数据信息量比较多的，反之类似企业网站就无需此框架了。</p>
-<p>2、手机web和app应用多端共用一套界面的项目，因为使用vue.cli+webpack后的前端目录，非常有利于项目的跨平台部署。</p>
-<h3 id="Case26-怎么理解MVVM模式的这些框架？"><a href="#Case26-怎么理解MVVM模式的这些框架？" class="headerlink" title="Case26.怎么理解MVVM模式的这些框架？"></a>Case26.怎么理解MVVM模式的这些框架？</h3><p>答：1、M就是Model模型层，存的一个数据对象。</p>
-<p>2、V就是View视图层，所有的html节点在这一层。</p>
-<p>3、VM就是ViewModel，它通过data属性连接Model模型层，通过el属性连接View视图层。</p>
-<h3 id="Case27-PC端项目你会在哪些场景使用Vue框架？"><a href="#Case27-PC端项目你会在哪些场景使用Vue框架？" class="headerlink" title="Case27.PC端项目你会在哪些场景使用Vue框架？"></a>Case27.PC端项目你会在哪些场景使用Vue框架？</h3><p>答：上万级数据需要瀑布流更新和搜索的时候，因为数据庞大的时候，用原生的dom操作js和html都会有列表的html布局，迭代很困难。再一个dom节点的大面积添加会影响性能。</p>
-<p>那么vue为什么解决这些问题呢？</p>
-<p>第一：只需用v-for在view层一个地方遍历数据即可，无需复制一段html代码在js和html两个地方。</p>
-<p>第二：vue通过<code>Virtual Dom</code>就是在js中模拟<code>DOM</code>对象树来优化<code>DOM</code>操作。</p>
-<h1 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h1><ul>
-<li><a href="http://www.bslxx.com/p/3187.html" target="_blank" rel="external">vue前端框架面试问题汇总，附答案 | 奔三路学习</a></li>
-<li>​</li>
-</ul>
-]]></content>
-      
-        <categories>
-            
-            <category> 大前端 </category>
-            
-        </categories>
-        
-        
-        <tags>
-            
-            <tag> vue </tag>
-            
-        </tags>
-        
-    </entry>
-    
-    <entry>
       <title><![CDATA[Less语言特性]]></title>
       <url>/2017/10/02/%E5%89%8D%E7%AB%AF/%E6%9E%84%E5%BB%BA%E7%94%9F%E6%80%81/Less%E8%AF%AD%E8%A8%80%E7%89%B9%E6%80%A7/</url>
       <content type="html"><![CDATA[<p>本文介绍Less语言特性</p>
@@ -2657,9 +2631,9 @@ h1 { color: green; }
         
         <tags>
             
-            <tag> less </tag>
-            
             <tag> web </tag>
+            
+            <tag> less </tag>
             
         </tags>
         
@@ -2830,9 +2804,9 @@ var baseConfig = {
         
         <tags>
             
-            <tag> web </tag>
-            
             <tag> webpack </tag>
+            
+            <tag> web </tag>
             
         </tags>
         
@@ -5994,9 +5968,9 @@ result=匿名函数();//返回匿名函数的执行结果
         
         <tags>
             
-            <tag> HTML </tag>
-            
             <tag> 前端基础 </tag>
+            
+            <tag> HTML </tag>
             
         </tags>
         
@@ -8053,9 +8027,9 @@ Response.Flush()
         
         <tags>
             
-            <tag> 前端基础 </tag>
-            
             <tag> HTML5 </tag>
+            
+            <tag> 前端基础 </tag>
             
         </tags>
         
