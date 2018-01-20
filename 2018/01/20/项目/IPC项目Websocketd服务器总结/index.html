@@ -540,7 +540,7 @@
                 <!-- Post Content -->
                 <div id="post-content" class="mdl-color-text--grey-700 mdl-card__supporting-text fade out">
     
-        <p>工作需要，在16年写了个websocket服务器做实时推送音量。当时还没有找到C版的websocket，于是自己参考java写了个，功能比较简单，协议特性实现了实时，但是同步功能是靠开多线程实现，大PV可能不稳定，这块可以再优化管理。</p>
+        <script src="/assets/js/APlayer.min.js"> </script><p>工作需要，在16年写了个websocket服务器做实时推送音量。当时还没有找到C版的websocket，于是自己参考java写了个，功能比较简单，协议特性实现了实时，但是同步功能是靠开多线程实现，大PV可能不稳定，这块可以再优化管理。</p>
 <p>这篇主要介绍一下原理，实现比较简单可参考我的github，如果使用主流服务器语言库也很多。</p>
 <a id="more"></a>
 <h1 id="C版websocketd服务器总结"><a href="#C版websocketd服务器总结" class="headerlink" title="C版websocketd服务器总结"></a>C版websocketd服务器总结</h1><h2 id="websocketd"><a href="#websocketd" class="headerlink" title="websocketd"></a>websocketd</h2><h3 id="背景简介"><a href="#背景简介" class="headerlink" title="背景简介"></a>背景简介</h3><h4 id="1-WebSocket-API简介"><a href="#1-WebSocket-API简介" class="headerlink" title="1. WebSocket API简介"></a>1. WebSocket API简介</h4><pre><code class="javascript">var ws = new WebSocket(“ws://echo.websocket.org”);  
@@ -861,11 +861,21 @@ Sec-WebSocket-Protocol: chat // 表明选择的子协议
         
     
         <li>
-            <a href="/links.html" title="链接">
+            <a href="/music.html" title="音乐">
+                
+                    <i class="material-icons sidebar-material-icons">photo</i>
+                
+                音乐
+            </a>
+        </li>
+        
+    
+        <li>
+            <a href="/links.html" title="牛链">
                 
                     <i class="material-icons sidebar-material-icons">people</i>
                 
-                链接
+                牛链
             </a>
         </li>
         

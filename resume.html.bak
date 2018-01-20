@@ -449,7 +449,7 @@
                 <!-- Post Content -->
                 <div id="post-content" class="mdl-color-text--grey-700 mdl-card__supporting-text fade out">
     
-        <h2 id="柏涛"><a href="#柏涛" class="headerlink" title="柏涛"></a>柏涛</h2><ul>
+        <script src="/assets/js/APlayer.min.js"> </script><h2 id="柏涛"><a href="#柏涛" class="headerlink" title="柏涛"></a>柏涛</h2><ul>
 <li><strong>手机</strong>：+86 18551671068</li>
 <li><strong>邮箱</strong>：<a href="mailto:baitaonju@163.com" target="_blank" rel="external">baitaonju@163.com</a></li>
 </ul>
@@ -659,11 +659,21 @@
         
     
         <li>
-            <a href="/links.html" title="链接">
+            <a href="/music.html" title="音乐">
+                
+                    <i class="material-icons sidebar-material-icons">photo</i>
+                
+                音乐
+            </a>
+        </li>
+        
+    
+        <li>
+            <a href="/links.html" title="牛链">
                 
                     <i class="material-icons sidebar-material-icons">people</i>
                 
-                链接
+                牛链
             </a>
         </li>
         
