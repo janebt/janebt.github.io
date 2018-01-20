@@ -1,0 +1,2168 @@
+<!DOCTYPE html>
+<html style="display: none;" lang="zh">
+    <head>
+    <meta charset="utf-8">
+    <!--
+        © Material Theme
+        https://github.com/viosey/hexo-theme-material
+        Version: 1.5.0 -->
+    <script>
+        window.materialVersion = "1.5.0"
+        // Delete localstorage with these tags
+        window.oldVersion = [
+            'codestartv1',
+            '1.3.4',
+            '1.4.0',
+            '1.4.0b1'
+        ]
+    </script>
+
+    <!-- dns prefetch -->
+    <meta http-equiv="x-dns-prefetch-control" content="on">
+
+
+    <link rel="dns-prefetch" href="https://cdn1.lncld.net"/>
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <!-- Title -->
+    
+    <title>
+        
+            IPC项目前端总结 | 
+        
+        Jane&#39;s blog
+    </title>
+
+    <!-- Meta & Info -->
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="format-detection" content="telephone=no"/>
+    <meta name="theme-color" content="#0097A7">
+    <meta name="author" content="jane">
+    <meta name="description" itemprop="description" content="IPC项目前端一部分经验的整理。
+里面东西还是很多的，后续有时间再补上。">
+    <meta name="keywords" content="jane, blog, hexo, Web, 博客,IPC">
+
+    <!-- Import lsloader -->
+    <script>(function(){window.lsloader={jsRunSequence:[],jsnamemap:{},cssnamemap:{}};lsloader.removeLS=function(key){try{localStorage.removeItem(key)}catch(e){}};lsloader.setLS=function(key,val){try{localStorage.setItem(key,val)}catch(e){}};lsloader.getLS=function(key){var val="";try{val=localStorage.getItem(key)}catch(e){val=""}return val};versionString="/*"+(window.materialVersion||"unknownVersion")+"*/";lsloader.clean=function(){try{var keys=[];for(var i=0;i<localStorage.length;i++){keys.push(localStorage.key(i))}keys.forEach(function(key){var data=lsloader.getLS(key);if(window.oldVersion){var remove=window.oldVersion.reduce(function(p,c){return p||data.indexOf("/*"+c+"*/")!==-1},false);if(remove){lsloader.removeLS(key)}}})}catch(e){}};lsloader.clean();lsloader.load=function(jsname,jspath,cssonload,isJs){if(typeof cssonload==="boolean"){isJs=cssonload;cssonload=undefined}isJs=isJs||false;cssonload=cssonload||function(){};var code;code=this.getLS(jsname);if(code&&code.indexOf(versionString)===-1){this.removeLS(jsname);this.requestResource(jsname,jspath,cssonload,isJs);return}if(code){var versionNumber=code.split(versionString)[0];if(versionNumber!=jspath){console.log("reload:"+jspath);this.removeLS(jsname);this.requestResource(jsname,jspath,cssonload,isJs);return}code=code.split(versionString)[1];if(isJs){this.jsRunSequence.push({name:jsname,code:code});this.runjs(jspath,jsname,code)}else{document.getElementById(jsname).appendChild(document.createTextNode(code));cssonload()}}else{this.requestResource(jsname,jspath,cssonload,isJs)}};lsloader.requestResource=function(name,path,cssonload,isJs){var that=this;if(isJs){this.iojs(path,name,function(path,name,code){that.setLS(name,path+versionString+code);that.runjs(path,name,code)})}else{this.iocss(path,name,function(code){document.getElementById(name).appendChild(document.createTextNode(code));that.setLS(name,path+versionString+code)},cssonload)}};lsloader.iojs=function(path,jsname,callback){var that=this;that.jsRunSequence.push({name:jsname,code:""});try{var xhr=new XMLHttpRequest;xhr.open("get",path,true);xhr.onreadystatechange=function(){if(xhr.readyState==4){if(xhr.status>=200&&xhr.status<300||xhr.status==304){if(xhr.response!=""){callback(path,jsname,xhr.response);return}}that.jsfallback(path,jsname)}};xhr.send(null)}catch(e){that.jsfallback(path,jsname)}};lsloader.iocss=function(path,jsname,callback,cssonload){var that=this;try{var xhr=new XMLHttpRequest;xhr.open("get",path,true);xhr.onreadystatechange=function(){if(xhr.readyState==4){if(xhr.status>=200&&xhr.status<300||xhr.status==304){if(xhr.response!=""){callback(xhr.response);cssonload();return}}that.cssfallback(path,jsname,cssonload)}};xhr.send(null)}catch(e){that.cssfallback(path,jsname,cssonload)}};lsloader.iofonts=function(path,jsname,callback,cssonload){var that=this;try{var xhr=new XMLHttpRequest;xhr.open("get",path,true);xhr.onreadystatechange=function(){if(xhr.readyState==4){if(xhr.status>=200&&xhr.status<300||xhr.status==304){if(xhr.response!=""){callback(xhr.response);cssonload();return}}that.cssfallback(path,jsname,cssonload)}};xhr.send(null)}catch(e){that.cssfallback(path,jsname,cssonload)}};lsloader.runjs=function(path,name,code){if(!!name&&!!code){for(var k in this.jsRunSequence){if(this.jsRunSequence[k].name==name){this.jsRunSequence[k].code=code}}}if(!!this.jsRunSequence[0]&&!!this.jsRunSequence[0].code&&this.jsRunSequence[0].status!="failed"){var script=document.createElement("script");script.appendChild(document.createTextNode(this.jsRunSequence[0].code));script.type="text/javascript";document.getElementsByTagName("head")[0].appendChild(script);this.jsRunSequence.shift();if(this.jsRunSequence.length>0){this.runjs()}}else if(!!this.jsRunSequence[0]&&this.jsRunSequence[0].status=="failed"){var that=this;var script=document.createElement("script");script.src=this.jsRunSequence[0].path;script.type="text/javascript";this.jsRunSequence[0].status="loading";script.onload=function(){that.jsRunSequence.shift();if(that.jsRunSequence.length>0){that.runjs()}};document.body.appendChild(script)}};lsloader.tagLoad=function(path,name){this.jsRunSequence.push({name:name,code:"",path:path,status:"failed"});this.runjs()};lsloader.jsfallback=function(path,name){if(!!this.jsnamemap[name]){return}else{this.jsnamemap[name]=name}for(var k in this.jsRunSequence){if(this.jsRunSequence[k].name==name){this.jsRunSequence[k].code="";this.jsRunSequence[k].status="failed";this.jsRunSequence[k].path=path}}this.runjs()};lsloader.cssfallback=function(path,name,cssonload){if(!!this.cssnamemap[name]){return}else{this.cssnamemap[name]=1}var link=document.createElement("link");link.type="text/css";link.href=path;link.rel="stylesheet";link.onload=link.onerror=cssonload;var root=document.getElementsByTagName("script")[0];root.parentNode.insertBefore(link,root)};lsloader.runInlineScript=function(scriptId,codeId){var code=document.getElementById(codeId).innerText;this.jsRunSequence.push({name:scriptId,code:code});this.runjs()};lsloader.loadCombo=function(jslist){var updateList="";var requestingModules={};for(var k in jslist){var LS=this.getLS(jslist[k].name);if(!!LS){var version=LS.split(versionString)[0];var code=LS.split(versionString)[1]}else{var version=""}if(version==jslist[k].path){this.jsRunSequence.push({name:jslist[k].name,code:code,path:jslist[k].path})}else{this.jsRunSequence.push({name:jslist[k].name,code:null,path:jslist[k].path,status:"comboloading"});requestingModules[jslist[k].name]=true;updateList+=(updateList==""?"":";")+jslist[k].path}}var that=this;if(!!updateList){var xhr=new XMLHttpRequest;xhr.open("get",combo+updateList,true);xhr.onreadystatechange=function(){if(xhr.readyState==4){if(xhr.status>=200&&xhr.status<300||xhr.status==304){if(xhr.response!=""){that.runCombo(xhr.response,requestingModules);return}}else{for(var i in that.jsRunSequence){if(requestingModules[that.jsRunSequence[i].name]){that.jsRunSequence[i].status="failed"}}that.runjs()}}};xhr.send(null)}this.runjs()};lsloader.runCombo=function(comboCode,requestingModules){comboCode=comboCode.split("/*combojs*/");comboCode.shift();for(var k in this.jsRunSequence){if(!!requestingModules[this.jsRunSequence[k].name]&&!!comboCode[0]){this.jsRunSequence[k].status="comboJS";this.jsRunSequence[k].code=comboCode[0];this.setLS(this.jsRunSequence[k].name,this.jsRunSequence[k].path+versionString+comboCode[0]);comboCode.shift()}}this.runjs()}})();</script>
+
+    <!-- Import queue -->
+    <script>function Queue(){this.dataStore=[];this.offer=b;this.poll=d;this.execNext=a;this.debug=false;this.startDebug=c;function b(e){if(this.debug){console.log("Offered a Queued Function.")}if(typeof e==="function"){this.dataStore.push(e)}else{console.log("You must offer a function.")}}function d(){if(this.debug){console.log("Polled a Queued Function.")}return this.dataStore.shift()}function a(){var e=this.poll();if(e!==undefined){if(this.debug){console.log("Run a Queued Function.")}e()}}function c(){this.debug=true}}var queue=new Queue();</script>
+
+    <!-- Favicons -->
+    <link rel="icon shortcut" type="image/ico" href="/img/favicon.jpeg">
+    <link rel="icon" sizes="192x192" href="/img/favicon.jpeg">
+    <link rel="apple-touch-icon" href="/img/favicon.jpeg">
+
+    <!--iOS -->
+    <meta name="apple-mobile-web-app-title" content="Title">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="480">
+
+    <!-- Add to homescreen for Chrome on Android -->
+    <meta name="mobile-web-app-capable" content="yes">
+
+    <!-- Add to homescreen for Safari on iOS -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="Jane&#39;s blog">
+
+    <!-- Site Verification -->
+    
+    
+
+    <!-- RSS -->
+    
+        
+            <link rel=alternate type="application/atom+xml" href="atom.xml">
+        
+    
+
+    <!--[if lte IE 9]>
+        <link rel="stylesheet" href="/css/ie-blocker.css">
+
+        
+            <script src="/js/ie-blocker.zhCN.js"></script>
+        
+    <![endif]-->
+
+    <!-- Import CSS -->
+    
+        <style id="material_css"></style><script>if(typeof window.lsLoadCSSMaxNums === "undefined")window.lsLoadCSSMaxNums = 0;window.lsLoadCSSMaxNums++;lsloader.load("material_css","/css/material.min.css?Z7a72R1E4SxzBKR/WGctOA==",function(){if(typeof window.lsLoadCSSNums === "undefined")window.lsLoadCSSNums = 0;window.lsLoadCSSNums++;if(window.lsLoadCSSNums == window.lsLoadCSSMaxNums)document.documentElement.style.display="";}, false)</script>
+        <style id="style_css"></style><script>if(typeof window.lsLoadCSSMaxNums === "undefined")window.lsLoadCSSMaxNums = 0;window.lsLoadCSSMaxNums++;lsloader.load("style_css","/css/style.min.css?MKetZV3cUTfDxvMffaOezg==",function(){if(typeof window.lsLoadCSSNums === "undefined")window.lsLoadCSSNums = 0;window.lsLoadCSSNums++;if(window.lsLoadCSSNums == window.lsLoadCSSMaxNums)document.documentElement.style.display="";}, false)</script>
+
+        
+            
+                <style id="prettify_css"></style><script>if(typeof window.lsLoadCSSMaxNums === "undefined")window.lsLoadCSSMaxNums = 0;window.lsLoadCSSMaxNums++;lsloader.load("prettify_css","/css/prettify.min.css?zp8STOU9v89XWFEnN+6YmQ==",function(){if(typeof window.lsLoadCSSNums === "undefined")window.lsLoadCSSNums = 0;window.lsLoadCSSNums++;if(window.lsLoadCSSNums == window.lsLoadCSSMaxNums)document.documentElement.style.display="";}, false)</script>
+                <style id="prettify_theme"></style><script>if(typeof window.lsLoadCSSMaxNums === "undefined")window.lsLoadCSSMaxNums = 0;window.lsLoadCSSMaxNums++;lsloader.load("prettify_theme","/css/prettify/github-v2.min.css?AfzKxt++K+/lhZBlSjnxwg==",function(){if(typeof window.lsLoadCSSNums === "undefined")window.lsLoadCSSNums = 0;window.lsLoadCSSNums++;if(window.lsLoadCSSNums == window.lsLoadCSSMaxNums)document.documentElement.style.display="";}, false)</script>
+            
+        
+
+    
+
+    
+
+    <!-- Config CSS -->
+
+<!-- Other Styles -->
+<style>
+  body, html {
+    font-family: Roboto, "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
+    overflow-x: hidden !important;
+  }
+  
+  code {
+    font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+  }
+
+  a {
+    color: #00838F;
+  }
+
+  .mdl-card__media,
+  #search-label,
+  #search-form-label:after,
+  #scheme-Paradox .hot_tags-count,
+  #scheme-Paradox .sidebar_archives-count,
+  #scheme-Paradox .sidebar-colored .sidebar-header,
+  #scheme-Paradox .sidebar-colored .sidebar-badge{
+    background-color: #0097A7 !important;
+  }
+
+  /* Sidebar User Drop Down Menu Text Color */
+  #scheme-Paradox .sidebar-colored .sidebar-nav>.dropdown>.dropdown-menu>li>a:hover,
+  #scheme-Paradox .sidebar-colored .sidebar-nav>.dropdown>.dropdown-menu>li>a:focus {
+    color: #0097A7 !important;
+  }
+
+  #post_entry-right-info,
+  .sidebar-colored .sidebar-nav li:hover > a,
+  .sidebar-colored .sidebar-nav li:hover > a i,
+  .sidebar-colored .sidebar-nav li > a:hover,
+  .sidebar-colored .sidebar-nav li > a:hover i,
+  .sidebar-colored .sidebar-nav li > a:focus i,
+  .sidebar-colored .sidebar-nav > .open > a,
+  .sidebar-colored .sidebar-nav > .open > a:hover,
+  .sidebar-colored .sidebar-nav > .open > a:focus,
+  #ds-reset #ds-ctx .ds-ctx-entry .ds-ctx-head a {
+    color: #0097A7 !important;
+  }
+
+  .toTop {
+    background: #757575 !important;
+  }
+
+  .material-layout .material-post>.material-nav,
+  .material-layout .material-index>.material-nav,
+  .material-nav a {
+    color: #757575;
+  }
+
+  #scheme-Paradox .MD-burger-layer {
+    background-color: #757575;
+  }
+
+  #scheme-Paradox #post-toc-trigger-btn {
+    color: #757575;
+  }
+
+  .post-toc a:hover {
+    color: #00838F;
+    text-decoration: underline;
+  }
+
+</style>
+
+
+<!-- Theme Background Related-->
+
+    <style>
+      body{
+        background-image: url(http://t1.aixinxi.net/o_1c1dbeee6lmkhc81k2c44n1joba.png-w.jpg);
+      }
+    </style>
+
+
+
+
+<!-- Fade Effect -->
+
+    <style>
+      .fade {
+        transition: all 800ms linear;
+        -webkit-transform: translate3d(0,0,0);
+        -moz-transform: translate3d(0,0,0);
+        -ms-transform: translate3d(0,0,0);
+        -o-transform: translate3d(0,0,0);
+        transform: translate3d(0,0,0);
+        opacity: 1;
+      }
+
+      .fade.out{
+        opacity: 0;
+      }
+    </style>
+
+
+<!-- Import Font -->
+<!-- Import Roboto -->
+
+    <style>
+        @font-face {
+            font-family: 'Roboto';
+            font-style: normal;
+            font-weight: 300;
+            src: local('Roboto Light'), local('Roboto-Light'), url('https://cdnjs.cat.net/ajax/libs/mdui/0.2.1/fonts/roboto/Roboto-Light.woff2') format('woff2'), url('https://cdnjs.cat.net/ajax/libs/mdui/0.2.1/fonts/roboto/Roboto-Light.woff') format('woff');
+        }
+        @font-face {
+            font-family: 'Roboto';
+            font-style: italic;
+            font-weight: 300;
+            src: local('Roboto LightItalic'), local('Roboto-LightItalic'), url('https://cdnjs.cat.net/ajax/libs/mdui/0.2.1/fonts/roboto/Roboto-LightItalic.woff2') format('woff2'), url('https://cdnjs.cat.net/ajax/libs/mdui/0.2.1/fonts/roboto/Roboto-LightItalic.woff') format('woff');
+          }
+        @font-face {
+            font-family: 'Roboto';
+            font-style: normal;
+            font-weight: 400;
+            src: local('Roboto Regular'), local('Roboto-Regular'), url('https://cdnjs.cat.net/ajax/libs/mdui/0.2.1/fonts/roboto/Roboto-Regular.woff2') format('woff2'), url('https://cdnjs.cat.net/ajax/libs/mdui/0.2.1/fonts/roboto/Roboto-Regular.woff') format('woff');
+        }
+        @font-face {
+            font-family: 'Roboto';
+            font-style: italic;
+            font-weight: 400;
+            src: local('Roboto RegularItalic'), local('Roboto-RegularItalic'), url('https://cdnjs.cat.net/ajax/libs/mdui/0.2.1/fonts/roboto/Roboto-RegularItalic.woff2') format('woff2'), url('https://cdnjs.cat.net/ajax/libs/mdui/0.2.1/fonts/roboto/Roboto-RegularItalic.woff') format('woff');
+          }
+        @font-face {
+            font-family: 'Roboto';
+            font-style: normal;
+            font-weight: 500;
+            src: local('Roboto Medium'), local('Roboto-Medium'), url('https://cdnjs.cat.net/ajax/libs/mdui/0.2.1/fonts/roboto/Roboto-Medium.woff2') format('woff2'), url('https://cdnjs.cat.net/ajax/libs/mdui/0.2.1/fonts/roboto/Roboto-Medium.woff') format('woff');
+        }
+        @font-face {
+            font-family: 'Roboto';
+            font-style: italic;
+            font-weight: 500;
+            src: local('Roboto MediumItalic'), local('Roboto-MediumItalic'), url('https://cdnjs.cat.net/ajax/libs/mdui/0.2.1/fonts/roboto/Roboto-MediumItalic.woff2') format('woff2'), url('https://cdnjs.cat.net/ajax/libs/mdui/0.2.1/fonts/roboto/Roboto-MediumItalic.woff') format('woff');
+        }
+        @font-face {
+            font-family: 'Material Icons';
+            font-style: normal;
+            font-weight: 400;
+            src: local('Material Icons'),
+            local('MaterialIcons-Regular'),
+            url(https://cdnjs.cat.net/ajax/libs/material-design-icons/3.0.1/iconfont/MaterialIcons-Regular.woff2) format('woff2'),
+            url(https://cdnjs.cat.net/ajax/libs/material-design-icons/3.0.1/iconfont/MaterialIcons-Regular.woff) format('woff'),
+            url(https://cdnjs.cat.net/ajax/libs/material-design-icons/3.0.1/iconfont/MaterialIcons-Regular.ttf) format('truetype');
+        }
+    </style>
+
+
+<!-- Import Material Icon -->
+
+    <link rel="stylesheet" href="https://cdn.bootcss.com/material-design-icons/3.0.1/iconfont/material-icons.min.css">
+
+
+
+
+    <!-- Import jQuery -->
+    
+        <script>lsloader.load("jq_js","https://cdn.bootcss.com/jquery/2.2.0/jquery.js", true)</script>
+    
+
+    <!-- The Open Graph protocol -->
+    <meta property="og:url" content="http://janebt.github.io">
+    <meta property="og:type" content="blog">
+    <meta property="og:title" content="IPC项目前端总结 | Jane&#39;s blog">
+    <meta property="og:image" content="http://janebt.github.io/img/favicon.jpeg" />
+    <meta property="og:description" content="IPC项目前端一部分经验的整理。
+里面东西还是很多的，后续有时间再补上。">
+    <meta property="og:article:tag" content="IPC"> 
+
+    
+        <meta property="article:published_time" content="Sat Nov 04 2017 10:35:34 GMT+0800" />
+        <meta property="article:modified_time" content="Sat Nov 04 2017 10:35:34 GMT+0800" />
+    
+
+    <!-- The Twitter Card protocol -->
+    <meta name="twitter:title" content="IPC项目前端总结 | Jane&#39;s blog">
+    <meta name="twitter:description" content="IPC项目前端一部分经验的整理。
+里面东西还是很多的，后续有时间再补上。">
+    <meta name="twitter:image" content="http://janebt.github.io/img/favicon.jpeg">
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:url" content="http://janebt.github.io" />
+
+    <!-- Add canonical link for SEO -->
+    
+        <link rel="canonical" href="http://janebt.github.io/2017/11/04/项目/IPC项目前端总结/index.html" />
+    
+
+    <!-- Structured-data for SEO -->
+    
+        
+
+
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "mainEntityOfPage": "http://janebt.github.io/2017/11/04/项目/IPC项目前端总结/index.html",
+    "headline": "IPC项目前端总结",
+    "datePublished": "Sat Nov 04 2017 10:35:34 GMT+0800",
+    "dateModified": "Sat Nov 04 2017 10:35:34 GMT+0800",
+    "author": {
+        "@type": "Person",
+        "name": "jane",
+        "image": {
+            "@type": "ImageObject",
+            "url": "/img/avatar.jpg"
+        },
+        "description": ""
+    },
+    "publisher": {
+        "@type": "Organization",
+        "name": "Jane&#39;s blog",
+        "logo": {
+            "@type":"ImageObject",
+            "url": "/img/favicon.jpeg"
+        }
+    },
+    "keywords": ",IPCjane, blog, hexo, Web, 博客",
+    "description": "IPC项目前端一部分经验的整理。
+里面东西还是很多的，后续有时间再补上。",
+}
+</script>
+
+
+    
+
+    <!-- Analytics -->
+    
+    
+    
+
+    <!-- Custom Head -->
+    
+
+</head>
+
+
+    
+        <body id="scheme-Paradox" class="lazy">
+            <div class="material-layout  mdl-js-layout has-drawer is-upgraded">
+                
+
+                <!-- Main Container -->
+                <main class="material-layout__content" id="main">
+
+                    <!-- Top Anchor -->
+                    <div id="top"></div>
+
+                    
+                        <!-- Hamburger Button -->
+                        <button class="MD-burger-icon sidebar-toggle">
+                            <span class="MD-burger-layer"></span>
+                        </button>
+                    
+
+                    <!-- Post TOC -->
+
+    
+    <!-- Back Button -->
+    <!--
+    <div class="material-back" id="backhome-div" tabindex="0">
+        <a class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon"
+           href="#" onclick="window.history.back();return false;"
+           target="_self"
+           role="button"
+           data-upgraded=",MaterialButton,MaterialRipple">
+            <i class="material-icons" role="presentation">arrow_back</i>
+            <span class="mdl-button__ripple-container">
+                <span class="mdl-ripple"></span>
+            </span>
+        </a>
+    </div>
+    -->
+
+
+    <!-- Left aligned menu below button -->
+    
+    
+    <button id="post-toc-trigger-btn"
+        class="mdl-button mdl-js-button mdl-button--icon">
+        <i class="material-icons">format_list_numbered</i>
+    </button>
+
+    <ul class="post-toc-wrap mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect" for="post-toc-trigger-btn" style="max-height:80vh; overflow-y:scroll;">
+        <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#IPC项目总结"><span class="post-toc-number">1.</span> <span class="post-toc-text">IPC项目总结</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#1-前端导出excel功能的实现"><span class="post-toc-number">1.1.</span> <span class="post-toc-text">1. 前端导出excel功能的实现</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#方案分析"><span class="post-toc-number">1.1.1.</span> <span class="post-toc-text">方案分析</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#服务器端生成-Vs-浏览器端生成"><span class="post-toc-number">1.1.1.1.</span> <span class="post-toc-text">服务器端生成  Vs  浏览器端生成</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#浏览器端生成"><span class="post-toc-number">1.1.1.2.</span> <span class="post-toc-text">浏览器端生成</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#浏览器端生成的缺陷"><span class="post-toc-number">1.1.1.3.</span> <span class="post-toc-text">浏览器端生成的缺陷</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#设计思路"><span class="post-toc-number">1.1.2.</span> <span class="post-toc-text">设计思路</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#实现细节"><span class="post-toc-number">1.1.3.</span> <span class="post-toc-text">实现细节</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#方案2"><span class="post-toc-number">1.1.3.1.</span> <span class="post-toc-text">方案2</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#getTblData"><span class="post-toc-number">1.1.3.1.1.</span> <span class="post-toc-text">getTblData()</span></a></li><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#doFileExport"><span class="post-toc-number">1.1.3.1.2.</span> <span class="post-toc-text">doFileExport()</span></a></li></ol></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#方案4"><span class="post-toc-number">1.1.3.2.</span> <span class="post-toc-text">方案4</span></a></li></ol></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#2-Canvas兼容"><span class="post-toc-number">1.2.</span> <span class="post-toc-text">2. Canvas兼容</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#html5-js"><span class="post-toc-number">1.2.1.</span> <span class="post-toc-text">html5.js</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#excanvas-js-Google发起"><span class="post-toc-number">1.2.2.</span> <span class="post-toc-text">excanvas.js(Google发起)</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#核心代码"><span class="post-toc-number">1.2.3.</span> <span class="post-toc-text">核心代码</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#3-盒模型介绍"><span class="post-toc-number">1.3.</span> <span class="post-toc-text">3. 盒模型介绍</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#IE6怪异盒模型"><span class="post-toc-number">1.3.1.</span> <span class="post-toc-text">IE6怪异盒模型</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#important研究"><span class="post-toc-number">1.3.2.</span> <span class="post-toc-text">!important研究</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Block-Formatting-Context"><span class="post-toc-number">1.3.3.</span> <span class="post-toc-text">Block Formatting Context</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#创建块格式化上下文"><span class="post-toc-number">1.3.3.1.</span> <span class="post-toc-text">创建块格式化上下文</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#块格式化上下文表现"><span class="post-toc-number">1.3.3.2.</span> <span class="post-toc-text">块格式化上下文表现</span></a></li></ol></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#4-title2-0页面加载流程问题"><span class="post-toc-number">1.4.</span> <span class="post-toc-text">4. title2.0页面加载流程问题</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#问题"><span class="post-toc-number">1.4.1.</span> <span class="post-toc-text">问题</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#分析"><span class="post-toc-number">1.4.2.</span> <span class="post-toc-text">分析</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#HTML页面加载和解析流程"><span class="post-toc-number">1.4.3.</span> <span class="post-toc-text">HTML页面加载和解析流程</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#如何加快HTML页面加载速度"><span class="post-toc-number">1.4.4.</span> <span class="post-toc-text">如何加快HTML页面加载速度</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#5-自动化测试"><span class="post-toc-number">1.5.</span> <span class="post-toc-text">5. 自动化测试</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Selenium"><span class="post-toc-number">1.5.1.</span> <span class="post-toc-text">Selenium</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#webdriver"><span class="post-toc-number">1.5.2.</span> <span class="post-toc-text">webdriver</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#样例"><span class="post-toc-number">1.5.3.</span> <span class="post-toc-text">样例</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#定位元素"><span class="post-toc-number">1.5.4.</span> <span class="post-toc-text">定位元素</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#关键对象"><span class="post-toc-number">1.5.5.</span> <span class="post-toc-text">关键对象</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#6-Cookie-amp-Session-amp-Cache-机制介绍"><span class="post-toc-number">1.6.</span> <span class="post-toc-text">6. Cookie & Session & Cache 机制介绍</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Cookie"><span class="post-toc-number">1.6.1.</span> <span class="post-toc-text">Cookie</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#Cookie格式"><span class="post-toc-number">1.6.1.1.</span> <span class="post-toc-text">Cookie格式</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#Cookie介绍"><span class="post-toc-number">1.6.1.2.</span> <span class="post-toc-text">Cookie介绍</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#Cookie的用法"><span class="post-toc-number">1.6.1.3.</span> <span class="post-toc-text">Cookie的用法</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Session"><span class="post-toc-number">1.6.2.</span> <span class="post-toc-text">Session</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#Session介绍"><span class="post-toc-number">1.6.2.1.</span> <span class="post-toc-text">Session介绍</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#Session作用"><span class="post-toc-number">1.6.2.2.</span> <span class="post-toc-text">Session作用</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#Session用法"><span class="post-toc-number">1.6.2.3.</span> <span class="post-toc-text">Session用法</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#借助Cookie"><span class="post-toc-number">1.6.2.3.1.</span> <span class="post-toc-text">借助Cookie</span></a></li><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#url重写"><span class="post-toc-number">1.6.2.3.2.</span> <span class="post-toc-text">url重写</span></a></li></ol></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#为什么会有cookie和session"><span class="post-toc-number">1.6.3.</span> <span class="post-toc-text">为什么会有cookie和session</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#为什么Session比cookie更安全？"><span class="post-toc-number">1.6.4.</span> <span class="post-toc-text">为什么Session比cookie更安全？</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#跨窗口使用"><span class="post-toc-number">1.6.5.</span> <span class="post-toc-text">跨窗口使用</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Session-vs-Cookie总结"><span class="post-toc-number">1.6.6.</span> <span class="post-toc-text">Session vs Cookie总结</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Cache"><span class="post-toc-number">1.6.7.</span> <span class="post-toc-text">Cache</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#Cache简介"><span class="post-toc-number">1.6.7.1.</span> <span class="post-toc-text">Cache简介</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#浏览器缓存（IE为例）"><span class="post-toc-number">1.6.7.1.1.</span> <span class="post-toc-text">浏览器缓存（IE为例）</span></a></li><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#代理缓存"><span class="post-toc-number">1.6.7.1.2.</span> <span class="post-toc-text">代理缓存</span></a></li></ol></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#网站缓存的工作原理"><span class="post-toc-number">1.6.7.2.</span> <span class="post-toc-text">网站缓存的工作原理</span></a></li></ol></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#7-settimeout介绍"><span class="post-toc-number">1.7.</span> <span class="post-toc-text">7. settimeout介绍</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#this"><span class="post-toc-number">1.7.1.</span> <span class="post-toc-text">this</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#js事件线程机制"><span class="post-toc-number">1.7.2.</span> <span class="post-toc-text">js事件线程机制</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#8-jquery选择器"><span class="post-toc-number">1.8.</span> <span class="post-toc-text">8. jquery选择器</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#选择器分类"><span class="post-toc-number">1.8.1.</span> <span class="post-toc-text">选择器分类</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#应用"><span class="post-toc-number">1.8.2.</span> <span class="post-toc-text">应用</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#9-页面布局"><span class="post-toc-number">1.9.</span> <span class="post-toc-text">9.页面布局</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#布局模型"><span class="post-toc-number">1.9.1.</span> <span class="post-toc-text">布局模型</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#布局模型：Flow"><span class="post-toc-number">1.9.2.</span> <span class="post-toc-text">布局模型：Flow</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#布局模型：Float"><span class="post-toc-number">1.9.3.</span> <span class="post-toc-text">布局模型：Float</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#布局模型：Layer"><span class="post-toc-number">1.9.4.</span> <span class="post-toc-text">布局模型：Layer</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#布局模型：绝对定位"><span class="post-toc-number">1.9.4.1.</span> <span class="post-toc-text">布局模型：绝对定位</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#布局模型：相对定位"><span class="post-toc-number">1.9.4.2.</span> <span class="post-toc-text">布局模型：相对定位</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#布局模型：固定定位"><span class="post-toc-number">1.9.4.3.</span> <span class="post-toc-text">布局模型：固定定位</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#居中效果的实现"><span class="post-toc-number">1.9.5.</span> <span class="post-toc-text">居中效果的实现</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#10-Vue-js"><span class="post-toc-number">1.10.</span> <span class="post-toc-text">10. Vue.js</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Vue-Vs-React"><span class="post-toc-number">1.10.1.</span> <span class="post-toc-text">Vue Vs React</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#组件通信"><span class="post-toc-number">1.10.2.</span> <span class="post-toc-text">组件通信</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#11-正则表达式介绍"><span class="post-toc-number">1.11.</span> <span class="post-toc-text">11. 正则表达式介绍</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#实战"><span class="post-toc-number">1.11.1.</span> <span class="post-toc-text">实战</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#12-IPC浏览器兼容性问题"><span class="post-toc-number">1.12.</span> <span class="post-toc-text">12. IPC浏览器兼容性问题</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#1-firefox兼容性问题"><span class="post-toc-number">1.12.1.</span> <span class="post-toc-text">1. firefox兼容性问题</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#1-1-firefox中float造成的异常"><span class="post-toc-number">1.12.1.1.</span> <span class="post-toc-text">1.1 firefox中float造成的异常</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#1-2-firefox下event缺失造成的异常"><span class="post-toc-number">1.12.1.2.</span> <span class="post-toc-text">1.2 firefox下event缺失造成的异常</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#1-3-firefox下iframe造成的异常"><span class="post-toc-number">1.12.1.3.</span> <span class="post-toc-text">1.3 firefox下iframe造成的异常</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#1-3-1-设置透明度被视频遮挡"><span class="post-toc-number">1.12.1.3.1.</span> <span class="post-toc-text">1.3.1 设置透明度被视频遮挡</span></a></li><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#1-3-2-设置圆角被视频截成矩形"><span class="post-toc-number">1.12.1.3.2.</span> <span class="post-toc-text">1.3.2 设置圆角被视频截成矩形</span></a></li></ol></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#1-4-冒泡事件"><span class="post-toc-number">1.12.1.4.</span> <span class="post-toc-text">1.4 冒泡事件</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#1-5-阻止事件传播"><span class="post-toc-number">1.12.1.5.</span> <span class="post-toc-text">1.5 阻止事件传播</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#2-IE8兼容性问题"><span class="post-toc-number">1.12.2.</span> <span class="post-toc-text">2. IE8兼容性问题</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#2-1-div-设为z-index经常无法覆盖下面元素"><span class="post-toc-number">1.12.2.1.</span> <span class="post-toc-text">2.1 div 设为z-index经常无法覆盖下面元素</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#2-2-变量未声明"><span class="post-toc-number">1.12.2.2.</span> <span class="post-toc-text">2.2 变量未声明</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#2-3-使用absolute"><span class="post-toc-number">1.12.2.3.</span> <span class="post-toc-text">2.3 使用absolute</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#2-4-日期显示NaN问题"><span class="post-toc-number">1.12.2.4.</span> <span class="post-toc-text">2.4 日期显示NaN问题</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#2-5-NAN和数字相加减导致的问题"><span class="post-toc-number">1.12.2.5.</span> <span class="post-toc-text">2.5 NAN和数字相加减导致的问题</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#2-6-width不包括边框导致的缩放问题"><span class="post-toc-number">1.12.2.6.</span> <span class="post-toc-text">2.6 width不包括边框导致的缩放问题</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#2-7-innerHTML写操作权限问题"><span class="post-toc-number">1.12.2.7.</span> <span class="post-toc-text">2.7 innerHTML写操作权限问题</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#3-IE6兼容性问题"><span class="post-toc-number">1.12.3.</span> <span class="post-toc-text">3. IE6兼容性问题</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#3-1-插件object占空间导致的布局异常"><span class="post-toc-number">1.12.3.1.</span> <span class="post-toc-text">3.1 插件object占空间导致的布局异常</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#3-2-float折行-错位问题"><span class="post-toc-number">1.12.3.2.</span> <span class="post-toc-text">3.2 float折行/错位问题</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#3-3-经典问题-双边距问题"><span class="post-toc-number">1.12.3.3.</span> <span class="post-toc-text">3.3 经典问题:双边距问题</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#3-4-缩放页面，页面换行重合问题"><span class="post-toc-number">1.12.3.4.</span> <span class="post-toc-text">3.4 缩放页面，页面换行重合问题</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#3-5-text-indent位置偏移问题"><span class="post-toc-number">1.12.3.5.</span> <span class="post-toc-text">3.5 text-indent位置偏移问题</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#3-6-z-index无论设置多高都无效问题"><span class="post-toc-number">1.12.3.6.</span> <span class="post-toc-text">3.6 z-index无论设置多高都无效问题</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#4-各浏览器共有性的兼容性问题"><span class="post-toc-number">1.12.4.</span> <span class="post-toc-text">4. 各浏览器共有性的兼容性问题</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#4-1-父元素为inline-block，子元素之间会多出4px的间距"><span class="post-toc-number">1.12.4.1.</span> <span class="post-toc-text">4.1 父元素为inline-block，子元素之间会多出4px的间距</span></a></li></ol></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#13-遮挡框"><span class="post-toc-number">1.13.</span> <span class="post-toc-text">13. 遮挡框</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#14-闭包"><span class="post-toc-number">1.14.</span> <span class="post-toc-text">14. 闭包</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#15-canvas实现图表"><span class="post-toc-number">1.15.</span> <span class="post-toc-text">15. canvas实现图表</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#16-输入框滚动"><span class="post-toc-number">1.16.</span> <span class="post-toc-text">16. 输入框滚动</span></a></li></ol></li></ol>
+    </ul>
+    
+
+
+
+
+<!-- Layouts -->
+
+    <!-- Post Module -->
+    <div class="material-post_container">
+
+        <div class="material-post mdl-grid">
+            <div class="mdl-card mdl-shadow--4dp mdl-cell mdl-cell--12-col">
+
+                <!-- Post Header(Thumbnail & Title) -->
+                
+    <!-- Paradox Post Header -->
+    
+        
+            <!-- Random Thumbnail -->
+            <div class="post_thumbnail-random mdl-card__media mdl-color-text--grey-50">
+            <script type="text/ls-javascript" id="post-thumbnail-script">
+    var randomNum = Math.floor(Math.random() * 1 + 1);
+
+    $('.post_thumbnail-random').attr('data-original', '/img/random/material-' + randomNum + '.png');
+    $('.post_thumbnail-random').addClass('lazy');
+</script>
+
+        
+    
+            <p class="article-headline-p">
+                IPC项目前端总结
+            </p>
+        </div>
+
+
+
+
+
+                
+                    <!-- Paradox Post Info -->
+                    <div class="mdl-color-text--grey-700 mdl-card__supporting-text meta">
+
+    <!-- Author Avatar -->
+    <div id="author-avatar">
+        <img src="/img/avatar.jpg" width="44px" height="44px" alt="Author Avatar"/>
+    </div>
+    <!-- Author Name & Date -->
+    <div>
+        <strong>jane</strong>
+        <span>11月 04, 2017</span>
+    </div>
+
+    <div class="section-spacer"></div>
+
+    <!-- Favorite -->
+    <!--
+        <button id="article-functions-like-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon btn-like">
+            <i class="material-icons" role="presentation">favorite</i>
+            <span class="visuallyhidden">favorites</span>
+        </button>
+    -->
+
+    <!-- Qrcode -->
+    
+
+    <!-- Tags (bookmark) -->
+    
+    <button id="article-functions-viewtags-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
+        <i class="material-icons" role="presentation">bookmark</i>
+        <span class="visuallyhidden">bookmark</span>
+    </button>
+    <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-functions-viewtags-button">
+        <li class="mdl-menu__item">
+        <a class="post_tag-link" href="/tags/IPC/">IPC</a>
+    </ul>
+    
+
+    <!-- Share -->
+    <button id="article-fuctions-share-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
+    <i class="material-icons" role="presentation">share</i>
+    <span class="visuallyhidden">share</span>
+</button>
+<ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-fuctions-share-button">
+    
+    <!-- Leancloud Views -->
+        <a class="post_share-link" href="#">
+            <li class="mdl-menu__item">
+                <span id="/2017/11/04/项目/IPC项目前端总结/" class="leancloud-views_num" data-flag-title="IPC项目前端总结">
+     &nbsp;浏览量
+</span>
+
+            </li>
+        </a>
+    
+
+    
+
+    <!-- Share Weibo -->
+    
+        <a class="post_share-link" href="http://service.weibo.com/share/share.php?appkey=&title=IPC项目前端总结&url=http://janebt.github.io/2017/11/04/项目/IPC项目前端总结/index.html&pic=http://janebt.github.io/img/favicon.jpeg&searchPic=false&style=simple" target="_blank">
+            <li class="mdl-menu__item">
+                分享到微博
+            </li>
+        </a>
+    
+
+    <!-- Share Twitter -->
+    
+
+    <!-- Share Facebook -->
+    
+
+    <!-- Share Google+ -->
+    
+
+    <!-- Share LinkedIn -->
+    
+
+    <!-- Share QQ -->
+    
+
+    <!-- Share Telegram -->
+    
+</ul>
+
+</div>
+
+                
+
+                <!-- Post Content -->
+                <div id="post-content" class="mdl-color-text--grey-700 mdl-card__supporting-text fade out">
+    
+        <p>IPC项目前端一部分经验的整理。</p>
+<p>里面东西还是很多的，后续有时间再补上。</p>
+<a id="more"></a>
+<h1 id="IPC项目总结"><a href="#IPC项目总结" class="headerlink" title="IPC项目总结"></a>IPC项目总结</h1><h2 id="1-前端导出excel功能的实现"><a href="#1-前端导出excel功能的实现" class="headerlink" title="1. 前端导出excel功能的实现"></a>1. 前端导出<strong>excel</strong>功能的实现</h2><h3 id="方案分析"><a href="#方案分析" class="headerlink" title="方案分析"></a>方案分析</h3><h4 id="服务器端生成-Vs-浏览器端生成"><a href="#服务器端生成-Vs-浏览器端生成" class="headerlink" title="服务器端生成  Vs  浏览器端生成"></a>服务器端生成  Vs  浏览器端生成</h4><p>服务器端生成：</p>
+<p><strong>table</strong>或是<strong>cvs</strong>纯文本的数据格式等。然后按<strong>.xls</strong>或是<strong>.cvs</strong>格式的文件的形式返回给用户，指定<strong>Content-Type:application/vnd.ms-excel ,</strong>浏览器就会提示要下载的文件是<strong>excel</strong>文件。</p>
+<p>缺点：</p>
+<p>产品主要还是以嵌入式开发为主，<strong>CPU</strong>、内存等资源资源有限，也没有相关逻辑代码，没有第三方的接口可用，实现起来反而会比前端实现更复杂。</p>
+<h4 id="浏览器端生成"><a href="#浏览器端生成" class="headerlink" title="浏览器端生成"></a>浏览器端生成</h4><ol>
+<li>activex方式：使用js/vbs调用excel对象。            （ie+excel）<br>e.g. var oXL = new ActiveXObject(“Excel.Application”); </li>
+<li>ie命令方式：将html或是csv输出到open的window，然后使用execCommand的saveas命令，存为csv或xls。             (ie only)<br>e.g. xlsWin.document.execCommand(‘Saveas’, true, inName);</li>
+<li>服务器端中转方式：将html的table或是拼接的csv传到服务器端，服务器端再按照Content-Type:application/vnd.ms-excel返回，浏览器就会按excel方式处理。     (all)<br>e.g. Response.contentType= “application/vnd.ms-excel ”</li>
+<li>data协议方式：对于支持data协议的浏览器，可以将html或是csv先用js base64处理，然后前缀data:application/vnd.ms-excel;base64,，即可使浏览器将其中的数据当做excel来处理，浏览器将提示下载或打开excel文件,可惜的是ie不支持 。extjs的官网有一个grid的plugin就是采用该做法。(except IE)<br>e.g. var uri = ‘data:application/vnd.ms-excel;base64</li>
+</ol>
+<h4 id="浏览器端生成的缺陷"><a href="#浏览器端生成的缺陷" class="headerlink" title="浏览器端生成的缺陷"></a>浏览器端生成的缺陷</h4><ol>
+<li><p>activex方式：使用js/vbs调用excel对象。            （ie+excel）</p>
+<p>缺点：安全性差，数据流会被截取；需要应用配合，局限性大。</p>
+</li>
+<li><p>ie命令方式：将html或是csv输出到open的window，然后使用execCommand的saveas命令，存为csv或xls。                                               (ie only)</p>
+<p>  缺点：只支持ie</p>
+</li>
+<li><p>服务器端中转方式：将html的table或是拼接的csv传到服务器端，服务器端再按照Content-Type:application/vnd.ms-excel返回，浏览器就会按excel方式处理。 (all)</p>
+<p> 缺点：我司框架结构比较特殊，无法简单运用，该方法一般用于独立的js和asp页面，通用性较差。需要增加通信流程，实现复杂化。</p>
+<ol>
+<li>data协议方式：对于支持data协议的浏览器，可以将html或是csv先用js base64处理，然后前缀data:application/vnd.ms-excel;base64,，即可使浏览器将其中的数据当做excel来处理，浏览器将提示下载或打开excel文件 。(except IE)<br>缺点：ie不支持；模板中的excel格式无法进行复杂化自定义。</li>
+</ol>
+</li>
+</ol>
+<h3 id="设计思路"><a href="#设计思路" class="headerlink" title="设计思路"></a>设计思路</h3><p>IE浏览器，采用方案2</p>
+<p>非IE浏览器，采用方案4</p>
+<h3 id="实现细节"><a href="#实现细节" class="headerlink" title="实现细节"></a>实现细节</h3><h4 id="方案2"><a href="#方案2" class="headerlink" title="方案2"></a>方案2</h4><blockquote>
+<p>分为两步：getTblData() + doFileExport()</p>
+</blockquote>
+<h5 id="getTblData"><a href="#getTblData" class="headerlink" title="getTblData()"></a>getTblData()</h5><ul>
+<li>检查输入框、单选框</li>
+<li>检查colspan</li>
+<li>间隔为\t，换行\r\n</li>
+</ul>
+<h5 id="doFileExport"><a href="#doFileExport" class="headerlink" title="doFileExport()"></a>doFileExport()</h5><ul>
+<li>建一个隐藏的iframe</li>
+<li>往iframe中写字符串，执行Saveas命令</li>
+</ul>
+<h4 id="方案4"><a href="#方案4" class="headerlink" title="方案4"></a>方案4</h4><p>URL拼接下载</p>
+<ul>
+<li>有一个固定的url模版，用于格式化表格</li>
+<li>建一个链接，并指定href为固定的uri+格式化后的字符串</li>
+<li>模拟点击链接</li>
+</ul>
+<h2 id="2-Canvas兼容"><a href="#2-Canvas兼容" class="headerlink" title="2. Canvas兼容"></a>2. Canvas兼容</h2><blockquote>
+<p>目标：兼容IE6、IE7、IE8，需要html5.js + excanvas.js</p>
+</blockquote>
+<h3 id="html5-js"><a href="#html5-js" class="headerlink" title="html5.js"></a>html5.js</h3><ol>
+<li>IE8无法识别html5标签，这些标签在IE8下无效果；</li>
+<li>document.createElement();</li>
+<li>设置css属性等；</li>
+</ol>
+<p>如<code>&lt;article&gt;</code></p>
+<h3 id="excanvas-js-Google发起"><a href="#excanvas-js-Google发起" class="headerlink" title="excanvas.js(Google发起)"></a>excanvas.js(Google发起)</h3><p>工作原理：</p>
+<ul>
+<li>使用VML对象来实现canvas的方法；</li>
+<li>加载库文件时，遍历网页中所有的canvas同时将canvas的方法赋给遍历得到的所有结果；</li>
+</ul>
+<h3 id="核心代码"><a href="#核心代码" class="headerlink" title="核心代码"></a>核心代码</h3><pre><code class="javascript">var canvasId = “canvasArea”;
+window.G_vmlCanvasManager.initElement(canvasId);
+
+var els = document.getElementsByTagName(&#39;canvas&#39;);
+for (var i = 0; i &lt; els.length; i++)
+{
+    if (this.canvasId == els[i].id)
+    {
+        this.can = window.G_vmlCanvasManager.initElement(els[i]);
+    }
+}
+</code></pre>
+<p>原方法：</p>
+<pre><code class="javascript">var G_vmlCanvasManager_ = {
+  init: function(opt_doc) {
+    var doc = opt_doc || document;
+    // Create a dummy element so that IE will allow canvas elements to be
+    // recognized.
+    doc.createElement(&#39;canvas&#39;);
+    doc.attachEvent(&#39;onreadystatechange&#39;, bind(this.init_, this, doc));
+  },
+
+  init_: function(doc) {
+    // find all canvas elements
+  },
+  initElement: function(el) {
+    if (!el.getContext) {
+      el.getContext = getContext;
+
+      // Add namespaces and stylesheet to document of the element.
+      addNamespacesAndStylesheet(el.ownerDocument);
+    }
+  };
+</code></pre>
+<h2 id="3-盒模型介绍"><a href="#3-盒模型介绍" class="headerlink" title="3. 盒模型介绍"></a>3. 盒模型介绍</h2><h3 id="IE6怪异盒模型"><a href="#IE6怪异盒模型" class="headerlink" title="IE6怪异盒模型"></a>IE6怪异盒模型</h3><blockquote>
+<p>在IE6下，会以盒模型的宽度 = margin + width或者padding+border（两者取其大者）</p>
+</blockquote>
+<p>解决方法：</p>
+<ol>
+<li>将页面设为“标准模式”。添加对应的dtd标识，如：&lt;!DOCTYPE html<strong>&gt;</strong>–推荐 </li>
+</ol>
+<ol>
+<li>使用hack或者在外面套上一层wrapper。 </li>
+</ol>
+<h3 id="important研究"><a href="#important研究" class="headerlink" title="!important研究"></a>!important研究</h3><p>并不是IE6不支持!important，而是它会按照样式声明顺序后出现的覆盖前面的，此时它已经不认识!important了，它六亲不认了。这正是广为流传的IE6 hack之一。</p>
+<h3 id="Block-Formatting-Context"><a href="#Block-Formatting-Context" class="headerlink" title="Block Formatting Context"></a>Block Formatting Context</h3><p>创建了BFC的元素规定了内部的块级盒如何布局，并且使该盒子在页面上形成一个隔离的独立容器，容器里面的子元素不会影响到外面的元素，反之亦然。</p>
+<h4 id="创建块格式化上下文"><a href="#创建块格式化上下文" class="headerlink" title="创建块格式化上下文"></a>创建块格式化上下文</h4><ul>
+<li>根元素或其它包含它的元素</li>
+<li>浮动 (元素的 float 不为 none)</li>
+<li>绝对定位元素 (元素的 position 为 absolute 或 fixed)</li>
+<li>行内块 inline-blocks (元素的 display: inline-block)</li>
+<li>表格单元格 (元素的 display: table-cell，HTML表格单元格默认属性)</li>
+<li>表格标题 (元素的 display: table-caption, HTML表格标题默认属性)</li>
+<li>overflow 的值不为 visible的元素</li>
+<li>弹性盒子 flex boxes (元素的 display: flex 或 inline-flex)</li>
+</ul>
+<h4 id="块格式化上下文表现"><a href="#块格式化上下文表现" class="headerlink" title="块格式化上下文表现"></a>块格式化上下文表现</h4><ul>
+<li>内部的Box会在垂直方向，从顶部开始一个接一个地放置。</li>
+<li>Box垂直方向的距离由margin决定。属于同一个BFC的两个相邻Box的margin会发生叠加</li>
+<li>每个元素的margin 子元素盒子的左边， 与包含块border 父元素盒的左边相接触(对于从左往右的格式化，否则相反)。即使存在浮动也是如此。</li>
+<li>BFC的区域不会与float box叠加。</li>
+<li>计算BFC的高度时，浮动元素也参与计算。</li>
+</ul>
+<blockquote>
+<p><strong>margin塌陷的解释</strong> </p>
+<p>所谓的塌陷其实是两个BFC的相邻盒或者父子盒相互作用时产生的。在形成BFC的两个盒子会取两个盒子相邻边的最大margin作为相邻边的共用maring。</p>
+</blockquote>
+<h2 id="4-title2-0页面加载流程问题"><a href="#4-title2-0页面加载流程问题" class="headerlink" title="4. title2.0页面加载流程问题"></a>4. title2.0页面加载流程问题</h2><h3 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h3><pre><code class="css">/* Basic.htm中: */
+body{
+    background-color:#1c1c1c;
+}
+
+/* 和BasicPreview.htm中*/
+
+body{
+    background-color:#000000;
+}
+</code></pre>
+<p>权值是相同的，理论上后加载的BasicPreview.htm中的css的优先级高于Basic.htm中css样式。但现在却出现了Basic.htm优先级高的问题。</p>
+<h3 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h3><p>经排查：2016年12月20日，Jenkins服务器修复了不能调用Java的问题，导致压缩后的htm文件js、css和html各部分顺序发生变化。原来没有压缩或者tftp传输没有问题。预览页面背景色涉及Basic.htm和BasicPreview.htm。原来这两个htm中的顺序是js-&gt;css-&gt;html,压缩后抓包看到顺序变为html-&gt;js-&gt;css。</p>
+<p>压缩后的Basic.htm先加载，html在页面中生成div容器等dom，css在html后面自然也在div的后面；BasicPreview.htm中的html和css载到Basic.htm的div容器中。所以此时BasicPreview.htm中的css出现在Basic.htm的css前，导致了Basic.htm中css样式优先级高于BasicPreview.htm中的css。</p>
+<p>解决方法：在时BasicPreview.htm中的相关css使用“!important”规则，来提高优先级。</p>
+<h3 id="HTML页面加载和解析流程"><a href="#HTML页面加载和解析流程" class="headerlink" title="HTML页面加载和解析流程"></a>HTML页面加载和解析流程</h3><ol>
+<li>用户输入网址（假设是个html页面，并且是第一次访问），浏览器向服务器发出请求，服务器返回html文件。</li>
+<li>浏览器开始载入html代码，发现<head>标签内有一个<link>标签引用外部CSS文件。</head></li>
+<li>浏览器又发出CSS文件的请求，服务器返回这个CSS文件。</li>
+<li>浏览器继续载入html中<body>部分的代码，并且CSS文件已经拿到手了，可以开始渲染页面了。</body></li>
+<li>浏览器在代码中发现一个<img>标签引用了一张图片，向服务器发出请求。此时浏览器不会等到图片下载完，而是继续渲染后面的代码。</li>
+<li>服务器返回图片文件，由于图片占用了一定面积，影响了后面段落的排布，因此浏览器需要回过头来重新渲染这部分代码。</li>
+<li>浏览器发现了一个包含一行Javascript代码的<code>&lt;script&gt;</code>标签，赶快运行它。</li>
+<li>Javascript脚本执行了这条语句，它命令浏览器隐藏掉代码中的某个<code>&lt;style&gt;</code>（style.display=”none”）。杯具啊，突然就少了这么一个元<br>素，浏览器不得不重新渲染这部分代码。</li>
+<li>终于等到了<code>&lt;/html&gt;</code>的到来，浏览器泪流满面…… </li>
+<li>等等，还没完，用户点了一下界面中的“换肤”按钮，Javascript让浏览器换了一下＜link＞标签的CSS路径。</li>
+<li>浏览器召集了在座的各位<div><span><ul><li>们，“大伙儿收拾收拾行李，咱得重新来过……”，浏览器向服务器请求了新的CSS文件，重新渲染页面。</li>
+</ul></span></div></li></ol>
+<h3 id="如何加快HTML页面加载速度"><a href="#如何加快HTML页面加载速度" class="headerlink" title="如何加快HTML页面加载速度"></a>如何加快HTML页面加载速度</h3><ol>
+<li>页面减肥：<br>a. 页面的肥瘦是影响加载速度最重要的因素。<br>b. 删除不必要的空格、注释。<br>c. 将inline的script和css移到外部文件。<br>d. 可以使用HTML Tidy来给HTML减肥，还可以使用一些压缩工具来给JavaScript减肥。</li>
+<li>减少文件数量：<br>a. 减少页面上引用的文件数量可以减少HTTP连接数。<br>b. 许多JavaScript、CSS文件可以合并最好合并，把自己的JavaScript. functions和Prototype.js合并到一个base.js文件里去了。</li>
+<li>减少域名查询：<br>a. DNS查询和解析域名也是消耗时间的，所以要减少对外部JavaScript、CSS、图片等资源的引用，不同域名的使用越少越好。</li>
+<li>缓存重用数据：<br>a. 对重复使用的数据进行缓存。</li>
+</ol>
+<ol>
+<li>优化页面元素加载顺序：<br>a. 首先加载页面最初显示的内容和与之相关的JavaScript和CSS，然后加载HTML相关的东西，像什么不是最初显示相关的图片、flash、视频等很肥的资源就最后加载。</li>
+<li>减少inline JavaScript的数量：<br>a. 浏览器parser会假设inline JavaScript会改变页面结构，所以使用inline JavaScript开销较大。<br>b. 不要使用document.write()这种输出内容的方法，使用现代W3C DOM方法来为现代浏览器处理页面内容。</li>
+<li>使用现代CSS和合法的标签：<br>a. 使用现代CSS来减少标签和图像，例如使用现代CSS+文字完全可以替代一些只有文字的图片。<br>b. 使用合法的标签避免浏览器解析HTML时做“error correction”等操作，还可以被HTML Tidy来给HTML减肥。</li>
+<li>Chunk your content：<br>a. 不要使用嵌套table，而使用非嵌套table或者div。将基于大块嵌套的table的layout分解成多个小table，这样就不需要等到整个页面（或<br>大table）内容全部加载完才显示。</li>
+<li>指定图像和table的大小：<br>a. 如果浏览器可以立即决定图像或table的大小，那么它就可以马上显示页面而不要重新做一些布局安排的工作。<br>b. 这不仅加快了页面的显示，也预防了页面完成加载后布局的一些不当的改变。<br>c. image使用height和width。</li>
+</ol>
+<h2 id="5-自动化测试"><a href="#5-自动化测试" class="headerlink" title="5. 自动化测试"></a>5. 自动化测试</h2><h3 id="Selenium"><a href="#Selenium" class="headerlink" title="Selenium"></a>Selenium</h3><ul>
+<li>Selenium测试直接运行在浏览器中，就像真正的用户在操作一样。它支持<strong>Firefox</strong>、<strong>ie</strong>、<strong>Mozilla</strong>等众多浏览器。它同时支持<strong>JAVA</strong>、<strong>C#</strong>、<strong>Ruby</strong>、<strong>Python</strong>、<strong>PHP</strong>、<strong>Perl</strong>等众多的主流语言开发测试用例。</li>
+</ul>
+<h3 id="webdriver"><a href="#webdriver" class="headerlink" title="webdriver"></a>webdriver</h3><ul>
+<li>属于selenium的工具包</li>
+<li>WebDriver通过原生浏览器支持或者浏览器扩展直接控制浏览器。WebDriver针对各个浏览器而开发，取代了嵌入到被测Web应用中的JavaScript。</li>
+</ul>
+<h3 id="样例"><a href="#样例" class="headerlink" title="样例"></a>样例</h3><pre><code class="python">#!/usr/bin/env python 
+# -*- coding: UTF-8 -* 
+import time 
+from selenium import webdriver 
+from selenium.webdriver.common.keys import Keys 
+print &#39;----- STEP1: Open the browser -----&#39; 
+browser = webdriver.Chrome() 
+print &#39;----- STEP2: Get the url:http://tp-link.net/ -----&#39; 
+browser.get(&#39;http://tp-link.net/&#39;) 
+assert u&#39;内网导航&#39; in browser.title 
+print &#39;----- STEP3: Find the element -----&#39; 
+elem = browser.find_element_by_name(&#39;searchword&#39;)  # Find the search box 
+print &#39;----- STEP4: Send keys to the element -----&#39; 
+elem.send_keys(&#39;seleniumhq&#39; + Keys.RETURN) 
+time.sleep(30) 
+print &#39;----- STEP5: Close the browser -----&#39; 
+browser.quit()
+</code></pre>
+<p>程序说明: 打开chrome浏览器，跳转内网<a href="http://tp-link.net/" target="_blank" rel="external">http://tp-link.net/</a>,  输入’seleniumhq’，按下ENTER</p>
+<h3 id="定位元素"><a href="#定位元素" class="headerlink" title="定位元素"></a>定位元素</h3><p>从html中提取控件的属性，然后通过webdriver的接口去定位这些控件，从而对控件进行各种操作。</p>
+<p>WebDriver提供八种定位方法：</p>
+<ul>
+<li>find _element_by_id()</li>
+<li>…</li>
+</ul>
+<h3 id="关键对象"><a href="#关键对象" class="headerlink" title="关键对象"></a>关键对象</h3><ul>
+<li>driver</li>
+<li>element</li>
+</ul>
+<h2 id="6-Cookie-amp-Session-amp-Cache-机制介绍"><a href="#6-Cookie-amp-Session-amp-Cache-机制介绍" class="headerlink" title="6. Cookie &amp; Session &amp; Cache 机制介绍"></a>6. <strong>Cookie &amp; Session &amp; Cache </strong>机制介绍</h2><h3 id="Cookie"><a href="#Cookie" class="headerlink" title="Cookie"></a>Cookie</h3><h4 id="Cookie格式"><a href="#Cookie格式" class="headerlink" title="Cookie格式"></a>Cookie格式</h4><pre><code class="http">Set－Cookie: NAME=VALUE；Expires=DATE；Path=PATH；Domain=DOMAIN_NAME；SECURE
+</code></pre>
+<ul>
+<li>在字符串“NAME=VALUE”中，不含分号、逗号和空格等字符。</li>
+<li>DATE必须以特定的格式来书写：星期几，DD－MM－YY HH:MM:SS GMT</li>
+<li>如果Path属性的值为“/”，则Web服务器上所有的WWW资源均可读取该Cookie。</li>
+<li>Secure：在Cookie中标记该变量，表明只有当浏览器和Web Server之间的通信协议为加密认证协议时，浏览器才向服务器提交相应的Cookie。</li>
+</ul>
+<h4 id="Cookie介绍"><a href="#Cookie介绍" class="headerlink" title="Cookie介绍"></a>Cookie介绍</h4><ul>
+<li>Cookie是保存在客户端的一组数据，主要用来保存用户名等个人信息。</li>
+<li>我们可以存放非敏感的用户信息，保存时间可以根据需要设置</li>
+<li>如果没有设置Cookie失效日期，它的生命周期保存到关闭浏览器为止</li>
+<li>Cookie对象的Expires属性设置为MinValue表示永不过期</li>
+<li>Cookie存储的数据量受限制，大多数的浏览器为4K因此不要存放大数据，很多浏览器都限制一个站点最多保存20个cookie。</li>
+</ul>
+<h4 id="Cookie的用法"><a href="#Cookie的用法" class="headerlink" title="Cookie的用法"></a>Cookie的用法</h4><p>Cookie是用于维持服务端会话状态的。</p>
+<p>客户端写Cookie：</p>
+<pre><code class="javascript">document.cookie = &quot;Authorization=&quot;+escape(auth)+&quot;;path=/&quot;;
+document.cookie = “SubType=pcSub;path=/&quot;;
+</code></pre>
+<p>客户端读Cookie：</p>
+<pre><code class="javascript">var startIndex = document.cookie.indexOf(“SubType=&quot;);
+var  cookieSubType = document.cookie.substring(startIndex);
+var startIndex = cookieLoginTime.indexOf(&quot;=&quot;);
+cookieSubType = cookieLoginTime.substring(startIndex +1);
+var endIndex = cookieLoginTime.indexOf(&quot;;&quot;);            
+cookieSubType = cookieSubType.substring(startIndex, endIndex);
+</code></pre>
+<h3 id="Session"><a href="#Session" class="headerlink" title="Session"></a>Session</h3><h4 id="Session介绍"><a href="#Session介绍" class="headerlink" title="Session介绍"></a>Session介绍</h4><p>Session是由应用服务器维持的一个服务器端的存储空间，用SessionID作为标识符来存取服务器端的Session存储空间。</p>
+<h4 id="Session作用"><a href="#Session作用" class="headerlink" title="Session作用"></a>Session作用</h4><p>Session 对象用于存储用户的信息，存储于 session 对象中的变量持有单一用户的信息，并且对于一个应用程序中的所有页面都是可用的。</p>
+<h4 id="Session用法"><a href="#Session用法" class="headerlink" title="Session用法"></a>Session用法</h4><h5 id="借助Cookie"><a href="#借助Cookie" class="headerlink" title="借助Cookie"></a>借助Cookie</h5><p>SessionID这一数据则是保存到客户端，用Cookie保存的，用户提交页面时，会将这一SessionID提交到服务器端，来存取Session数据。</p>
+<h5 id="url重写"><a href="#url重写" class="headerlink" title="url重写"></a>url重写</h5><p>  通过向 URL 连接添加参数，把 session ID 作为值包含在连接中。</p>
+<pre><code class="javascript">location.href = &quot;linkStatus.htm?clrStats=1&amp;session_id=&quot; + session_id;
+
+w(&#39;&lt;input name=&quot;session_id&quot; id=&quot;session_id&quot; type=&quot;hidden&quot; value=&quot;&#39;+ session_id +&#39;&quot;&gt;&#39;);
+</code></pre>
+<h3 id="为什么会有cookie和session"><a href="#为什么会有cookie和session" class="headerlink" title="为什么会有cookie和session"></a>为什么会有cookie和session</h3><ul>
+<li>http是无状态的协议，客户每次读取web页面时，服务器都打开新的会话，而且服务器也不会自动维护客户的上下文信息。</li>
+<li>session就是一种保存上下文信息的机制，它是针对每一个用户的，变量的值保存在服务器端，通过SessionID来区分不同的客户,session是以cookie或URL重写为基础的，默认使用cookie来实现，系统会创造一个名为JSESSIONID的输出cookie，我们叫做session cookie,以区别persistent cookies,也就是我们通常所说的cookie。</li>
+<li>注意session cookie是存储于浏览器内存中的，并不是写到硬盘上的，这也就是我们刚才看到的JSESSIONID，我们通常情是看不到JSESSIONID的，但是当我们把浏览器的cookie禁止后，web服务器会采用URL重写的方式传递Sessionid，我们就可以在地址栏看到sessionid=KWJHUG6JJM65HS2K6之类的字符串。 </li>
+</ul>
+<h3 id="为什么Session比cookie更安全？"><a href="#为什么Session比cookie更安全？" class="headerlink" title="为什么Session比cookie更安全？"></a>为什么Session比cookie更安全？</h3><p>session针对某一次会话而言，会话结束session也就随着消失了，而(persistent) cookie只是存在于客户端硬盘上的一段文本（通常是加密的），而且可能会遭到cookie欺骗以及针对cookie的跨站脚本攻击，自然不如session安全了。 </p>
+<h3 id="跨窗口使用"><a href="#跨窗口使用" class="headerlink" title="跨窗口使用"></a>跨窗口使用</h3><p>通常session cookie是不能跨窗口使用的，当你新开了一个浏览器窗口进入相同页面时，系统会赋予你一个新的sessionid，这样我们信息共享的目的就达不到了，此时我们可以先把sessionid保存在persistent cookie中，然后在新窗口中读出来，就可以得到上一个窗口SessionID了，这样通过session cookie和persistent cookie的结合我们就实现了跨窗口的session tracking（会话跟踪）。 </p>
+<h3 id="Session-vs-Cookie总结"><a href="#Session-vs-Cookie总结" class="headerlink" title="Session vs Cookie总结"></a>Session vs Cookie总结</h3><ul>
+<li>cookie存放在客户的浏览器上，session放在服务器上</li>
+<li>cookie不是很安全，考虑到安全应当使用session。</li>
+<li>session会在一定时间内保存在服务器上。当访问增多，会比较占用你服务器的性能。考虑到减轻服务器性能方面，应当使用cookie 。</li>
+</ul>
+<p>建议：将登陆信息等重要信息存放为SESSION，其他信息如果需要保留，可以放在COOKIE中</p>
+<h3 id="Cache"><a href="#Cache" class="headerlink" title="Cache"></a>Cache</h3><h4 id="Cache简介"><a href="#Cache简介" class="headerlink" title="Cache简介"></a>Cache简介</h4><h5 id="浏览器缓存（IE为例）"><a href="#浏览器缓存（IE为例）" class="headerlink" title="浏览器缓存（IE为例）"></a>浏览器缓存（IE为例）</h5><p>为了提高访问网页的速率，IE浏览器会采用累积式加速的方法，将曾经访问的网页内容存放在电脑里。这个存放空间，就称它为IE缓存。以后每次访问网站时，IE会首先搜索这个目录，其中已经有访问过的内容，那IE就不必从网上下载，而直接从缓存中调出来，从而提高了访问网站的速率</p>
+<h5 id="代理缓存"><a href="#代理缓存" class="headerlink" title="代理缓存"></a>代理缓存</h5><p>代理缓存是共享缓存的一种，不是只有一个人正在使用它们，而是同时又大量的用户，因为他们可以非常好的节约了带宽和网页延迟。</p>
+<h4 id="网站缓存的工作原理"><a href="#网站缓存的工作原理" class="headerlink" title="网站缓存的工作原理"></a>网站缓存的工作原理</h4><ul>
+<li><p>header响应头部分可以设置了是否进行缓存.</p>
+</li>
+<li><p>如果请求是经过HTTP 认证或是SSL安全链接 (i.e., HTTPS),缓存也无法工作.</p>
+</li>
+<li><p>如果符合以下条件，缓存机制的启用是通过页面的刷新引起(不需要经过检测服务器就可以直接发送到客户端)：</p>
+</li>
+<li><ul>
+<li>时间没有超过已设置的缓存页面过期时间或者其它类似 age-controlling（指示客户机可以接收生存期不大于指定时间的响应） 的设置。</li>
+<li>缓存是最近请求时保存的，或是缓存修改的时间也是新的。</li>
+</ul>
+</li>
+<li><p>当资源过期时（使用Cache-Control标识的max-age），发现资源具有Last-Modified（Etag）声明，则再次向web服务器请求时带上头 <strong>If-Modified-Since</strong>（<strong>If-None-Match</strong>），表示客户端请求时间。<strong>web</strong>服务器收到请求后发现有头<strong>If-Modified-Since</strong>（<strong>If-None-Match</strong>）则与被请求资源的最后修改时间进行比对。若最后修改时间较新，说明资源又被改动过，则响应整片资源内容（写在响应消息包体内），HTTP 200；若最后修改时间较旧，说明资源无新修改，则响应HTTP 304 (无需包体，节省浏览)，告知浏览器继续使用所保存的cache。</p>
+</li>
+<li><p>特定情况— 比如, 与服务器断开连接 — 缓存会直接作为请求的响应.</p>
+</li>
+</ul>
+<h2 id="7-settimeout介绍"><a href="#7-settimeout介绍" class="headerlink" title="7. settimeout介绍"></a>7. settimeout介绍</h2><h3 id="this"><a href="#this" class="headerlink" title="this"></a>this</h3><p>setInterval()，setTimeout() 方法是浏览器 window 对象提供，所以第一个参数函数中的this指向window对象，这跟变量的作用域有关。 </p>
+<p>Function.prototype.bind() 方法，该方法允许显式地指定函数调用时 this 所指向的值 。</p>
+<h3 id="js事件线程机制"><a href="#js事件线程机制" class="headerlink" title="js事件线程机制"></a>js事件线程机制</h3><p>浏览器的内核是多线程的，它们在内核制控下相互配合以保持同步，一个浏览器至少实现三个常驻线程：javascript引擎线程，GUI渲染线程，浏览器事件触发线程。</p>
+<ul>
+<li>javascript引擎是基于事件驱动单线程执行的，JS引擎一直等待着任务队列中任务的到来，然后加以处理，浏览器无论什么时候都只有一个JS线程在运行JS程序。js的工作机制是：当线程中没有执行任何同步代码的前提下才会执行异步代码</li>
+<li>GUI渲染线程负责渲染浏览器界面，当界面需要重绘（Repaint）或由于某种操作引发回流(reflow)时,该线程就会执行。但需要注意 GUI渲染线程与JS引擎是互斥的，当JS引擎执行时GUI线程会被挂起，GUI更新会被保存在一个队列中等到JS引擎空闲时立即被执行。</li>
+<li>事件触发线程，当一个事件被触发时该线程会把事件添加到待处理队列的队尾，等待JS引擎的处理。这些事件可来自JavaScript引擎当前执行的代码块如setTimeout、也可来自浏览器内核的其他线程如鼠标点击、AJAX异步请求等，但由于JS的单线程关系所有这些事件都得排队等待JS引擎处理。（当线程中没有执行任何同步代码的前提下才会执行异步代码）</li>
+</ul>
+<h2 id="8-jquery选择器"><a href="#8-jquery选择器" class="headerlink" title="8. jquery选择器"></a>8. jquery选择器</h2><h3 id="选择器分类"><a href="#选择器分类" class="headerlink" title="选择器分类"></a>选择器分类</h3><p>《jquery选择器.ppt》P7</p>
+<h3 id="应用"><a href="#应用" class="headerlink" title="应用"></a>应用</h3><pre><code class="javascript">//如果硬盘格式化中，无法进行格式化操作
+$(&quot;td:contains(&#39;+label.formatting+&#39;)&quot;).next().children().css(&quot;display:none&quot;)
+
+//点击格式化按钮，呈现格式化进度条动画
+$(&quot;#diskTable tbody tr:eq(&#39;+(index+1)+&#39;) td:last-child&quot;)
+</code></pre>
+<h2 id="9-页面布局"><a href="#9-页面布局" class="headerlink" title="9.页面布局"></a>9.页面布局</h2><h3 id="布局模型"><a href="#布局模型" class="headerlink" title="布局模型"></a>布局模型</h3><ol>
+<li>流动模型（Flow）</li>
+<li>浮动模型 (Float)</li>
+<li>层模型（Layer）</li>
+</ol>
+<h3 id="布局模型：Flow"><a href="#布局模型：Flow" class="headerlink" title="布局模型：Flow"></a>布局模型：Flow</h3><p>流动是默认的网页布局模式，也是HTML页面默认的布局模型。</p>
+<p>特征：</p>
+<ol>
+<li>块状元素都会在父元素内自上而下按照顺序垂直分布，宽度为100%，每个块状元素均占据一行。</li>
+</ol>
+<ol>
+<li>内联元素都会在父元素中从左到右水平分布显示，宽度由内容撑开。</li>
+<li>内联块状元素在父元素中同一行分布，可设置宽度、高度、padding、margin。</li>
+</ol>
+<p>常用的块状元素有：</p>
+<pre><code class="html">&lt;div&gt;、&lt;p&gt;、&lt;h1&gt;...&lt;h6&gt;、&lt;ol&gt;、&lt;ul&gt;、&lt;dl&gt;、&lt;table&gt;、&lt;address&gt;、&lt;blockquote&gt; 、&lt;form&gt;
+</code></pre>
+<p>常用的内联元素有：</p>
+<pre><code class="html">&lt;a&gt;、&lt;span&gt;、&lt;br&gt;、&lt;i&gt;、&lt;em&gt;、&lt;strong&gt;、&lt;label&gt;、&lt;q&gt;、&lt;var&gt;、&lt;cite&gt;、&lt;code&gt;
+</code></pre>
+<p>常用的内联块状元素有：</p>
+<pre><code class="html">&lt;img&gt;、&lt;input&gt;
+</code></pre>
+<h3 id="布局模型：Float"><a href="#布局模型：Float" class="headerlink" title="布局模型：Float"></a>布局模型：Float</h3><p>使用浮动的元素必然是inline-block;</p>
+<h3 id="布局模型：Layer"><a href="#布局模型：Layer" class="headerlink" title="布局模型：Layer"></a>布局模型：Layer</h3><p>层模型有三种形式：</p>
+<ol>
+<li><strong>绝对定位</strong>(position: absolute)</li>
+<li><strong>相对定位</strong>(position: relative)</li>
+<li><strong>固定定位</strong>(position: fixed)</li>
+</ol>
+<h4 id="布局模型：绝对定位"><a href="#布局模型：绝对定位" class="headerlink" title="布局模型：绝对定位"></a>布局模型：绝对定位</h4><p><strong>使用绝对定位的元素必然是inline-block;</strong></p>
+<p>使用position:absolute可以为元素设置层模型中的绝对定位，该样式的作用：</p>
+<ol>
+<li>将元素从文档流中拖出来；</li>
+<li>使用left、right、top、bottom属性<strong>相对于其最接近的一个具有定位属性的父包含块进行绝对定位。</strong>如果不存在这样的包含块，则相对于body元素，即相对于浏览器窗口。</li>
+</ol>
+<h4 id="布局模型：相对定位"><a href="#布局模型：相对定位" class="headerlink" title="布局模型：相对定位"></a>布局模型：相对定位</h4><p>它通过left、right、top、bottom属性确定元素在<strong>正常文档流中</strong>的偏移位置。</p>
+<p>相对定位完成的过程是首先按static(float)方式生成一个元素(并且元素像层一样浮动了起来)，然后相对于<strong>以前的位置移动</strong>，移动的方向和幅度由left、right、top、bottom属性确定，偏移前的位置保留不动。</p>
+<h4 id="布局模型：固定定位"><a href="#布局模型：固定定位" class="headerlink" title="布局模型：固定定位"></a>布局模型：固定定位</h4><p>它的相对移动的坐标是视图（<strong>屏幕内的网页窗口</strong>）本身。由于视图本身是固定的，它不会随浏览器窗口的滚动条滚动而变化，因此固定定位的元素会始终位于浏览器窗口内视图的某个位置，不会受文档流动影响</p>
+<h3 id="居中效果的实现"><a href="#居中效果的实现" class="headerlink" title="居中效果的实现"></a>居中效果的实现</h3><ol>
+<li><p>水平居中</p>
+<ul>
+<li>行内或类行内元素：text-align:center</li>
+<li>块级元素：设置 margin-left 和 margin-right 为 auto（前提是已经为元素设置了适当的 <code>width</code> 宽度，否则块级元素的宽度会被拉伸为父级容器的宽度）</li>
+<li>float + left</li>
+</ul>
+</li>
+<li><p>垂直居中</p>
+<ul>
+<li>行内或类行内元素 + 父元素高度确定<ul>
+<li>单行行内或者文本元素：<ul>
+<li>等值的 padding-top 和 padding-bottom</li>
+<li><code>line-height</code> 和 <code>center</code> 相等</li>
+</ul>
+</li>
+<li>多行文本<ul>
+<li>等值 <code>padding-top</code> 和 <code>padding-bottom</code></li>
+<li><code>table-cell</code> 的父级容器 +  <code>vertical-align</code></li>
+<li>父级容器为 <code>display: flex</code> </li>
+<li>幽灵元素：在垂直居中的元素上添加伪元素，设置伪元素的高等于父级容器的高，然后为文本添加 vertical-align: middle;</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>块级元素 + 已知元素的高度：top+height+margin-top</li>
+<li>块级元素 + 未知元素的高度：top+<code>translate</code> 属性</li>
+<li>flexbox</li>
+</ul>
+</li>
+<li>水平且垂直居中</li>
+</ol>
+<ul>
+<li>宽高固定元素：设定父级容器为相对定位的容器，设定子元素绝对定位的位置 <code>position: absolute; top: 50%; left: 50%</code>，最后使用负向 <code>margin</code> 实现水平和垂直居中，<code>margin</code> 的值为宽高（具体的宽高需要根据实际情况计算 <code>padding</code>）的一半。</li>
+<li>宽高不固定元素：设定父级容器为相对定位的容器，设定子元素绝对定位的位置 position: absolute; top: 50%; left: 50%。不同的是，接下来需要使用 transform: translate(-50%, -50%); 实现垂直居中</li>
+<li>flexbox：justify-content+align-items</li>
+</ul>
+<h2 id="10-Vue-js"><a href="#10-Vue-js" class="headerlink" title="10. Vue.js"></a>10. Vue.js</h2><h3 id="Vue-Vs-React"><a href="#Vue-Vs-React" class="headerlink" title="Vue Vs React"></a>Vue Vs React</h3><p>相同点：</p>
+<ul>
+<li>React采用特殊的JSX语法，Vue.js在组件开发中也推崇编写.vue特殊文件格式，对文件内容都有一些约定，两者都需要编译后使用。</li>
+<li>中心思想相同：一切都是组件，组件实例之间可以嵌套。</li>
+<li>都提供合理的钩子函数，可以让开发者定制化地去处理需求。</li>
+<li>都不内置列数AJAX，Route等功能到核心包，而是以插件的方式加载。</li>
+<li>在组件开发中都支持mixins的特性。</li>
+</ul>
+<p>不同点：</p>
+<ul>
+<li>React依赖Virtual DOM,而Vue.js使用的是DOM模板。React采用的Virtual DOM会对渲染出来的结果做脏检查。</li>
+<li>Vue.js在模板中提供了指令，过滤器等，可以非常方便，快捷地操作DOM。</li>
+</ul>
+<h3 id="组件通信"><a href="#组件通信" class="headerlink" title="组件通信"></a>组件通信</h3><ul>
+<li>v-on  事件监听</li>
+<li>v-bind 元素属性绑定</li>
+</ul>
+<p>在 Vue.js 中，父子组件的关系可以总结为 <strong>props down, events up</strong> 。</p>
+<ul>
+<li>使用 $on(eventName) 监听事件</li>
+<li>使用 $emit(eventName) 触发事件</li>
+</ul>
+<h2 id="11-正则表达式介绍"><a href="#11-正则表达式介绍" class="headerlink" title="11. 正则表达式介绍"></a>11. 正则表达式介绍</h2><h3 id="实战"><a href="#实战" class="headerlink" title="实战"></a>实战</h3><p>合法路径检测：</p>
+<pre><code class="javascript">/^[^\\/:*?&quot;&#39;&lt;&gt;|%]+$/gi.test(val)
+</code></pre>
+<h2 id="12-IPC浏览器兼容性问题"><a href="#12-IPC浏览器兼容性问题" class="headerlink" title="12. IPC浏览器兼容性问题"></a>12. IPC浏览器兼容性问题</h2><h3 id="1-firefox兼容性问题"><a href="#1-firefox兼容性问题" class="headerlink" title="1. firefox兼容性问题"></a>1. firefox兼容性问题</h3><h4 id="1-1-firefox中float造成的异常"><a href="#1-1-firefox中float造成的异常" class="headerlink" title="1.1 firefox中float造成的异常"></a>1.1 firefox中float造成的异常</h4><p>清除浮动</p>
+<h4 id="1-2-firefox下event缺失造成的异常"><a href="#1-2-firefox下event缺失造成的异常" class="headerlink" title="1.2 firefox下event缺失造成的异常"></a>1.2 firefox下event缺失造成的异常</h4><p>函数接口缺失event所致，window.event只能在IE下使用，而不能用在Firefox下，导致代码在stopProp处中止执行下面为body绑定点击事件的代码。</p>
+<h4 id="1-3-firefox下iframe造成的异常"><a href="#1-3-firefox下iframe造成的异常" class="headerlink" title="1.3 firefox下iframe造成的异常"></a>1.3 firefox下iframe造成的异常</h4><p>firefox下iframe造成的异常，本质上是浏览器的bug。目前没有什么好的方法解决，只能避免采用iframe同时再使用某些属性。</p>
+<h5 id="1-3-1-设置透明度被视频遮挡"><a href="#1-3-1-设置透明度被视频遮挡" class="headerlink" title="1.3.1 设置透明度被视频遮挡"></a>1.3.1 设置透明度被视频遮挡</h5><pre><code class="css">opacity:0.95;
+filter:alpha(opacity=95);
+</code></pre>
+<h5 id="1-3-2-设置圆角被视频截成矩形"><a href="#1-3-2-设置圆角被视频截成矩形" class="headerlink" title="1.3.2 设置圆角被视频截成矩形"></a>1.3.2 设置圆角被视频截成矩形</h5><pre><code class="css">border-radius:12px;;
+</code></pre>
+<h4 id="1-4-冒泡事件"><a href="#1-4-冒泡事件" class="headerlink" title="1.4 冒泡事件"></a>1.4 冒泡事件</h4><pre><code class="javascript">/*绑定事件函数*/
+this.attachEvnt = function(target, event, handle)
+{
+    if (event.indexOf(&quot;on&quot;) == 0)
+    {
+        event = event.substring(2);
+    }
+
+    if (document.body.attachEvent)
+    {
+        target.attachEvent(&quot;on&quot;+event, handle);
+    }
+    else
+    {
+        target.addEventListener(event, handle, false);
+    }
+};
+</code></pre>
+<h4 id="1-5-阻止事件传播"><a href="#1-5-阻止事件传播" class="headerlink" title="1.5 阻止事件传播"></a>1.5 阻止事件传播</h4><pre><code class="javascript">/*stop propagation of event */
+this.stopProp = function (event)
+{
+    event = event || window.event;
+    if (undefined == event)
+    {
+        return;
+    }
+
+    if (event.stopPropagation)
+    {
+        event.stopPropagation();
+    }
+    else
+    {
+        event.cancelBubble = true;
+    }
+};
+</code></pre>
+<h3 id="2-IE8兼容性问题"><a href="#2-IE8兼容性问题" class="headerlink" title="2. IE8兼容性问题"></a>2. IE8兼容性问题</h3><h4 id="2-1-div-设为z-index经常无法覆盖下面元素"><a href="#2-1-div-设为z-index经常无法覆盖下面元素" class="headerlink" title="2.1 div 设为z-index经常无法覆盖下面元素"></a>2.1 div 设为z-index经常无法覆盖下面元素</h4><p>当div使用transparent时，或不使用时（默认透明）IE8下z-index经常会出现无效问题。无法起到覆盖作用。</p>
+<p>解决方法：将div的背景颜色设为背景色。</p>
+<h4 id="2-2-变量未声明"><a href="#2-2-变量未声明" class="headerlink" title="2.2 变量未声明"></a>2.2 变量未声明</h4><p>变量未声明在IE11下为全局变量。但在IE8下会在此中断往下执行javascript，导致页面异常。</p>
+<h4 id="2-3-使用absolute"><a href="#2-3-使用absolute" class="headerlink" title="2.3 使用absolute"></a>2.3 使用absolute</h4><p>使用absolute进行绝对定位时，元素的位置未通过 “left”, “top”, “right” 以及 “bottom” 属性进行规定。</p>
+<h4 id="2-4-日期显示NaN问题"><a href="#2-4-日期显示NaN问题" class="headerlink" title="2.4 日期显示NaN问题"></a>2.4 日期显示NaN问题</h4><p>IE8下使用new Date()。设初始值时，日期会显示NaN</p>
+<p>可使用parseISO8601()解决</p>
+<h4 id="2-5-NAN和数字相加减导致的问题"><a href="#2-5-NAN和数字相加减导致的问题" class="headerlink" title="2.5 NAN和数字相加减导致的问题"></a>2.5 NAN和数字相加减导致的问题</h4><p>解决方案：针对不同的变量，建议采用不同的方法来解决。</p>
+<ul>
+<li>当被设置的值不是必需时如line-height，加减运算前可先进行判断，不为NAN再进行运算。</li>
+<li>若控件中已经定义默认值，判断为NAN时可采用默认值来替代。</li>
+</ul>
+<h4 id="2-6-width不包括边框导致的缩放问题"><a href="#2-6-width不包括边框导致的缩放问题" class="headerlink" title="2.6 width不包括边框导致的缩放问题"></a>2.6 width不包括边框导致的缩放问题</h4><p>IE8/Firefox下缩放，拖动条最后一个元素输入框会异位，呈现在下一行。</p>
+<p>原因：IE8/Firefox下缩放按照width缩放，测试发现width不包括边框，这样会带来：如果有border，那么放大后，实际的宽度会比正常放大的比例小。而缩小相反。此时父元素的width按同等比例缩小，会小于实际宽度。</p>
+<p>解决方案：父元素的宽度不需要设置。</p>
+<h4 id="2-7-innerHTML写操作权限问题"><a href="#2-7-innerHTML写操作权限问题" class="headerlink" title="2.7 innerHTML写操作权限问题"></a>2.7 innerHTML写操作权限问题</h4><p> 在IE8上修改table的innerHTML时，会出现“未知的运行时错误”。</p>
+<p>原因：IE8在对innerHTML进行写操作的时候会检查element是否满足作为这些内容的容器的要求，在IE8上<tbody>,<table>,<tr>标签不满足这种要求。</tr></table></tbody></p>
+<p>解决方案：避免直接对table的innerHTML进行操作，改为对其父容器进行操作</p>
+<h3 id="3-IE6兼容性问题"><a href="#3-IE6兼容性问题" class="headerlink" title="3. IE6兼容性问题"></a>3. IE6兼容性问题</h3><h4 id="3-1-插件object占空间导致的布局异常"><a href="#3-1-插件object占空间导致的布局异常" class="headerlink" title="3.1 插件object占空间导致的布局异常"></a>3.1 插件object占空间导致的布局异常</h4><p>IE6预览界面object对象没有设置宽和高，但会有默认的宽度和高度。</p>
+<h4 id="3-2-float折行-错位问题"><a href="#3-2-float折行-错位问题" class="headerlink" title="3.2 float折行/错位问题"></a>3.2 float折行/错位问题</h4><p>解决方法：</p>
+<ol>
+<li>尽量不使用浮动定位；</li>
+<li>使用position定位，记得父元素使用相对定位，子元素使用绝对定位；</li>
+<li>浮动的div尝试使用display:inline和overflow:hidden属性；</li>
+<li>将使用右浮动的元素放到没有浮动元素的左边；将使用左浮动的元素放到没有使用浮动元素的右边。</li>
+</ol>
+<h4 id="3-3-经典问题-双边距问题"><a href="#3-3-经典问题-双边距问题" class="headerlink" title="3.3 经典问题:双边距问题"></a>3.3 经典问题:双边距问题</h4><p>给样式增加一条css样式：_display:inline;</p>
+<h4 id="3-4-缩放页面，页面换行重合问题"><a href="#3-4-缩放页面，页面换行重合问题" class="headerlink" title="3.4 缩放页面，页面换行重合问题"></a>3.4 缩放页面，页面换行重合问题</h4><p>原因：在body上设置最小宽度在IE6下没有生效,测试发现expression表达式在IE6下可以正常执行（会不断重复计算），但是body属性只执行了一次，后续resize不会再执行expression表达式，转而设置body宽度为页面宽度，所以不能很好缩放。</p>
+<p>解决：绕过该问题，改为在body的子元素Con上设置expression，可以解决问题，它会不断计算当前的最小宽度。</p>
+<h4 id="3-5-text-indent位置偏移问题"><a href="#3-5-text-indent位置偏移问题" class="headerlink" title="3.5 text-indent位置偏移问题"></a>3.5 text-indent位置偏移问题</h4><p>在IE6/IE7中，text-indent会导致inline- block元素出现向左(text-indent的值为负时)或向右(text-indent值为正时)的偏移。</p>
+<p>解决方法：在基本布局不变情况下，做IE6/7 hack：在CSS中添加 *margin-left:-14px;</p>
+<h4 id="3-6-z-index无论设置多高都无效问题"><a href="#3-6-z-index无论设置多高都无效问题" class="headerlink" title="3.6 z-index无论设置多高都无效问题"></a>3.6 z-index无论设置多高都无效问题</h4><p>这种情况发生的条件有三个：</p>
+<ol>
+<li>父标签 position属性为relative；</li>
+<li>问题标签无position属性（不包括static）；</li>
+<li>问题标签含有浮动(float)属性。</li>
+</ol>
+<p>解决方法：</p>
+<ol>
+<li>position:relative改为position:absolute；</li>
+<li>去除浮动；</li>
+<li>浮动元素添加position属性（如relative，absolute等）。</li>
+</ol>
+<p>原因：父标签position属性为relative或absolute时，子标签的absolute属性是相对于父标签而言的。而在IE6下，层级的表现有时候不是看子标签的z-index多高，而要看它们的父标签的z-index谁高谁低。所以在满足上述条件同时，要保证父标签的z-index高。</p>
+<h3 id="4-各浏览器共有性的兼容性问题"><a href="#4-各浏览器共有性的兼容性问题" class="headerlink" title="4. 各浏览器共有性的兼容性问题"></a>4. 各浏览器共有性的兼容性问题</h3><h4 id="4-1-父元素为inline-block，子元素之间会多出4px的间距"><a href="#4-1-父元素为inline-block，子元素之间会多出4px的间距" class="headerlink" title="4.1 父元素为inline-block，子元素之间会多出4px的间距"></a>4.1 父元素为inline-block，子元素之间会多出4px的间距</h4><p>原因： inline 元素中间的空白符引起的，解决办法：就是去掉空白符<br>解决方法：</p>
+<p>方法一：改变HTML结构。具体方式较多，但需要修改dom结构，不实用。</p>
+<p>方法二：负的margin。如果你的父元素设置的字号不一样，可能你的“-4px”就不能解决问题。况且在Chrome中你需要另外设置一个负的margin值才能实现同等的效果，不实用。</p>
+<p>方法三：设置父元素的字体为“0”，然后在“inline-block”元素上重置字体需要的大小。这样处理在Firexfox,chrome等浏览器下是达到了效果，可是在Safari下可问题依然存在，根据ipc支持性，认为相对较好。</p>
+<p>方法四：丢失结束标签。这种方法又回到了方法一，还是有一个前提，那就是“DOCTYPE”要选择对，在“XHTML”下可就问题又出来了，不实用。</p>
+<p>方法五：通过jQuery来改变“nodeType”的值。不实用</p>
+<p><strong>全兼容的样式解决方法：在父元素中设置font-size:0,用来兼容chrome，而使用letter-space:-N px来兼容safari:</strong></p>
+<h2 id="13-遮挡框"><a href="#13-遮挡框" class="headerlink" title="13. 遮挡框"></a>13. 遮挡框</h2><pre><code class="html">&lt;div style=&quot;position:relative;*z-index:1;&quot;&gt;
+    &lt;div id=&quot;hidebg&quot;&gt;&lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+<pre><code class="css">#hidebg{
+    position:absolute;
+    background-color:#F5F6FA;
+    left:0px;
+    width:100%;
+    filter:alpha(opacity=50);
+    opacity:0.5;
+    display:none;
+    z-Index:1000;
+}
+</code></pre>
+<pre><code class="javascript">function exSwitchHd(state)
+{
+  var hideobj = document.getElementById(&quot;hidebg&quot;);
+
+  if(0 == state)
+  {
+    hideobj.style.display = &quot;block&quot;;
+    hideobj.style.height = getoffset(id(&quot;save&quot;)).top - getoffset(id(&quot;actionBarDiv&quot;)).top + &quot;px&quot;;
+  }
+  else
+  {
+      hideobj.style.display = &quot;none&quot;;
+  }
+}
+</code></pre>
+<h2 id="14-闭包"><a href="#14-闭包" class="headerlink" title="14. 闭包"></a>14. 闭包</h2><pre><code class="javascript">(function(path)
+ {
+      table.rows[parseInt(indexArry[downIndex],10) + 1].cells[6].childNodes[1].onclick = function()
+  {
+    plugin.openFileStorageFolder(path);
+  }
+}(path));
+</code></pre>
+<h2 id="15-canvas实现图表"><a href="#15-canvas实现图表" class="headerlink" title="15. canvas实现图表"></a>15. canvas实现图表</h2><pre><code class="javascript">function createChart(chartStyle, chartInfo)
+{
+    var chart =
+    {
+        /*用于配置图表的必选参数*/
+        canvasId:undefined,//绘制的图表所在的canvas的ID
+        chartStyle : chartStyle,//当前选中的图表类型 barChart || lineChart
+        xyData:[],//用于绘制图形的XY轴数据
+
+        /*可选，假设在同一张图上绘制折线图和柱形图，则折线图的点对应于柱形图顶部中心点*/
+        fontSize:0.017,//填充的字体大小和canvas整体长度的比例，包括XY轴数据，柱形图和折线图上的信息
+        graphName:undefined,//图表标题
+        xValuePosition:&quot;center&quot;,//假设绘制柱形图，X轴数据需要和柱形中轴线还是右边对齐 right || center
+
+        xyColor:&quot;#606060&quot;,//XY轴的颜色
+        lineColor:&quot;#006ACC&quot;,//折线图线条的颜色
+        barColorFill:&quot;#006ACC&quot;,//柱形图填充的颜色
+        barColorStroke:&quot;#006ACC&quot;,//柱形图边框颜色
+        dotColor:&quot;#006ACC&quot;,//折线图中数据点的颜色
+        xyDataColor:&quot;#909090&quot;,//XY轴上数值以及文字信息的颜色
+        dataColor:&quot;#E1E1E1&quot;,//数据点上数值的颜色
+        chartBackColor:&quot;transparent&quot;,//图表背景颜色
+
+        chartPaddingLeft:0.044,//图表左边距和图表总宽度的比例
+        chartPaddingRight:0.022,//图表右边距和图表总宽度的比例
+        chartPaddingTop:0.07,//图表上边距和图表总高度的比例
+        chartPaddingBottom:0.101,//图表下边距和图表总高度的比例
+        barWidth:0.8,//柱形宽度和相邻柱形间距的比例，默认为0.8
+        leftDis:0.5,//最左端柱形离Y轴距离和相邻柱形之间的距离的比例，默认为0.5
+        smallPaddingWithY:0,//用于微调柱形和Y轴之间的距离的像素值
+        smallPaddingBetween:0,//用于微调柱形之间的距离的像素值
+
+        init:function(chartInfo)
+        {
+            for (var prop in chartInfo)
+            {
+                if (undefined != chartInfo[prop])
+                {
+                    this[prop] = chartInfo[prop];
+                }
+            }
+
+            /*支持动态生成的canvas*/
+            var browser = navigator.appName;
+
+            if (&quot;Microsoft Internet Explorer&quot; == browser)
+            {
+                var b_version = navigator.appVersion;
+                var version = b_version.split(&quot;;&quot;);
+                var trim_Version = version[1].replace(/[ ]/g,&quot;&quot;);
+
+                if ((&quot;MSIE6.0&quot; == trim_Version) || (&quot;MSIE7.0&quot; == trim_Version) || (&quot;MSIE8.0&quot; == trim_Version))
+                {
+                    var els = document.getElementsByTagName(&#39;canvas&#39;);
+                    for (var i = 0; i &lt; els.length; i++)
+                    {
+                        if (this.canvasId == els[i].id)
+                        {
+                            this.can = window.G_vmlCanvasManager.initElement(els[i]);
+                        }
+                    }
+                }
+                else
+                {
+                    this.can = document.getElementById(this.canvasId);
+                }
+            }
+            else
+            {
+                this.can = document.getElementById(this.canvasId);
+            }
+
+            this.can.style.display = &quot;block&quot;;
+            this.canctx = this.can.getContext(&quot;2d&quot;);
+
+            /*比例转化为像素值*/
+            this.chartPaddingLeft = parseInt(this.chartPaddingLeft * this.can.width);
+            this.chartPaddingRight = parseInt(this.chartPaddingRight * this.can.width);
+            this.chartPaddingTop = parseInt(this.chartPaddingTop * this.can.height);
+            this.chartPaddingBottom = parseInt(this.chartPaddingBottom * this.can.height);
+            this.fontSize = parseInt(this.fontSize * this.can.width);
+
+            /*设置用于调节fillText中文字位置的字体宽度和高度以及字体颜色*/
+            this.fontWidth = this.fontSize;
+            this.fontHeight = this.fontSize * 1.2;
+            this.canctx.font = this.fontSize + &quot;px 微软雅黑&quot;;
+
+            /*清除原有画布内容*/
+            this.canctx.clearRect(0, 0, this.can.width, this.can.height);
+
+            this.drawGraph(this.xyData, this.chartStyle, this.chartPaddingLeft, this.chartPaddingRight, this.chartPaddingTop, this.chartPaddingBottom, this.barWidth, this.leftDis, this.xValuePosition, this.can);
+        },
+
+        /*绘制XY轴以及坐标轴上的数值、图表的标题、图表的背景*/
+        drawGraph:function(data, chartStyle, paddingLeft, paddingRight, paddingTop, paddingBottom, barWidth, leftDis, xValuePosition, can)
+        {
+            /*获取绘图需要的数据*/
+            var perwidth = this.getXWidth(data, can.width, paddingLeft, paddingRight, barWidth, leftDis);//x 轴上两个数据点之间距离
+            var floatExist = this.checkFloatExist(data);//搜索data中value值中是否有小数
+            var yEmptyHeight = parseInt(0.07 * can.height);//用于放置Y轴备注信息的位置高度
+            var yInfo = this.getYInfo(this.getMax(data), can.height, paddingBottom, paddingTop, yEmptyHeight, floatExist);
+            var maxY = yInfo.maxY;//图表中Y轴所能表示的最大值
+            var perY = yInfo.perY;//Y轴上每maxY所表示的像素值
+            var tenTimes = yInfo.tenTimes;//Y轴显示的数据需要乘以十的倍数
+
+            /*修改图表背景颜色*/
+            if (&quot;transparent&quot; != this.chartBackColor)
+            {
+                can.style.background = this.chartBackColor;
+            }
+
+            this.drawCoordinate(data, paddingLeft, paddingRight, paddingTop, paddingBottom, barWidth, leftDis, xValuePosition, can, tenTimes, perwidth, yEmptyHeight, maxY, perY);
+
+            /*绘制标题*/
+            if (undefined != chartInfo[&quot;graphName&quot;])
+            {
+                this.drawGraphName(perY, can, paddingTop, paddingLeft, paddingRight);
+            }
+
+            /*绘制柱形或折线*/
+            if (&quot;lineChart&quot; == chartStyle)
+            {
+                this.drawLine(data, paddingLeft, paddingBottom, perwidth, perY, barWidth, leftDis, tenTimes);
+            }
+            else if (&quot;barChart&quot; == chartStyle)
+            {
+                this.drawBar(data, paddingLeft, paddingBottom, perwidth, perY, barWidth, leftDis, tenTimes);
+            }
+        },
+
+        drawCoordinate:function(data, paddingLeft, paddingRight, paddingTop, paddingBottom, barWidth, leftDis, xValuePosition, can, tenTimes, perwidth, yEmptyHeight, maxY, perY)
+        {
+            var moveDis = 0;//根据不同的xValuePosition设置的文字偏移距离
+
+            /*绘制XY轴*/
+            this.canctx.beginPath();
+            this.canctx.lineWidth = &quot;1&quot;;
+            this.canctx.strokeStyle = this.xyColor;
+            this.canctx.moveTo(paddingLeft, paddingTop);
+            this.canctx.lineTo(paddingLeft, can.height - paddingBottom);
+            this.canctx.lineTo(can.width - paddingRight, can.height - paddingBottom);
+            this.canctx.stroke();
+            this.canctx.closePath();
+
+            this.canctx.beginPath();
+            this.canctx.fillStyle= this.xyDataColor;
+
+            /*绘制X轴上的数据*/
+            if (&quot;right&quot; == xValuePosition)
+            {
+                moveDis = perwidth * barWidth / 2;
+            }
+
+            for (var i = 0; i &lt; data.length; i++)
+            {
+                var nameValue = data[i].name;
+                var dataLengthByNumber = this.getTotalLength((!isNaN(nameValue))?nameValue.toString():nameValue);
+
+                var x = this.getCoordX(paddingLeft, perwidth, i, leftDis, barWidth) + moveDis - this.fontWidth / 4 * dataLengthByNumber;
+                var y = can.height - paddingBottom + this.fontHeight;
+                this.canctx.fillText(data[i].name, x, y);
+            }
+
+            /*绘制Y轴上的数字*/
+            for (var i = 1; i &lt;= 10; i ++)
+            {
+                var valueOfY = maxY * i / 10;
+                var dataLengthByNumber = this.getTotalLength(valueOfY.toString());
+
+                var x = paddingLeft - this.fontWidth / 2 * dataLengthByNumber - 10;
+                var y = this.getCoordY(paddingBottom, perY, valueOfY) + this.fontHeight / 2;
+                this.canctx.fillText(valueOfY, x, y);
+            }
+
+            /*绘制坐标轴左下角的0*/
+            if (0 == moveDis)
+            {
+                var x = paddingLeft - this.fontWidth / 2 * 1.2 - 2;
+                var y = this.getCoordY(paddingBottom, perY, 0) + this.fontHeight / 2;
+            }
+            else
+            {
+                var x = paddingLeft - this.fontWidth / 2;
+                var y = can.height - paddingBottom + this.fontHeight;
+            }
+            this.canctx.fillText(0, x, y);
+
+            /*绘制Y轴上方表示10的倍数的值*/
+            if (1 != tenTimes)
+            {
+                var content = &quot;( ×&quot; + tenTimes + &quot; )&quot;;
+                var dataLengthByNumber = this.getTotalLength(content);
+                var x = paddingLeft - dataLengthByNumber * (this.fontWidth / 2) / 2;
+                var y = paddingTop - this.fontHeight / 4;
+                //var y = paddingTop + parseInt(yEmptyHeight / 2) + parseInt(this.fontHeight / 2);
+                this.canctx.fillText(content, x, y);
+            }
+        },
+
+        drawGraphName:function(perY, can, paddingTop, paddingLeft, paddingRight)
+        {
+            /*绘制标题*/
+            var dataLengthByNumber = this.getTotalLength(this.graphName);
+            var x = (can.width - paddingLeft - paddingRight) / 2 + paddingLeft - (this.fontWidth / 2) * (dataLengthByNumber / 2);
+            var y = paddingTop / 2 + this.fontHeight / 2;
+            this.canctx.fillStyle= this.xyDataColor;
+
+            this.canctx.fillText(this.graphName, x, y);
+        },
+
+        /*折线图：根据数据在坐标轴中添加点和线*/
+        drawLine:function(data, paddingLeft, paddingBottom, perwidth, perY, barWidth, leftDis, tenTimes)
+        {
+            var x = this.getCoordX(paddingLeft, perwidth, 0, leftDis, barWidth);
+            var y = this.getCoordY(paddingBottom, perY, data[0].value / tenTimes);
+
+            this.canctx.lineWidth = &quot;2&quot;;
+            this.canctx.strokeStyle = this.lineColor;
+            this.canctx.beginPath();
+            this.canctx.moveTo(x, y);
+
+            for (var i = 1; i &lt; data.length; i++)
+            {
+                var x = this.getCoordX(paddingLeft, perwidth, i, leftDis, barWidth);
+                var y = this.getCoordY(paddingBottom, perY, data[i].value / tenTimes);
+                this.canctx.lineTo(x, y);
+            }
+            this.canctx.stroke();
+
+            /*画折线上的点*/
+            this.canctx.fillStyle = this.dotColor;
+
+            for (var i = 0; i &lt; data.length; i++)
+            {
+                var x = this.getCoordX(paddingLeft, perwidth, i, leftDis, barWidth);
+                var y = this.getCoordY(paddingBottom, perY, data[i].value / tenTimes);
+
+                this.canctx.beginPath();
+                this.canctx.arc(x, y, 3, 0, Math.PI*2, true);
+                this.canctx.fill();
+            }
+
+            /*填充每一点对应的值*/
+            this.canctx.fillStyle= this.dataColor;
+
+            for (var i = 0; i &lt; data.length; i++)
+            {
+                var dataLengthByNumber = this.getTotalLength(data[i].value.toString());
+                var x = this.getCoordX(paddingLeft, perwidth, i, leftDis, barWidth) - (this.fontWidth / 2) * (dataLengthByNumber / 2);
+                var y = this.getCoordY(paddingBottom, perY, data[i].value / tenTimes);
+
+                this.canctx.fillText(data[i].value, x, y - this.fontWidth / 2);
+            }
+        },
+
+        /*柱形图：根据数据在坐标轴中添加框*/
+        drawBar:function(data, paddingLeft, paddingBottom, perwidth, perY, barWidth, leftDis, tenTimes)
+        {
+            /*此处绘制柱形图
+            先绘制柱形*/
+            this.canctx.lineWidth = &quot;2&quot;;
+            this.canctx.fillStyle = this.barColorFill;
+
+            /*先绘制第一个柱形*/
+            var x = this.getCoordX(paddingLeft, perwidth, 0, leftDis, barWidth) - perwidth * barWidth / 2;
+            var y = this.getCoordY(paddingBottom, perY, data[0].value / tenTimes);
+            this.canctx.beginPath();
+            this.canctx.rect(x + this.smallPaddingWithY, y, perwidth * barWidth - this.smallPaddingBetween - this.smallPaddingWithY, data[0].value / tenTimes * perY);
+            this.canctx.fill();
+            var smallPadding = 0;
+
+            /*绘制第2到n个柱形*/
+            for (var i = 1; i &lt; data.length; i++)
+            {
+                var x = this.getCoordX(paddingLeft, perwidth, i, leftDis, barWidth) - perwidth * barWidth / 2;
+                var y = this.getCoordY(paddingBottom, perY, data[i].value / tenTimes);
+
+                this.canctx.beginPath();
+                this.canctx.rect(x + this.smallPaddingBetween, y, perwidth * barWidth - 2 * this.smallPaddingBetween, data[i].value / tenTimes * perY);
+                this.canctx.fill();
+            }
+
+            /*再绘制柱形上的数值*/
+            this.canctx.fillStyle = this.dataColor;
+            for (var i = 0; i &lt; data.length; i++)
+            {
+                var dataLengthByNumber = this.getTotalLength(data[i].value.toString());
+                var x = this.getCoordX(paddingLeft, perwidth, i, leftDis, barWidth) - (this.fontWidth / 2) * (dataLengthByNumber / 2);
+                var y = this.getCoordY(paddingBottom, perY, data[i].value / tenTimes);
+
+                this.canctx.fillText(data[i].value, x, y - this.fontWidth / 4);
+            }
+        },
+
+        /*获取value值占据的总宽度(像素)相对于单个数字宽度(像素)的倍数*/
+        getTotalLength:function(value)
+        {
+            var totalLength = 0;
+
+            for (var i = 0; i &lt; value.length; i++)
+            {
+                if (/[\u4E00-\u9FA5]/g.test(value[i]))
+                {
+                    totalLength += 2;
+                }
+                else
+                {
+                    totalLength += 1;
+                }
+            }
+
+            return totalLength;
+        },
+
+        /*搜索data中value值中是否有小数*/
+        checkFloatExist:function(data)
+        {
+            for (var i = 0; i &lt; data.length; i++)
+            {
+                if (data[i].value != parseInt(data[i].value))
+                {
+                    return 1;
+                }
+            }
+
+            return 0;
+        },
+
+        /*x 轴每一个数据占据的宽度*/
+        getXWidth:function(data, width, paddingLeft, paddingRight, barWidth, leftDis)
+        {
+            return ((width - paddingLeft - paddingRight) / (data.length + leftDis - (1 - barWidth) / 2));
+        },
+
+        /*根据pindex获取X轴上相邻两个坐标点之间的距离，表示柱形图中轴线或者折线图的点的横坐标*/
+        getCoordX:function(paddingLeft, perwidth, ptindex, leftDis, barWidth)
+        {
+            return paddingLeft + perwidth * (leftDis + barWidth / 2 + ptindex);
+        },
+
+        /*根据y的值获取对应的坐标*/
+        getCoordY:function(paddingBottom, perY, yValue)
+        {
+            return (this.can.height - paddingBottom - perY * yValue);
+        },
+
+        /*返回Y轴上数值能够显示的最大值和Y轴单位数值占有的像素值*/
+        getYInfo:function(maxYNumber, height, paddingBottom, paddingTop, yEmptyHeight, floatExist)
+        {
+            var tenTimes = 1;
+            var maxY = undefined;
+
+            while (maxYNumber &gt; 100)
+            {
+                tenTimes *= 10;
+                maxYNumber /= 10;
+            }
+
+            if (10 &gt;= maxYNumber)
+            {
+                maxY = 10;
+            }
+            else if (10 &lt; maxYNumber)
+            {
+                maxY = (parseInt(maxYNumber / 10) + 1) * 10;
+            }
+
+            return {perY:(height - paddingBottom - paddingTop - yEmptyHeight) / maxY, maxY:maxY, tenTimes:tenTimes};
+        },
+
+        /*返回最大值*/
+        getMax:function(data)
+        {
+            var maxYNumber = data[0].value;
+            var length = data.length;
+            for (var i = 1; i &lt; length; i++)
+            {
+                if (maxYNumber &lt; data[i].value)
+                {
+                    maxYNumber = data[i].value;
+                }
+            }
+            return maxYNumber;
+        }
+    };
+
+    chart.init(chartInfo);
+}
+</code></pre>
+<h2 id="16-输入框滚动"><a href="#16-输入框滚动" class="headerlink" title="16. 输入框滚动"></a>16. 输入框滚动</h2><pre><code class="javascript">this.getWheelDelta = function(event){
+  event = event || window.event;
+  if (event.wheelDelta)
+  {
+    return window.opera&amp;&amp;window.opera.version &lt; 9.5?-event.wheelDelta:event.wheelDelta;
+  }
+  else
+  {
+    return -event.detail*40;
+  }
+};
+
+this.scrollWheelHd = function(event)
+{
+  if(gTimeEditInputId == null)
+  {
+    return;
+  }
+
+  var targerObj = id(gTimeEditInputId);
+  var tmpValue = parseInt(targerObj.value, 10);
+  var direct = (this.getWheelDelta(event) &gt; 0) ? 0 : 1;
+
+  switch (gTimeEditInputId)
+  {
+    case &quot;timeHour&quot;:
+      if(direct == 0)
+      {
+        if (tmpValue == 23)
+        {
+          targerObj.value = &quot;00&quot;;
+        }
+        else
+        {
+          tmpValue++;
+          targerObj.value = midifyTimeStr(tmpValue);
+        }
+      }
+      else
+      {
+        if (tmpValue == 0)
+        {
+          targerObj.value = &quot;23&quot;;
+        }
+        else
+        {
+          tmpValue--;
+          targerObj.value = midifyTimeStr(tmpValue);
+        }
+      }
+      break;
+    case &quot;timeMinute&quot;:
+    case &quot;timeSecond&quot;:
+      if(direct == 0)
+      {
+        if (tmpValue == 59)
+        {
+          targerObj.value = &quot;00&quot;;
+        }
+        else
+        {
+          tmpValue++;
+          targerObj.value = midifyTimeStr(tmpValue);
+        }
+      }
+      else
+      {
+        if (tmpValue == 0)
+        {
+          targerObj.value = &quot;59&quot;;
+        }
+        else
+        {
+          tmpValue--;
+          targerObj.value = midifyTimeStr(tmpValue);
+        }
+      }
+      break;
+    default:
+      break;
+  }
+
+  clearSelection();
+}
+
+this.bindScrollWheel = function()
+{
+  if (document.attachEvent)
+  {
+    document.body.attachEvent(&quot;onmousewheel&quot;, function(event){
+      event = event || window.event;scrollWheelHd(event)});
+  }
+  else
+  {
+    document.body.addEventListener(&quot;mousewheel&quot;,
+                                   function(event){event = event || window.event;scrollWheelHd(event)}, false);
+    document.body.addEventListener(&quot;DOMMouseScroll&quot;,
+                                   function(event){event = event || window.event;scrollWheelHd(event)}, false);
+  }
+}
+</code></pre>
+<p>onmousewheel +  getWheelDelta 测试滚动距离</p>
+<p>…</p>
+
+        
+                <blockquote style="margin: 2em 0 0;padding: 0.5em 1em;border-left: 3px solid #F44336;background-color: #F5F5F5;list-style: none;">
+                    <p><strong>
+                         
+                            本文采用 <a rel='nofollow noopener' href='https://creativecommons.org/licenses/by-nc-sa/3.0/deed.zh' target='_blank'>CC BY-NC-SA 3.0 Unported</a> 协议进行许可，阅读 <a href='/creativecommons.html' target='_blank'>相关说明</a>
+                        </strong>
+                        <br>
+                        <strong>本文链接：</strong><a href="http://janebt.github.io/2017/11/04/项目/IPC项目前端总结/">http://janebt.github.io/2017/11/04/项目/IPC项目前端总结/</a>
+                    </p>
+                </blockquote>
+        
+    
+
+    
+</div>
+
+
+                
+
+                <!-- Post Comments -->
+                
+                    
+    <!-- 使用 gitcoment -->
+<div id="gitment-comment">
+    <!-- Gitment 评论框 -->
+<div id="container"></div>
+</div>
+<style>
+    #gitment-comment{
+        background-color: #eee;
+        padding: 2pc;
+    }
+</style>
+<link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
+<script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
+<script>
+    var gitment = new Gitment({
+        //id: '页面 ID', // 可选。默认为 location.href
+        owner: 'janebt',
+        repo: 'janebt.github.io',
+        oauth: {
+            client_id: 'adee389eb98ad460b2c7',
+            client_secret: '60592360bda99443a993f57ce1c3635f79fdbc65',
+        },
+    })
+    gitment.render('container')
+</script>
+
+                
+            </div>
+
+            <!-- Post Prev & Next Nav -->
+            <nav class="material-nav mdl-color-text--grey-50 mdl-cell mdl-cell--12-col">
+    <!-- Prev Nav -->
+    
+        <a href="/2017/11/28/前端/基础/JavaScript/作用域/" id="post_nav-newer" class="prev-content">
+            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
+                <i class="material-icons">arrow_back</i>
+            </button>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            新篇
+        </a>
+    
+
+    <!-- Section Spacer -->
+    <div class="section-spacer"></div>
+
+    <!-- Next Nav -->
+    
+        <a href="/2017/11/04/前端/基础/ES6/ES6知识点整理/" id="post_nav-older" class="next-content">
+            旧篇
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
+                <i class="material-icons">arrow_forward</i>
+            </button>
+        </a>
+    
+</nav>
+
+        </div>
+    </div>
+
+
+
+                    
+                        <!-- Overlay For Active Sidebar -->
+<div class="sidebar-overlay"></div>
+
+<!-- Material sidebar -->
+<aside id="sidebar" class="sidebar sidebar-colored sidebar-fixed-left" role="navigation">
+    <div id="sidebar-main">
+        <!-- Sidebar Header -->
+        <div class="sidebar-header header-cover" style="background-image: url(http://t1.aixinxi.net/o_1c1dbu9jefl61vl9141amt1vfba.jpg-w.jpg);">
+    <!-- Top bar -->
+    <div class="top-bar"></div>
+
+    <!-- Sidebar toggle button -->
+    <button type="button" class="sidebar-toggle mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon" style="display: initial;" data-upgraded=",MaterialButton,MaterialRipple">
+        <i class="material-icons">clear_all</i>
+        <span class="mdl-button__ripple-container">
+            <span class="mdl-ripple">
+            </span>
+        </span>
+    </button>
+
+    <!-- Sidebar Avatar -->
+    <div class="sidebar-image">
+        <img src="/img/avatar.jpg" alt="jane's avatar">
+    </div>
+
+    <!-- Sidebar Email -->
+    <a data-toggle="dropdown" class="sidebar-brand" href="#settings-dropdown">
+        janebtgithub@163.com
+        <b class="caret"></b>
+    </a>
+</div>
+
+
+        <!-- Sidebar Navigation  -->
+        <ul class="nav sidebar-nav">
+    <!-- User dropdown  -->
+    <li class="dropdown">
+        <ul id="settings-dropdown" class="dropdown-menu">
+            
+                <li>
+                    <a href="mailto:janebtgithub@163.com" target="_blank" title="Email Me">
+                        
+                            <i class="material-icons sidebar-material-icons sidebar-indent-left1pc-element">email</i>
+                        
+                        Email Me
+                    </a>
+                </li>
+            
+        </ul>
+    </li>
+
+    <!-- Homepage -->
+    
+        <li id="sidebar-first-li">
+            <a href="/">
+                
+                    <i class="material-icons sidebar-material-icons">home</i>
+                
+                主页
+            </a>
+        </li>
+        
+    
+
+    <!-- Archives  -->
+    
+        <li class="dropdown">
+            <a href="#" class="ripple-effect dropdown-toggle" data-toggle="dropdown">
+                
+                    <i class="material-icons sidebar-material-icons">inbox</i>
+                
+                    归档
+                <b class="caret"></b>
+            </a>
+            <ul class="dropdown-menu">
+            <li>
+                <a class="sidebar_archives-link" href="/archives/2117/11/">十一月 2117<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2018/01/">一月 2018<span class="sidebar_archives-count">9</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/12/">十二月 2017<span class="sidebar_archives-count">10</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/11/">十一月 2017<span class="sidebar_archives-count">5</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/10/">十月 2017<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/08/">八月 2017<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/06/">六月 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/05/">五月 2017<span class="sidebar_archives-count">3</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/04/">四月 2017<span class="sidebar_archives-count">3</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/03/">三月 2017<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/02/">二月 2017<span class="sidebar_archives-count">3</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/01/">一月 2017<span class="sidebar_archives-count">6</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/10/">十月 2016<span class="sidebar_archives-count">1</span></a>
+            </ul>
+        </li>
+        
+    
+
+    <!-- Categories  -->
+    
+        <li class="dropdown">
+            <a href="#" class="ripple-effect dropdown-toggle" data-toggle="dropdown">
+                
+                    <i class="material-icons sidebar-material-icons">apps</i>
+                
+                分类
+                <b class="caret"></b>
+            </a>
+            <ul class="dropdown-menu">
+                <li>
+                <a class="sidebar_archives-link" href="/categories/基础/">基础<span class="sidebar_archives-count">23</span></a></li><li><a class="sidebar_archives-link" href="/categories/工具/">工具<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/构建/">构建<span class="sidebar_archives-count">3</span></a></li><li><a class="sidebar_archives-link" href="/categories/框架/">框架<span class="sidebar_archives-count">4</span></a></li><li><a class="sidebar_archives-link" href="/categories/生活/">生活<span class="sidebar_archives-count">3</span></a></li><li><a class="sidebar_archives-link" href="/categories/面试/">面试<span class="sidebar_archives-count">11</span></a></li><li><a class="sidebar_archives-link" href="/categories/项目/">项目<span class="sidebar_archives-count">3</span></a>
+            </ul>
+        </li>
+        
+    
+
+    <!-- Pages  -->
+    
+        <li>
+            <a href="/tags.html" title="标签">
+                
+                    <i class="material-icons sidebar-material-icons">bookmark</i>
+                
+                标签
+            </a>
+        </li>
+        
+    
+        <li>
+            <a href="/timeline.html" title="时间线">
+                
+                    <i class="material-icons sidebar-material-icons">inbox</i>
+                
+                时间线
+            </a>
+        </li>
+        
+            <li class="divider"></li>
+        
+    
+        <li>
+            <a href="/gallery.html" title="映像">
+                
+                    <i class="material-icons sidebar-material-icons">photo</i>
+                
+                映像
+            </a>
+        </li>
+        
+    
+        <li>
+            <a href="/links.html" title="链接">
+                
+                    <i class="material-icons sidebar-material-icons">people</i>
+                
+                链接
+            </a>
+        </li>
+        
+            <li class="divider"></li>
+        
+    
+        <li>
+            <a href="/resume.html" title="简历">
+                
+                    <i class="material-icons sidebar-material-icons">person</i>
+                
+                简历
+            </a>
+        </li>
+        
+    
+        <li>
+            <a href="/about.html" title="关于">
+                
+                    <i class="material-icons sidebar-material-icons">person</i>
+                
+                关于
+            </a>
+        </li>
+        
+    
+
+    <!-- Article Number  -->
+    
+        <li>
+            <a href="/archives">
+                文章总数
+                <span class="sidebar-badge">48</span>
+            </a>
+        </li>
+        
+    
+</ul>
+
+
+        <!-- Sidebar Footer -->
+        <!--
+I'm glad you use this theme, the development is no so easy, I hope you can keep the copyright, I will thank you so much.
+If you still want to delete the copyrights, could you still retain the first one? Which namely "Theme Material"
+It will not impact the appearance and can give developers a lot of support :)
+
+很高兴您使用并喜欢该主题，开发不易 十分谢谢与希望您可以保留一下版权声明。
+如果您仍然想删除的话 能否只保留第一项呢？即 "Theme Material"
+它不会影响美观并可以给开发者很大的支持和动力。 :)
+-->
+
+<!-- Sidebar Divider -->
+
+
+<!-- Theme Material -->
+
+
+<!-- Help & Support -->
+<!--
+
+-->
+
+<!-- Feedback -->
+<!--
+
+-->
+
+<!-- About Theme -->
+<!--
+
+-->
+
+    </div>
+
+    <!-- Sidebar Image -->
+    
+
+</aside>
+
+                    
+
+                    
+                        <!-- Footer Top Button -->
+                        <div id="back-to-top" class="toTop-wrap">
+    <a href="#top" class="toTop">
+        <i class="material-icons footer_top-i">expand_less</i>
+    </a>
+</div>
+
+                    
+
+                    <!--Footer-->
+<footer class="mdl-mini-footer" id="bottom">
+    
+        <!-- Paradox Footer Left Section -->
+        <div class="mdl-mini-footer--left-section sns-list">
+    <!-- Twitter -->
+    
+
+    <!-- Facebook -->
+    
+
+    <!-- Google + -->
+    
+
+    <!-- Weibo -->
+    
+
+    <!-- Instagram -->
+    
+
+    <!-- Tumblr -->
+    
+
+    <!-- Github -->
+    
+        <a href="https://github.com/janebt" target="_blank">
+            <button class="mdl-mini-footer--social-btn social-btn footer-sns-github">
+                <span class="visuallyhidden">Github</span>
+            </button><!--
+     --></a>
+    
+
+    <!-- LinkedIn -->
+    
+
+    <!-- Zhihu -->
+    
+        <a href="https://www.zhihu.com/people/bai-yan-zhi-ji/activities" target="_blank">
+            <button class="mdl-mini-footer--social-btn social-btn footer-sns-zhihu">
+                <span class="visuallyhidden">Zhihu</span>
+            </button><!--
+     --></a>
+    
+
+    <!-- Bilibili -->
+    
+
+    <!-- Telegram -->
+    
+    
+    <!-- V2EX -->
+    
+</div>
+
+
+        <!--Copyright-->
+        <div id="copyright">
+            Copyright&nbsp;©&nbsp;2016&nbsp;-<script type="text/javascript">var fd = new Date();document.write("&nbsp;" + fd.getFullYear() + "&nbsp;");</script>Jane's blog
+            
+        </div>
+
+        <!-- Paradox Footer Right Section -->
+
+        <!--
+        I am glad you use this theme, the development is no so easy, I hope you can keep the copyright.
+        It will not impact the appearance and can give developers a lot of support :)
+
+        很高兴您使用该主题，开发不易，希望您可以保留一下版权声明。
+        它不会影响美观并可以给开发者很大的支持。 :)
+        -->
+
+        <div class="mdl-mini-footer--right-section">
+            <div>
+                <div class="footer-develop-div">Powered by <a href="https://hexo.io" target="_blank" class="footer-develop-a">Hexo</a></div>
+                <div class="footer-develop-div">Theme - <a href="https://github.com/viosey/hexo-theme-material" target="_blank" class="footer-develop-a">Material</a></div>
+            </div>
+        </div>
+    
+</footer>
+
+
+                    <!-- Import JS File -->
+
+    <script>lsloader.load("lazyload_js","/js/lazyload.min.js?1BcfzuNXqV+ntF6gq+5X3Q==", true)</script>
+
+
+
+    <script>lsloader.load("js_js","/js/js.min.js?V/53wGualMuiPM3xoetD5Q==", true)</script>
+
+
+
+    <script>lsloader.load("np_js","https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js", true)</script>
+
+
+<script type="text/ls-javascript" id="NProgress-script">
+    NProgress.configure({
+        showSpinner: true
+    });
+    NProgress.start();
+    $('#nprogress .bar').css({
+        'background': '#29d'
+    });
+    $('#nprogress .peg').css({
+        'box-shadow': '0 0 10px #29d, 0 0 15px #29d'
+    });
+    $('#nprogress .spinner-icon').css({
+        'border-top-color': '#29d',
+        'border-left-color': '#29d'
+    });
+    setTimeout(function() {
+        NProgress.done();
+        $('.fade').removeClass('out');
+    }, 800);
+</script>
+
+
+
+
+
+    <!-- Leancloud -->
+    <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+    <script>
+        AV.initialize('3gXS00IaaGNfNPMhlV73UmeJ-gzGzoHsz', 'b3xbjqdGWcfsqeXEHw5yT3vx');
+    </script>
+    <script type="text/ls-javascript" id="leancloud-views-script">
+    function showTime(Counter) {
+        var query = new AV.Query(Counter);
+        $('.leancloud-views_num').each(function() {
+            var url = $(this).attr('id').trim();
+            query.equalTo('url', url);
+            query.find({
+                success: function(results) {
+                    if (results.length === 0) {
+                        var content = '0 ' + $(document.getElementById(url)).text();
+                        $(document.getElementById(url)).text(content);
+                        return;
+                    }
+                    for (var i = 0; i < results.length; i++) {
+                        var object = results[i];
+                        var content = object.get('time') + ' ' + $(document.getElementById(url)).text();
+                        $(document.getElementById(url)).text(content);
+                    }
+                },
+                error: function(object, error) {
+                    console.log('Error: ' + error.code + ' ' + error.message);
+                }
+            });
+        });
+    }
+
+    function addCount(Counter) {
+      var Counter = AV.Object.extend('Counter');
+      url = $('.leancloud-views_num').attr('id').trim();
+      title = $('.leancloud-views_num').attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+      query.equalTo('url', url);
+      query.find({
+          success: function(results) {
+            if (results.length > 0) {
+                var counter = results[0];
+                counter.fetchWhenSave(true);
+                counter.increment('time');
+                counter.save(null, {
+                    success: function(counter) {
+                        var content =  counter.get('time') + ' ' + $(document.getElementById(url)).text();
+                        $(document.getElementById(url)).text(content);
+                    },
+                    error: function(counter, error) {
+                        console.log('Failed to save Visitor num, with error message: ' + error.message);
+                    }
+                });
+            } else {
+              var newcounter = new Counter();
+              newcounter.set('title', title);
+              newcounter.set('url', url);
+              newcounter.set('time', 1);
+              newcounter.save(null, {
+                  success: function(newcounter) {
+                      console.log('newcounter.get(\'time\')='+newcounter.get('time'));
+                      var content = newcounter.get('time') + ' ' + $(document.getElementById(url)).text();
+                      $(document.getElementById(url)).text(content);
+                  },
+                  error: function(newcounter, error) {
+                      console.log('Failed to create');
+                  }
+              });
+            }
+        },
+        error: function(error) {
+            console.log('Error:' + error.code + ' ' + error.message);
+        }
+      });
+    }
+    $(function() {
+        var Counter = AV.Object.extend('Counter');
+        if ($('.leancloud-views_num').length === 1) {
+            addCount(Counter);
+        } else if ($('.post-title-link').length > 1) {
+            showTime(Counter);
+        }
+    });
+</script>
+
+
+
+
+
+
+   <!-- Gitment -->
+
+
+
+
+
+<!-- UC Browser Compatible -->
+<script>
+	var agent = navigator.userAgent.toLowerCase();
+	if(agent.indexOf('ucbrowser')>0) {
+		document.write('<link rel="stylesheet" href="/css/uc.css">');
+	   alert('由于 UC 浏览器使用极旧的内核，而本网站使用了一些新的特性。\n为了您能更好的浏览，推荐使用 Chrome 或 Firefox 浏览器。');
+	}
+</script>
+
+<!-- Import prettify js  -->
+
+    
+        
+            <script>lsloader.load("prettify_js","/js/prettify.min.js?WN07fivHQSMKWy7BmHBB6w==", true)</script>
+        
+    
+
+
+
+<!-- Window Load -->
+<!-- add class for prettify -->
+<script type="text/ls-javascript" id="window-load">
+    $(window).on('load', function() {
+        // Post_Toc parent position fixed
+        $('.post-toc-wrap').parent('.mdl-menu__container').css('position', 'fixed');
+    });
+
+    
+        
+            $(function() {
+                $('pre').addClass('prettyprint linenums').attr('style', 'overflow:auto;');
+                prettyPrint();
+                })
+        
+    
+    
+</script>
+
+<!-- MathJax Load-->
+
+
+<!-- Bing Background -->
+
+
+<script type="text/ls-javascript" id="lazy-load">
+    // Offer LazyLoad
+    queue.offer(function(){
+        $('.lazy').lazyload({
+            effect : 'show'
+        });
+    });
+
+    // Start Queue
+    $(document).ready(function(){
+        setInterval(function(){
+            queue.execNext();
+        },200);
+    });
+</script>
+
+<!-- Custom Footer -->
+
+
+
+<script>
+    (function(){
+        var scriptList = document.querySelectorAll('script[type="text/ls-javascript"]')
+
+        for (var i = 0; i < scriptList.length; ++i) {
+            var item = scriptList[i];
+            lsloader.runInlineScript(item.id,item.id);
+        }
+    })()
+console.log('\n %c © Material Theme | Version: 1.5.0 | https://github.com/viosey/hexo-theme-material %c \n', 'color:#455a64;background:#e0e0e0;padding:5px 0;border-top-left-radius:5px;border-bottom-left-radius:5px;', 'color:#455a64;background:#e0e0e0;padding:5px 0;border-top-right-radius:5px;border-bottom-right-radius:5px;');
+</script>
+
+                </main>
+            </div>
+        </body>
+    
+</html>
