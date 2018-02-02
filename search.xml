@@ -76,6 +76,127 @@
     </entry>
     
     <entry>
+      <title><![CDATA[Git使用的一些理解]]></title>
+      <url>/2018/01/27/%E5%B7%A5%E5%85%B7/Git/Git%E4%BD%BF%E7%94%A8%E7%9A%84%E4%B8%80%E4%BA%9B%E7%90%86%E8%A7%A3/</url>
+      <content type="html"><![CDATA[<script src="/assets/js/APlayer.min.js"> </script><p>Git用了很久，但没有思考过原理，偶尔使用遇到问题就很捉急，把工作中遇到的问题都提上来。</p>
+<a id="more"></a>
+<h1 id="Git使用的一些理解"><a href="#Git使用的一些理解" class="headerlink" title="Git使用的一些理解"></a>Git使用的一些理解</h1><h2 id="remote、origin和master"><a href="#remote、origin和master" class="headerlink" title="remote、origin和master"></a>remote、origin和master</h2><h3 id="情景"><a href="#情景" class="headerlink" title="情景"></a>情景</h3><blockquote>
+<p>本地已有一个分支，想push到github上，怎么关联呢？</p>
+</blockquote>
+<h3 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h3><pre><code class="sh">git push -u origin master -f
+</code></pre>
+<h3 id="思考"><a href="#思考" class="headerlink" title="思考"></a>思考</h3><blockquote>
+<p>问题是，origin是什么，master是什么，怎么绑定的？</p>
+</blockquote>
+<p>关于remote的常用操作:</p>
+<pre><code class="sh">git remote add origin https://github.com/lonelyc/MyRepo.git
+git remote remove xxx
+git remote -v
+
+origin    https://github.com/janebt/janeBlog.git (fetch)
+origin    https://github.com/janebt/janeBlog.git (push)
+</code></pre>
+<p>这样就很清楚了，remote指定的是本地默认的origin 和远程库的一个关联，其中默认指定了fetch和push操作</p>
+<p>origin我的理解是：origin指向的是repository</p>
+<p>其实很清楚， <code>git push</code>就是默认 <code>git push origin master</code></p>
+<p><code>$git push origin master</code> （省略了<code>&lt;dst&gt;</code>，等价于 <code>git push origin master:master</code> ）</p>
+<p><code>$git push origin master:master</code> (在local repository中找到名字为master的branch，使用它去更新remote repository下名字为master的branch，如果remote repository下不存在名字是master的branch，那么新建一个)</p>
+<p>origin是一个链接，它指定了本地库到远程库的连接，但是本地哪个库和远程哪个branch的连接，就由master指定</p>
+<hr>
+<p>回归问题，这样做还是有问题，github创建时会有一个默认提交，而这边push的提交不带这个提交，所以要强行merge，必然会失败，提示要先pull再push。这时可以直接使用 -f 参数强行推送，然后在github上 dismiss这个冲突问题。</p>
+<p>一个tip，github会有很多问题，比如ssh、路径不对什么的。<strong>我的建议是，直接<code>vim .git/config</code>。</strong></p>
+<h2 id="push-和-pull"><a href="#push-和-pull" class="headerlink" title="push 和 pull"></a>push 和 pull</h2><h3 id="情景-1"><a href="#情景-1" class="headerlink" title="情景"></a>情景</h3><blockquote>
+<p>git clone的远程库，push总会莫名报错。考虑实现 git push自动在远程库中建立本地分支同名的远程分支。但会失败</p>
+</blockquote>
+<h3 id="解决方法-1"><a href="#解决方法-1" class="headerlink" title="解决方法"></a>解决方法</h3><p>未设置</p>
+<pre><code class="sh">git clone xxx
+git branch --track local_branch origin/branch
+git branch --set-upstream-to=origin/&lt;branch&gt; pj-risk
+git pull
+git push origin lcoal_branch
+</code></pre>
+<p>git push的一种简单方法，可以设置current，这样会自动创建同名branch，和track的没关系</p>
+<pre><code class="sh">git config --global push.default current
+</code></pre>
+<h3 id="思考-1"><a href="#思考-1" class="headerlink" title="思考"></a>思考</h3><blockquote>
+<p>为什么<code>git push</code>与<code>git pull</code>命令的默认行为混乱</p>
+</blockquote>
+<p>先上两篇文章：</p>
+<ul>
+<li><a href="https://segmentfault.com/a/1190000002783245" target="_blank" rel="external">Git push与pull的默认行为</a></li>
+<li><a href="https://stackoverflow.com/questions/24864700/fatal-the-upstream-branch-of-your-current-branch-does-not-match-the-name-of-you" target="_blank" rel="external">fatal: The upstream branch of your current branch does not match the name of your current branch</a></li>
+</ul>
+<p>总结一下干货：</p>
+<h4 id="git-push"><a href="#git-push" class="headerlink" title="git push"></a>git push</h4><p>如果你未曾改动过git config中的<code>push.default</code>属性，根据我们使用的git不同版本（Git 2.0之前或之后），<code>git push</code>通常会有两种截然不同的行为:</p>
+<ol>
+<li>develop分支中本地新增的commit被push到远程仓库</li>
+<li>push失败，并收到git如下的警告</li>
+</ol>
+<p>为什么git版本不同会有两种不同的push行为？</p>
+<p>因为在<a href="http://git-scm.com/docs/git-config" target="_blank" rel="external">git的全局配置中，有一个push.default</a>属性，其决定了<code>git push</code>操作的默认行为。在Git 2.0之前，这个属性的默认被设为’matching’，2.0之后则被更改为了’simple’。</p>
+<p>可以通过<code>git version</code>确定当前的git版本（如果小于2.0，更新是个更好的选择），通过<code>git config --global push.default &#39;option&#39;</code>改变push.default的默认行为（或者也可直接编辑~/.gitconfig文件）。</p>
+<p><strong>push.default</strong> 有以下几个可选值：<br><strong>nothing, current, upstream, simple, matching</strong></p>
+<p>其用途分别为：</p>
+<ul>
+<li><strong>nothing</strong> - push操作无效，除非显式指定远程分支，例如<code>git push origin develop</code>（我觉得。。。可以给那些不愿学git的同事配上此项）。</li>
+<li><strong>current</strong> - push当前分支到远程同名分支，如果远程同名分支不存在则自动创建同名分支。</li>
+<li><strong>upstream</strong> - push当前分支到它的upstream分支上（这一项其实用于经常从本地分支push/pull到同一远程仓库的情景，这种模式叫做central workflow）。</li>
+<li><strong>simple</strong> - simple和upstream是相似的，只有一点不同，simple必须保证本地分支和它的远程<br>upstream分支同名，否则会拒绝push操作。</li>
+<li><strong>matching</strong> - push所有本地和远程两端都存在的同名分支。</li>
+</ul>
+<h4 id="upstream-amp-downstream"><a href="#upstream-amp-downstream" class="headerlink" title="upstream &amp; downstream"></a>upstream &amp; downstream</h4><p><a href="http://stackoverflow.com/questions/2739376/definition-of-downstream-and-upstream" target="_blank" rel="external">git中的upstream到底是什么</a>：</p>
+<blockquote>
+<p>git中存在upstream和downstream，简言之，当我们把仓库A中某分支x的代码push到仓库B分支y，此时仓库B的这个分支y就叫做A中x分支的upstream，而x则被称作y的downstream，这是一个相对关系，每一个本地分支都相对地可以有一个远程的upstream分支（注意这个upstream分支可以不同名，但通常我们都会使用同名分支作为upstream）。</p>
+</blockquote>
+<p>初次提交本地分支，并不会定义当前本地分支的upstream分支，解决方法：</p>
+<ul>
+<li><code>git push --set-upstream origin develop</code></li>
+<li><code>git push -u origin develop</code></li>
+</ul>
+<p>注意push.default = current可以在远程同名分支不存在的情况下自动创建同名分支，我就如此指定。</p>
+<h4 id="git-pull"><a href="#git-pull" class="headerlink" title="git pull"></a>git pull</h4><p>当我们执行<code>git pull</code>的时候，实际上是做了<code>git fetch + git merge</code>操作：</p>
+<ul>
+<li><p>fetch操作将会更新本地仓库的remote tracking，也就是refs/remotes中的代码，并不会对refs/heads中本地当前的代码造成影响。</p>
+</li>
+<li><p>当进行merge时，对git来说，如果我们没有设定当前分支的upstream，它并不知道我们要合并哪个分支到当前分支，所以我们需要通过下面的代码指定当前分支的upstream：</p>
+<pre><code class="sh">git branch --set-upstream-to=origin/&lt;branch&gt; develop
+</code></pre>
+</li>
+</ul>
+<p>实际上，如果我们没有指定upstream，git在merge时会访问git config中当前分支(develop)merge的默认配置</p>
+<pre><code class="sh">[branch &quot;develop&quot;]
+    remote = origin
+    merge = refs/heads/develop // [1]为什么不是refs/remotes/develop?
+
+git config branch.develop.merge refs/heads/develop
+</code></pre>
+<blockquote>
+<p>[1] 为什么merge = refs/heads/develop 而不是refs/remotes/develop?</p>
+<p>因为这里merge指代的是我们想要merge的远程分支，是remote上的refs/heads/develop，文中即是origin上的refs/heads/develop，这和我们在本地直接执行<code>git merge</code>是不同的(本地执行<code>git merge origin/develop</code>则是直接merge refs/remotes/develop)。</p>
+</blockquote>
+<hr>
+<p>回归问题，我遇到的问题其实是git push的默认行为不对。我的操作是通过修改.gitconfig 指定默认的push行为未current，对于pull操作，通过—track来指定pull的remote分支，我认为这样的一个好处是自由高，有一个场景：</p>
+<blockquote>
+<p>本地分支 需要 能push到远程并新建远程同名分支，只需要执行 <code>git push</code>；需要 pull 远程的master分支，只要执行<code>git pull</code> 。相当于做了一步默认分支指定。只需要在创建本地分支时候 —track 指定一下即可。</p>
+</blockquote>
+]]></content>
+      
+        <categories>
+            
+            <category> 工具 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> Git </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[IPC项目Websocketd服务器总结]]></title>
       <url>/2018/01/20/%E9%A1%B9%E7%9B%AE/IPC%E9%A1%B9%E7%9B%AEWebsocketd%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%80%BB%E7%BB%93/</url>
       <content type="html"><![CDATA[<script src="/assets/js/APlayer.min.js"> </script><p>工作需要，在16年写了个websocket服务器做实时推送音量。当时还没有找到C版的websocket，于是自己参考java写了个，功能比较简单，协议特性实现了实时，但是同步功能是靠开多线程实现，大PV可能不稳定，这块可以再优化管理。</p>
@@ -938,62 +1059,9 @@ ReactDOM.render(
             
             <tag> 面试攻略 </tag>
             
+            <tag> JavaScript </tag>
+            
             <tag> AJAX </tag>
-            
-            <tag> JavaScript </tag>
-            
-        </tags>
-        
-    </entry>
-    
-    <entry>
-      <title><![CDATA[面试重点之异步]]></title>
-      <url>/2018/01/01/%E9%9D%A2%E8%AF%95/%E5%89%8D%E7%AB%AF/%E9%9D%A2%E8%AF%95%E9%87%8D%E7%82%B9%E4%B9%8B%E5%BC%82%E6%AD%A5/</url>
-      <content type="html"><![CDATA[<script src="/assets/js/APlayer.min.js"> </script><p>异步问题在面试中必问。本文只介绍JS异步基础原理。</p>
-<p>面试的异步部分，需要掌握以下：</p>
-<blockquote>
-<ul>
-<li>异步实现原理</li>
-<li>几种常用异步机制的实现</li>
-</ul>
-</blockquote>
-<p>TODO：</p>
-<blockquote>
-<ul>
-<li>其他几种异步待补充</li>
-</ul>
-</blockquote>
-<a id="more"></a>
-<h1 id="面试重点之异步"><a href="#面试重点之异步" class="headerlink" title="面试重点之异步"></a>面试重点之异步</h1><h2 id="JS异步原理-事件-队列"><a href="#JS异步原理-事件-队列" class="headerlink" title="JS异步原理(事件,队列)"></a>JS异步原理(事件,队列)</h2><h3 id="调用栈"><a href="#调用栈" class="headerlink" title="调用栈"></a>调用栈</h3><ul>
-<li>JS执行时会形成调用栈,调用一个函数时,返回地址、参数、本地变量都会被推入栈中,如果当前正在运行的函数中调用另外一个函数,则该函数相关内容也会被推入栈顶.该函数执行完毕,则会被弹出调用栈.变量也随之弹出,由于复杂类型值存放于堆中,因此弹出的只是指针,他们的值依然在堆中,由GC决定回收.</li>
-<li>尾调用:指某个函数的最后一步是调用另一个函数。由调用栈可知,调用栈中有a函数,如果a函数调用b函数,则b函数也随之入栈,此时栈中就会有两个函数.但是如果b函数是a函数最后一步,并且不需保留外层函数调用记录,即a函数调用位置变量等都不需要用到,则该调用栈中会只保留b函数,这就叫做”尾调用优化”（Tail call optimization），即只保留内层函数的调用记录。如果所有函数都是尾调用，那么完全可以做到每次执行时，调用记录只有一项，这将大大节省内存。这就是”尾调用优化”的意义。</li>
-</ul>
-<h3 id="事件循环-event-loop-和任务队列-task-queue"><a href="#事件循环-event-loop-和任务队列-task-queue" class="headerlink" title="事件循环(event loop)和任务队列(task queue)"></a>事件循环(event loop)和任务队列(task queue)</h3><ul>
-<li>JS的异步机制由事件循环和任务队列构成.JS本身是单线程语言,所谓异步依赖于浏览器或者操作系统等完成. JavaScript 主线程拥有一个执行栈以及一个任务队列，主线程会依次执行代码，当遇到函数时，会先将函数入栈，函数运行完毕后再将该函数出栈，直到所有代码执行完毕。</li>
-<li>遇到异步操作（例如：setTimeout, AJAX）时，异步操作会由浏览器(OS)执行，浏览器会在这些任务完成后，将事先定义的回调函数推入主线程的任务队列(task queue)中,当主线程的执行栈清空之后会读取task queue中的回调函数,当task queue被读取完毕之后,主线程接着执行,从而进入一个无限的循环,这就是事件循环.</li>
-</ul>
-<h3 id="Microtask-与-Macrotask"><a href="#Microtask-与-Macrotask" class="headerlink" title="Microtask 与 Macrotask"></a>Microtask 与 Macrotask</h3><ul>
-<li>一个浏览器环境（unit of related similar-origin browsing contexts.）只能有一个事件循环（Event loop），而一个事件循环可以多个任务队列（Task queue），每个任务都有一个任务源（Task source）。例如,客户端可能实现了一个包含鼠标键盘事件的任务队列，还有其他的任务队列，而给鼠标键盘事件的任务队列更高优先级，例如75%的可能性执行它。这样就能保证流畅的交互性，而且别的任务也能执行到了。但是，同一个任务队列中的任务必须按先进先出的顺序执行。多个任务队列，是为了方便控制优先级。任务队列是一个先进先出的队列.</li>
-<li>macrotask 和 microtask 是异步任务的两种分类。在挂起任务时，JS 引擎会将所有任务按照类别分到这两个队列中，首先在 macrotask 的队列（这个队列也被叫做 task queue）中取出第一个任务，执行完毕后取出 microtask 队列中的所有任务顺序执行；之后再取 macrotask 任务，周而复始，直至两个队列的任务都取完。</li>
-<li>全部代码(script)是一个macrotask,js先执行一个macrotask,执行过程中遇到(setTimeout, setInterval, setImmediate等)异步操作则创建一个macrotask,遇到(process.nextTick, Promises等)创建一个microtask,这两个queue分别被挂起.执行栈为空时开始处理macrotask,完成后处理microtask,直到该microtask全部执行完,然后继续主线程调用栈.</li>
-</ul>
-<p>注:每一次事件循环（one cycle of the event loop），只处理一个 (macro)task。待该 macrotask 完成后，所有的 microtask 会在同一次循环中处理。处理这些 microtask 时，还可以将更多的 microtask 入队，它们会一一执行，直到整个 microtask 队列处理完。</p>
-]]></content>
-      
-        <categories>
-            
-            <category> 面试 </category>
-            
-        </categories>
-        
-        
-        <tags>
-            
-            <tag> 面试攻略 </tag>
-            
-            <tag> JavaScript </tag>
-            
-            <tag> 异步 </tag>
             
         </tags>
         
@@ -1123,6 +1191,59 @@ if (typeof window.addEventListener != &#39;undefined&#39;) {
             <tag> JavaScript </tag>
             
             <tag> 跨域 </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[面试重点之异步]]></title>
+      <url>/2018/01/01/%E9%9D%A2%E8%AF%95/%E5%89%8D%E7%AB%AF/%E9%9D%A2%E8%AF%95%E9%87%8D%E7%82%B9%E4%B9%8B%E5%BC%82%E6%AD%A5/</url>
+      <content type="html"><![CDATA[<script src="/assets/js/APlayer.min.js"> </script><p>异步问题在面试中必问。本文只介绍JS异步基础原理。</p>
+<p>面试的异步部分，需要掌握以下：</p>
+<blockquote>
+<ul>
+<li>异步实现原理</li>
+<li>几种常用异步机制的实现</li>
+</ul>
+</blockquote>
+<p>TODO：</p>
+<blockquote>
+<ul>
+<li>其他几种异步待补充</li>
+</ul>
+</blockquote>
+<a id="more"></a>
+<h1 id="面试重点之异步"><a href="#面试重点之异步" class="headerlink" title="面试重点之异步"></a>面试重点之异步</h1><h2 id="JS异步原理-事件-队列"><a href="#JS异步原理-事件-队列" class="headerlink" title="JS异步原理(事件,队列)"></a>JS异步原理(事件,队列)</h2><h3 id="调用栈"><a href="#调用栈" class="headerlink" title="调用栈"></a>调用栈</h3><ul>
+<li>JS执行时会形成调用栈,调用一个函数时,返回地址、参数、本地变量都会被推入栈中,如果当前正在运行的函数中调用另外一个函数,则该函数相关内容也会被推入栈顶.该函数执行完毕,则会被弹出调用栈.变量也随之弹出,由于复杂类型值存放于堆中,因此弹出的只是指针,他们的值依然在堆中,由GC决定回收.</li>
+<li>尾调用:指某个函数的最后一步是调用另一个函数。由调用栈可知,调用栈中有a函数,如果a函数调用b函数,则b函数也随之入栈,此时栈中就会有两个函数.但是如果b函数是a函数最后一步,并且不需保留外层函数调用记录,即a函数调用位置变量等都不需要用到,则该调用栈中会只保留b函数,这就叫做”尾调用优化”（Tail call optimization），即只保留内层函数的调用记录。如果所有函数都是尾调用，那么完全可以做到每次执行时，调用记录只有一项，这将大大节省内存。这就是”尾调用优化”的意义。</li>
+</ul>
+<h3 id="事件循环-event-loop-和任务队列-task-queue"><a href="#事件循环-event-loop-和任务队列-task-queue" class="headerlink" title="事件循环(event loop)和任务队列(task queue)"></a>事件循环(event loop)和任务队列(task queue)</h3><ul>
+<li>JS的异步机制由事件循环和任务队列构成.JS本身是单线程语言,所谓异步依赖于浏览器或者操作系统等完成. JavaScript 主线程拥有一个执行栈以及一个任务队列，主线程会依次执行代码，当遇到函数时，会先将函数入栈，函数运行完毕后再将该函数出栈，直到所有代码执行完毕。</li>
+<li>遇到异步操作（例如：setTimeout, AJAX）时，异步操作会由浏览器(OS)执行，浏览器会在这些任务完成后，将事先定义的回调函数推入主线程的任务队列(task queue)中,当主线程的执行栈清空之后会读取task queue中的回调函数,当task queue被读取完毕之后,主线程接着执行,从而进入一个无限的循环,这就是事件循环.</li>
+</ul>
+<h3 id="Microtask-与-Macrotask"><a href="#Microtask-与-Macrotask" class="headerlink" title="Microtask 与 Macrotask"></a>Microtask 与 Macrotask</h3><ul>
+<li>一个浏览器环境（unit of related similar-origin browsing contexts.）只能有一个事件循环（Event loop），而一个事件循环可以多个任务队列（Task queue），每个任务都有一个任务源（Task source）。例如,客户端可能实现了一个包含鼠标键盘事件的任务队列，还有其他的任务队列，而给鼠标键盘事件的任务队列更高优先级，例如75%的可能性执行它。这样就能保证流畅的交互性，而且别的任务也能执行到了。但是，同一个任务队列中的任务必须按先进先出的顺序执行。多个任务队列，是为了方便控制优先级。任务队列是一个先进先出的队列.</li>
+<li>macrotask 和 microtask 是异步任务的两种分类。在挂起任务时，JS 引擎会将所有任务按照类别分到这两个队列中，首先在 macrotask 的队列（这个队列也被叫做 task queue）中取出第一个任务，执行完毕后取出 microtask 队列中的所有任务顺序执行；之后再取 macrotask 任务，周而复始，直至两个队列的任务都取完。</li>
+<li>全部代码(script)是一个macrotask,js先执行一个macrotask,执行过程中遇到(setTimeout, setInterval, setImmediate等)异步操作则创建一个macrotask,遇到(process.nextTick, Promises等)创建一个microtask,这两个queue分别被挂起.执行栈为空时开始处理macrotask,完成后处理microtask,直到该microtask全部执行完,然后继续主线程调用栈.</li>
+</ul>
+<p>注:每一次事件循环（one cycle of the event loop），只处理一个 (macro)task。待该 macrotask 完成后，所有的 microtask 会在同一次循环中处理。处理这些 microtask 时，还可以将更多的 microtask 入队，它们会一一执行，直到整个 microtask 队列处理完。</p>
+]]></content>
+      
+        <categories>
+            
+            <category> 面试 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> 面试攻略 </tag>
+            
+            <tag> JavaScript </tag>
+            
+            <tag> 异步 </tag>
             
         </tags>
         
@@ -1432,6 +1553,235 @@ if (typeof window.addEventListener != &#39;undefined&#39;) {
         <tags>
             
             <tag> 面试攻略 </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[面试重点之ES6]]></title>
+      <url>/2018/01/01/%E9%9D%A2%E8%AF%95/%E5%89%8D%E7%AB%AF/%E9%9D%A2%E8%AF%95%E9%87%8D%E7%82%B9%E4%B9%8BES6/</url>
+      <content type="html"><![CDATA[<script src="/assets/js/APlayer.min.js"> </script><p>ES6问题在面试中是重中之重。我感觉是比较难的，如果仅仅是使用，那倒很轻松，但是其中会问实现、原理等，涉及的东西很多。</p>
+<p>面试的ES6部分，需要掌握：</p>
+<blockquote>
+<ul>
+<li>掌握每个概念存在的意义，是为了解决什么类型问题</li>
+<li>掌握每个概念的实现原理，ES5怎么写</li>
+<li>掌握每个概念的一些使用上的坑和技巧</li>
+</ul>
+</blockquote>
+<p>TODO：</p>
+<blockquote>
+<ul>
+<li>提到的概念深入细化</li>
+</ul>
+</blockquote>
+<a id="more"></a>
+<h1 id="面试重点之ES6"><a href="#面试重点之ES6" class="headerlink" title="面试重点之ES6"></a>面试重点之ES6</h1><h2 id="知识点"><a href="#知识点" class="headerlink" title="知识点"></a>知识点</h2><ul>
+<li>let/const</li>
+<li>立即执行函数</li>
+<li>箭头函数</li>
+<li>字符串拓展</li>
+<li>字符串模板字面量</li>
+<li>数组的拓展</li>
+<li>Maps</li>
+<li>Object</li>
+<li>for…of循环</li>
+<li>解构</li>
+<li>Modules</li>
+<li>参数默认值</li>
+<li>Class</li>
+<li>Object.assign()</li>
+<li>Symbol</li>
+<li>Promise</li>
+</ul>
+<h2 id="Promise"><a href="#Promise" class="headerlink" title="Promise"></a>Promise</h2><p>它的思想是，每一个异步任务返回一个Promise对象，该对象有一个then方法，允许指定回调函数。比如，f1的回调函数f2,可以写成：</p>
+<pre><code class="javascript">f1().then(f2);
+f1().then(f2).then(f3);
+f1().then(f2).fail(f3);
+</code></pre>
+<p>如果一个任务已经完成，再添加回调函数，该回调函数会立即执行。</p>
+<p>API:</p>
+<pre><code class="javascript">new Promise((resolve, reject) =&gt;
+    reject(new Error(&#39;Failed to fulfill Promise&#39;)))
+        .catch(reason =&gt; console.log(reason));
+</code></pre>
+<p>这里有两个处理函数，<strong>resolve</strong>（当Promise执行成功完毕时调用的回调函数） 和 <strong>reject</strong> （当Promise执行不接受时调用的回调函数）</p>
+<p><strong>Promises的好处</strong>：</p>
+<ul>
+<li>大量嵌套错误处理回调函数会使代码变得难以阅读理解。使用Promises，我们可以通过清晰的路径将错误事件让上传递，并且适当地处理它们。</li>
+</ul>
+<p>此外，Promise处理后的值，无论是解决（resolved）还是拒绝（rejected）的结果值，都是不可改变的。</p>
+<h3 id="1-什么是promise对象，它能干什么？"><a href="#1-什么是promise对象，它能干什么？" class="headerlink" title="1. 什么是promise对象，它能干什么？"></a>1. 什么是promise对象，它能干什么？</h3><p><strong>Promise</strong> 对象用于延迟(deferred) 计算和异步(asynchronous ) 计算.。一个Promise对象代表着一个还未完成，但预期将来会完成的操作。</p>
+<p><strong>Promise</strong> 对象是一个返回值的代理，这个返回值在promise对象创建时未必已知。它允许你为异步操作的成功或失败指定处理方法。 这使得异步方法可以像同步方法那样返回值：异步方法会返回一个包含了原返回值的 promise 对象来替代原返回值。</p>
+<p><strong>Promise</strong> 对象有以下几种状态:</p>
+<ul>
+<li><em>pending</em>: 表示一个初始状态, 非 fulfilled 或 rejected。</li>
+<li><em>fulfilled</em>: 成功的操作。</li>
+<li><em>rejected</em>: 失败的操作。</li>
+</ul>
+<p>每一个异步任务都会返回一个Promise对象，该对象有一个then方法，允许指定回调函数。可以根据Promise对象的状态相应的去执行对应的回调函数。</p>
+<h3 id="2-常用的API"><a href="#2-常用的API" class="headerlink" title="2. 常用的API"></a>2. 常用的API</h3><h4 id="1-Promise-prototype-then"><a href="#1-Promise-prototype-then" class="headerlink" title="1.Promise.prototype.then()"></a>1.Promise.prototype.then()</h4><p>它的作用是为promise实例添加状态改变时的回调函数。</p>
+<p>then()方法的第一个参数是resolved状态的回调函数，第二个参数（可选）是rejected状态的回调函数。then方法返回的是一个新的promise实例。</p>
+<p>then方法的第二个参数一般不推荐写。有以下两个原因：</p>
+<ul>
+<li>由于是链式操作，这个then方法之后还可能会有其他操作，如果此时把错误捕捉的函数放在后面方法前边的话，并且之后再无错误捕获方法，then之后的错误就会捕捉不到。</li>
+<li>在then方法里面，两个参数都是回调函数写了一大堆，这样结构看起来比较混乱。</li>
+</ul>
+<pre><code class="javascript">var p=new Promise(function(resolve, reject){
+    resolve(&quot;ok&quot;);    
+});
+p.then(function(value){console.log(val)},
+ function(err)(console.log(err))       
+);
+</code></pre>
+<h4 id="2-Promise-prototype-catch"><a href="#2-Promise-prototype-catch" class="headerlink" title="2.Promise.prototype.catch()"></a>2.Promise.prototype.catch()</h4><p>这个方法是.then(null,rejection)的别名，这也能看出这个方法是专门只能用来捕获错误信息，用于指定发生错误时的回调函数。</p>
+<p>要注意一下几点：</p>
+<ul>
+<li>当promise状态已经变成resolved的时候，再抛出错误时是无效的。</li>
+<li>尽量将catch方法写在链式操作的最后。<strong>错误会一直冒泡到最后，catch放在最后会捕捉到所有错误。</strong></li>
+<li>当没有使用catch方法指定错误处理函数的回调函数时，promise对象里面抛出的错误不会传递到外层的代码。</li>
+</ul>
+<h4 id="3-Promise-resolve"><a href="#3-Promise-resolve" class="headerlink" title="3. Promise.resolve()"></a>3. Promise.resolve()</h4><p>这个方法的作用就是将现有的对象转化为Promise对象，进而可以执行这些方法。</p>
+<pre><code class="javascript">Promise.resolve(&quot;foo&quot;);
+</code></pre>
+<h4 id="4-Promise-all"><a href="#4-Promise-all" class="headerlink" title="4. Promise.all()"></a>4. Promise.all()</h4><p>这个方法用于将多个promise实例，包装成一个新的promise实例。</p>
+<pre><code class="javascript">var p=Promise.all([p1,p2,p3]);
+</code></pre>
+<p>要注意一下两点：</p>
+<ul>
+<li>只有当p1,p2,p3状态都变为fulfilled之后，p的状态才会变为fulfilled。</li>
+<li>只要p1.p2,p3中有任意一个状态变为rejected，p的状态就会变为rejected。</li>
+</ul>
+<h3 id="3-实现异步编程的原理"><a href="#3-实现异步编程的原理" class="headerlink" title="3. 实现异步编程的原理"></a>3. 实现异步编程的原理</h3><p>Promise对象相当于是一个状态机，在其内部使用resolve方法，使其由初始状态变为成功时的fulfilled状态或者执行失败后的rejected状态。这时内部的工作就完成了，开始由外部监听其内部的状态的改变，调用then()方法（catch()方法相当于then内部的第二个参数方法）对应的状态调用对应的处理函数。</p>
+<h2 id="箭头函数需要注意的地方"><a href="#箭头函数需要注意的地方" class="headerlink" title="箭头函数需要注意的地方"></a>箭头函数需要注意的地方</h2><p>当要求动态上下文的时候，就不能够使用箭头函数。也就是this的固定化</p>
+<ol>
+<li>在使用=&gt;定义函数的时候，<strong>this的指向是定义时所在的对象</strong>，而不是使用时所在的对象</li>
+<li>不能够用作构造函数，这就是说，不能够使用new命令，否则就会抛出一个错误</li>
+<li>不能够使用arguments对象</li>
+<li>不能使用yield命令</li>
+</ol>
+<h2 id="Proxy"><a href="#Proxy" class="headerlink" title="Proxy"></a>Proxy</h2><p>使用 Proxy 的好处是：对象只需关注于核心逻辑，一些非核心的逻辑（如：读取或设置对象的某些属性前记录日志；设置对象的某些属性值前，需要验证；某些属性的访问控制等）可以让 Proxy 来做。从而达到关注点分离，降级对象复杂度的目的。</p>
+<p>Proxy用于修改某些操作的默认行为，用来代理有些行为。Proxy 可以理解成，在目标对象之前架设一层“拦截”，外界对该对象的访问，都必须先通过这层拦截，因此提供了一种机制，可以对外界的访问进行过滤和改写。</p>
+<pre><code class="javascript">var engineer = { name: &#39;Joe Sixpack&#39;, salary: 50 };
+
+var interceptor = {
+  set: function (receiver, property, value) {
+    console.log(property, &#39;is changed to&#39;, value);
+    receiver[property] = value;
+  }
+};
+
+engineer = Proxy(engineer, interceptor);
+engineer.salary = 60;    //会触发处理器
+</code></pre>
+<p><strong>（1）get(target, propKey, receiver)</strong></p>
+<p>拦截对象属性的读取，比如<code>proxy.foo</code>和<code>proxy[&#39;foo&#39;]</code>。</p>
+<p>最后一个参数<code>receiver</code>是一个对象，可选，参见下面<code>Reflect.get</code>的部分。</p>
+<p><strong>（2）set(target, propKey, value, receiver)</strong></p>
+<p>拦截对象属性的设置，比如<code>proxy.foo = v</code>或<code>proxy[&#39;foo&#39;] = v</code>，返回一个布尔值。</p>
+<p><strong>（3）has(target, propKey)</strong></p>
+<p>拦截<code>propKey in proxy</code>的操作，返回一个布尔值。</p>
+<p><strong>（4）deleteProperty(target, propKey)</strong></p>
+<p>拦截<code>delete proxy[propKey]</code>的操作，返回一个布尔值。</p>
+<p><strong>（5）ownKeys(target)</strong></p>
+<p>拦截<code>Object.getOwnPropertyNames(proxy)</code>、<code>Object.getOwnPropertySymbols(proxy)</code>、<code>Object.keys(proxy)</code>，返回一个数组。该方法返回目标对象所有自身的属性的属性名，而<code>Object.keys()</code>的返回结果仅包括目标对象自身的可遍历属性。</p>
+<p><strong>（6）getOwnPropertyDescriptor(target, propKey)</strong></p>
+<p>拦截<code>Object.getOwnPropertyDescriptor(proxy, propKey)</code>，返回属性的描述对象。</p>
+<p><strong>（7）defineProperty(target, propKey, propDesc)</strong></p>
+<p>拦截<code>Object.defineProperty(proxy, propKey, propDesc）</code>、<code>Object.defineProperties(proxy, propDescs)</code>，返回一个布尔值。</p>
+<p><strong>（8）preventExtensions(target)</strong></p>
+<p>拦截<code>Object.preventExtensions(proxy)</code>，返回一个布尔值。</p>
+<p><strong>（9）getPrototypeOf(target)</strong></p>
+<p>拦截<code>Object.getPrototypeOf(proxy)</code>，返回一个对象。</p>
+<p><strong>（10）isExtensible(target)</strong></p>
+<p>拦截<code>Object.isExtensible(proxy)</code>，返回一个布尔值。</p>
+<p><strong>（11）setPrototypeOf(target, proto)</strong></p>
+<p>拦截<code>Object.setPrototypeOf(proxy, proto)</code>，返回一个布尔值。</p>
+<p>如果目标对象是函数，那么还有两种额外操作可以拦截。</p>
+<p><strong>（12）apply(target, object, args)</strong></p>
+<p>拦截 Proxy 实例作为函数调用的操作，比如<code>proxy(...args)</code>、<code>proxy.call(object, ...args)</code>、<code>proxy.apply(...)</code>。</p>
+<p><strong>（13）construct(target, args)</strong></p>
+<p>拦截 Proxy 实例作为构造函数调用的操作，比如<code>new proxy(...args)</code>。</p>
+<h2 id="Generator-函数"><a href="#Generator-函数" class="headerlink" title="Generator 函数"></a>Generator 函数</h2><p>异步编程的方法</p>
+<ul>
+<li>回调函数</li>
+<li>事件监听</li>
+<li>发布/订阅</li>
+<li>Promise 对象</li>
+</ul>
+<p>Generator 函数是协程在 ES6 的实现，最大特点就是可以交出函数的执行权（即暂停执行）。异步操作需要暂停的地方，都用 yield 语句注明。</p>
+<p>Generator 函数不同于普通函数的另一个地方，即执行它不会返回结果，返回的是指针对象。</p>
+<pre><code class="javascript">function* gen(x){
+  var y = yield x + 2;
+  return y;
+}
+
+var g = gen(1);
+g.next() // { value: 3, done: false }
+g.next() // { value: undefined, done: true }
+</code></pre>
+<p><strong>Case</strong></p>
+<pre><code class="javascript">var fetch = require(&#39;node-fetch&#39;);
+
+function* gen(){
+  var url = &#39;https://api.github.com/users/github&#39;;
+  var result = yield fetch(url);
+  console.log(result.bio);
+}
+</code></pre>
+<pre><code class="javascript">var g = gen();
+var result = g.next();
+
+result.value.then(function(data){
+  return data.json();
+}).then(function(data){
+  g.next(data);
+});
+</code></pre>
+<p>一句话说，next方法参数的作用，是覆盖掉上一个yield语句的值。</p>
+<p>带参数跟不带参数的区别是，带参数的情况，首先第一步就是将上一个yield语句重置为参数值，然后再照常执行剩下的语句。<strong>总之，区别就是先有一步先重置值，接下来其他全都一样。</strong></p>
+<h2 id="ES7的Async-Await"><a href="#ES7的Async-Await" class="headerlink" title="ES7的Async/Await"></a>ES7的Async/Await</h2><pre><code class="javascript">var sleep = function (time) {
+    return new Promise(function (resolve, reject) {
+        setTimeout(function () {
+            resolve();
+        }, time);
+    })
+};
+
+var start = async function () {
+    // 在这里使用起来就像同步代码那样直观
+    console.log(&#39;start&#39;);
+    await sleep(3000);
+    console.log(&#39;end&#39;);
+};
+
+start();
+</code></pre>
+<ul>
+<li>async 表示<code>这是一个async函数</code>，<code>await只能用在这个函数里面</code>。</li>
+<li>await 表示在这里<code>等待promise返回结果</code>了，再继续执行。</li>
+<li>await 后面跟着的<code>应该是一个promise对象</code></li>
+</ul>
+<h3 id="特点"><a href="#特点" class="headerlink" title="特点"></a>特点</h3><p>await等待的虽然是promise对象，但不必写<code>.then(..)</code>，直接可以得到返回值。</p>
+<p>await看起来就像是同步代码，所以可以理所当然的写在<code>for</code>循环里，不必担心以往需要<code>闭包</code>才能解决的问题。</p>
+<p>值得注意的是，<code>await</code>必须在<code>async函数的上下文中</code>的。</p>
+]]></content>
+      
+        <categories>
+            
+            <category> 面试 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> 面试攻略 </tag>
+            
+            <tag> ES6 </tag>
+            
+            <tag> JavaScript </tag>
             
         </tags>
         
@@ -1831,235 +2181,6 @@ vm.msg = 2; //输出「变了」
             <tag> 面试攻略 </tag>
             
             <tag> Vue </tag>
-            
-        </tags>
-        
-    </entry>
-    
-    <entry>
-      <title><![CDATA[面试重点之ES6]]></title>
-      <url>/2018/01/01/%E9%9D%A2%E8%AF%95/%E5%89%8D%E7%AB%AF/%E9%9D%A2%E8%AF%95%E9%87%8D%E7%82%B9%E4%B9%8BES6/</url>
-      <content type="html"><![CDATA[<script src="/assets/js/APlayer.min.js"> </script><p>ES6问题在面试中是重中之重。我感觉是比较难的，如果仅仅是使用，那倒很轻松，但是其中会问实现、原理等，涉及的东西很多。</p>
-<p>面试的ES6部分，需要掌握：</p>
-<blockquote>
-<ul>
-<li>掌握每个概念存在的意义，是为了解决什么类型问题</li>
-<li>掌握每个概念的实现原理，ES5怎么写</li>
-<li>掌握每个概念的一些使用上的坑和技巧</li>
-</ul>
-</blockquote>
-<p>TODO：</p>
-<blockquote>
-<ul>
-<li>提到的概念深入细化</li>
-</ul>
-</blockquote>
-<a id="more"></a>
-<h1 id="面试重点之ES6"><a href="#面试重点之ES6" class="headerlink" title="面试重点之ES6"></a>面试重点之ES6</h1><h2 id="知识点"><a href="#知识点" class="headerlink" title="知识点"></a>知识点</h2><ul>
-<li>let/const</li>
-<li>立即执行函数</li>
-<li>箭头函数</li>
-<li>字符串拓展</li>
-<li>字符串模板字面量</li>
-<li>数组的拓展</li>
-<li>Maps</li>
-<li>Object</li>
-<li>for…of循环</li>
-<li>解构</li>
-<li>Modules</li>
-<li>参数默认值</li>
-<li>Class</li>
-<li>Object.assign()</li>
-<li>Symbol</li>
-<li>Promise</li>
-</ul>
-<h2 id="Promise"><a href="#Promise" class="headerlink" title="Promise"></a>Promise</h2><p>它的思想是，每一个异步任务返回一个Promise对象，该对象有一个then方法，允许指定回调函数。比如，f1的回调函数f2,可以写成：</p>
-<pre><code class="javascript">f1().then(f2);
-f1().then(f2).then(f3);
-f1().then(f2).fail(f3);
-</code></pre>
-<p>如果一个任务已经完成，再添加回调函数，该回调函数会立即执行。</p>
-<p>API:</p>
-<pre><code class="javascript">new Promise((resolve, reject) =&gt;
-    reject(new Error(&#39;Failed to fulfill Promise&#39;)))
-        .catch(reason =&gt; console.log(reason));
-</code></pre>
-<p>这里有两个处理函数，<strong>resolve</strong>（当Promise执行成功完毕时调用的回调函数） 和 <strong>reject</strong> （当Promise执行不接受时调用的回调函数）</p>
-<p><strong>Promises的好处</strong>：</p>
-<ul>
-<li>大量嵌套错误处理回调函数会使代码变得难以阅读理解。使用Promises，我们可以通过清晰的路径将错误事件让上传递，并且适当地处理它们。</li>
-</ul>
-<p>此外，Promise处理后的值，无论是解决（resolved）还是拒绝（rejected）的结果值，都是不可改变的。</p>
-<h3 id="1-什么是promise对象，它能干什么？"><a href="#1-什么是promise对象，它能干什么？" class="headerlink" title="1. 什么是promise对象，它能干什么？"></a>1. 什么是promise对象，它能干什么？</h3><p><strong>Promise</strong> 对象用于延迟(deferred) 计算和异步(asynchronous ) 计算.。一个Promise对象代表着一个还未完成，但预期将来会完成的操作。</p>
-<p><strong>Promise</strong> 对象是一个返回值的代理，这个返回值在promise对象创建时未必已知。它允许你为异步操作的成功或失败指定处理方法。 这使得异步方法可以像同步方法那样返回值：异步方法会返回一个包含了原返回值的 promise 对象来替代原返回值。</p>
-<p><strong>Promise</strong> 对象有以下几种状态:</p>
-<ul>
-<li><em>pending</em>: 表示一个初始状态, 非 fulfilled 或 rejected。</li>
-<li><em>fulfilled</em>: 成功的操作。</li>
-<li><em>rejected</em>: 失败的操作。</li>
-</ul>
-<p>每一个异步任务都会返回一个Promise对象，该对象有一个then方法，允许指定回调函数。可以根据Promise对象的状态相应的去执行对应的回调函数。</p>
-<h3 id="2-常用的API"><a href="#2-常用的API" class="headerlink" title="2. 常用的API"></a>2. 常用的API</h3><h4 id="1-Promise-prototype-then"><a href="#1-Promise-prototype-then" class="headerlink" title="1.Promise.prototype.then()"></a>1.Promise.prototype.then()</h4><p>它的作用是为promise实例添加状态改变时的回调函数。</p>
-<p>then()方法的第一个参数是resolved状态的回调函数，第二个参数（可选）是rejected状态的回调函数。then方法返回的是一个新的promise实例。</p>
-<p>then方法的第二个参数一般不推荐写。有以下两个原因：</p>
-<ul>
-<li>由于是链式操作，这个then方法之后还可能会有其他操作，如果此时把错误捕捉的函数放在后面方法前边的话，并且之后再无错误捕获方法，then之后的错误就会捕捉不到。</li>
-<li>在then方法里面，两个参数都是回调函数写了一大堆，这样结构看起来比较混乱。</li>
-</ul>
-<pre><code class="javascript">var p=new Promise(function(resolve, reject){
-    resolve(&quot;ok&quot;);    
-});
-p.then(function(value){console.log(val)},
- function(err)(console.log(err))       
-);
-</code></pre>
-<h4 id="2-Promise-prototype-catch"><a href="#2-Promise-prototype-catch" class="headerlink" title="2.Promise.prototype.catch()"></a>2.Promise.prototype.catch()</h4><p>这个方法是.then(null,rejection)的别名，这也能看出这个方法是专门只能用来捕获错误信息，用于指定发生错误时的回调函数。</p>
-<p>要注意一下几点：</p>
-<ul>
-<li>当promise状态已经变成resolved的时候，再抛出错误时是无效的。</li>
-<li>尽量将catch方法写在链式操作的最后。<strong>错误会一直冒泡到最后，catch放在最后会捕捉到所有错误。</strong></li>
-<li>当没有使用catch方法指定错误处理函数的回调函数时，promise对象里面抛出的错误不会传递到外层的代码。</li>
-</ul>
-<h4 id="3-Promise-resolve"><a href="#3-Promise-resolve" class="headerlink" title="3. Promise.resolve()"></a>3. Promise.resolve()</h4><p>这个方法的作用就是将现有的对象转化为Promise对象，进而可以执行这些方法。</p>
-<pre><code class="javascript">Promise.resolve(&quot;foo&quot;);
-</code></pre>
-<h4 id="4-Promise-all"><a href="#4-Promise-all" class="headerlink" title="4. Promise.all()"></a>4. Promise.all()</h4><p>这个方法用于将多个promise实例，包装成一个新的promise实例。</p>
-<pre><code class="javascript">var p=Promise.all([p1,p2,p3]);
-</code></pre>
-<p>要注意一下两点：</p>
-<ul>
-<li>只有当p1,p2,p3状态都变为fulfilled之后，p的状态才会变为fulfilled。</li>
-<li>只要p1.p2,p3中有任意一个状态变为rejected，p的状态就会变为rejected。</li>
-</ul>
-<h3 id="3-实现异步编程的原理"><a href="#3-实现异步编程的原理" class="headerlink" title="3. 实现异步编程的原理"></a>3. 实现异步编程的原理</h3><p>Promise对象相当于是一个状态机，在其内部使用resolve方法，使其由初始状态变为成功时的fulfilled状态或者执行失败后的rejected状态。这时内部的工作就完成了，开始由外部监听其内部的状态的改变，调用then()方法（catch()方法相当于then内部的第二个参数方法）对应的状态调用对应的处理函数。</p>
-<h2 id="箭头函数需要注意的地方"><a href="#箭头函数需要注意的地方" class="headerlink" title="箭头函数需要注意的地方"></a>箭头函数需要注意的地方</h2><p>当要求动态上下文的时候，就不能够使用箭头函数。也就是this的固定化</p>
-<ol>
-<li>在使用=&gt;定义函数的时候，<strong>this的指向是定义时所在的对象</strong>，而不是使用时所在的对象</li>
-<li>不能够用作构造函数，这就是说，不能够使用new命令，否则就会抛出一个错误</li>
-<li>不能够使用arguments对象</li>
-<li>不能使用yield命令</li>
-</ol>
-<h2 id="Proxy"><a href="#Proxy" class="headerlink" title="Proxy"></a>Proxy</h2><p>使用 Proxy 的好处是：对象只需关注于核心逻辑，一些非核心的逻辑（如：读取或设置对象的某些属性前记录日志；设置对象的某些属性值前，需要验证；某些属性的访问控制等）可以让 Proxy 来做。从而达到关注点分离，降级对象复杂度的目的。</p>
-<p>Proxy用于修改某些操作的默认行为，用来代理有些行为。Proxy 可以理解成，在目标对象之前架设一层“拦截”，外界对该对象的访问，都必须先通过这层拦截，因此提供了一种机制，可以对外界的访问进行过滤和改写。</p>
-<pre><code class="javascript">var engineer = { name: &#39;Joe Sixpack&#39;, salary: 50 };
-
-var interceptor = {
-  set: function (receiver, property, value) {
-    console.log(property, &#39;is changed to&#39;, value);
-    receiver[property] = value;
-  }
-};
-
-engineer = Proxy(engineer, interceptor);
-engineer.salary = 60;    //会触发处理器
-</code></pre>
-<p><strong>（1）get(target, propKey, receiver)</strong></p>
-<p>拦截对象属性的读取，比如<code>proxy.foo</code>和<code>proxy[&#39;foo&#39;]</code>。</p>
-<p>最后一个参数<code>receiver</code>是一个对象，可选，参见下面<code>Reflect.get</code>的部分。</p>
-<p><strong>（2）set(target, propKey, value, receiver)</strong></p>
-<p>拦截对象属性的设置，比如<code>proxy.foo = v</code>或<code>proxy[&#39;foo&#39;] = v</code>，返回一个布尔值。</p>
-<p><strong>（3）has(target, propKey)</strong></p>
-<p>拦截<code>propKey in proxy</code>的操作，返回一个布尔值。</p>
-<p><strong>（4）deleteProperty(target, propKey)</strong></p>
-<p>拦截<code>delete proxy[propKey]</code>的操作，返回一个布尔值。</p>
-<p><strong>（5）ownKeys(target)</strong></p>
-<p>拦截<code>Object.getOwnPropertyNames(proxy)</code>、<code>Object.getOwnPropertySymbols(proxy)</code>、<code>Object.keys(proxy)</code>，返回一个数组。该方法返回目标对象所有自身的属性的属性名，而<code>Object.keys()</code>的返回结果仅包括目标对象自身的可遍历属性。</p>
-<p><strong>（6）getOwnPropertyDescriptor(target, propKey)</strong></p>
-<p>拦截<code>Object.getOwnPropertyDescriptor(proxy, propKey)</code>，返回属性的描述对象。</p>
-<p><strong>（7）defineProperty(target, propKey, propDesc)</strong></p>
-<p>拦截<code>Object.defineProperty(proxy, propKey, propDesc）</code>、<code>Object.defineProperties(proxy, propDescs)</code>，返回一个布尔值。</p>
-<p><strong>（8）preventExtensions(target)</strong></p>
-<p>拦截<code>Object.preventExtensions(proxy)</code>，返回一个布尔值。</p>
-<p><strong>（9）getPrototypeOf(target)</strong></p>
-<p>拦截<code>Object.getPrototypeOf(proxy)</code>，返回一个对象。</p>
-<p><strong>（10）isExtensible(target)</strong></p>
-<p>拦截<code>Object.isExtensible(proxy)</code>，返回一个布尔值。</p>
-<p><strong>（11）setPrototypeOf(target, proto)</strong></p>
-<p>拦截<code>Object.setPrototypeOf(proxy, proto)</code>，返回一个布尔值。</p>
-<p>如果目标对象是函数，那么还有两种额外操作可以拦截。</p>
-<p><strong>（12）apply(target, object, args)</strong></p>
-<p>拦截 Proxy 实例作为函数调用的操作，比如<code>proxy(...args)</code>、<code>proxy.call(object, ...args)</code>、<code>proxy.apply(...)</code>。</p>
-<p><strong>（13）construct(target, args)</strong></p>
-<p>拦截 Proxy 实例作为构造函数调用的操作，比如<code>new proxy(...args)</code>。</p>
-<h2 id="Generator-函数"><a href="#Generator-函数" class="headerlink" title="Generator 函数"></a>Generator 函数</h2><p>异步编程的方法</p>
-<ul>
-<li>回调函数</li>
-<li>事件监听</li>
-<li>发布/订阅</li>
-<li>Promise 对象</li>
-</ul>
-<p>Generator 函数是协程在 ES6 的实现，最大特点就是可以交出函数的执行权（即暂停执行）。异步操作需要暂停的地方，都用 yield 语句注明。</p>
-<p>Generator 函数不同于普通函数的另一个地方，即执行它不会返回结果，返回的是指针对象。</p>
-<pre><code class="javascript">function* gen(x){
-  var y = yield x + 2;
-  return y;
-}
-
-var g = gen(1);
-g.next() // { value: 3, done: false }
-g.next() // { value: undefined, done: true }
-</code></pre>
-<p><strong>Case</strong></p>
-<pre><code class="javascript">var fetch = require(&#39;node-fetch&#39;);
-
-function* gen(){
-  var url = &#39;https://api.github.com/users/github&#39;;
-  var result = yield fetch(url);
-  console.log(result.bio);
-}
-</code></pre>
-<pre><code class="javascript">var g = gen();
-var result = g.next();
-
-result.value.then(function(data){
-  return data.json();
-}).then(function(data){
-  g.next(data);
-});
-</code></pre>
-<p>一句话说，next方法参数的作用，是覆盖掉上一个yield语句的值。</p>
-<p>带参数跟不带参数的区别是，带参数的情况，首先第一步就是将上一个yield语句重置为参数值，然后再照常执行剩下的语句。<strong>总之，区别就是先有一步先重置值，接下来其他全都一样。</strong></p>
-<h2 id="ES7的Async-Await"><a href="#ES7的Async-Await" class="headerlink" title="ES7的Async/Await"></a>ES7的Async/Await</h2><pre><code class="javascript">var sleep = function (time) {
-    return new Promise(function (resolve, reject) {
-        setTimeout(function () {
-            resolve();
-        }, time);
-    })
-};
-
-var start = async function () {
-    // 在这里使用起来就像同步代码那样直观
-    console.log(&#39;start&#39;);
-    await sleep(3000);
-    console.log(&#39;end&#39;);
-};
-
-start();
-</code></pre>
-<ul>
-<li>async 表示<code>这是一个async函数</code>，<code>await只能用在这个函数里面</code>。</li>
-<li>await 表示在这里<code>等待promise返回结果</code>了，再继续执行。</li>
-<li>await 后面跟着的<code>应该是一个promise对象</code></li>
-</ul>
-<h3 id="特点"><a href="#特点" class="headerlink" title="特点"></a>特点</h3><p>await等待的虽然是promise对象，但不必写<code>.then(..)</code>，直接可以得到返回值。</p>
-<p>await看起来就像是同步代码，所以可以理所当然的写在<code>for</code>循环里，不必担心以往需要<code>闭包</code>才能解决的问题。</p>
-<p>值得注意的是，<code>await</code>必须在<code>async函数的上下文中</code>的。</p>
-]]></content>
-      
-        <categories>
-            
-            <category> 面试 </category>
-            
-        </categories>
-        
-        
-        <tags>
-            
-            <tag> 面试攻略 </tag>
-            
-            <tag> JavaScript </tag>
-            
-            <tag> ES6 </tag>
             
         </tags>
         
@@ -2695,234 +2816,6 @@ var 参数1值 =  mYRequest[&quot;参数1&quot;];
         <tags>
             
             <tag> 随感 </tag>
-            
-        </tags>
-        
-    </entry>
-    
-    <entry>
-      <title><![CDATA[Vue源码阅读]]></title>
-      <url>/2017/12/04/%E5%89%8D%E7%AB%AF/%E6%A1%86%E6%9E%B6/Vue/Vue%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB/</url>
-      <content type="html"><![CDATA[<script src="/assets/js/APlayer.min.js"> </script><p>TODO：整理的很乱，需要细化并补充完整</p>
-<a id="more"></a>
-<h1 id="Vue源码阅读"><a href="#Vue源码阅读" class="headerlink" title="Vue源码阅读"></a>Vue源码阅读</h1><h3 id="Virtual-DOM"><a href="#Virtual-DOM" class="headerlink" title="Virtual DOM"></a>Virtual DOM</h3><h4 id="为什么会有Virtual-DOM"><a href="#为什么会有Virtual-DOM" class="headerlink" title="为什么会有Virtual DOM?"></a>为什么会有Virtual DOM?</h4><p>DOM操作都是很慢 &gt;&gt; 因为DOM的属性太多，可能触发重排的操作很多</p>
-<p>Virtual DOM：操作js对象，然后最后把这个对象再一起转换成真正的DOM就行了，所以就变成 代码 =&gt; Virtual DOM( 一个特殊的js对象） =&gt; DOM</p>
-<h4 id="什么是Virtual-DOM"><a href="#什么是Virtual-DOM" class="headerlink" title="什么是Virtual DOM"></a>什么是Virtual DOM</h4><p>一个特殊的js对象</p>
-<pre><code class="javascript">export class VNode {
-  constructor (
-    tag?: string,
-    data?: VNodeData,
-    children?: ?Array&lt;VNode&gt;,
-    text?: string,
-    ...
-  ) {
-    this.tag = tag
-    this.data = data
-    this.children = children
-    ...
-  }
-}
-</code></pre>
-<h4 id="Virtual-DOM算法"><a href="#Virtual-DOM算法" class="headerlink" title="Virtual DOM算法"></a>Virtual DOM算法</h4><ul>
-<li>首先是js对象（Virtual DOM）描述树（<code>vm._render</code>)，转换dom插入(第一次渲染）</li>
-<li>状态变化，生成新的js对象（Virtual DOM），比对新旧对象</li>
-<li>将变更应用到DOM上，并保存新的js对象（Virtual DOM），重复第二步操作</li>
-</ul>
-<p>用js对象描述树(生成Virtual DOM），Vue中就是先转成AST生成code,然后通过$creatElement通过Vnode的那种形式生成Virtual DOM (<code>vm._render的操作</code>)</p>
-<p><code>vm._update</code>（其实就是Virtual DOM算法的后两步）</p>
-<pre><code class="javascript">function lifecycleMixin (Vue) {
-  Vue.prototype._update = function (vnode, hydrating) {
-    if (vm._isMounted) {...}
-    if (!prevVnode) {
-      // initial render
-      vm.$el = vm.__patch__(...)
-    } else {
-      // updates
-      vm.$el = vm.__patch__(...)
-    }
-}
-</code></pre>
-<p><code>vm.__patch__</code>，其实它就是Virtual DOM Diff的核心</p>
-<h5 id="Virtual-DOM-Diff"><a href="#Virtual-DOM-Diff" class="headerlink" title="Virtual DOM Diff"></a>Virtual DOM Diff</h5><p>patch函数</p>
-<pre><code class="javascript">function patch (oldVnode, vnode, hydrating, removeOnly, parentElm, refElm) {
-    if (isUndef(vnode)) {
-      if (isDef(oldVnode)) invokeDestroyHook(oldVnode)
-      return
-    }
-
-    let isInitialPatch = false
-    const insertedVnodeQueue = []
-
-    if (isUndef(oldVnode)) {
-      // empty mount (likely as component), create new root element
-      // 老节点不存在，直接创建元素
-      isInitialPatch = true
-      createElm(vnode, insertedVnodeQueue, parentElm, refElm)
-    } else {
-      const isRealElement = isDef(oldVnode.nodeType)
-      if (!isRealElement &amp;&amp; sameVnode(oldVnode, vnode)) {
-        // patch existing root node
-        // 新节点和老节点相同，则给老节点打补丁
-        patchVnode(oldVnode, vnode, insertedVnodeQueue, removeOnly)
-      } else {
-        // ... 省略ssr代码
-        // replacing existing element
-        // 新节点和老节点相同，直接替换老节点
-        const oldElm = oldVnode.elm
-        const parentElm = nodeOps.parentNode(oldElm)
-        createElm(
-          vnode,
-          insertedVnodeQueue,
-          // extremely rare edge case: do not insert if old element is in a
-          // leaving transition. Only happens when combining transition +
-          // keep-alive + HOCs. (#4590)
-          oldElm._leaveCb ? null : parentElm,
-          nodeOps.nextSibling(oldElm)
-        )
-      }
-    }
-    // ...省略代码
-    return vnode.elm
-  }
-</code></pre>
-<p>所以patch大概做下面几件事</p>
-<ul>
-<li>判断老节点存不存在<ul>
-<li>不存在则为首次渲染，直接创建元素</li>
-<li>存在的话则sameVnode使用判断根节点是否相同<ul>
-<li>相同则使用patchVnode给老节点打补丁</li>
-<li>不相同则使用新节点直接替换老节点</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<p>对于sameVnode判断，其实就是简单比较了几个属性判断</p>
-<pre><code class="javascript">function sameVnode (a, b) {
-  return (
-    a.key === b.key &amp;&amp; (
-      (
-        a.tag === b.tag &amp;&amp;
-        a.isComment === b.isComment &amp;&amp;
-        isDef(a.data) === isDef(b.data) &amp;&amp;
-        sameInputType(a, b)
-      ) || (
-        isTrue(a.isAsyncPlaceholder) &amp;&amp;
-        a.asyncFactory === b.asyncFactory &amp;&amp;
-        isUndef(b.asyncFactory.error)
-      )
-    )
-  )
-}
-</code></pre>
-<p>patchVnode</p>
-<pre><code class="javascript">function patchVnode (oldVnode, vnode, insertedVnodeQueue, removeOnly) {
-  if (oldVnode === vnode) {
-    // 新老节点相同
-    return
-  }
-  // ... 省略代码
-  if (isUndef(vnode.text)) {
-    // 假如新节点没有text
-    if (isDef(oldCh) &amp;&amp; isDef(ch)) {
-      // 假如老节点和新节点都有子节点
-      // 不相等则更新子节点
-      if (oldCh !== ch) updateChildren(elm, oldCh, ch, insertedVnodeQueue, removeOnly)
-    } else if (isDef(ch)) {
-      // 新节点有子节点，老节点没有
-      // 老节点加上
-      if (isDef(oldVnode.text)) nodeOps.setTextContent(elm, &#39;&#39;)
-      addVnodes(elm, null, ch, 0, ch.length - 1, insertedVnodeQueue)
-    } else if (isDef(oldCh)) {
-      // 老节点有子节点，新节点没有
-      // 老节点移除
-      removeVnodes(elm, oldCh, 0, oldCh.length - 1)
-    } else if (isDef(oldVnode.text)) {
-      // 老节点有文本，新节点没有文本
-      nodeOps.setTextContent(elm, &#39;&#39;)
-    }
-  } else if (oldVnode.text !== vnode.text) {
-    // 假如新节点和老节点text不相等
-    nodeOps.setTextContent(elm, vnode.text)
-  }
-  if (isDef(data)) {
-    if (isDef(i = data.hook) &amp;&amp; isDef(i = i.postpatch)) i(oldVnode, vnode)
-  }
-}
-</code></pre>
-<h2 id="算法实现"><a href="#算法实现" class="headerlink" title="算法实现"></a>算法实现</h2><h3 id="步骤一：用JS对象模拟DOM树"><a href="#步骤一：用JS对象模拟DOM树" class="headerlink" title="步骤一：用JS对象模拟DOM树"></a>步骤一：用JS对象模拟DOM树</h3><p>用 JavaScript 来表示一个 DOM 节点是很简单的事情，你只需要记录它的节点类型、属性，还有子节点</p>
-<h3 id="步骤二：比较两棵虚拟DOM树的差异"><a href="#步骤二：比较两棵虚拟DOM树的差异" class="headerlink" title="步骤二：比较两棵虚拟DOM树的差异"></a>步骤二：比较两棵虚拟DOM树的差异</h3><p>两个树的完全的 diff 算法是一个时间复杂度为 O(n^3) 的问题。但是在前端当中，你很少会跨越层级地移动DOM元素。所以 Virtual DOM 只会对同一个层级的元素进行对比</p>
-<h4 id="深度优先遍历，记录差异"><a href="#深度优先遍历，记录差异" class="headerlink" title="深度优先遍历，记录差异"></a>深度优先遍历，记录差异</h4><p>在深度优先遍历的时候，每遍历到一个节点就把该节点和新的的树进行对比。如果有差异的话就记录到一个对象里面。</p>
-<p>上面的<code>div</code>和新的<code>div</code>有差异，当前的标记是0，那么：</p>
-<pre><code>patches[0] = [{difference}, {difference}, ...] // 用数组存储新旧节点的不同
-</code></pre><h4 id="差异类型"><a href="#差异类型" class="headerlink" title="差异类型"></a>差异类型</h4><p>对 DOM 操作可能会：</p>
-<ol>
-<li>替换掉原来的节点，例如把上面的<code>div</code>换成了<code>section</code></li>
-<li>移动、删除、新增子节点，例如上面<code>div</code>的子节点，把<code>p</code>和<code>ul</code>顺序互换</li>
-<li>修改了节点的属性</li>
-<li>对于文本节点，文本内容可能会改变。</li>
-</ol>
-<p>对于重新排序，替代开销就非常大。而实际上是不需要替换节点，而只需要经过节点移动</p>
-<h4 id="列表对比算法"><a href="#列表对比算法" class="headerlink" title="列表对比算法"></a>列表对比算法</h4><p>现在知道了新旧的顺序，求最小的插入、删除操作（移动可以看成是删除和插入操作的结合）。这个问题抽象出来其实是字符串的最小编辑距离问题（<a href="https://en.wikipedia.org/wiki/Edit_distance" target="_blank" rel="external">Edition Distance</a>），最常见的解决算法是 <a href="https://en.wikipedia.org/wiki/Levenshtein_distance" target="_blank" rel="external">Levenshtein Distance</a>，通过动态规划求解，时间复杂度为 O(M * N)。但是我们并不需要真的达到最小的操作，我们只需要优化一些比较常见的移动情况，牺牲一定DOM操作，让算法时间复杂度达到线性的（O(max(M, N))。</p>
-<h3 id="步骤三：把差异应用到真正的DOM树上"><a href="#步骤三：把差异应用到真正的DOM树上" class="headerlink" title="步骤三：把差异应用到真正的DOM树上"></a>步骤三：把差异应用到真正的DOM树上</h3><p>applyPatches，根据不同类型的差异对当前节点进行 DOM 操作：</p>
-<pre><code class="javascript">function applyPatches (node, currentPatches) {
-  currentPatches.forEach(function (currentPatch) {
-    switch (currentPatch.type) {
-      case REPLACE:
-        node.parentNode.replaceChild(currentPatch.node.render(), node)
-        break
-      case REORDER:
-        reorderChildren(node, currentPatch.moves)
-        break
-      case PROPS:
-        setProps(node, currentPatch.props)
-        break
-      case TEXT:
-        node.textContent = currentPatch.content
-        break
-      default:
-        throw new Error(&#39;Unknown patch type &#39; + currentPatch.type)
-    }
-  })
-}
-</code></pre>
-<h2 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h2><p>Virtual DOM 算法主要是实现上面步骤的三个函数：<a href="https://github.com/livoras/simple-virtual-dom/blob/master/lib/element.js" target="_blank" rel="external">element</a>，<a href="https://github.com/livoras/simple-virtual-dom/blob/master/lib/diff.js" target="_blank" rel="external">diff</a>，<a href="https://github.com/livoras/simple-virtual-dom/blob/master/lib/patch.js" target="_blank" rel="external">patch</a>。然后就可以实际的进行使用：</p>
-<pre><code class="javascript">// 1. 构建虚拟DOM
-var tree = el(&#39;div&#39;, {&#39;id&#39;: &#39;container&#39;}, [
-    el(&#39;h1&#39;, {style: &#39;color: blue&#39;}, [&#39;simple virtal dom&#39;]),
-    el(&#39;p&#39;, [&#39;Hello, virtual-dom&#39;]),
-    el(&#39;ul&#39;, [el(&#39;li&#39;)])
-])
-
-// 2. 通过虚拟DOM构建真正的DOM
-var root = tree.render()
-document.body.appendChild(root)
-
-// 3. 生成新的虚拟DOM
-var newTree = el(&#39;div&#39;, {&#39;id&#39;: &#39;container&#39;}, [
-    el(&#39;h1&#39;, {style: &#39;color: red&#39;}, [&#39;simple virtal dom&#39;]),
-    el(&#39;p&#39;, [&#39;Hello, virtual-dom&#39;]),
-    el(&#39;ul&#39;, [el(&#39;li&#39;), el(&#39;li&#39;)])
-])
-
-// 4. 比较两棵虚拟DOM树的不同
-var patches = diff(tree, newTree)
-
-// 5. 在真正的DOM元素上应用变更
-patch(root, patches)
-</code></pre>
-]]></content>
-      
-        <categories>
-            
-            <category> 框架 </category>
-            
-        </categories>
-        
-        
-        <tags>
-            
-            <tag> Vue </tag>
             
         </tags>
         
@@ -3839,6 +3732,234 @@ main();
         <tags>
             
             <tag> ES6 </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[Vue源码阅读]]></title>
+      <url>/2017/12/04/%E5%89%8D%E7%AB%AF/%E6%A1%86%E6%9E%B6/Vue/Vue%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB/</url>
+      <content type="html"><![CDATA[<script src="/assets/js/APlayer.min.js"> </script><p>TODO：整理的很乱，需要细化并补充完整</p>
+<a id="more"></a>
+<h1 id="Vue源码阅读"><a href="#Vue源码阅读" class="headerlink" title="Vue源码阅读"></a>Vue源码阅读</h1><h3 id="Virtual-DOM"><a href="#Virtual-DOM" class="headerlink" title="Virtual DOM"></a>Virtual DOM</h3><h4 id="为什么会有Virtual-DOM"><a href="#为什么会有Virtual-DOM" class="headerlink" title="为什么会有Virtual DOM?"></a>为什么会有Virtual DOM?</h4><p>DOM操作都是很慢 &gt;&gt; 因为DOM的属性太多，可能触发重排的操作很多</p>
+<p>Virtual DOM：操作js对象，然后最后把这个对象再一起转换成真正的DOM就行了，所以就变成 代码 =&gt; Virtual DOM( 一个特殊的js对象） =&gt; DOM</p>
+<h4 id="什么是Virtual-DOM"><a href="#什么是Virtual-DOM" class="headerlink" title="什么是Virtual DOM"></a>什么是Virtual DOM</h4><p>一个特殊的js对象</p>
+<pre><code class="javascript">export class VNode {
+  constructor (
+    tag?: string,
+    data?: VNodeData,
+    children?: ?Array&lt;VNode&gt;,
+    text?: string,
+    ...
+  ) {
+    this.tag = tag
+    this.data = data
+    this.children = children
+    ...
+  }
+}
+</code></pre>
+<h4 id="Virtual-DOM算法"><a href="#Virtual-DOM算法" class="headerlink" title="Virtual DOM算法"></a>Virtual DOM算法</h4><ul>
+<li>首先是js对象（Virtual DOM）描述树（<code>vm._render</code>)，转换dom插入(第一次渲染）</li>
+<li>状态变化，生成新的js对象（Virtual DOM），比对新旧对象</li>
+<li>将变更应用到DOM上，并保存新的js对象（Virtual DOM），重复第二步操作</li>
+</ul>
+<p>用js对象描述树(生成Virtual DOM），Vue中就是先转成AST生成code,然后通过$creatElement通过Vnode的那种形式生成Virtual DOM (<code>vm._render的操作</code>)</p>
+<p><code>vm._update</code>（其实就是Virtual DOM算法的后两步）</p>
+<pre><code class="javascript">function lifecycleMixin (Vue) {
+  Vue.prototype._update = function (vnode, hydrating) {
+    if (vm._isMounted) {...}
+    if (!prevVnode) {
+      // initial render
+      vm.$el = vm.__patch__(...)
+    } else {
+      // updates
+      vm.$el = vm.__patch__(...)
+    }
+}
+</code></pre>
+<p><code>vm.__patch__</code>，其实它就是Virtual DOM Diff的核心</p>
+<h5 id="Virtual-DOM-Diff"><a href="#Virtual-DOM-Diff" class="headerlink" title="Virtual DOM Diff"></a>Virtual DOM Diff</h5><p>patch函数</p>
+<pre><code class="javascript">function patch (oldVnode, vnode, hydrating, removeOnly, parentElm, refElm) {
+    if (isUndef(vnode)) {
+      if (isDef(oldVnode)) invokeDestroyHook(oldVnode)
+      return
+    }
+
+    let isInitialPatch = false
+    const insertedVnodeQueue = []
+
+    if (isUndef(oldVnode)) {
+      // empty mount (likely as component), create new root element
+      // 老节点不存在，直接创建元素
+      isInitialPatch = true
+      createElm(vnode, insertedVnodeQueue, parentElm, refElm)
+    } else {
+      const isRealElement = isDef(oldVnode.nodeType)
+      if (!isRealElement &amp;&amp; sameVnode(oldVnode, vnode)) {
+        // patch existing root node
+        // 新节点和老节点相同，则给老节点打补丁
+        patchVnode(oldVnode, vnode, insertedVnodeQueue, removeOnly)
+      } else {
+        // ... 省略ssr代码
+        // replacing existing element
+        // 新节点和老节点相同，直接替换老节点
+        const oldElm = oldVnode.elm
+        const parentElm = nodeOps.parentNode(oldElm)
+        createElm(
+          vnode,
+          insertedVnodeQueue,
+          // extremely rare edge case: do not insert if old element is in a
+          // leaving transition. Only happens when combining transition +
+          // keep-alive + HOCs. (#4590)
+          oldElm._leaveCb ? null : parentElm,
+          nodeOps.nextSibling(oldElm)
+        )
+      }
+    }
+    // ...省略代码
+    return vnode.elm
+  }
+</code></pre>
+<p>所以patch大概做下面几件事</p>
+<ul>
+<li>判断老节点存不存在<ul>
+<li>不存在则为首次渲染，直接创建元素</li>
+<li>存在的话则sameVnode使用判断根节点是否相同<ul>
+<li>相同则使用patchVnode给老节点打补丁</li>
+<li>不相同则使用新节点直接替换老节点</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>对于sameVnode判断，其实就是简单比较了几个属性判断</p>
+<pre><code class="javascript">function sameVnode (a, b) {
+  return (
+    a.key === b.key &amp;&amp; (
+      (
+        a.tag === b.tag &amp;&amp;
+        a.isComment === b.isComment &amp;&amp;
+        isDef(a.data) === isDef(b.data) &amp;&amp;
+        sameInputType(a, b)
+      ) || (
+        isTrue(a.isAsyncPlaceholder) &amp;&amp;
+        a.asyncFactory === b.asyncFactory &amp;&amp;
+        isUndef(b.asyncFactory.error)
+      )
+    )
+  )
+}
+</code></pre>
+<p>patchVnode</p>
+<pre><code class="javascript">function patchVnode (oldVnode, vnode, insertedVnodeQueue, removeOnly) {
+  if (oldVnode === vnode) {
+    // 新老节点相同
+    return
+  }
+  // ... 省略代码
+  if (isUndef(vnode.text)) {
+    // 假如新节点没有text
+    if (isDef(oldCh) &amp;&amp; isDef(ch)) {
+      // 假如老节点和新节点都有子节点
+      // 不相等则更新子节点
+      if (oldCh !== ch) updateChildren(elm, oldCh, ch, insertedVnodeQueue, removeOnly)
+    } else if (isDef(ch)) {
+      // 新节点有子节点，老节点没有
+      // 老节点加上
+      if (isDef(oldVnode.text)) nodeOps.setTextContent(elm, &#39;&#39;)
+      addVnodes(elm, null, ch, 0, ch.length - 1, insertedVnodeQueue)
+    } else if (isDef(oldCh)) {
+      // 老节点有子节点，新节点没有
+      // 老节点移除
+      removeVnodes(elm, oldCh, 0, oldCh.length - 1)
+    } else if (isDef(oldVnode.text)) {
+      // 老节点有文本，新节点没有文本
+      nodeOps.setTextContent(elm, &#39;&#39;)
+    }
+  } else if (oldVnode.text !== vnode.text) {
+    // 假如新节点和老节点text不相等
+    nodeOps.setTextContent(elm, vnode.text)
+  }
+  if (isDef(data)) {
+    if (isDef(i = data.hook) &amp;&amp; isDef(i = i.postpatch)) i(oldVnode, vnode)
+  }
+}
+</code></pre>
+<h2 id="算法实现"><a href="#算法实现" class="headerlink" title="算法实现"></a>算法实现</h2><h3 id="步骤一：用JS对象模拟DOM树"><a href="#步骤一：用JS对象模拟DOM树" class="headerlink" title="步骤一：用JS对象模拟DOM树"></a>步骤一：用JS对象模拟DOM树</h3><p>用 JavaScript 来表示一个 DOM 节点是很简单的事情，你只需要记录它的节点类型、属性，还有子节点</p>
+<h3 id="步骤二：比较两棵虚拟DOM树的差异"><a href="#步骤二：比较两棵虚拟DOM树的差异" class="headerlink" title="步骤二：比较两棵虚拟DOM树的差异"></a>步骤二：比较两棵虚拟DOM树的差异</h3><p>两个树的完全的 diff 算法是一个时间复杂度为 O(n^3) 的问题。但是在前端当中，你很少会跨越层级地移动DOM元素。所以 Virtual DOM 只会对同一个层级的元素进行对比</p>
+<h4 id="深度优先遍历，记录差异"><a href="#深度优先遍历，记录差异" class="headerlink" title="深度优先遍历，记录差异"></a>深度优先遍历，记录差异</h4><p>在深度优先遍历的时候，每遍历到一个节点就把该节点和新的的树进行对比。如果有差异的话就记录到一个对象里面。</p>
+<p>上面的<code>div</code>和新的<code>div</code>有差异，当前的标记是0，那么：</p>
+<pre><code>patches[0] = [{difference}, {difference}, ...] // 用数组存储新旧节点的不同
+</code></pre><h4 id="差异类型"><a href="#差异类型" class="headerlink" title="差异类型"></a>差异类型</h4><p>对 DOM 操作可能会：</p>
+<ol>
+<li>替换掉原来的节点，例如把上面的<code>div</code>换成了<code>section</code></li>
+<li>移动、删除、新增子节点，例如上面<code>div</code>的子节点，把<code>p</code>和<code>ul</code>顺序互换</li>
+<li>修改了节点的属性</li>
+<li>对于文本节点，文本内容可能会改变。</li>
+</ol>
+<p>对于重新排序，替代开销就非常大。而实际上是不需要替换节点，而只需要经过节点移动</p>
+<h4 id="列表对比算法"><a href="#列表对比算法" class="headerlink" title="列表对比算法"></a>列表对比算法</h4><p>现在知道了新旧的顺序，求最小的插入、删除操作（移动可以看成是删除和插入操作的结合）。这个问题抽象出来其实是字符串的最小编辑距离问题（<a href="https://en.wikipedia.org/wiki/Edit_distance" target="_blank" rel="external">Edition Distance</a>），最常见的解决算法是 <a href="https://en.wikipedia.org/wiki/Levenshtein_distance" target="_blank" rel="external">Levenshtein Distance</a>，通过动态规划求解，时间复杂度为 O(M * N)。但是我们并不需要真的达到最小的操作，我们只需要优化一些比较常见的移动情况，牺牲一定DOM操作，让算法时间复杂度达到线性的（O(max(M, N))。</p>
+<h3 id="步骤三：把差异应用到真正的DOM树上"><a href="#步骤三：把差异应用到真正的DOM树上" class="headerlink" title="步骤三：把差异应用到真正的DOM树上"></a>步骤三：把差异应用到真正的DOM树上</h3><p>applyPatches，根据不同类型的差异对当前节点进行 DOM 操作：</p>
+<pre><code class="javascript">function applyPatches (node, currentPatches) {
+  currentPatches.forEach(function (currentPatch) {
+    switch (currentPatch.type) {
+      case REPLACE:
+        node.parentNode.replaceChild(currentPatch.node.render(), node)
+        break
+      case REORDER:
+        reorderChildren(node, currentPatch.moves)
+        break
+      case PROPS:
+        setProps(node, currentPatch.props)
+        break
+      case TEXT:
+        node.textContent = currentPatch.content
+        break
+      default:
+        throw new Error(&#39;Unknown patch type &#39; + currentPatch.type)
+    }
+  })
+}
+</code></pre>
+<h2 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h2><p>Virtual DOM 算法主要是实现上面步骤的三个函数：<a href="https://github.com/livoras/simple-virtual-dom/blob/master/lib/element.js" target="_blank" rel="external">element</a>，<a href="https://github.com/livoras/simple-virtual-dom/blob/master/lib/diff.js" target="_blank" rel="external">diff</a>，<a href="https://github.com/livoras/simple-virtual-dom/blob/master/lib/patch.js" target="_blank" rel="external">patch</a>。然后就可以实际的进行使用：</p>
+<pre><code class="javascript">// 1. 构建虚拟DOM
+var tree = el(&#39;div&#39;, {&#39;id&#39;: &#39;container&#39;}, [
+    el(&#39;h1&#39;, {style: &#39;color: blue&#39;}, [&#39;simple virtal dom&#39;]),
+    el(&#39;p&#39;, [&#39;Hello, virtual-dom&#39;]),
+    el(&#39;ul&#39;, [el(&#39;li&#39;)])
+])
+
+// 2. 通过虚拟DOM构建真正的DOM
+var root = tree.render()
+document.body.appendChild(root)
+
+// 3. 生成新的虚拟DOM
+var newTree = el(&#39;div&#39;, {&#39;id&#39;: &#39;container&#39;}, [
+    el(&#39;h1&#39;, {style: &#39;color: red&#39;}, [&#39;simple virtal dom&#39;]),
+    el(&#39;p&#39;, [&#39;Hello, virtual-dom&#39;]),
+    el(&#39;ul&#39;, [el(&#39;li&#39;), el(&#39;li&#39;)])
+])
+
+// 4. 比较两棵虚拟DOM树的不同
+var patches = diff(tree, newTree)
+
+// 5. 在真正的DOM元素上应用变更
+patch(root, patches)
+</code></pre>
+]]></content>
+      
+        <categories>
+            
+            <category> 框架 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> Vue </tag>
             
         </tags>
         
@@ -5206,6 +5327,509 @@ with(person.wife){
     </entry>
     
     <entry>
+      <title><![CDATA[前端工程化]]></title>
+      <url>/2017/11/04/%E5%89%8D%E7%AB%AF/%E6%9E%84%E5%BB%BA/%E6%9E%B6%E6%9E%84/%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%8C%96%E6%A6%82%E5%BF%B5/</url>
+      <content type="html"><![CDATA[<script src="/assets/js/APlayer.min.js"> </script><p>前端工程化学习整理。</p>
+<p>TODO：</p>
+<blockquote>
+<ul>
+<li>太多太多，慢慢细化记录构建的坑和优化对比</li>
+</ul>
+</blockquote>
+<a id="more"></a>
+<h1 id="前端工程化概念"><a href="#前端工程化概念" class="headerlink" title="前端工程化概念"></a>前端工程化概念</h1><h2 id="《浅析前端工程化》"><a href="#《浅析前端工程化》" class="headerlink" title="《浅析前端工程化》"></a>《浅析前端工程化》</h2><h3 id="1-什么是前端工程化"><a href="#1-什么是前端工程化" class="headerlink" title="1.什么是前端工程化"></a>1.什么是前端工程化</h3><h3 id="2-前端工程化面临的问题"><a href="#2-前端工程化面临的问题" class="headerlink" title="2.前端工程化面临的问题"></a>2.前端工程化面临的问题</h3><p>要解决前端工程化的问题，可以从两个角度入手：<em>开发</em>和<em>部署</em>。</p>
+<p>从开发角度，要解决的问题包括：</p>
+<ol>
+<li>提高开发生产效率；</li>
+<li>降低维护难度。</li>
+</ol>
+<p>这两个问题的解决方案有两点：</p>
+<ol>
+<li>制定开发规范，提高团队协作能力；</li>
+<li>分治。软件工程中有个很重要的概念叫做<em>模块化开发</em>其中心思想就是分治。</li>
+</ol>
+<p>从部署角度，要解决的问题主要是<strong>资源管理</strong>，包括：</p>
+<ol>
+<li>代码审查；</li>
+<li>压缩打包；</li>
+<li>增量更新；</li>
+<li>单元测试；</li>
+</ol>
+<p>要解决上述问题，需要引入<strong>构建/编译</strong>阶段。</p>
+<h4 id="2-1-开发规范"><a href="#2-1-开发规范" class="headerlink" title="2.1 开发规范"></a>2.1 开发规范</h4><p>推荐<a href="https://github.com/airbnb/javascript" target="_blank" rel="external">Airbnb的eslint规范</a></p>
+<h4 id="2-2-模块-组件化开发"><a href="#2-2-模块-组件化开发" class="headerlink" title="2.2 模块/组件化开发"></a>2.2 模块/组件化开发</h4><h5 id="2-2-1-模块还是组件？"><a href="#2-2-1-模块还是组件？" class="headerlink" title="2.2.1 模块还是组件？"></a>2.2.1 模块还是组件？</h5><p>两者的区别主要在<strong>颗粒度</strong>方面。</p>
+<p>简单讲，module侧重的是对属性的封装，重心是在设计和开发阶段，不关注runtime的逻辑。module是一个白盒；而component是一个可以独立部署的软件单元，面向的是runtime，侧重于产品的功能性。component是一个黑盒，内部的逻辑是不可见的。</p>
+<p>用通俗的话讲，模块可以理解为零件，比如轮胎上的螺丝钉；而组件则是轮胎，是具备某项完整功能的一个整体。具体到前端领域，一个button是一个模块，一个包括多个button的nav是一个组件。</p>
+<h5 id="2-2-2-模块-组件化开发的必要性"><a href="#2-2-2-模块-组件化开发的必要性" class="headerlink" title="2.2.2 模块/组件化开发的必要性"></a>2.2.2 模块/组件化开发的必要性</h5><p>模块/组件化开发的核心思想是<strong>分治</strong>，主要针对的是开发和维护阶段。</p>
+<h3 id="3-构建-amp-编译"><a href="#3-构建-amp-编译" class="headerlink" title="3. 构建&amp;编译"></a>3. 构建&amp;编译</h3><h4 id="3-1-构建在前端工程中的角色"><a href="#3-1-构建在前端工程中的角色" class="headerlink" title="3.1 构建在前端工程中的角色"></a>3.1 构建在前端工程中的角色</h4><p>典型的web前后端协作模式</p>
+<p><img src="http://images2015.cnblogs.com/blog/595796/201604/595796-20160411142716207-1803317219.png" alt="典型的web前后端协作模式"></p>
+<p>大前端模式的构建：</p>
+<p><img src="http://images2015.cnblogs.com/blog/595796/201604/595796-20160411142733598-1823214206.png" alt="大前端模式的构建"></p>
+<p>构建的作用就是对静态资源以及模板进行处理，换句话说：<strong>构建的核心是资源管理</strong>。</p>
+<h4 id="3-2-资源管理要做什么？"><a href="#3-2-资源管理要做什么？" class="headerlink" title="3.2 资源管理要做什么？"></a>3.2 资源管理要做什么？</h4><p>前端的资源可以分为<strong>静态资源</strong>和<strong>模板</strong>。构建过程中需要对两种资源使用不同的构建策略。</p>
+<h5 id="3-2-1-静态资源构建策略"><a href="#3-2-1-静态资源构建策略" class="headerlink" title="3.2.1 静态资源构建策略"></a>3.2.1 静态资源构建策略</h5><p>通常开发阶段的静态资源是：</p>
+<ol>
+<li>es6/7规范的文件；</li>
+<li>less/sass等文件（具体看团队技术选型）；</li>
+<li>[可选]独立的小图标，在构建阶段使用工具处理成spirit图片。</li>
+</ol>
+<p>构建阶段在处理这些静态文件时，基本的功能应包括：</p>
+<ol>
+<li>es6/7转译，比如babel；</li>
+<li>将less/sass编译成css；</li>
+<li>spirit图片生成；</li>
+</ol>
+<p>静态资源的构建处理还需要考虑web应用的<strong>性能因素</strong>，构建阶段需要包括以下功能：</p>
+<ol>
+<li>依赖打包。分析文件依赖关系，将同步依赖的的文件打包在一起，减少http请求数量；</li>
+<li>资源嵌入。比如小于10KB的图片编译为base64格式嵌入文档，减少一次http请求；</li>
+<li>文件压缩。减小文件体积；</li>
+<li>hash指纹。通过给文件名加入hash指纹，以应对浏览器缓存引起的静态资源更新问题；</li>
+<li>代码审查。避免上线文件的低级错误；</li>
+</ol>
+<p>对比目前较流行的一些构建产品，比如fis，它具备以上所得的编译功能，同时提供了一些机制以<strong>提高开发阶段的生产效率</strong>。包括：</p>
+<ol>
+<li>文件监听。配合动态构建、浏览器自动刷新等功能，提高开发效率；</li>
+<li>mock server。并非所有前端团队都是大前端，即使在大前端体系下，mock server的存在也是很有必要的；</li>
+</ol>
+<h5 id="3-2-2-模板的构建策略"><a href="#3-2-2-模板的构建策略" class="headerlink" title="3.2.2 模板的构建策略"></a>3.2.2 模板的构建策略</h5><p>模板与静态资源是<em>容器-模块</em>关系。模板直接引用静态资源，经过构建后，静态资源的改动有以下几点：</p>
+<ol>
+<li>url改变。开发环境与线上环境的url肯定是不同的，不同类型的资源甚至根据项目的CDN策略放在不同的服务器上；</li>
+<li>文件名改变。静态资源经过构建之后，文件名被加上hash指纹，内容的改动导致hash指纹的改变。</li>
+</ol>
+<p>对于模板的构建宗旨是在<strong>静态资源url和文件名改变后，同步更新模板中资源的引用地址</strong>。</p>
+<p>这种模式下fis的<strong>资源映射表</strong>机制是非常好的解决方案。</p>
+<h5 id="3-2-3-小结"><a href="#3-2-3-小结" class="headerlink" title="3.2.3 小结"></a>3.2.3 小结</h5><p>构建可以分为<strong>工具层面</strong>和<strong>平台层面</strong>的功能：</p>
+<p>工具层面</p>
+<ol>
+<li>预编译，包括es6/7语法转译、css预编译器处理、spirit图片生成；</li>
+<li>依赖打包；</li>
+<li>资源嵌入；</li>
+<li>文件压缩；</li>
+<li>hash指纹；</li>
+<li>代码审查；</li>
+<li>模板构建。</li>
+</ol>
+<p>平台层面</p>
+<ol>
+<li>文件监听，动态编译；</li>
+<li>mock server。</li>
+</ol>
+<h2 id="《谁能介绍下web前端工程化》"><a href="#《谁能介绍下web前端工程化》" class="headerlink" title="《谁能介绍下web前端工程化》"></a>《谁能介绍下web前端工程化》</h2><h3 id="模块化"><a href="#模块化" class="headerlink" title="模块化"></a>模块化</h3><p>模块化就是<strong>将一个大文件拆分成相互依赖的小文件，再进行统一的拼装和加载</strong>。</p>
+<h4 id="JS的模块化"><a href="#JS的模块化" class="headerlink" title="JS的模块化"></a>JS的模块化</h4><p>社区制定了一些模块加载方案，如CommonJS、AMD和CMD等。</p>
+<p>ES6已经在语言层面上规定了模块系统，完全可以取代现有的CommonJS和AMD规范，而且使用起来相当简洁，并且有静态加载的特性。</p>
+<p>模块的打包和加载问题：</p>
+<ol>
+<li>用 Webpack + Babel将所有模块打包成一个文件同步加载，也可以打成多个chunk异步加载；（主流）</li>
+<li>用 SystemJS+Babel 主要是分模块异步加载；</li>
+<li>用浏览器的<code>&lt;script type=&quot;module&quot;&gt;</code>加载</li>
+</ol>
+<h4 id="CSS的模块化"><a href="#CSS的模块化" class="headerlink" title="CSS的模块化"></a>CSS的模块化</h4><p>虽然SASS、LESS、Stylus等预处理器实现了CSS的文件拆分，但没有解决CSS模块化的一个重要问题：<strong>选择器的全局污染问题</strong>。</p>
+<p>解决方法：</p>
+<ul>
+<li>各厂都制定了自己的CSS命名风格。弱约束</li>
+<li>工具层面：Shadow DOM、CSS in JS和CSS Modules三种解决方案<ul>
+<li>Shadow DOM是WebComponents的标准。它能解决全局污染问题，但目前很多浏览器不兼容，对我们来说还很久远；</li>
+<li>CSS in JS是彻底抛弃CSS，使用JS或JSON来写样式。这种方法很激进，不能利用现有的CSS技术，而且处理伪类等问题比较困难；<a href="https://polished.js.org/" target="_blank" rel="external">polished.js</a>，柯里化</li>
+<li>CSS Modules仍然使用CSS，只是让JS来管理依赖。它能够最大化地结合CSS生态和JS模块化能力，目前来看是最好的解决方案。Vue的scoped style也算是一种。一种哈希文件名的实现，只加入了局部作用域和模块依赖。CSS Modules 内部通过 <a href="https://github.com/css-modules/icss" target="_blank" rel="external">ICSS</a> 来解决样式导入和导出这两个问题。分别对应 <code>:import</code> 和 <code>:export</code> 两个新增的伪类。</li>
+</ul>
+</li>
+</ul>
+<h4 id="资源的模块化"><a href="#资源的模块化" class="headerlink" title="资源的模块化"></a>资源的模块化</h4><p>资源模块化后，有三个好处：</p>
+<ol>
+<li>依赖关系单一化。所有CSS和图片等资源的依赖关系统一走JS路线，无需额外处理CSS预处理器的依赖关系，也不需处理代码迁移时的图片合并、字体图片等路径问题；</li>
+<li>资源处理集成化。现在可以用loader对各种资源做各种事情，比如复杂的vue-loader等等。</li>
+<li>项目结构清晰化。使用Webpack后，你的项目结构总可以表示成这样的函数：dest = webpack(src, config)</li>
+</ol>
+<h3 id="组件化"><a href="#组件化" class="headerlink" title="组件化"></a>组件化</h3><p>模块化只是在文件层面上，对代码或资源的拆分；而组件化是在设计层面上，对UI（用户界面）的拆分。</p>
+<p>从UI拆分下来的<strong>每个包含模板(HTML)+样式(CSS)+逻辑(JS)功能完备的结构单元，我们称之为组件。</strong></p>
+<p>其实，组件化更重要的是一种<strong>分治思想</strong>。</p>
+<p>传统前端框架/类库的思想是先组织DOM，然后把某些可复用的逻辑封装成组件来操作DOM，是DOM优先；而组件化框架/类库的思想是先来构思组件，然后用DOM这种基本单元结合相应逻辑来实现组件，是组件优先。这是两者本质的区别。</p>
+<p>其次，组件化实际上是一种按照模板(HTML)+样式(CSS)+逻辑(JS)三位一体的形式<strong>对面向对象的进一步抽象</strong>。</p>
+<p>所以我们除了封装组件本身，还要合理处理组件之间的关系，比如<strong>（逻辑）继承</strong>、<strong>（样式）扩展</strong>、<strong>（模板）嵌套</strong>和<strong>包含</strong>等，这些关系都可以归为<strong>依赖</strong>。</p>
+<h3 id="规范化"><a href="#规范化" class="headerlink" title="规范化"></a>规范化</h3><p>一些内容：</p>
+<ul>
+<li>目录结构的制定</li>
+<li>编码规范</li>
+<li>前后端接口规范</li>
+<li>文档规范</li>
+<li>组件管理</li>
+<li>Git分支管理</li>
+<li>Commit描述规范</li>
+<li>定期CodeReview</li>
+<li>视觉图标规范</li>
+<li>…</li>
+</ul>
+<h3 id="自动化"><a href="#自动化" class="headerlink" title="自动化"></a>自动化</h3><h4 id="图标合并"><a href="#图标合并" class="headerlink" title="图标合并"></a>图标合并</h4><p>Webpack</p>
+<h4 id="持续集成"><a href="#持续集成" class="headerlink" title="持续集成"></a>持续集成</h4><h4 id="自动化构建"><a href="#自动化构建" class="headerlink" title="自动化构建"></a>自动化构建</h4><h4 id="自动化部署"><a href="#自动化部署" class="headerlink" title="自动化部署"></a>自动化部署</h4><h4 id="自动化测试"><a href="#自动化测试" class="headerlink" title="自动化测试"></a>自动化测试</h4><p>比如：Karma + Mocha + Chai</p>
+<h1 id="深入"><a href="#深入" class="headerlink" title="深入"></a>深入</h1><h2 id="RequireJS"><a href="#RequireJS" class="headerlink" title="RequireJS"></a>RequireJS</h2><h3 id="RequireJS使用"><a href="#RequireJS使用" class="headerlink" title="RequireJS使用"></a>RequireJS使用</h3><h2 id="SPA理解"><a href="#SPA理解" class="headerlink" title="SPA理解"></a>SPA理解</h2><h3 id="作用（好处）"><a href="#作用（好处）" class="headerlink" title="作用（好处）"></a>作用（好处）</h3><ol>
+<li>由于避免了页面的重新加载，SPA可以提供较为流畅的用户体验。得益于Ajax，可以实现无跳转刷新，由于与浏览器的history机制，可以使用hash的b变化从而可以实现推动界面变化。</li>
+<li>只要使用支持HTML5和CSS3的浏览器就可以执行复杂的SPA,因此，开发人员不必为了写SPA网站而特别学习另一个开发方式，而使用者也不额外安装软件，所以，让开发SPA网页程序的入门和使用门槛降低不少。</li>
+</ol>
+<h3 id="缺点"><a href="#缺点" class="headerlink" title="缺点"></a>缺点</h3><p>以SPA方式开发的网站不容易管理也不够安全。<br>因为没了一页一页的网页给搜索引擎的爬虫来爬，所以，在搜索引擎最佳化（SEO）的工作上，需要花费额外的功夫。<br>因为没有换页，需要自定义状态来取代传统网页程序以网址来做判断。</p>
+<h3 id="实现SPA"><a href="#实现SPA" class="headerlink" title="实现SPA"></a>实现SPA</h3><p><strong>技术：</strong></p>
+<ol>
+<li>处理#后面的字符</li>
+<li>局部刷新</li>
+</ol>
+<h2 id="Babel的原理"><a href="#Babel的原理" class="headerlink" title="Babel的原理"></a>Babel的原理</h2><p>但是和编译器类似，babel的转译过程也分为三个阶段：parsing、transforming、generating，以ES6代码转译为ES5代码为例，babel转译的具体过程如下：</p>
+<blockquote>
+<p>ES6代码输入 ==》 babylon进行解析 ==》 得到AST ==》 plugin用babel-traverse对AST树进行遍历转译 ==》 得到新的AST树 ==》 用babel-generator通过AST树生成ES5代码</p>
+</blockquote>
+<p>Babel工作分为三个阶段:</p>
+<ol>
+<li>解析:将代码字符串解析成抽象语法树</li>
+<li>变换:将抽象语法树</li>
+<li>根据变换后的抽象语法树再生成代码字符串</li>
+</ol>
+<h2 id="Babel的一些转化"><a href="#Babel的一些转化" class="headerlink" title="Babel的一些转化"></a>Babel的一些转化</h2><h3 id="A-动态字符使用反引号"><a href="#A-动态字符使用反引号" class="headerlink" title="A.动态字符使用反引号"></a>A.动态字符使用反引号</h3><pre><code class="javascript">const a = &#39;foobar&#39;;
+const b = `foo${a}bar`;
+
+var a = &#39;foobar&#39;;
+var b = &#39;foo&#39; + a + &#39;bar&#39;;
+</code></pre>
+<h3 id="B-解构"><a href="#B-解构" class="headerlink" title="B.解构"></a>B.解构</h3><pre><code class="javascript">const arr = [1, 2, 3, 4];
+const [first, second] = arr;
+
+var arr = [1, 2, 3, 4];
+var first = arr[0],
+    second = arr[1];
+</code></pre>
+<h3 id="C-默认参数"><a href="#C-默认参数" class="headerlink" title="C.默认参数"></a>C.默认参数</h3><pre><code class="javascript">function concateAll(...args){
+    return args.join(&#39;&#39;);
+}
+
+function concateAll() {
+    for (var _len = arguments.length, args = Array(_len), _key = 0; _key &lt; _len; _key++) {
+        args[_key] = arguments[_key];
+    }
+    return args.join(&#39;&#39;);
+}
+</code></pre>
+<h2 id="Gzip压缩工作原理"><a href="#Gzip压缩工作原理" class="headerlink" title="Gzip压缩工作原理"></a>Gzip压缩工作原理</h2><p>Web服务器处理HTTP压缩的过程如下：</p>
+<ol>
+<li>Web服务器接收到浏览器的HTTP请求后，检查浏览器是否支持HTTP压缩（Accept-Encoding 信息）；</li>
+<li>如果浏览器支持HTTP压缩，Web服务器检查请求文件的后缀名；</li>
+<li>如果请求文件是HTML、CSS等静态文件，Web服务器到压缩缓冲目录中检查是否已经存在请求文件的最新压缩文件；</li>
+<li>如果请求文件的压缩文件不存在，Web服务器向浏览器返回未压缩的请求文件，并在压缩缓冲目录中存放请求文件的压缩文件；</li>
+<li>如果请求文件的最新压缩文件已经存在，则直接返回请求文件的压缩文件；</li>
+<li>如果请求文件是动态文件，Web服务器动态压缩内容并返回浏览器，压缩内容不存放到压缩缓存目录中。</li>
+</ol>
+<h1 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h1><h2 id="ES6模块系统"><a href="#ES6模块系统" class="headerlink" title="ES6模块系统"></a>ES6模块系统</h2><h1 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h1><ul>
+<li><a href="https://www.zhihu.com/question/24558375" target="_blank" rel="external">谁能介绍下web前端工程化？</a></li>
+<li><a href="http://www.cnblogs.com/ihardcoder/p/5378290.html" target="_blank" rel="external">浅析前端工程化</a></li>
+<li><a href="http://hzp.iteye.com/blog/1833619" target="_blank" rel="external">用Gzip对网页内容进行压缩详解</a></li>
+</ul>
+]]></content>
+      
+        <categories>
+            
+            <category> 构建 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> 架构 </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[ES6知识点整理]]></title>
+      <url>/2017/11/04/%E5%89%8D%E7%AB%AF/%E5%9F%BA%E7%A1%80/ES6/ES6%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/</url>
+      <content type="html"><![CDATA[<script src="/assets/js/APlayer.min.js"> </script><p>ES6知识点整理。</p>
+<p>ES6给我的感觉主要是一个简化的工具，一是将作用域、继承、原型这些JS比较难理解的概念做抽象，二是对对象、数组这些不太方便使用的方法增加方法，三是对函数模型做简化，默认值、Rest这些，四是对模块交互上做简化，比如Modules。有点C向C++过渡的意思。</p>
+<a id="more"></a>
+<h1 id="知识点"><a href="#知识点" class="headerlink" title="知识点"></a>知识点</h1><h2 id="let-const"><a href="#let-const" class="headerlink" title="let/const"></a>let/const</h2><p><code>let</code> 和 <code>const</code> 语句不会造成声明提升。会报错ReferenceError</p>
+<p><code>let</code> 和 <code>const</code> 是块级作用域语句。</p>
+<p>使用 <code>let</code> 声明一个变量，使用 <code>const</code> 来声明一个不可改变的常量。</p>
+<h2 id="块级立即执行函数"><a href="#块级立即执行函数" class="headerlink" title="块级立即执行函数"></a>块级立即执行函数</h2><p>ES6支持块级作用域，可以通过创建一个代码块（Block）来实现，不必通过创建一个函数来实现</p>
+<h2 id="箭头函数"><a href="#箭头函数" class="headerlink" title="箭头函数"></a>箭头函数</h2><p>一些时候，我们在函数嵌套中需要访问上下文中的 <code>this</code>。</p>
+<ul>
+<li>一种通用的方式是把上下文中的 <code>this</code> 保存在一个变量里</li>
+<li>也可以把 <code>this</code> 通过属性传进去</li>
+<li>还可以直接使用 <code>bind</code></li>
+<li>使用 <strong>箭头函数</strong></li>
+</ul>
+<h3 id="箭头函数需要注意的地方"><a href="#箭头函数需要注意的地方" class="headerlink" title="箭头函数需要注意的地方"></a>箭头函数需要注意的地方</h3><p>当要求动态上下文的时候，就不能够使用箭头函数。也就是this的固定化</p>
+<ol>
+<li>在使用=&gt;定义函数的时候，<strong>this的指向是定义时所在的对象</strong>，而不是使用时所在的对象</li>
+<li>不能够用作构造函数，这就是说，不能够使用new命令，否则就会抛出一个错误</li>
+<li>不能够使用arguments对象</li>
+<li>不能使用yield命令</li>
+</ol>
+<h2 id="字符串拓展"><a href="#字符串拓展" class="headerlink" title="字符串拓展"></a>字符串拓展</h2><h3 id="includes"><a href="#includes" class="headerlink" title=".includes( )"></a>.includes( )</h3><p>替代以往判断内容<code>.indexOf(xxx) &gt; -1</code> 的方式。</p>
+<h3 id="repeat"><a href="#repeat" class="headerlink" title=".repeat( )"></a>.repeat( )</h3><p>实现重复字符：</p>
+<pre><code class="javascript">&#39;meow&#39;.repeat(3); // &#39;meowmeowmeow&#39;
+</code></pre>
+<h3 id="contains"><a href="#contains" class="headerlink" title=".contains()"></a>.contains()</h3><p>返回布尔值，表示是否找到了参数字符串</p>
+<h3 id="startsWith"><a href="#startsWith" class="headerlink" title=".startsWith()"></a>.startsWith()</h3><p>返回布尔值，表示参数字符串是否在源字符串的头部</p>
+<h3 id="endsWith"><a href="#endsWith" class="headerlink" title=".endsWith()"></a>.endsWith()</h3><p>返回布尔值，表示参数字符串是否在源字符串的尾部</p>
+<h3 id="字符串模板字面量"><a href="#字符串模板字面量" class="headerlink" title="字符串模板字面量"></a>字符串模板字面量</h3><ul>
+<li>在字符串中直接使用特殊字符，而不用转义。</li>
+<li>支持直接插入变量</li>
+<li>直接换行</li>
+<li>内部可以使用表达式</li>
+</ul>
+<pre><code class="javascript">let text = ( `cat
+    dog
+    nickelodeon`
+);
+string${varible}string
+</code></pre>
+<h2 id="数组的拓展"><a href="#数组的拓展" class="headerlink" title="数组的拓展"></a>数组的拓展</h2><p><strong>Array.from()用于将两类对象转为真正的数组：</strong>类似数组的对象（array-like object）和可遍历（iterable）的对象，其中包括ES6新增的Set和Map结构。</p>
+<p><strong>【重点】find()和findIndex()</strong>，意义较大，如下：</p>
+<pre><code class="javascript">[1,5,10,15].find( function(value, index, arr){ return value &gt; 9; } ); // 返回10
+[1,5,10,15].findIndex( function(value, index, arr){ return value &gt; 9; } ); // 返回2
+</code></pre>
+<p><strong>fill()使用给定值，填充一个数组：</strong></p>
+<pre><code class="javascript">newArray(3).fill(7)
+</code></pre>
+<h2 id="Maps"><a href="#Maps" class="headerlink" title="Maps"></a>Maps</h2><p><strong>Maps</strong> 是一个JavaScript中很重要（迫切需要）的数据结构。</p>
+<p>Maps让我们使用 <code>set</code>，<code>get</code> 和 <code>search</code> 操作数据。</p>
+<p>Maps最强大的地方在于我们不必只能使用字符串来做key了，现在可以使用任何类型来当作key，而且key不会被强制类型转换为字符串。</p>
+<pre><code class="javascript">let map = new Map();
+&gt; map.set(&#39;name&#39;, &#39;david&#39;);
+&gt; map.get(&#39;name&#39;); // david
+&gt; map.has(&#39;name&#39;); // true
+</code></pre>
+<p><strong>遍历：</strong></p>
+<pre><code class="javascript">for (let key of map.keys()) {
+for (let [key, value] of map.entries()) {
+</code></pre>
+<p><strong>ES6提供三个新的方法：entries()，keys()和values()用于遍历数组</strong>。</p>
+<p>可以用for…of循环进行遍历，唯一的区别是keys()是对键名的遍历、values()是对键值的遍历，entries()是对键值对的遍历</p>
+<h2 id="Object"><a href="#Object" class="headerlink" title="Object"></a>Object</h2><h3 id="Object-setPrototypeOf-，Object-getPrototypeOf"><a href="#Object-setPrototypeOf-，Object-getPrototypeOf" class="headerlink" title="Object.setPrototypeOf()，Object.getPrototypeOf()"></a>Object.setPrototypeOf()，Object.getPrototypeOf()</h3><h2 id="for…of循环"><a href="#for…of循环" class="headerlink" title="for…of循环"></a>for…of循环</h2><p>for…of循环可以代替数组实例的forEach方法</p>
+<p><strong>和for…in的区别</strong></p>
+<ul>
+<li>for…of可以遍历键与值，for…in只能遍历键名</li>
+<li>对于普通的对象，for…of结构不能直接使用，会报错，必须部署了iterator接口后才能使用。但是，这样情况下，for…in循环依然可以用来遍历键名</li>
+</ul>
+<h2 id="WeakMaps"><a href="#WeakMaps" class="headerlink" title="WeakMaps"></a>WeakMaps</h2><p>使用WeakMaps来保存我们私有数据的理由之一是不会暴露出属性名</p>
+<p>通常情况下，在涉及DOM元素存储和缓存的情况下，使用WeakMaps是非常有效的。</p>
+<h2 id="解构"><a href="#解构" class="headerlink" title="解构"></a>解构</h2><pre><code class="javascript">let [a, b, c, d] = [1, 2, 3, 4];    //数组
+let luke = { occupation: &#39;jedi&#39;, father: &#39;anakin&#39; };    //对象
+let {occupation, father} = luke;
+</code></pre>
+<p>该特性更多的用处是在遍历Map结构的时候，可以如下：</p>
+<pre><code class="javascript">for( let [ key,value] of map ) 
+{ console.log ( key +&#39;:&#39;+ value);}
+</code></pre>
+<h2 id="Modules"><a href="#Modules" class="headerlink" title="Modules"></a>Modules</h2><h3 id="export"><a href="#export" class="headerlink" title="export"></a>export</h3><pre><code class="javascript">export default api;
+</code></pre>
+<p>总是在模块的 <strong>最后</strong> 使用 <code>export default</code> 方法。它让模块的出口更清晰明了，节省了阅读整个模块来寻找出口的时间。</p>
+<h3 id="import"><a href="#import" class="headerlink" title="import"></a>import</h3><pre><code class="javascript">import * as content from &#39;./content&#39;
+</code></pre>
+<p><strong>注意</strong>：被导出的值是被 <strong>绑定的（原文：bingdings）</strong>，而不是引用。<br>所以，改变一个模块中的值的话，会影响其他引用本模块的代码，一定要避免此种改动发生。</p>
+<h2 id="参数默认值"><a href="#参数默认值" class="headerlink" title="参数默认值"></a>参数默认值</h2><pre><code class="javascript">function addTwoNumbers(x=0, y=0) {
+    return x + y;
+}
+</code></pre>
+<h2 id="Rest"><a href="#Rest" class="headerlink" title="Rest"></a>Rest</h2><p>使用 <strong>rest</strong> 操作符，我们可以给函数传入一个不确定数量的参数列表：</p>
+<pre><code class="javascript">function logArguments(...args) {
+    for (let arg of args) {
+        console.log(arg);
+    }
+}
+</code></pre>
+<h2 id="Class"><a href="#Class" class="headerlink" title="Class"></a>Class</h2><p>class语法相对原型、构造函数、继承更接近传统语法</p>
+<pre><code class="javascript">class Animal {
+    constructor () {
+        this.type = &#39;animal&#39;
+    }
+    says(say) {
+        console.log(this.type + &#39;says&#39; + say)
+    }
+}
+ let animal = new Animal()
+ animal.says(&#39;hello&#39;) // animal says hello
+
+ class Cat extends Animal {
+     constructor() {
+         super()
+         this.type = &#39;cat&#39;
+     }
+ }
+ let cat = new Cat()
+ cat.says(&#39;hello&#39;) // cat says hello
+</code></pre>
+<p>contructor内部定义的方法和属性是实例对象自己的，不能通过extends 进行继承。</p>
+<p>在ES6中，子类的构造函数必须含有super函数，super表示的是调用父类的构造函数，虽然是父类的构造函数，但是this指向的却是cat</p>
+<h2 id="Object-assign"><a href="#Object-assign" class="headerlink" title="Object.assign()"></a>Object.assign()</h2><p>Object.assign方法用来将源对象（source）的所有可枚举属性，复制到目标对象（target）</p>
+<pre><code class="javascript">var target = { a:1};
+var source1 = { b:2};
+var source2 = { c:3};
+Object.assign(target, source1, source2);
+target// {a:1, b:2, c:3}
+
+var n = Object.assign(a,b,c)向n中添加a,b,c的属性
+</code></pre>
+<p><strong>应用</strong></p>
+<ul>
+<li>为对象添加属性</li>
+<li>为对象添加方法</li>
+</ul>
+<ul>
+<li>克隆对象</li>
+<li>为属性指定默认值</li>
+</ul>
+<h2 id="Symbol"><a href="#Symbol" class="headerlink" title="Symbol"></a>Symbol</h2><p>ES6引入了一种新的原始数据类型Symbol，表示独一无二的ID。它通过Symbol函数生成。</p>
+<p>Symbols常用的一个使用场景，尤其是使用 <code>Symbol.for(key)</code> 方法，是用于实现代码间的互操作。</p>
+<h2 id="Promise"><a href="#Promise" class="headerlink" title="Promise"></a>Promise</h2><p>它的思想是，每一个异步任务返回一个Promise对象，该对象有一个then方法，允许指定回调函数。比如，f1的回调函数f2,可以写成：</p>
+<pre><code class="javascript">f1().then(f2);
+f1().then(f2).then(f3);
+f1().then(f2).fail(f3);
+</code></pre>
+<p>如果一个任务已经完成，再添加回调函数，该回调函数会立即执行。</p>
+<p>API:</p>
+<pre><code class="javascript">new Promise((resolve, reject) =&gt;
+    reject(new Error(&#39;Failed to fulfill Promise&#39;)))
+        .catch(reason =&gt; console.log(reason));
+</code></pre>
+<p>这里有两个处理函数，<strong>resolve</strong>（当Promise执行成功完毕时调用的回调函数） 和 <strong>reject</strong> （当Promise执行不接受时调用的回调函数）</p>
+<p><strong>Promises的好处</strong>：</p>
+<ul>
+<li>大量嵌套错误处理回调函数会使代码变得难以阅读理解。使用Promises，我们可以通过清晰的路径将错误事件让上传递，并且适当地处理它们。</li>
+</ul>
+<p>此外，Promise处理后的值，无论是解决（resolved）还是拒绝（rejected）的结果值，都是不可改变的。</p>
+<h3 id="1-什么是promise对象，它能干什么？"><a href="#1-什么是promise对象，它能干什么？" class="headerlink" title="1. 什么是promise对象，它能干什么？"></a>1. 什么是promise对象，它能干什么？</h3><p><strong>Promise</strong> 对象用于延迟(deferred) 计算和异步(asynchronous ) 计算。一个Promise对象代表着一个还未完成，但预期将来会完成的操作。</p>
+<p><strong>Promise</strong> 对象是一个返回值的代理，这个返回值在promise对象创建时未必已知。它允许你为异步操作的成功或失败指定处理方法。 这使得异步方法可以像同步方法那样返回值：异步方法会返回一个包含了原返回值的 promise 对象来替代原返回值。</p>
+<p><strong>Promise</strong> 对象有以下几种状态:</p>
+<ul>
+<li><em>pending</em>: 表示一个初始状态, 非 fulfilled 或 rejected。</li>
+<li><em>fulfilled</em>: 成功的操作。</li>
+<li><em>rejected</em>: 失败的操作。</li>
+</ul>
+<p>每一个异步任务都会返回一个Promise对象，该对象有一个then方法，允许指定回调函数。可以根据Promise对象的状态相应的去执行对应的回调函数。</p>
+<h3 id="2-常用的API"><a href="#2-常用的API" class="headerlink" title="2. 常用的API"></a>2. 常用的API</h3><h4 id="1-Promise-prototype-then"><a href="#1-Promise-prototype-then" class="headerlink" title="1.Promise.prototype.then()"></a>1.Promise.prototype.then()</h4><p>它的作用是为promise实例添加状态改变时的回调函数。</p>
+<p>then()方法的第一个参数是resolved状态的回调函数，第二个参数（可选）是rejected状态的回调函数。then方法返回的是一个新的promise实例。</p>
+<p>then方法的第二个参数一般不推荐写。有以下两个原因：</p>
+<ul>
+<li>由于是链式操作，这个then方法之后还可能会有其他操作，如果此时把错误捕捉的函数放在后面方法前边的话，并且之后再无错误捕获方法，then之后的错误就会捕捉不到。</li>
+<li>在then方法里面，两个参数都是回调函数写了一大堆，这样结构看起来比较混乱。</li>
+</ul>
+<pre><code class="javascript">var p=new Promise(function(resolve, reject){
+    resolve(&quot;ok&quot;);    
+});
+p.then(function(value){console.log(val)},
+ function(err)(console.log(err))       
+);
+</code></pre>
+<h4 id="2-Promise-prototype-catch"><a href="#2-Promise-prototype-catch" class="headerlink" title="2.Promise.prototype.catch()"></a>2.Promise.prototype.catch()</h4><p>这个方法是.then(null,rejection)的别名，这也能看出这个方法是专门只能用来捕获错误信息，用于指定发生错误时的回调函数。</p>
+<p>要注意一下几点：</p>
+<ul>
+<li>当promise状态已经变成resolved的时候，再抛出错误时是无效的。</li>
+<li>尽量将catch方法写在链式操作的最后。错误会一直冒泡到最后，catch放在最后会捕捉到所有错误。</li>
+<li>当没有使用catch方法指定错误处理函数的回调函数时，promise对象里面抛出的错误不会传递到外层的代码。</li>
+</ul>
+<h4 id="3-Promise-resolve"><a href="#3-Promise-resolve" class="headerlink" title="3. Promise.resolve()"></a>3. Promise.resolve()</h4><p>这个方法的作用就是将现有的对象转化为Promise对象，进而可以执行这些方法。</p>
+<pre><code class="javascript">Promise.resolve(&quot;foo&quot;);
+</code></pre>
+<h4 id="4-Promise-all"><a href="#4-Promise-all" class="headerlink" title="4. Promise.all()"></a>4. Promise.all()</h4><p>这个方法用于将多个promise实例，包装成一个新的promise实例。</p>
+<pre><code class="javascript">var p=Promise.all([p1,p2,p3]);
+</code></pre>
+<p>要注意一下两点：</p>
+<ul>
+<li>只有当p1,p2,p3状态都变为fulfilled之后，p的状态才会变为fulfilled。</li>
+<li>只要p1.p2,p3中有任意一个状态变为rejected，p的状态就会变为rejected。</li>
+</ul>
+<h3 id="3-实现异步编程的原理"><a href="#3-实现异步编程的原理" class="headerlink" title="3. 实现异步编程的原理"></a>3. 实现异步编程的原理</h3><p>Promise对象相当于是一个状态机，在其内部使用resolve方法，使其由初始状态变为成功时的fulfilled状态或者执行失败后的rejected状态。这时内部的工作就完成了，开始由外部监听其内部的状态的改变，调用then()方法（catch()方法相当于then内部的第二个参数方法）对应的状态调用对应的处理函数。</p>
+<h1 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h1><h2 id="Case1-promise执行顺序"><a href="#Case1-promise执行顺序" class="headerlink" title="Case1.promise执行顺序"></a>Case1.promise执行顺序</h2><pre><code class="javascript">setTimeout(function(){
+    console.log(1);
+}, 0)
+
+new Promise(function executor(resolve){
+    console.log(2);
+    for(var i = 0; i &lt; 1000; i++){
+        i = 9999 &amp;&amp; resolve();
+    }
+    console.log(3);
+}).then(function(){
+    console.log(4);
+})
+
+console.log(5);
+// 2， 3， 5， 4， 1
+</code></pre>
+<ul>
+<li>在定时器，事件，ajax等操作的时候，<strong>会使一个异步操作，会把该操作放到一个task queue里，需要等当前主线程的任务完成后，会读取任务队列(task queue)中的是事件。</strong></li>
+<li>promise中的then操作是放在执行栈，也就是主线程的最后。 </li>
+</ul>
+<h2 id="Case2-promise的原理？jquery的ajax返回的是promise对象吗？"><a href="#Case2-promise的原理？jquery的ajax返回的是promise对象吗？" class="headerlink" title="Case2.promise的原理？jquery的ajax返回的是promise对象吗？"></a>Case2.promise的原理？jquery的ajax返回的是promise对象吗？</h2><p>jquery的ajax返回的是<strong>deferred对象</strong>，通过<strong>promise的resolve()方</strong>法将其转换为promise对象。</p>
+<pre><code class="javascript">var jsPromise = Promise.resolve($.ajax(&#39;/whatever.json&#39;));
+</code></pre>
+<h2 id="Case3-promise对象捕获错误"><a href="#Case3-promise对象捕获错误" class="headerlink" title="Case3.promise对象捕获错误"></a>Case3.promise对象捕获错误</h2><pre><code class="javascript">//使用throw添加错误事件
+var p = new Promise(function(resolve, reject) {
+    resolve(&quot;ok&quot;);
+    throw new Error(&#39;error0&#39;);
+    //setTimeout(function() { throw new Error(&#39;error1&#39;) }, 0);
+});
+p.then(function(value){
+    console.log(value) 
+　})
+ .catch(function(err){
+    console.log(err)
+    });
+process.on(&#39;unhandledRejection&#39;, function (err, p) { console.error(&#39;catch exception:&#39;,err.stack) });
+
+//设置定时器来抛出错误事件
+var p = new Promise(function(resolve, reject) {
+    resolve(&quot;ok&quot;);
+    //throw new Error(&#39;error0&#39;);
+    setTimeout(function() { throw new Error(&#39;error1&#39;) }, 0);
+});
+p.then(function(value){
+    console.log(value) 
+　})
+ .catch(function(err){
+    console.log(err)
+    });
+process.on(&#39;unhandledRejection&#39;, function (err, p) { console.error(&#39;catch exception:&#39;,err.stack) });
+
+//同时添加错误事件
+var p = new Promise(function(resolve, reject) {
+    resolve(&quot;ok&quot;);
+    throw new Error(&#39;error0&#39;);
+    setTimeout(function() { throw new Error(&#39;error1&#39;) }, 0);
+});
+p.then(function(value){
+    console.log(value) 
+　})
+ .catch(function(err){
+    console.log(err)
+    });
+process.on(&#39;unhandledRejection&#39;, function (err, p) { console.error(&#39;catch exception:&#39;,err.stack) });
+</code></pre>
+<p>第一个只会打印出 “ok”。状态被设定为fulfilled之后，再进行抛出错误处理，错误也不会被后续的catch方法捕获到。</p>
+<p>第二个先打印出“ok”，之后抛出process里面定义的错误。虽然状态已经变为fulfilled，但是定时器抛出的错误属于异步抛出的错误，无法被try catch捕获到，因此和Promise对象无关，所以错误可以正常的抛出来</p>
+<p>第三个只打印出“ok”。当执行throw之后，虽然错误未被外部函数捕获处理，但这也是个实实在在存在的错误啊，对于javascript来说，有错就不会继续往下面执行了。所以并不会执行到定时器抛出错误就停止了</p>
+<h1 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h1><ul>
+<li><a href="https://segmentfault.com/a/1190000011344301" target="_blank" rel="external">前端面试之ES6篇（高产似母猪）</a></li>
+<li><a href="http://www.jianshu.com/p/c4ba3b25ca0d" target="_blank" rel="external">ECMAScript 6重点一览——基础篇</a></li>
+<li><a href="http://blog.csdn.net/shuidinaozhongyan/article/details/77864182" target="_blank" rel="external">面试考察之Promise对象</a></li>
+<li>​</li>
+</ul>
+]]></content>
+      
+        <categories>
+            
+            <category> 基础 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> ES6 </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[IPC项目前端总结]]></title>
       <url>/2017/11/04/%E9%A1%B9%E7%9B%AE/IPC%E9%A1%B9%E7%9B%AE%E5%89%8D%E7%AB%AF%E6%80%BB%E7%BB%93/</url>
       <content type="html"><![CDATA[<script src="/assets/js/APlayer.min.js"> </script><p>IPC项目前端一部分经验的整理。</p>
@@ -6240,199 +6864,159 @@ this.bindScrollWheel = function()
     </entry>
     
     <entry>
-      <title><![CDATA[前端工程化]]></title>
-      <url>/2017/11/04/%E5%89%8D%E7%AB%AF/%E6%9E%84%E5%BB%BA/%E6%9E%B6%E6%9E%84/%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%8C%96%E6%A6%82%E5%BF%B5/</url>
-      <content type="html"><![CDATA[<script src="/assets/js/APlayer.min.js"> </script><p>前端工程化学习整理。</p>
-<p>TODO：</p>
-<blockquote>
-<ul>
-<li>太多太多，慢慢细化记录构建的坑和优化对比</li>
-</ul>
-</blockquote>
+      <title><![CDATA[webpack篇]]></title>
+      <url>/2017/10/02/%E5%89%8D%E7%AB%AF/%E6%9E%84%E5%BB%BA/Webpack/Webpack%E7%AF%87/</url>
+      <content type="html"><![CDATA[<script src="/assets/js/APlayer.min.js"> </script><p>本文介绍webpack结构</p>
 <a id="more"></a>
-<h1 id="前端工程化概念"><a href="#前端工程化概念" class="headerlink" title="前端工程化概念"></a>前端工程化概念</h1><h2 id="《浅析前端工程化》"><a href="#《浅析前端工程化》" class="headerlink" title="《浅析前端工程化》"></a>《浅析前端工程化》</h2><h3 id="1-什么是前端工程化"><a href="#1-什么是前端工程化" class="headerlink" title="1.什么是前端工程化"></a>1.什么是前端工程化</h3><h3 id="2-前端工程化面临的问题"><a href="#2-前端工程化面临的问题" class="headerlink" title="2.前端工程化面临的问题"></a>2.前端工程化面临的问题</h3><p>要解决前端工程化的问题，可以从两个角度入手：<em>开发</em>和<em>部署</em>。</p>
-<p>从开发角度，要解决的问题包括：</p>
-<ol>
-<li>提高开发生产效率；</li>
-<li>降低维护难度。</li>
-</ol>
-<p>这两个问题的解决方案有两点：</p>
-<ol>
-<li>制定开发规范，提高团队协作能力；</li>
-<li>分治。软件工程中有个很重要的概念叫做<em>模块化开发</em>其中心思想就是分治。</li>
-</ol>
-<p>从部署角度，要解决的问题主要是<strong>资源管理</strong>，包括：</p>
-<ol>
-<li>代码审查；</li>
-<li>压缩打包；</li>
-<li>增量更新；</li>
-<li>单元测试；</li>
-</ol>
-<p>要解决上述问题，需要引入<strong>构建/编译</strong>阶段。</p>
-<h4 id="2-1-开发规范"><a href="#2-1-开发规范" class="headerlink" title="2.1 开发规范"></a>2.1 开发规范</h4><p>推荐<a href="https://github.com/airbnb/javascript" target="_blank" rel="external">Airbnb的eslint规范</a></p>
-<h4 id="2-2-模块-组件化开发"><a href="#2-2-模块-组件化开发" class="headerlink" title="2.2 模块/组件化开发"></a>2.2 模块/组件化开发</h4><h5 id="2-2-1-模块还是组件？"><a href="#2-2-1-模块还是组件？" class="headerlink" title="2.2.1 模块还是组件？"></a>2.2.1 模块还是组件？</h5><p>两者的区别主要在<strong>颗粒度</strong>方面。</p>
-<p>简单讲，module侧重的是对属性的封装，重心是在设计和开发阶段，不关注runtime的逻辑。module是一个白盒；而component是一个可以独立部署的软件单元，面向的是runtime，侧重于产品的功能性。component是一个黑盒，内部的逻辑是不可见的。</p>
-<p>用通俗的话讲，模块可以理解为零件，比如轮胎上的螺丝钉；而组件则是轮胎，是具备某项完整功能的一个整体。具体到前端领域，一个button是一个模块，一个包括多个button的nav是一个组件。</p>
-<h5 id="2-2-2-模块-组件化开发的必要性"><a href="#2-2-2-模块-组件化开发的必要性" class="headerlink" title="2.2.2 模块/组件化开发的必要性"></a>2.2.2 模块/组件化开发的必要性</h5><p>模块/组件化开发的核心思想是<strong>分治</strong>，主要针对的是开发和维护阶段。</p>
-<h3 id="3-构建-amp-编译"><a href="#3-构建-amp-编译" class="headerlink" title="3. 构建&amp;编译"></a>3. 构建&amp;编译</h3><h4 id="3-1-构建在前端工程中的角色"><a href="#3-1-构建在前端工程中的角色" class="headerlink" title="3.1 构建在前端工程中的角色"></a>3.1 构建在前端工程中的角色</h4><p>典型的web前后端协作模式</p>
-<p><img src="http://images2015.cnblogs.com/blog/595796/201604/595796-20160411142716207-1803317219.png" alt="典型的web前后端协作模式"></p>
-<p>大前端模式的构建：</p>
-<p><img src="http://images2015.cnblogs.com/blog/595796/201604/595796-20160411142733598-1823214206.png" alt="大前端模式的构建"></p>
-<p>构建的作用就是对静态资源以及模板进行处理，换句话说：<strong>构建的核心是资源管理</strong>。</p>
-<h4 id="3-2-资源管理要做什么？"><a href="#3-2-资源管理要做什么？" class="headerlink" title="3.2 资源管理要做什么？"></a>3.2 资源管理要做什么？</h4><p>前端的资源可以分为<strong>静态资源</strong>和<strong>模板</strong>。构建过程中需要对两种资源使用不同的构建策略。</p>
-<h5 id="3-2-1-静态资源构建策略"><a href="#3-2-1-静态资源构建策略" class="headerlink" title="3.2.1 静态资源构建策略"></a>3.2.1 静态资源构建策略</h5><p>通常开发阶段的静态资源是：</p>
-<ol>
-<li>es6/7规范的文件；</li>
-<li>less/sass等文件（具体看团队技术选型）；</li>
-<li>[可选]独立的小图标，在构建阶段使用工具处理成spirit图片。</li>
-</ol>
-<p>构建阶段在处理这些静态文件时，基本的功能应包括：</p>
-<ol>
-<li>es6/7转译，比如babel；</li>
-<li>将less/sass编译成css；</li>
-<li>spirit图片生成；</li>
-</ol>
-<p>静态资源的构建处理还需要考虑web应用的<strong>性能因素</strong>，构建阶段需要包括以下功能：</p>
-<ol>
-<li>依赖打包。分析文件依赖关系，将同步依赖的的文件打包在一起，减少http请求数量；</li>
-<li>资源嵌入。比如小于10KB的图片编译为base64格式嵌入文档，减少一次http请求；</li>
-<li>文件压缩。减小文件体积；</li>
-<li>hash指纹。通过给文件名加入hash指纹，以应对浏览器缓存引起的静态资源更新问题；</li>
-<li>代码审查。避免上线文件的低级错误；</li>
-</ol>
-<p>对比目前较流行的一些构建产品，比如fis，它具备以上所得的编译功能，同时提供了一些机制以<strong>提高开发阶段的生产效率</strong>。包括：</p>
-<ol>
-<li>文件监听。配合动态构建、浏览器自动刷新等功能，提高开发效率；</li>
-<li>mock server。并非所有前端团队都是大前端，即使在大前端体系下，mock server的存在也是很有必要的；</li>
-</ol>
-<h5 id="3-2-2-模板的构建策略"><a href="#3-2-2-模板的构建策略" class="headerlink" title="3.2.2 模板的构建策略"></a>3.2.2 模板的构建策略</h5><p>模板与静态资源是<em>容器-模块</em>关系。模板直接引用静态资源，经过构建后，静态资源的改动有以下几点：</p>
-<ol>
-<li>url改变。开发环境与线上环境的url肯定是不同的，不同类型的资源甚至根据项目的CDN策略放在不同的服务器上；</li>
-<li>文件名改变。静态资源经过构建之后，文件名被加上hash指纹，内容的改动导致hash指纹的改变。</li>
-</ol>
-<p>对于模板的构建宗旨是在<strong>静态资源url和文件名改变后，同步更新模板中资源的引用地址</strong>。</p>
-<p>这种模式下fis的<strong>资源映射表</strong>机制是非常好的解决方案。</p>
-<h5 id="3-2-3-小结"><a href="#3-2-3-小结" class="headerlink" title="3.2.3 小结"></a>3.2.3 小结</h5><p>构建可以分为<strong>工具层面</strong>和<strong>平台层面</strong>的功能：</p>
-<p>工具层面</p>
-<ol>
-<li>预编译，包括es6/7语法转译、css预编译器处理、spirit图片生成；</li>
-<li>依赖打包；</li>
-<li>资源嵌入；</li>
-<li>文件压缩；</li>
-<li>hash指纹；</li>
-<li>代码审查；</li>
-<li>模板构建。</li>
-</ol>
-<p>平台层面</p>
-<ol>
-<li>文件监听，动态编译；</li>
-<li>mock server。</li>
-</ol>
-<h2 id="《谁能介绍下web前端工程化》"><a href="#《谁能介绍下web前端工程化》" class="headerlink" title="《谁能介绍下web前端工程化》"></a>《谁能介绍下web前端工程化》</h2><h3 id="模块化"><a href="#模块化" class="headerlink" title="模块化"></a>模块化</h3><p>模块化就是<strong>将一个大文件拆分成相互依赖的小文件，再进行统一的拼装和加载</strong>。</p>
-<h4 id="JS的模块化"><a href="#JS的模块化" class="headerlink" title="JS的模块化"></a>JS的模块化</h4><p>社区制定了一些模块加载方案，如CommonJS、AMD和CMD等。</p>
-<p>ES6已经在语言层面上规定了模块系统，完全可以取代现有的CommonJS和AMD规范，而且使用起来相当简洁，并且有静态加载的特性。</p>
-<p>模块的打包和加载问题：</p>
-<ol>
-<li>用 Webpack + Babel将所有模块打包成一个文件同步加载，也可以打成多个chunk异步加载；（主流）</li>
-<li>用 SystemJS+Babel 主要是分模块异步加载；</li>
-<li>用浏览器的<code>&lt;script type=&quot;module&quot;&gt;</code>加载</li>
-</ol>
-<h4 id="CSS的模块化"><a href="#CSS的模块化" class="headerlink" title="CSS的模块化"></a>CSS的模块化</h4><p>虽然SASS、LESS、Stylus等预处理器实现了CSS的文件拆分，但没有解决CSS模块化的一个重要问题：<strong>选择器的全局污染问题</strong>。</p>
-<p>解决方法：</p>
-<ul>
-<li>各厂都制定了自己的CSS命名风格。弱约束</li>
-<li>工具层面：Shadow DOM、CSS in JS和CSS Modules三种解决方案<ul>
-<li>Shadow DOM是WebComponents的标准。它能解决全局污染问题，但目前很多浏览器不兼容，对我们来说还很久远；</li>
-<li>CSS in JS是彻底抛弃CSS，使用JS或JSON来写样式。这种方法很激进，不能利用现有的CSS技术，而且处理伪类等问题比较困难；<a href="https://polished.js.org/" target="_blank" rel="external">polished.js</a>，柯里化</li>
-<li>CSS Modules仍然使用CSS，只是让JS来管理依赖。它能够最大化地结合CSS生态和JS模块化能力，目前来看是最好的解决方案。Vue的scoped style也算是一种。一种哈希文件名的实现，只加入了局部作用域和模块依赖。CSS Modules 内部通过 <a href="https://github.com/css-modules/icss" target="_blank" rel="external">ICSS</a> 来解决样式导入和导出这两个问题。分别对应 <code>:import</code> 和 <code>:export</code> 两个新增的伪类。</li>
-</ul>
-</li>
-</ul>
-<h4 id="资源的模块化"><a href="#资源的模块化" class="headerlink" title="资源的模块化"></a>资源的模块化</h4><p>资源模块化后，有三个好处：</p>
-<ol>
-<li>依赖关系单一化。所有CSS和图片等资源的依赖关系统一走JS路线，无需额外处理CSS预处理器的依赖关系，也不需处理代码迁移时的图片合并、字体图片等路径问题；</li>
-<li>资源处理集成化。现在可以用loader对各种资源做各种事情，比如复杂的vue-loader等等。</li>
-<li>项目结构清晰化。使用Webpack后，你的项目结构总可以表示成这样的函数：dest = webpack(src, config)</li>
-</ol>
-<h3 id="组件化"><a href="#组件化" class="headerlink" title="组件化"></a>组件化</h3><p>模块化只是在文件层面上，对代码或资源的拆分；而组件化是在设计层面上，对UI（用户界面）的拆分。</p>
-<p>从UI拆分下来的<strong>每个包含模板(HTML)+样式(CSS)+逻辑(JS)功能完备的结构单元，我们称之为组件。</strong></p>
-<p>其实，组件化更重要的是一种<strong>分治思想</strong>。</p>
-<p>传统前端框架/类库的思想是先组织DOM，然后把某些可复用的逻辑封装成组件来操作DOM，是DOM优先；而组件化框架/类库的思想是先来构思组件，然后用DOM这种基本单元结合相应逻辑来实现组件，是组件优先。这是两者本质的区别。</p>
-<p>其次，组件化实际上是一种按照模板(HTML)+样式(CSS)+逻辑(JS)三位一体的形式<strong>对面向对象的进一步抽象</strong>。</p>
-<p>所以我们除了封装组件本身，还要合理处理组件之间的关系，比如<strong>（逻辑）继承</strong>、<strong>（样式）扩展</strong>、<strong>（模板）嵌套</strong>和<strong>包含</strong>等，这些关系都可以归为<strong>依赖</strong>。</p>
-<h3 id="规范化"><a href="#规范化" class="headerlink" title="规范化"></a>规范化</h3><p>一些内容：</p>
-<ul>
-<li>目录结构的制定</li>
-<li>编码规范</li>
-<li>前后端接口规范</li>
-<li>文档规范</li>
-<li>组件管理</li>
-<li>Git分支管理</li>
-<li>Commit描述规范</li>
-<li>定期CodeReview</li>
-<li>视觉图标规范</li>
-<li>…</li>
-</ul>
-<h3 id="自动化"><a href="#自动化" class="headerlink" title="自动化"></a>自动化</h3><h4 id="图标合并"><a href="#图标合并" class="headerlink" title="图标合并"></a>图标合并</h4><p>Webpack</p>
-<h4 id="持续集成"><a href="#持续集成" class="headerlink" title="持续集成"></a>持续集成</h4><h4 id="自动化构建"><a href="#自动化构建" class="headerlink" title="自动化构建"></a>自动化构建</h4><h4 id="自动化部署"><a href="#自动化部署" class="headerlink" title="自动化部署"></a>自动化部署</h4><h4 id="自动化测试"><a href="#自动化测试" class="headerlink" title="自动化测试"></a>自动化测试</h4><p>比如：Karma + Mocha + Chai</p>
-<h1 id="深入"><a href="#深入" class="headerlink" title="深入"></a>深入</h1><h2 id="RequireJS"><a href="#RequireJS" class="headerlink" title="RequireJS"></a>RequireJS</h2><h3 id="RequireJS使用"><a href="#RequireJS使用" class="headerlink" title="RequireJS使用"></a>RequireJS使用</h3><h2 id="SPA理解"><a href="#SPA理解" class="headerlink" title="SPA理解"></a>SPA理解</h2><h3 id="作用（好处）"><a href="#作用（好处）" class="headerlink" title="作用（好处）"></a>作用（好处）</h3><ol>
-<li>由于避免了页面的重新加载，SPA可以提供较为流畅的用户体验。得益于Ajax，可以实现无跳转刷新，由于与浏览器的history机制，可以使用hash的b变化从而可以实现推动界面变化。</li>
-<li>只要使用支持HTML5和CSS3的浏览器就可以执行复杂的SPA,因此，开发人员不必为了写SPA网站而特别学习另一个开发方式，而使用者也不额外安装软件，所以，让开发SPA网页程序的入门和使用门槛降低不少。</li>
-</ol>
-<h3 id="缺点"><a href="#缺点" class="headerlink" title="缺点"></a>缺点</h3><p>以SPA方式开发的网站不容易管理也不够安全。<br>因为没了一页一页的网页给搜索引擎的爬虫来爬，所以，在搜索引擎最佳化（SEO）的工作上，需要花费额外的功夫。<br>因为没有换页，需要自定义状态来取代传统网页程序以网址来做判断。</p>
-<h3 id="实现SPA"><a href="#实现SPA" class="headerlink" title="实现SPA"></a>实现SPA</h3><p><strong>技术：</strong></p>
-<ol>
-<li>处理#后面的字符</li>
-<li>局部刷新</li>
-</ol>
-<h2 id="Babel的原理"><a href="#Babel的原理" class="headerlink" title="Babel的原理"></a>Babel的原理</h2><p>但是和编译器类似，babel的转译过程也分为三个阶段：parsing、transforming、generating，以ES6代码转译为ES5代码为例，babel转译的具体过程如下：</p>
-<blockquote>
-<p>ES6代码输入 ==》 babylon进行解析 ==》 得到AST ==》 plugin用babel-traverse对AST树进行遍历转译 ==》 得到新的AST树 ==》 用babel-generator通过AST树生成ES5代码</p>
-</blockquote>
-<p>Babel工作分为三个阶段:</p>
-<ol>
-<li>解析:将代码字符串解析成抽象语法树</li>
-<li>变换:将抽象语法树</li>
-<li>根据变换后的抽象语法树再生成代码字符串</li>
-</ol>
-<h2 id="Babel的一些转化"><a href="#Babel的一些转化" class="headerlink" title="Babel的一些转化"></a>Babel的一些转化</h2><h3 id="A-动态字符使用反引号"><a href="#A-动态字符使用反引号" class="headerlink" title="A.动态字符使用反引号"></a>A.动态字符使用反引号</h3><pre><code class="javascript">const a = &#39;foobar&#39;;
-const b = `foo${a}bar`;
+<h1 id="webpack篇"><a href="#webpack篇" class="headerlink" title="webpack篇"></a>webpack篇</h1><h1 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h1><p>不像大多数的模块打包机，webpack是收把项目当作一个整体，通过一个给定的的主文件，webpack将从这个文件开始找到你的项目的所有依赖文件，使用loaders处理它们，最后打包成一个或多个浏览器可识别的js文件</p>
+<h1 id="install"><a href="#install" class="headerlink" title="install"></a>install</h1><p>webpack是我们需要的模块打包机，webpack-dev-server用来创建本地服务器，监听你的代码修改，并自动刷新修改后的结果。这些是有关<strong>devServer的配置</strong></p>
+<pre><code class="javascript">contentBase,  // 为文件提供本地服务器
+port, // 监听端口，默认8080
+inline, // 设置为true,源文件发生改变自动刷新页面
+historyApiFallback  // 依赖HTML5 history API,如果设置为true,所有的页面跳转指向index.html
 
-var a = &#39;foobar&#39;;
-var b = &#39;foo&#39; + a + &#39;bar&#39;;
-</code></pre>
-<h3 id="B-解构"><a href="#B-解构" class="headerlink" title="B.解构"></a>B.解构</h3><pre><code class="javascript">const arr = [1, 2, 3, 4];
-const [first, second] = arr;
-
-var arr = [1, 2, 3, 4];
-var first = arr[0],
-    second = arr[1];
-</code></pre>
-<h3 id="C-默认参数"><a href="#C-默认参数" class="headerlink" title="C.默认参数"></a>C.默认参数</h3><pre><code class="javascript">function concateAll(...args){
-    return args.join(&#39;&#39;);
+devServer:{
+    contentBase: &#39;./src&#39; // 本地服务器所加载的页面所在的目录
+    historyApiFallback: true, // 不跳转
+    inline: true // 实时刷新
 }
-
-function concateAll() {
-    for (var _len = arguments.length, args = Array(_len), _key = 0; _key &lt; _len; _key++) {
-        args[_key] = arguments[_key];
+</code></pre>
+<p>然后我们在根目录下创建一个’webpack.config.js’，在’package.json’添加两个命令用于本地开发和生产发布</p>
+<pre><code class="javascript">&quot;scripts&quot;: {
+      &quot;start&quot;: &quot;webpack-dev-server&quot;,
+    &quot;build&quot;: &quot;webpack&quot;
+}
+</code></pre>
+<h1 id="webpack-config-js"><a href="#webpack-config-js" class="headerlink" title="webpack.config.js"></a>webpack.config.js</h1><h2 id="entry"><a href="#entry" class="headerlink" title="entry"></a>entry</h2><p>entry: 用来写入口文件，它将是整个依赖关系的根，当我们需要多个入口文件的时候，可以把entry写成一个对象</p>
+<pre><code class="javascript">var baseConfig = {
+        entry: {
+            main: &#39;./src/index.js&#39;
+        }
     }
-    return args.join(&#39;&#39;);
+</code></pre>
+<h2 id="output"><a href="#output" class="headerlink" title="output"></a>output</h2><p>output: 即使入口文件有多个，但是只有一个输出配置</p>
+<pre><code class="javascript">var path = require(&#39;path&#39;)
+var baseConfig = {
+    entry: {
+        main: &#39;./src/index.js&#39;
+    },
+    output: {
+        filename: &#39;main.js&#39;,
+        path: path.resolve(&#39;./build&#39;)
+    }
+}
+module.exports = baseConfig
+</code></pre>
+<p>如果你定义的入口文件有多个，那么我们需要使用<strong>占位符</strong>来确保输出文件的唯一性</p>
+<pre><code class="javascript">output: {
+      filename: &#39;[name].js&#39;,
+    path: path.resolve(&#39;./build&#39;)
 }
 </code></pre>
-<h2 id="Gzip压缩工作原理"><a href="#Gzip压缩工作原理" class="headerlink" title="Gzip压缩工作原理"></a>Gzip压缩工作原理</h2><p>Web服务器处理HTTP压缩的过程如下：</p>
+<p>注：filename应该比较好理解，就是对应于entry里面生成出来的文件名。</p>
+<h2 id="Loader"><a href="#Loader" class="headerlink" title="Loader"></a>Loader</h2><p><strong>loader的作用</strong>： </p>
 <ol>
-<li>Web服务器接收到浏览器的HTTP请求后，检查浏览器是否支持HTTP压缩（Accept-Encoding 信息）；</li>
-<li>如果浏览器支持HTTP压缩，Web服务器检查请求文件的后缀名；</li>
-<li>如果请求文件是HTML、CSS等静态文件，Web服务器到压缩缓冲目录中检查是否已经存在请求文件的最新压缩文件；</li>
-<li>如果请求文件的压缩文件不存在，Web服务器向浏览器返回未压缩的请求文件，并在压缩缓冲目录中存放请求文件的压缩文件；</li>
-<li>如果请求文件的最新压缩文件已经存在，则直接返回请求文件的压缩文件；</li>
-<li>如果请求文件是动态文件，Web服务器动态压缩内容并返回浏览器，压缩内容不存放到压缩缓存目录中。</li>
+<li>实现对不同格式的文件的处理，比如说将scss转换为css，或者typescript转化为js</li>
+<li>转换这些文件，从而使其能够被添加到依赖图中</li>
 </ol>
-<h1 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h1><h2 id="ES6模块系统"><a href="#ES6模块系统" class="headerlink" title="ES6模块系统"></a>ES6模块系统</h2><h1 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h1><ul>
-<li><a href="https://www.zhihu.com/question/24558375" target="_blank" rel="external">谁能介绍下web前端工程化？</a></li>
-<li><a href="http://www.cnblogs.com/ihardcoder/p/5378290.html" target="_blank" rel="external">浅析前端工程化</a></li>
-<li><a href="http://hzp.iteye.com/blog/1833619" target="_blank" rel="external">用Gzip对网页内容进行压缩详解</a></li>
+<p>loader是webpack最重要的部分之一，通过使用不同的Loader，我们能够调用外部的脚本或者工具，实现对不同格式文件的处理，loader需要在webpack.config.js里边单独用module进行配置，需要的loader需要通过npm 进行安装。配置如下：</p>
+<pre><code class="javascript">var baseConfig = {
+  // ...
+  module: {
+    rules: [
+      {
+        test: /*匹配文件后缀名的正则*/,
+        use: [
+        loader: /*loader名字*/,
+        query: /*额外配置*/
+        ]
+      }
+    ]
+  }
+}
+</code></pre>
+<p>几个常用的loader：</p>
+<ul>
+<li>babel-loader： 让下一代的js文件转换成现代浏览器能够支持的JS文件。babel有些复杂，所以大多数都会新建一个.babelrc进行配置</li>
+<li>css-loader,style-loader:两个建议配合使用，用来解析css文件，能够解释@import,url()如果需要解析less就在后面加一个less-loader</li>
+<li>file-loader: 生成的文件名就是文件内容的MD5哈希值并会保留所引用资源的原始扩展名</li>
+<li>url-loader: 功能类似 file-loader,但是文件大小低于指定的限制时，可以返回一个DataURL事实上，在使用less,scss,stylus这些的时候，npm会提示你差什么插件，差什么，你就安上就行了</li>
 </ul>
+<h2 id="Plugins"><a href="#Plugins" class="headerlink" title="Plugins"></a>Plugins</h2><p><strong>plugins和loader区别</strong></p>
+<p><strong>loaders负责的是处理源文件的如css、jsx，一次处理一个文件。而plugins并不是直接操作单个文件，</strong>它直接对整个构建过程起作用。下面列举了一些我们常用的plugins和他的用法</p>
+<ul>
+<li>ExtractTextWebpackPlugin: 它会将入口中引用css文件，都打包都独立的css文件中，而不是内嵌在js打包文件中。</li>
+<li>HtmlWebpackPlugin:它依据一个简单的index.html模版，生成一个自动引用你打包后的js文件的新index.html</li>
+<li>HotModuleReplacementPlugin: 它允许你在修改组件代码时，自动刷新实时预览修改后的结果注意永远不要在生产环境中使用HMR。这儿说一下一般情况分为开发环境，测试环境，生产环境。</li>
+</ul>
+<p>Case.webapck.config.js的全部内容:</p>
+<pre><code class="javascript">const webpack = require(&quot;webpack&quot;)
+const HtmlWebpackPlugin = require(&quot;html-webpack-plugin&quot;)
+var ExtractTextPlugin = require(&#39;extract-text-webpack-plugin&#39;)
+var lessRules = {
+  use: [
+    {loader: &#39;css-loader&#39;},
+    {loader: &#39;less-loader&#39;}
+  ]
+}
+module.exports = {
+  entry: {
+    main: &#39;./src/index.js&#39;
+  },
+  output: {
+    filename: &#39;[name].js&#39;,
+    path: path.resolve(&#39;./build&#39;)
+  },
+  devServer: {
+    contentBase: &#39;/src&#39;,
+    historyApiFallback: true,
+    inline: true,
+    hot: true
+  },
+  module: {
+    rules: [
+      {test: /\.less$/, use: ExtractTextPlugin.extract(lessRules)}
+    ]
+  },
+  plugins: [
+    new ExtractTextPlugin(&#39;main.css&#39;)
+  ]
+}
+</code></pre>
+<h1 id="产品阶段的构建"><a href="#产品阶段的构建" class="headerlink" title="产品阶段的构建"></a>产品阶段的构建</h1><p>在产品阶段，还需要对资源进行别的<br>处理，例如压缩，优化，缓存，分离css和js。首先我们来定义产品环境</p>
+<pre><code class="javascript">var ENV = process.env.NODE_ENV
+var baseConfig = {
+  // ... 
+  plugins: [
+    new webpack.DefinePlugin({
+      &#39;process.env.NODE_ENV&#39;: JSON.stringify(ENV)
+    })
+  ]
+}
+</code></pre>
+<p>然后还需要修改我们的script命令</p>
+<pre><code class="javascript">&quot;scripts&quot;: {
+    &quot;start&quot;: &quot;NODE_ENV=development webpack-dev-server&quot;,
+    &quot;build&quot;: &quot;NODE_ENV=production webpack&quot;
+}
+</code></pre>
+<p>process.env.NODE_ENV 将被一个字符串替代，它运行压缩器排除那些不可到达的开发代码分支。<br>当你引入那些不会进行生产的代码，下面这个代码将非常有用。</p>
+<pre><code class="javascript">if (process.env.NODE_ENV === &#39;development&#39;) {
+  console.warn(&#39;这个警告会在生产阶段消失&#39;)
+}
+</code></pre>
+<h1 id="优化插件"><a href="#优化插件" class="headerlink" title="优化插件"></a>优化插件</h1><ul>
+<li>OccurenceOrderPlugin: 为组件分配ID,通过这个插件webpack可以分析和优先考虑使用最多 的模块，然后为他们分配最小的ID</li>
+<li>UglifyJsPlugin: 压缩代码</li>
+</ul>
+<p>使用方法</p>
+<pre><code class="javascript">var baseConfig = {
+  // ...
+  new webpack.optimize.OccurenceOrderPlugin()
+  new webpack.optimize.UglifyJsPlugin()
+}
+</code></pre>
+<p>然后在我们使用npm run build会发现代码是压缩的</p>
 ]]></content>
       
         <categories>
@@ -6444,299 +7028,7 @@ function concateAll() {
         
         <tags>
             
-            <tag> 架构 </tag>
-            
-        </tags>
-        
-    </entry>
-    
-    <entry>
-      <title><![CDATA[ES6知识点整理]]></title>
-      <url>/2017/11/04/%E5%89%8D%E7%AB%AF/%E5%9F%BA%E7%A1%80/ES6/ES6%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/</url>
-      <content type="html"><![CDATA[<script src="/assets/js/APlayer.min.js"> </script><p>ES6知识点整理。</p>
-<p>ES6给我的感觉主要是一个简化的工具，一是将作用域、继承、原型这些JS比较难理解的概念做抽象，二是对对象、数组这些不太方便使用的方法增加方法，三是对函数模型做简化，默认值、Rest这些，四是对模块交互上做简化，比如Modules。有点C向C++过渡的意思。</p>
-<a id="more"></a>
-<h1 id="知识点"><a href="#知识点" class="headerlink" title="知识点"></a>知识点</h1><h2 id="let-const"><a href="#let-const" class="headerlink" title="let/const"></a>let/const</h2><p><code>let</code> 和 <code>const</code> 语句不会造成声明提升。会报错ReferenceError</p>
-<p><code>let</code> 和 <code>const</code> 是块级作用域语句。</p>
-<p>使用 <code>let</code> 声明一个变量，使用 <code>const</code> 来声明一个不可改变的常量。</p>
-<h2 id="块级立即执行函数"><a href="#块级立即执行函数" class="headerlink" title="块级立即执行函数"></a>块级立即执行函数</h2><p>ES6支持块级作用域，可以通过创建一个代码块（Block）来实现，不必通过创建一个函数来实现</p>
-<h2 id="箭头函数"><a href="#箭头函数" class="headerlink" title="箭头函数"></a>箭头函数</h2><p>一些时候，我们在函数嵌套中需要访问上下文中的 <code>this</code>。</p>
-<ul>
-<li>一种通用的方式是把上下文中的 <code>this</code> 保存在一个变量里</li>
-<li>也可以把 <code>this</code> 通过属性传进去</li>
-<li>还可以直接使用 <code>bind</code></li>
-<li>使用 <strong>箭头函数</strong></li>
-</ul>
-<h3 id="箭头函数需要注意的地方"><a href="#箭头函数需要注意的地方" class="headerlink" title="箭头函数需要注意的地方"></a>箭头函数需要注意的地方</h3><p>当要求动态上下文的时候，就不能够使用箭头函数。也就是this的固定化</p>
-<ol>
-<li>在使用=&gt;定义函数的时候，<strong>this的指向是定义时所在的对象</strong>，而不是使用时所在的对象</li>
-<li>不能够用作构造函数，这就是说，不能够使用new命令，否则就会抛出一个错误</li>
-<li>不能够使用arguments对象</li>
-<li>不能使用yield命令</li>
-</ol>
-<h2 id="字符串拓展"><a href="#字符串拓展" class="headerlink" title="字符串拓展"></a>字符串拓展</h2><h3 id="includes"><a href="#includes" class="headerlink" title=".includes( )"></a>.includes( )</h3><p>替代以往判断内容<code>.indexOf(xxx) &gt; -1</code> 的方式。</p>
-<h3 id="repeat"><a href="#repeat" class="headerlink" title=".repeat( )"></a>.repeat( )</h3><p>实现重复字符：</p>
-<pre><code class="javascript">&#39;meow&#39;.repeat(3); // &#39;meowmeowmeow&#39;
-</code></pre>
-<h3 id="contains"><a href="#contains" class="headerlink" title=".contains()"></a>.contains()</h3><p>返回布尔值，表示是否找到了参数字符串</p>
-<h3 id="startsWith"><a href="#startsWith" class="headerlink" title=".startsWith()"></a>.startsWith()</h3><p>返回布尔值，表示参数字符串是否在源字符串的头部</p>
-<h3 id="endsWith"><a href="#endsWith" class="headerlink" title=".endsWith()"></a>.endsWith()</h3><p>返回布尔值，表示参数字符串是否在源字符串的尾部</p>
-<h3 id="字符串模板字面量"><a href="#字符串模板字面量" class="headerlink" title="字符串模板字面量"></a>字符串模板字面量</h3><ul>
-<li>在字符串中直接使用特殊字符，而不用转义。</li>
-<li>支持直接插入变量</li>
-<li>直接换行</li>
-<li>内部可以使用表达式</li>
-</ul>
-<pre><code class="javascript">let text = ( `cat
-    dog
-    nickelodeon`
-);
-string${varible}string
-</code></pre>
-<h2 id="数组的拓展"><a href="#数组的拓展" class="headerlink" title="数组的拓展"></a>数组的拓展</h2><p><strong>Array.from()用于将两类对象转为真正的数组：</strong>类似数组的对象（array-like object）和可遍历（iterable）的对象，其中包括ES6新增的Set和Map结构。</p>
-<p><strong>【重点】find()和findIndex()</strong>，意义较大，如下：</p>
-<pre><code class="javascript">[1,5,10,15].find( function(value, index, arr){ return value &gt; 9; } ); // 返回10
-[1,5,10,15].findIndex( function(value, index, arr){ return value &gt; 9; } ); // 返回2
-</code></pre>
-<p><strong>fill()使用给定值，填充一个数组：</strong></p>
-<pre><code class="javascript">newArray(3).fill(7)
-</code></pre>
-<h2 id="Maps"><a href="#Maps" class="headerlink" title="Maps"></a>Maps</h2><p><strong>Maps</strong> 是一个JavaScript中很重要（迫切需要）的数据结构。</p>
-<p>Maps让我们使用 <code>set</code>，<code>get</code> 和 <code>search</code> 操作数据。</p>
-<p>Maps最强大的地方在于我们不必只能使用字符串来做key了，现在可以使用任何类型来当作key，而且key不会被强制类型转换为字符串。</p>
-<pre><code class="javascript">let map = new Map();
-&gt; map.set(&#39;name&#39;, &#39;david&#39;);
-&gt; map.get(&#39;name&#39;); // david
-&gt; map.has(&#39;name&#39;); // true
-</code></pre>
-<p><strong>遍历：</strong></p>
-<pre><code class="javascript">for (let key of map.keys()) {
-for (let [key, value] of map.entries()) {
-</code></pre>
-<p><strong>ES6提供三个新的方法：entries()，keys()和values()用于遍历数组</strong>。</p>
-<p>可以用for…of循环进行遍历，唯一的区别是keys()是对键名的遍历、values()是对键值的遍历，entries()是对键值对的遍历</p>
-<h2 id="Object"><a href="#Object" class="headerlink" title="Object"></a>Object</h2><h3 id="Object-setPrototypeOf-，Object-getPrototypeOf"><a href="#Object-setPrototypeOf-，Object-getPrototypeOf" class="headerlink" title="Object.setPrototypeOf()，Object.getPrototypeOf()"></a>Object.setPrototypeOf()，Object.getPrototypeOf()</h3><h2 id="for…of循环"><a href="#for…of循环" class="headerlink" title="for…of循环"></a>for…of循环</h2><p>for…of循环可以代替数组实例的forEach方法</p>
-<p><strong>和for…in的区别</strong></p>
-<ul>
-<li>for…of可以遍历键与值，for…in只能遍历键名</li>
-<li>对于普通的对象，for…of结构不能直接使用，会报错，必须部署了iterator接口后才能使用。但是，这样情况下，for…in循环依然可以用来遍历键名</li>
-</ul>
-<h2 id="WeakMaps"><a href="#WeakMaps" class="headerlink" title="WeakMaps"></a>WeakMaps</h2><p>使用WeakMaps来保存我们私有数据的理由之一是不会暴露出属性名</p>
-<p>通常情况下，在涉及DOM元素存储和缓存的情况下，使用WeakMaps是非常有效的。</p>
-<h2 id="解构"><a href="#解构" class="headerlink" title="解构"></a>解构</h2><pre><code class="javascript">let [a, b, c, d] = [1, 2, 3, 4];    //数组
-let luke = { occupation: &#39;jedi&#39;, father: &#39;anakin&#39; };    //对象
-let {occupation, father} = luke;
-</code></pre>
-<p>该特性更多的用处是在遍历Map结构的时候，可以如下：</p>
-<pre><code class="javascript">for( let [ key,value] of map ) 
-{ console.log ( key +&#39;:&#39;+ value);}
-</code></pre>
-<h2 id="Modules"><a href="#Modules" class="headerlink" title="Modules"></a>Modules</h2><h3 id="export"><a href="#export" class="headerlink" title="export"></a>export</h3><pre><code class="javascript">export default api;
-</code></pre>
-<p>总是在模块的 <strong>最后</strong> 使用 <code>export default</code> 方法。它让模块的出口更清晰明了，节省了阅读整个模块来寻找出口的时间。</p>
-<h3 id="import"><a href="#import" class="headerlink" title="import"></a>import</h3><pre><code class="javascript">import * as content from &#39;./content&#39;
-</code></pre>
-<p><strong>注意</strong>：被导出的值是被 <strong>绑定的（原文：bingdings）</strong>，而不是引用。<br>所以，改变一个模块中的值的话，会影响其他引用本模块的代码，一定要避免此种改动发生。</p>
-<h2 id="参数默认值"><a href="#参数默认值" class="headerlink" title="参数默认值"></a>参数默认值</h2><pre><code class="javascript">function addTwoNumbers(x=0, y=0) {
-    return x + y;
-}
-</code></pre>
-<h2 id="Rest"><a href="#Rest" class="headerlink" title="Rest"></a>Rest</h2><p>使用 <strong>rest</strong> 操作符，我们可以给函数传入一个不确定数量的参数列表：</p>
-<pre><code class="javascript">function logArguments(...args) {
-    for (let arg of args) {
-        console.log(arg);
-    }
-}
-</code></pre>
-<h2 id="Class"><a href="#Class" class="headerlink" title="Class"></a>Class</h2><p>class语法相对原型、构造函数、继承更接近传统语法</p>
-<pre><code class="javascript">class Animal {
-    constructor () {
-        this.type = &#39;animal&#39;
-    }
-    says(say) {
-        console.log(this.type + &#39;says&#39; + say)
-    }
-}
- let animal = new Animal()
- animal.says(&#39;hello&#39;) // animal says hello
-
- class Cat extends Animal {
-     constructor() {
-         super()
-         this.type = &#39;cat&#39;
-     }
- }
- let cat = new Cat()
- cat.says(&#39;hello&#39;) // cat says hello
-</code></pre>
-<p>contructor内部定义的方法和属性是实例对象自己的，不能通过extends 进行继承。</p>
-<p>在ES6中，子类的构造函数必须含有super函数，super表示的是调用父类的构造函数，虽然是父类的构造函数，但是this指向的却是cat</p>
-<h2 id="Object-assign"><a href="#Object-assign" class="headerlink" title="Object.assign()"></a>Object.assign()</h2><p>Object.assign方法用来将源对象（source）的所有可枚举属性，复制到目标对象（target）</p>
-<pre><code class="javascript">var target = { a:1};
-var source1 = { b:2};
-var source2 = { c:3};
-Object.assign(target, source1, source2);
-target// {a:1, b:2, c:3}
-
-var n = Object.assign(a,b,c)向n中添加a,b,c的属性
-</code></pre>
-<p><strong>应用</strong></p>
-<ul>
-<li>为对象添加属性</li>
-<li>为对象添加方法</li>
-</ul>
-<ul>
-<li>克隆对象</li>
-<li>为属性指定默认值</li>
-</ul>
-<h2 id="Symbol"><a href="#Symbol" class="headerlink" title="Symbol"></a>Symbol</h2><p>ES6引入了一种新的原始数据类型Symbol，表示独一无二的ID。它通过Symbol函数生成。</p>
-<p>Symbols常用的一个使用场景，尤其是使用 <code>Symbol.for(key)</code> 方法，是用于实现代码间的互操作。</p>
-<h2 id="Promise"><a href="#Promise" class="headerlink" title="Promise"></a>Promise</h2><p>它的思想是，每一个异步任务返回一个Promise对象，该对象有一个then方法，允许指定回调函数。比如，f1的回调函数f2,可以写成：</p>
-<pre><code class="javascript">f1().then(f2);
-f1().then(f2).then(f3);
-f1().then(f2).fail(f3);
-</code></pre>
-<p>如果一个任务已经完成，再添加回调函数，该回调函数会立即执行。</p>
-<p>API:</p>
-<pre><code class="javascript">new Promise((resolve, reject) =&gt;
-    reject(new Error(&#39;Failed to fulfill Promise&#39;)))
-        .catch(reason =&gt; console.log(reason));
-</code></pre>
-<p>这里有两个处理函数，<strong>resolve</strong>（当Promise执行成功完毕时调用的回调函数） 和 <strong>reject</strong> （当Promise执行不接受时调用的回调函数）</p>
-<p><strong>Promises的好处</strong>：</p>
-<ul>
-<li>大量嵌套错误处理回调函数会使代码变得难以阅读理解。使用Promises，我们可以通过清晰的路径将错误事件让上传递，并且适当地处理它们。</li>
-</ul>
-<p>此外，Promise处理后的值，无论是解决（resolved）还是拒绝（rejected）的结果值，都是不可改变的。</p>
-<h3 id="1-什么是promise对象，它能干什么？"><a href="#1-什么是promise对象，它能干什么？" class="headerlink" title="1. 什么是promise对象，它能干什么？"></a>1. 什么是promise对象，它能干什么？</h3><p><strong>Promise</strong> 对象用于延迟(deferred) 计算和异步(asynchronous ) 计算。一个Promise对象代表着一个还未完成，但预期将来会完成的操作。</p>
-<p><strong>Promise</strong> 对象是一个返回值的代理，这个返回值在promise对象创建时未必已知。它允许你为异步操作的成功或失败指定处理方法。 这使得异步方法可以像同步方法那样返回值：异步方法会返回一个包含了原返回值的 promise 对象来替代原返回值。</p>
-<p><strong>Promise</strong> 对象有以下几种状态:</p>
-<ul>
-<li><em>pending</em>: 表示一个初始状态, 非 fulfilled 或 rejected。</li>
-<li><em>fulfilled</em>: 成功的操作。</li>
-<li><em>rejected</em>: 失败的操作。</li>
-</ul>
-<p>每一个异步任务都会返回一个Promise对象，该对象有一个then方法，允许指定回调函数。可以根据Promise对象的状态相应的去执行对应的回调函数。</p>
-<h3 id="2-常用的API"><a href="#2-常用的API" class="headerlink" title="2. 常用的API"></a>2. 常用的API</h3><h4 id="1-Promise-prototype-then"><a href="#1-Promise-prototype-then" class="headerlink" title="1.Promise.prototype.then()"></a>1.Promise.prototype.then()</h4><p>它的作用是为promise实例添加状态改变时的回调函数。</p>
-<p>then()方法的第一个参数是resolved状态的回调函数，第二个参数（可选）是rejected状态的回调函数。then方法返回的是一个新的promise实例。</p>
-<p>then方法的第二个参数一般不推荐写。有以下两个原因：</p>
-<ul>
-<li>由于是链式操作，这个then方法之后还可能会有其他操作，如果此时把错误捕捉的函数放在后面方法前边的话，并且之后再无错误捕获方法，then之后的错误就会捕捉不到。</li>
-<li>在then方法里面，两个参数都是回调函数写了一大堆，这样结构看起来比较混乱。</li>
-</ul>
-<pre><code class="javascript">var p=new Promise(function(resolve, reject){
-    resolve(&quot;ok&quot;);    
-});
-p.then(function(value){console.log(val)},
- function(err)(console.log(err))       
-);
-</code></pre>
-<h4 id="2-Promise-prototype-catch"><a href="#2-Promise-prototype-catch" class="headerlink" title="2.Promise.prototype.catch()"></a>2.Promise.prototype.catch()</h4><p>这个方法是.then(null,rejection)的别名，这也能看出这个方法是专门只能用来捕获错误信息，用于指定发生错误时的回调函数。</p>
-<p>要注意一下几点：</p>
-<ul>
-<li>当promise状态已经变成resolved的时候，再抛出错误时是无效的。</li>
-<li>尽量将catch方法写在链式操作的最后。错误会一直冒泡到最后，catch放在最后会捕捉到所有错误。</li>
-<li>当没有使用catch方法指定错误处理函数的回调函数时，promise对象里面抛出的错误不会传递到外层的代码。</li>
-</ul>
-<h4 id="3-Promise-resolve"><a href="#3-Promise-resolve" class="headerlink" title="3. Promise.resolve()"></a>3. Promise.resolve()</h4><p>这个方法的作用就是将现有的对象转化为Promise对象，进而可以执行这些方法。</p>
-<pre><code class="javascript">Promise.resolve(&quot;foo&quot;);
-</code></pre>
-<h4 id="4-Promise-all"><a href="#4-Promise-all" class="headerlink" title="4. Promise.all()"></a>4. Promise.all()</h4><p>这个方法用于将多个promise实例，包装成一个新的promise实例。</p>
-<pre><code class="javascript">var p=Promise.all([p1,p2,p3]);
-</code></pre>
-<p>要注意一下两点：</p>
-<ul>
-<li>只有当p1,p2,p3状态都变为fulfilled之后，p的状态才会变为fulfilled。</li>
-<li>只要p1.p2,p3中有任意一个状态变为rejected，p的状态就会变为rejected。</li>
-</ul>
-<h3 id="3-实现异步编程的原理"><a href="#3-实现异步编程的原理" class="headerlink" title="3. 实现异步编程的原理"></a>3. 实现异步编程的原理</h3><p>Promise对象相当于是一个状态机，在其内部使用resolve方法，使其由初始状态变为成功时的fulfilled状态或者执行失败后的rejected状态。这时内部的工作就完成了，开始由外部监听其内部的状态的改变，调用then()方法（catch()方法相当于then内部的第二个参数方法）对应的状态调用对应的处理函数。</p>
-<h1 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h1><h2 id="Case1-promise执行顺序"><a href="#Case1-promise执行顺序" class="headerlink" title="Case1.promise执行顺序"></a>Case1.promise执行顺序</h2><pre><code class="javascript">setTimeout(function(){
-    console.log(1);
-}, 0)
-
-new Promise(function executor(resolve){
-    console.log(2);
-    for(var i = 0; i &lt; 1000; i++){
-        i = 9999 &amp;&amp; resolve();
-    }
-    console.log(3);
-}).then(function(){
-    console.log(4);
-})
-
-console.log(5);
-// 2， 3， 5， 4， 1
-</code></pre>
-<ul>
-<li>在定时器，事件，ajax等操作的时候，<strong>会使一个异步操作，会把该操作放到一个task queue里，需要等当前主线程的任务完成后，会读取任务队列(task queue)中的是事件。</strong></li>
-<li>promise中的then操作是放在执行栈，也就是主线程的最后。 </li>
-</ul>
-<h2 id="Case2-promise的原理？jquery的ajax返回的是promise对象吗？"><a href="#Case2-promise的原理？jquery的ajax返回的是promise对象吗？" class="headerlink" title="Case2.promise的原理？jquery的ajax返回的是promise对象吗？"></a>Case2.promise的原理？jquery的ajax返回的是promise对象吗？</h2><p>jquery的ajax返回的是<strong>deferred对象</strong>，通过<strong>promise的resolve()方</strong>法将其转换为promise对象。</p>
-<pre><code class="javascript">var jsPromise = Promise.resolve($.ajax(&#39;/whatever.json&#39;));
-</code></pre>
-<h2 id="Case3-promise对象捕获错误"><a href="#Case3-promise对象捕获错误" class="headerlink" title="Case3.promise对象捕获错误"></a>Case3.promise对象捕获错误</h2><pre><code class="javascript">//使用throw添加错误事件
-var p = new Promise(function(resolve, reject) {
-    resolve(&quot;ok&quot;);
-    throw new Error(&#39;error0&#39;);
-    //setTimeout(function() { throw new Error(&#39;error1&#39;) }, 0);
-});
-p.then(function(value){
-    console.log(value) 
-　})
- .catch(function(err){
-    console.log(err)
-    });
-process.on(&#39;unhandledRejection&#39;, function (err, p) { console.error(&#39;catch exception:&#39;,err.stack) });
-
-//设置定时器来抛出错误事件
-var p = new Promise(function(resolve, reject) {
-    resolve(&quot;ok&quot;);
-    //throw new Error(&#39;error0&#39;);
-    setTimeout(function() { throw new Error(&#39;error1&#39;) }, 0);
-});
-p.then(function(value){
-    console.log(value) 
-　})
- .catch(function(err){
-    console.log(err)
-    });
-process.on(&#39;unhandledRejection&#39;, function (err, p) { console.error(&#39;catch exception:&#39;,err.stack) });
-
-//同时添加错误事件
-var p = new Promise(function(resolve, reject) {
-    resolve(&quot;ok&quot;);
-    throw new Error(&#39;error0&#39;);
-    setTimeout(function() { throw new Error(&#39;error1&#39;) }, 0);
-});
-p.then(function(value){
-    console.log(value) 
-　})
- .catch(function(err){
-    console.log(err)
-    });
-process.on(&#39;unhandledRejection&#39;, function (err, p) { console.error(&#39;catch exception:&#39;,err.stack) });
-</code></pre>
-<p>第一个只会打印出 “ok”。状态被设定为fulfilled之后，再进行抛出错误处理，错误也不会被后续的catch方法捕获到。</p>
-<p>第二个先打印出“ok”，之后抛出process里面定义的错误。虽然状态已经变为fulfilled，但是定时器抛出的错误属于异步抛出的错误，无法被try catch捕获到，因此和Promise对象无关，所以错误可以正常的抛出来</p>
-<p>第三个只打印出“ok”。当执行throw之后，虽然错误未被外部函数捕获处理，但这也是个实实在在存在的错误啊，对于javascript来说，有错就不会继续往下面执行了。所以并不会执行到定时器抛出错误就停止了</p>
-<h1 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h1><ul>
-<li><a href="https://segmentfault.com/a/1190000011344301" target="_blank" rel="external">前端面试之ES6篇（高产似母猪）</a></li>
-<li><a href="http://www.jianshu.com/p/c4ba3b25ca0d" target="_blank" rel="external">ECMAScript 6重点一览——基础篇</a></li>
-<li><a href="http://blog.csdn.net/shuidinaozhongyan/article/details/77864182" target="_blank" rel="external">面试考察之Promise对象</a></li>
-<li>​</li>
-</ul>
-]]></content>
-      
-        <categories>
-            
-            <category> 基础 </category>
-            
-        </categories>
-        
-        
-        <tags>
-            
-            <tag> ES6 </tag>
+            <tag> Webpack </tag>
             
         </tags>
         
@@ -7356,177 +7648,6 @@ h1 { color: green; }
         <tags>
             
             <tag> Less </tag>
-            
-        </tags>
-        
-    </entry>
-    
-    <entry>
-      <title><![CDATA[webpack篇]]></title>
-      <url>/2017/10/02/%E5%89%8D%E7%AB%AF/%E6%9E%84%E5%BB%BA/Webpack/Webpack%E7%AF%87/</url>
-      <content type="html"><![CDATA[<script src="/assets/js/APlayer.min.js"> </script><p>本文介绍webpack结构</p>
-<a id="more"></a>
-<h1 id="webpack篇"><a href="#webpack篇" class="headerlink" title="webpack篇"></a>webpack篇</h1><h1 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h1><p>不像大多数的模块打包机，webpack是收把项目当作一个整体，通过一个给定的的主文件，webpack将从这个文件开始找到你的项目的所有依赖文件，使用loaders处理它们，最后打包成一个或多个浏览器可识别的js文件</p>
-<h1 id="install"><a href="#install" class="headerlink" title="install"></a>install</h1><p>webpack是我们需要的模块打包机，webpack-dev-server用来创建本地服务器，监听你的代码修改，并自动刷新修改后的结果。这些是有关<strong>devServer的配置</strong></p>
-<pre><code class="javascript">contentBase,  // 为文件提供本地服务器
-port, // 监听端口，默认8080
-inline, // 设置为true,源文件发生改变自动刷新页面
-historyApiFallback  // 依赖HTML5 history API,如果设置为true,所有的页面跳转指向index.html
-
-devServer:{
-    contentBase: &#39;./src&#39; // 本地服务器所加载的页面所在的目录
-    historyApiFallback: true, // 不跳转
-    inline: true // 实时刷新
-}
-</code></pre>
-<p>然后我们在根目录下创建一个’webpack.config.js’，在’package.json’添加两个命令用于本地开发和生产发布</p>
-<pre><code class="javascript">&quot;scripts&quot;: {
-      &quot;start&quot;: &quot;webpack-dev-server&quot;,
-    &quot;build&quot;: &quot;webpack&quot;
-}
-</code></pre>
-<h1 id="webpack-config-js"><a href="#webpack-config-js" class="headerlink" title="webpack.config.js"></a>webpack.config.js</h1><h2 id="entry"><a href="#entry" class="headerlink" title="entry"></a>entry</h2><p>entry: 用来写入口文件，它将是整个依赖关系的根，当我们需要多个入口文件的时候，可以把entry写成一个对象</p>
-<pre><code class="javascript">var baseConfig = {
-        entry: {
-            main: &#39;./src/index.js&#39;
-        }
-    }
-</code></pre>
-<h2 id="output"><a href="#output" class="headerlink" title="output"></a>output</h2><p>output: 即使入口文件有多个，但是只有一个输出配置</p>
-<pre><code class="javascript">var path = require(&#39;path&#39;)
-var baseConfig = {
-    entry: {
-        main: &#39;./src/index.js&#39;
-    },
-    output: {
-        filename: &#39;main.js&#39;,
-        path: path.resolve(&#39;./build&#39;)
-    }
-}
-module.exports = baseConfig
-</code></pre>
-<p>如果你定义的入口文件有多个，那么我们需要使用<strong>占位符</strong>来确保输出文件的唯一性</p>
-<pre><code class="javascript">output: {
-      filename: &#39;[name].js&#39;,
-    path: path.resolve(&#39;./build&#39;)
-}
-</code></pre>
-<p>注：filename应该比较好理解，就是对应于entry里面生成出来的文件名。</p>
-<h2 id="Loader"><a href="#Loader" class="headerlink" title="Loader"></a>Loader</h2><p><strong>loader的作用</strong>： </p>
-<ol>
-<li>实现对不同格式的文件的处理，比如说将scss转换为css，或者typescript转化为js</li>
-<li>转换这些文件，从而使其能够被添加到依赖图中</li>
-</ol>
-<p>loader是webpack最重要的部分之一，通过使用不同的Loader，我们能够调用外部的脚本或者工具，实现对不同格式文件的处理，loader需要在webpack.config.js里边单独用module进行配置，需要的loader需要通过npm 进行安装。配置如下：</p>
-<pre><code class="javascript">var baseConfig = {
-  // ...
-  module: {
-    rules: [
-      {
-        test: /*匹配文件后缀名的正则*/,
-        use: [
-        loader: /*loader名字*/,
-        query: /*额外配置*/
-        ]
-      }
-    ]
-  }
-}
-</code></pre>
-<p>几个常用的loader：</p>
-<ul>
-<li>babel-loader： 让下一代的js文件转换成现代浏览器能够支持的JS文件。babel有些复杂，所以大多数都会新建一个.babelrc进行配置</li>
-<li>css-loader,style-loader:两个建议配合使用，用来解析css文件，能够解释@import,url()如果需要解析less就在后面加一个less-loader</li>
-<li>file-loader: 生成的文件名就是文件内容的MD5哈希值并会保留所引用资源的原始扩展名</li>
-<li>url-loader: 功能类似 file-loader,但是文件大小低于指定的限制时，可以返回一个DataURL事实上，在使用less,scss,stylus这些的时候，npm会提示你差什么插件，差什么，你就安上就行了</li>
-</ul>
-<h2 id="Plugins"><a href="#Plugins" class="headerlink" title="Plugins"></a>Plugins</h2><p><strong>plugins和loader区别</strong></p>
-<p><strong>loaders负责的是处理源文件的如css、jsx，一次处理一个文件。而plugins并不是直接操作单个文件，</strong>它直接对整个构建过程起作用。下面列举了一些我们常用的plugins和他的用法</p>
-<ul>
-<li>ExtractTextWebpackPlugin: 它会将入口中引用css文件，都打包都独立的css文件中，而不是内嵌在js打包文件中。</li>
-<li>HtmlWebpackPlugin:它依据一个简单的index.html模版，生成一个自动引用你打包后的js文件的新index.html</li>
-<li>HotModuleReplacementPlugin: 它允许你在修改组件代码时，自动刷新实时预览修改后的结果注意永远不要在生产环境中使用HMR。这儿说一下一般情况分为开发环境，测试环境，生产环境。</li>
-</ul>
-<p>Case.webapck.config.js的全部内容:</p>
-<pre><code class="javascript">const webpack = require(&quot;webpack&quot;)
-const HtmlWebpackPlugin = require(&quot;html-webpack-plugin&quot;)
-var ExtractTextPlugin = require(&#39;extract-text-webpack-plugin&#39;)
-var lessRules = {
-  use: [
-    {loader: &#39;css-loader&#39;},
-    {loader: &#39;less-loader&#39;}
-  ]
-}
-module.exports = {
-  entry: {
-    main: &#39;./src/index.js&#39;
-  },
-  output: {
-    filename: &#39;[name].js&#39;,
-    path: path.resolve(&#39;./build&#39;)
-  },
-  devServer: {
-    contentBase: &#39;/src&#39;,
-    historyApiFallback: true,
-    inline: true,
-    hot: true
-  },
-  module: {
-    rules: [
-      {test: /\.less$/, use: ExtractTextPlugin.extract(lessRules)}
-    ]
-  },
-  plugins: [
-    new ExtractTextPlugin(&#39;main.css&#39;)
-  ]
-}
-</code></pre>
-<h1 id="产品阶段的构建"><a href="#产品阶段的构建" class="headerlink" title="产品阶段的构建"></a>产品阶段的构建</h1><p>在产品阶段，还需要对资源进行别的<br>处理，例如压缩，优化，缓存，分离css和js。首先我们来定义产品环境</p>
-<pre><code class="javascript">var ENV = process.env.NODE_ENV
-var baseConfig = {
-  // ... 
-  plugins: [
-    new webpack.DefinePlugin({
-      &#39;process.env.NODE_ENV&#39;: JSON.stringify(ENV)
-    })
-  ]
-}
-</code></pre>
-<p>然后还需要修改我们的script命令</p>
-<pre><code class="javascript">&quot;scripts&quot;: {
-    &quot;start&quot;: &quot;NODE_ENV=development webpack-dev-server&quot;,
-    &quot;build&quot;: &quot;NODE_ENV=production webpack&quot;
-}
-</code></pre>
-<p>process.env.NODE_ENV 将被一个字符串替代，它运行压缩器排除那些不可到达的开发代码分支。<br>当你引入那些不会进行生产的代码，下面这个代码将非常有用。</p>
-<pre><code class="javascript">if (process.env.NODE_ENV === &#39;development&#39;) {
-  console.warn(&#39;这个警告会在生产阶段消失&#39;)
-}
-</code></pre>
-<h1 id="优化插件"><a href="#优化插件" class="headerlink" title="优化插件"></a>优化插件</h1><ul>
-<li>OccurenceOrderPlugin: 为组件分配ID,通过这个插件webpack可以分析和优先考虑使用最多 的模块，然后为他们分配最小的ID</li>
-<li>UglifyJsPlugin: 压缩代码</li>
-</ul>
-<p>使用方法</p>
-<pre><code class="javascript">var baseConfig = {
-  // ...
-  new webpack.optimize.OccurenceOrderPlugin()
-  new webpack.optimize.UglifyJsPlugin()
-}
-</code></pre>
-<p>然后在我们使用npm run build会发现代码是压缩的</p>
-]]></content>
-      
-        <categories>
-            
-            <category> 构建 </category>
-            
-        </categories>
-        
-        
-        <tags>
-            
-            <tag> Webpack </tag>
             
         </tags>
         

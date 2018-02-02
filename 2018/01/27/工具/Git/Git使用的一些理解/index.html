@@ -39,7 +39,7 @@
     
     <title>
         
-            归档: 2017/6 | 
+            Git使用的一些理解 | 
         
         Jane&#39;s blog
     </title>
@@ -50,8 +50,8 @@
     <meta name="format-detection" content="telephone=no"/>
     <meta name="theme-color" content="#0097A7">
     <meta name="author" content="jane">
-    <meta name="description" itemprop="description" content="记录前端学习的一些经历">
-    <meta name="keywords" content="jane, blog, hexo, Web, 博客">
+    <meta name="description" itemprop="description" content="Git用了很久，但没有思考过原理，偶尔使用遇到问题就很捉急，把工作中遇到的问题都提上来。">
+    <meta name="keywords" content="jane, blog, hexo, Web, 博客,Git">
 
     <!-- Import lsloader -->
     <script>(function(){window.lsloader={jsRunSequence:[],jsnamemap:{},cssnamemap:{}};lsloader.removeLS=function(key){try{localStorage.removeItem(key)}catch(e){}};lsloader.setLS=function(key,val){try{localStorage.setItem(key,val)}catch(e){}};lsloader.getLS=function(key){var val="";try{val=localStorage.getItem(key)}catch(e){val=""}return val};versionString="/*"+(window.materialVersion||"unknownVersion")+"*/";lsloader.clean=function(){try{var keys=[];for(var i=0;i<localStorage.length;i++){keys.push(localStorage.key(i))}keys.forEach(function(key){var data=lsloader.getLS(key);if(window.oldVersion){var remove=window.oldVersion.reduce(function(p,c){return p||data.indexOf("/*"+c+"*/")!==-1},false);if(remove){lsloader.removeLS(key)}}})}catch(e){}};lsloader.clean();lsloader.load=function(jsname,jspath,cssonload,isJs){if(typeof cssonload==="boolean"){isJs=cssonload;cssonload=undefined}isJs=isJs||false;cssonload=cssonload||function(){};var code;code=this.getLS(jsname);if(code&&code.indexOf(versionString)===-1){this.removeLS(jsname);this.requestResource(jsname,jspath,cssonload,isJs);return}if(code){var versionNumber=code.split(versionString)[0];if(versionNumber!=jspath){console.log("reload:"+jspath);this.removeLS(jsname);this.requestResource(jsname,jspath,cssonload,isJs);return}code=code.split(versionString)[1];if(isJs){this.jsRunSequence.push({name:jsname,code:code});this.runjs(jspath,jsname,code)}else{document.getElementById(jsname).appendChild(document.createTextNode(code));cssonload()}}else{this.requestResource(jsname,jspath,cssonload,isJs)}};lsloader.requestResource=function(name,path,cssonload,isJs){var that=this;if(isJs){this.iojs(path,name,function(path,name,code){that.setLS(name,path+versionString+code);that.runjs(path,name,code)})}else{this.iocss(path,name,function(code){document.getElementById(name).appendChild(document.createTextNode(code));that.setLS(name,path+versionString+code)},cssonload)}};lsloader.iojs=function(path,jsname,callback){var that=this;that.jsRunSequence.push({name:jsname,code:""});try{var xhr=new XMLHttpRequest;xhr.open("get",path,true);xhr.onreadystatechange=function(){if(xhr.readyState==4){if(xhr.status>=200&&xhr.status<300||xhr.status==304){if(xhr.response!=""){callback(path,jsname,xhr.response);return}}that.jsfallback(path,jsname)}};xhr.send(null)}catch(e){that.jsfallback(path,jsname)}};lsloader.iocss=function(path,jsname,callback,cssonload){var that=this;try{var xhr=new XMLHttpRequest;xhr.open("get",path,true);xhr.onreadystatechange=function(){if(xhr.readyState==4){if(xhr.status>=200&&xhr.status<300||xhr.status==304){if(xhr.response!=""){callback(xhr.response);cssonload();return}}that.cssfallback(path,jsname,cssonload)}};xhr.send(null)}catch(e){that.cssfallback(path,jsname,cssonload)}};lsloader.iofonts=function(path,jsname,callback,cssonload){var that=this;try{var xhr=new XMLHttpRequest;xhr.open("get",path,true);xhr.onreadystatechange=function(){if(xhr.readyState==4){if(xhr.status>=200&&xhr.status<300||xhr.status==304){if(xhr.response!=""){callback(xhr.response);cssonload();return}}that.cssfallback(path,jsname,cssonload)}};xhr.send(null)}catch(e){that.cssfallback(path,jsname,cssonload)}};lsloader.runjs=function(path,name,code){if(!!name&&!!code){for(var k in this.jsRunSequence){if(this.jsRunSequence[k].name==name){this.jsRunSequence[k].code=code}}}if(!!this.jsRunSequence[0]&&!!this.jsRunSequence[0].code&&this.jsRunSequence[0].status!="failed"){var script=document.createElement("script");script.appendChild(document.createTextNode(this.jsRunSequence[0].code));script.type="text/javascript";document.getElementsByTagName("head")[0].appendChild(script);this.jsRunSequence.shift();if(this.jsRunSequence.length>0){this.runjs()}}else if(!!this.jsRunSequence[0]&&this.jsRunSequence[0].status=="failed"){var that=this;var script=document.createElement("script");script.src=this.jsRunSequence[0].path;script.type="text/javascript";this.jsRunSequence[0].status="loading";script.onload=function(){that.jsRunSequence.shift();if(that.jsRunSequence.length>0){that.runjs()}};document.body.appendChild(script)}};lsloader.tagLoad=function(path,name){this.jsRunSequence.push({name:name,code:"",path:path,status:"failed"});this.runjs()};lsloader.jsfallback=function(path,name){if(!!this.jsnamemap[name]){return}else{this.jsnamemap[name]=name}for(var k in this.jsRunSequence){if(this.jsRunSequence[k].name==name){this.jsRunSequence[k].code="";this.jsRunSequence[k].status="failed";this.jsRunSequence[k].path=path}}this.runjs()};lsloader.cssfallback=function(path,name,cssonload){if(!!this.cssnamemap[name]){return}else{this.cssnamemap[name]=1}var link=document.createElement("link");link.type="text/css";link.href=path;link.rel="stylesheet";link.onload=link.onerror=cssonload;var root=document.getElementsByTagName("script")[0];root.parentNode.insertBefore(link,root)};lsloader.runInlineScript=function(scriptId,codeId){var code=document.getElementById(codeId).innerText;this.jsRunSequence.push({name:scriptId,code:code});this.runjs()};lsloader.loadCombo=function(jslist){var updateList="";var requestingModules={};for(var k in jslist){var LS=this.getLS(jslist[k].name);if(!!LS){var version=LS.split(versionString)[0];var code=LS.split(versionString)[1]}else{var version=""}if(version==jslist[k].path){this.jsRunSequence.push({name:jslist[k].name,code:code,path:jslist[k].path})}else{this.jsRunSequence.push({name:jslist[k].name,code:null,path:jslist[k].path,status:"comboloading"});requestingModules[jslist[k].name]=true;updateList+=(updateList==""?"":";")+jslist[k].path}}var that=this;if(!!updateList){var xhr=new XMLHttpRequest;xhr.open("get",combo+updateList,true);xhr.onreadystatechange=function(){if(xhr.readyState==4){if(xhr.status>=200&&xhr.status<300||xhr.status==304){if(xhr.response!=""){that.runCombo(xhr.response,requestingModules);return}}else{for(var i in that.jsRunSequence){if(requestingModules[that.jsRunSequence[i].name]){that.jsRunSequence[i].status="failed"}}that.runjs()}}};xhr.send(null)}this.runjs()};lsloader.runCombo=function(comboCode,requestingModules){comboCode=comboCode.split("/*combojs*/");comboCode.shift();for(var k in this.jsRunSequence){if(!!requestingModules[this.jsRunSequence[k].name]&&!!comboCode[0]){this.jsRunSequence[k].status="comboJS";this.jsRunSequence[k].code=comboCode[0];this.setLS(this.jsRunSequence[k].name,this.jsRunSequence[k].path+versionString+comboCode[0]);comboCode.shift()}}this.runjs()}})();</script>
@@ -104,6 +104,9 @@
         <style id="style_css"></style><script>if(typeof window.lsLoadCSSMaxNums === "undefined")window.lsLoadCSSMaxNums = 0;window.lsLoadCSSMaxNums++;lsloader.load("style_css","/css/style.min.css?MKetZV3cUTfDxvMffaOezg==",function(){if(typeof window.lsLoadCSSNums === "undefined")window.lsLoadCSSNums = 0;window.lsLoadCSSNums++;if(window.lsLoadCSSNums == window.lsLoadCSSMaxNums)document.documentElement.style.display="";}, false)</script>
 
         
+            
+                <style id="prettify_css"></style><script>if(typeof window.lsLoadCSSMaxNums === "undefined")window.lsLoadCSSMaxNums = 0;window.lsLoadCSSMaxNums++;lsloader.load("prettify_css","/css/prettify.min.css?zp8STOU9v89XWFEnN+6YmQ==",function(){if(typeof window.lsLoadCSSNums === "undefined")window.lsLoadCSSNums = 0;window.lsLoadCSSNums++;if(window.lsLoadCSSNums == window.lsLoadCSSMaxNums)document.documentElement.style.display="";}, false)</script>
+                <style id="prettify_theme"></style><script>if(typeof window.lsLoadCSSMaxNums === "undefined")window.lsLoadCSSMaxNums = 0;window.lsLoadCSSMaxNums++;lsloader.load("prettify_theme","/css/prettify/github-v2.min.css?AfzKxt++K+/lhZBlSjnxwg==",function(){if(typeof window.lsLoadCSSNums === "undefined")window.lsLoadCSSNums = 0;window.lsLoadCSSNums++;if(window.lsLoadCSSNums == window.lsLoadCSSMaxNums)document.documentElement.style.display="";}, false)</script>
             
         
 
@@ -281,29 +284,62 @@
     <!-- The Open Graph protocol -->
     <meta property="og:url" content="http://janebt.github.io">
     <meta property="og:type" content="blog">
-    <meta property="og:title" content="归档: 2017/6 | Jane&#39;s blog">
+    <meta property="og:title" content="Git使用的一些理解 | Jane&#39;s blog">
     <meta property="og:image" content="http://janebt.github.io/img/favicon.jpeg" />
-    <meta property="og:description" content="记录前端学习的一些经历">
-    
+    <meta property="og:description" content="Git用了很久，但没有思考过原理，偶尔使用遇到问题就很捉急，把工作中遇到的问题都提上来。">
+    <meta property="og:article:tag" content="Git"> 
 
+    
+        <meta property="article:published_time" content="Sat Jan 27 2018 15:55:34 GMT+0800" />
+        <meta property="article:modified_time" content="Sat Jan 27 2018 15:55:34 GMT+0800" />
     
 
     <!-- The Twitter Card protocol -->
-    <meta name="twitter:title" content="归档: 2017/6 | Jane&#39;s blog">
-    <meta name="twitter:description" content="记录前端学习的一些经历">
+    <meta name="twitter:title" content="Git使用的一些理解 | Jane&#39;s blog">
+    <meta name="twitter:description" content="Git用了很久，但没有思考过原理，偶尔使用遇到问题就很捉急，把工作中遇到的问题都提上来。">
     <meta name="twitter:image" content="http://janebt.github.io/img/favicon.jpeg">
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:url" content="http://janebt.github.io" />
 
     <!-- Add canonical link for SEO -->
     
-        <link rel="canonical" href="http://janebt.github.io/archives/2017/06/index.html" />
+        <link rel="canonical" href="http://janebt.github.io/2018/01/27/工具/Git/Git使用的一些理解/index.html" />
     
 
     <!-- Structured-data for SEO -->
     
         
 
+
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "mainEntityOfPage": "http://janebt.github.io/2018/01/27/工具/Git/Git使用的一些理解/index.html",
+    "headline": "Git使用的一些理解",
+    "datePublished": "Sat Jan 27 2018 15:55:34 GMT+0800",
+    "dateModified": "Sat Jan 27 2018 15:55:34 GMT+0800",
+    "author": {
+        "@type": "Person",
+        "name": "jane",
+        "image": {
+            "@type": "ImageObject",
+            "url": "/img/avatar.jpg"
+        },
+        "description": ""
+    },
+    "publisher": {
+        "@type": "Organization",
+        "name": "Jane&#39;s blog",
+        "logo": {
+            "@type":"ImageObject",
+            "url": "/img/favicon.jpeg"
+        }
+    },
+    "keywords": ",Gitjane, blog, hexo, Web, 博客",
+    "description": "Git用了很久，但没有思考过原理，偶尔使用遇到问题就很捉急，把工作中遇到的问题都提上来。",
+}
+</script>
 
 
     
@@ -337,100 +373,353 @@
                         </button>
                     
 
-                    <!-- Index Module -->
-<div class="material-index mdl-grid">
-    
-    <div class="locate-thumbnail-symbol"></div>
+                    <!-- Post TOC -->
 
-    <!-- Pin on top -->
     
-        
+    <!-- Back Button -->
+    <!--
+    <div class="material-back" id="backhome-div" tabindex="0">
+        <a class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon"
+           href="#" onclick="window.history.back();return false;"
+           target="_self"
+           role="button"
+           data-upgraded=",MaterialButton,MaterialRipple">
+            <i class="material-icons" role="presentation">arrow_back</i>
+            <span class="mdl-button__ripple-container">
+                <span class="mdl-ripple"></span>
+            </span>
+        </a>
+    </div>
+    -->
+
+
+    <!-- Left aligned menu below button -->
+    
+    
+    <button id="post-toc-trigger-btn"
+        class="mdl-button mdl-js-button mdl-button--icon">
+        <i class="material-icons">format_list_numbered</i>
+    </button>
+
+    <ul class="post-toc-wrap mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect" for="post-toc-trigger-btn" style="max-height:80vh; overflow-y:scroll;">
+        <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#Git使用的一些理解"><span class="post-toc-number">1.</span> <span class="post-toc-text">Git使用的一些理解</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#remote、origin和master"><span class="post-toc-number">1.1.</span> <span class="post-toc-text">remote、origin和master</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#情景"><span class="post-toc-number">1.1.1.</span> <span class="post-toc-text">情景</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#解决方法"><span class="post-toc-number">1.1.2.</span> <span class="post-toc-text">解决方法</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#思考"><span class="post-toc-number">1.1.3.</span> <span class="post-toc-text">思考</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#push-和-pull"><span class="post-toc-number">1.2.</span> <span class="post-toc-text">push 和 pull</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#情景-1"><span class="post-toc-number">1.2.1.</span> <span class="post-toc-text">情景</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#解决方法-1"><span class="post-toc-number">1.2.2.</span> <span class="post-toc-text">解决方法</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#思考-1"><span class="post-toc-number">1.2.3.</span> <span class="post-toc-text">思考</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#git-push"><span class="post-toc-number">1.2.3.1.</span> <span class="post-toc-text">git push</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#upstream-amp-downstream"><span class="post-toc-number">1.2.3.2.</span> <span class="post-toc-text">upstream & downstream</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#git-pull"><span class="post-toc-number">1.2.3.3.</span> <span class="post-toc-text">git pull</span></a></li></ol></li></ol></li></ol></li></ol>
+    </ul>
     
 
-    <!-- Normal Post -->
-    
-        
-            
-                <!-- Paradox Thumbnail -->
-                <div class="post_entry-module mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col fade out">
-    <!-- Post Thumbnail -->
+
+
+
+<!-- Layouts -->
+
+    <!-- Post Module -->
+    <div class="material-post_container">
+
+        <div class="material-post mdl-grid">
+            <div class="mdl-card mdl-shadow--4dp mdl-cell mdl-cell--12-col">
+
+                <!-- Post Header(Thumbnail & Title) -->
+                
+    <!-- Paradox Post Header -->
     
         
             <!-- Random Thumbnail -->
             <div class="post_thumbnail-random mdl-card__media mdl-color-text--grey-50">
-        
-    
+            <script type="text/ls-javascript" id="post-thumbnail-script">
+    var randomNum = Math.floor(Math.random() * 1 + 1);
 
-        <!-- Post Title -->
-        <p class="article-headline-p"><a href="/2017/06/29/前端/基础/JavaScript/跨域/">跨域</a></p>
-    </div>
-
-    <!-- Post Excerpt -->
-    <div class="mdl-color-text--grey-600 mdl-card__supporting-text post_entry-content">
-        
-            本文介绍跨域的知识
-        
-        &nbsp;&nbsp;&nbsp;
-        <span>
-            <a href="/2017/06/29/前端/基础/JavaScript/跨域/" target="_self">阅读全文</a>
-        </span>
-    </div>
-    <!-- Post_entry Info-->
-    <div id="post_entry-info">
-        <div id="post_entry-left-info" class="mdl-card__supporting-text meta mdl-color-text--grey-600 ">
-            <!-- Author Avatar -->
-            <div id="author-avatar">
-                <img src="/img/avatar.jpg" width="44px" height="44px" alt="jane's avatar">
-            </div>
-            <div>
-                <strong>jane</strong>
-                <span>6月 29, 2017</span>
-            </div>
-        </div>
-        <div id="post_entry-right-info">
-          
-              <!-- Category -->
-              <span class="post_entry-category">
-                  <a class="post_category-link" href="/categories/基础/">基础</a>
-              </span>
-            
-
-            
-
-            
-
-            <!-- Post Views -->
-            <span class="post_entry-views">
-            </span>
-        </div>
-    </div>
-</div>
-
-            
-            
-        
-    
-
-    
-
-    
-        <script type="text/ls-javascript" id="thumbnail-script">
-    var randomNum;
-
-    var locatePost = $('.locate-thumbnail-symbol').next();
-    for(var i = 0; i <= 10; i++) {
-        randomNum = Math.floor(Math.random() * 1 + 1);
-
-        locatePost.children('.post_thumbnail-random').attr('id', 'random_thumbnail-'+randomNum);
-        locatePost.children('.post_thumbnail-random').attr('data-original', '/img/random/material-' + randomNum + '.png');
+    $('.post_thumbnail-random').attr('data-original', '/img/random/material-' + randomNum + '.png');
     $('.post_thumbnail-random').addClass('lazy');
-
-        locatePost = locatePost.next();
-    }
 </script>
 
+        
+    
+            <p class="article-headline-p">
+                Git使用的一些理解
+            </p>
+        </div>
+
+
+
+
+
+                
+                    <!-- Paradox Post Info -->
+                    <div class="mdl-color-text--grey-700 mdl-card__supporting-text meta">
+
+    <!-- Author Avatar -->
+    <div id="author-avatar">
+        <img src="/img/avatar.jpg" width="44px" height="44px" alt="Author Avatar"/>
+    </div>
+    <!-- Author Name & Date -->
+    <div>
+        <strong>jane</strong>
+        <span>1月 27, 2018</span>
+    </div>
+
+    <div class="section-spacer"></div>
+
+    <!-- Favorite -->
+    <!--
+        <button id="article-functions-like-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon btn-like">
+            <i class="material-icons" role="presentation">favorite</i>
+            <span class="visuallyhidden">favorites</span>
+        </button>
+    -->
+
+    <!-- Qrcode -->
+    
+
+    <!-- Tags (bookmark) -->
+    
+    <button id="article-functions-viewtags-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
+        <i class="material-icons" role="presentation">bookmark</i>
+        <span class="visuallyhidden">bookmark</span>
+    </button>
+    <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-functions-viewtags-button">
+        <li class="mdl-menu__item">
+        <a class="post_tag-link" href="/tags/Git/">Git</a>
+    </ul>
+    
+
+    <!-- Share -->
+    <button id="article-fuctions-share-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
+    <i class="material-icons" role="presentation">share</i>
+    <span class="visuallyhidden">share</span>
+</button>
+<ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-fuctions-share-button">
+    
+    <!-- Leancloud Views -->
+        <a class="post_share-link" href="#">
+            <li class="mdl-menu__item">
+                <span id="/2018/01/27/工具/Git/Git使用的一些理解/" class="leancloud-views_num" data-flag-title="Git使用的一些理解">
+     &nbsp;浏览量
+</span>
+
+            </li>
+        </a>
+    
+
+    
+
+    <!-- Share Weibo -->
+    
+        <a class="post_share-link" href="http://service.weibo.com/share/share.php?appkey=&title=Git使用的一些理解&url=http://janebt.github.io/2018/01/27/工具/Git/Git使用的一些理解/index.html&pic=http://janebt.github.io/img/favicon.jpeg&searchPic=false&style=simple" target="_blank">
+            <li class="mdl-menu__item">
+                分享到微博
+            </li>
+        </a>
+    
+
+    <!-- Share Twitter -->
+    
+
+    <!-- Share Facebook -->
+    
+
+    <!-- Share Google+ -->
+    
+
+    <!-- Share LinkedIn -->
+    
+
+    <!-- Share QQ -->
+    
+
+    <!-- Share Telegram -->
+    
+</ul>
+
+</div>
+
+                
+
+                <!-- Post Content -->
+                <div id="post-content" class="mdl-color-text--grey-700 mdl-card__supporting-text fade out">
+    
+        <script src="/assets/js/APlayer.min.js"> </script><p>Git用了很久，但没有思考过原理，偶尔使用遇到问题就很捉急，把工作中遇到的问题都提上来。</p>
+<a id="more"></a>
+<h1 id="Git使用的一些理解"><a href="#Git使用的一些理解" class="headerlink" title="Git使用的一些理解"></a>Git使用的一些理解</h1><h2 id="remote、origin和master"><a href="#remote、origin和master" class="headerlink" title="remote、origin和master"></a>remote、origin和master</h2><h3 id="情景"><a href="#情景" class="headerlink" title="情景"></a>情景</h3><blockquote>
+<p>本地已有一个分支，想push到github上，怎么关联呢？</p>
+</blockquote>
+<h3 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h3><pre><code class="sh">git push -u origin master -f
+</code></pre>
+<h3 id="思考"><a href="#思考" class="headerlink" title="思考"></a>思考</h3><blockquote>
+<p>问题是，origin是什么，master是什么，怎么绑定的？</p>
+</blockquote>
+<p>关于remote的常用操作:</p>
+<pre><code class="sh">git remote add origin https://github.com/lonelyc/MyRepo.git
+git remote remove xxx
+git remote -v
+
+origin    https://github.com/janebt/janeBlog.git (fetch)
+origin    https://github.com/janebt/janeBlog.git (push)
+</code></pre>
+<p>这样就很清楚了，remote指定的是本地默认的origin 和远程库的一个关联，其中默认指定了fetch和push操作</p>
+<p>origin我的理解是：origin指向的是repository</p>
+<p>其实很清楚， <code>git push</code>就是默认 <code>git push origin master</code></p>
+<p><code>$git push origin master</code> （省略了<code>&lt;dst&gt;</code>，等价于 <code>git push origin master:master</code> ）</p>
+<p><code>$git push origin master:master</code> (在local repository中找到名字为master的branch，使用它去更新remote repository下名字为master的branch，如果remote repository下不存在名字是master的branch，那么新建一个)</p>
+<p>origin是一个链接，它指定了本地库到远程库的连接，但是本地哪个库和远程哪个branch的连接，就由master指定</p>
+<hr>
+<p>回归问题，这样做还是有问题，github创建时会有一个默认提交，而这边push的提交不带这个提交，所以要强行merge，必然会失败，提示要先pull再push。这时可以直接使用 -f 参数强行推送，然后在github上 dismiss这个冲突问题。</p>
+<p>一个tip，github会有很多问题，比如ssh、路径不对什么的。<strong>我的建议是，直接<code>vim .git/config</code>。</strong></p>
+<h2 id="push-和-pull"><a href="#push-和-pull" class="headerlink" title="push 和 pull"></a>push 和 pull</h2><h3 id="情景-1"><a href="#情景-1" class="headerlink" title="情景"></a>情景</h3><blockquote>
+<p>git clone的远程库，push总会莫名报错。考虑实现 git push自动在远程库中建立本地分支同名的远程分支。但会失败</p>
+</blockquote>
+<h3 id="解决方法-1"><a href="#解决方法-1" class="headerlink" title="解决方法"></a>解决方法</h3><p>未设置</p>
+<pre><code class="sh">git clone xxx
+git branch --track local_branch origin/branch
+git branch --set-upstream-to=origin/&lt;branch&gt; pj-risk
+git pull
+git push origin lcoal_branch
+</code></pre>
+<p>git push的一种简单方法，可以设置current，这样会自动创建同名branch，和track的没关系</p>
+<pre><code class="sh">git config --global push.default current
+</code></pre>
+<h3 id="思考-1"><a href="#思考-1" class="headerlink" title="思考"></a>思考</h3><blockquote>
+<p>为什么<code>git push</code>与<code>git pull</code>命令的默认行为混乱</p>
+</blockquote>
+<p>先上两篇文章：</p>
+<ul>
+<li><a href="https://segmentfault.com/a/1190000002783245" target="_blank" rel="external">Git push与pull的默认行为</a></li>
+<li><a href="https://stackoverflow.com/questions/24864700/fatal-the-upstream-branch-of-your-current-branch-does-not-match-the-name-of-you" target="_blank" rel="external">fatal: The upstream branch of your current branch does not match the name of your current branch</a></li>
+</ul>
+<p>总结一下干货：</p>
+<h4 id="git-push"><a href="#git-push" class="headerlink" title="git push"></a>git push</h4><p>如果你未曾改动过git config中的<code>push.default</code>属性，根据我们使用的git不同版本（Git 2.0之前或之后），<code>git push</code>通常会有两种截然不同的行为:</p>
+<ol>
+<li>develop分支中本地新增的commit被push到远程仓库</li>
+<li>push失败，并收到git如下的警告</li>
+</ol>
+<p>为什么git版本不同会有两种不同的push行为？</p>
+<p>因为在<a href="http://git-scm.com/docs/git-config" target="_blank" rel="external">git的全局配置中，有一个push.default</a>属性，其决定了<code>git push</code>操作的默认行为。在Git 2.0之前，这个属性的默认被设为’matching’，2.0之后则被更改为了’simple’。</p>
+<p>可以通过<code>git version</code>确定当前的git版本（如果小于2.0，更新是个更好的选择），通过<code>git config --global push.default &#39;option&#39;</code>改变push.default的默认行为（或者也可直接编辑~/.gitconfig文件）。</p>
+<p><strong>push.default</strong> 有以下几个可选值：<br><strong>nothing, current, upstream, simple, matching</strong></p>
+<p>其用途分别为：</p>
+<ul>
+<li><strong>nothing</strong> - push操作无效，除非显式指定远程分支，例如<code>git push origin develop</code>（我觉得。。。可以给那些不愿学git的同事配上此项）。</li>
+<li><strong>current</strong> - push当前分支到远程同名分支，如果远程同名分支不存在则自动创建同名分支。</li>
+<li><strong>upstream</strong> - push当前分支到它的upstream分支上（这一项其实用于经常从本地分支push/pull到同一远程仓库的情景，这种模式叫做central workflow）。</li>
+<li><strong>simple</strong> - simple和upstream是相似的，只有一点不同，simple必须保证本地分支和它的远程<br>upstream分支同名，否则会拒绝push操作。</li>
+<li><strong>matching</strong> - push所有本地和远程两端都存在的同名分支。</li>
+</ul>
+<h4 id="upstream-amp-downstream"><a href="#upstream-amp-downstream" class="headerlink" title="upstream &amp; downstream"></a>upstream &amp; downstream</h4><p><a href="http://stackoverflow.com/questions/2739376/definition-of-downstream-and-upstream" target="_blank" rel="external">git中的upstream到底是什么</a>：</p>
+<blockquote>
+<p>git中存在upstream和downstream，简言之，当我们把仓库A中某分支x的代码push到仓库B分支y，此时仓库B的这个分支y就叫做A中x分支的upstream，而x则被称作y的downstream，这是一个相对关系，每一个本地分支都相对地可以有一个远程的upstream分支（注意这个upstream分支可以不同名，但通常我们都会使用同名分支作为upstream）。</p>
+</blockquote>
+<p>初次提交本地分支，并不会定义当前本地分支的upstream分支，解决方法：</p>
+<ul>
+<li><code>git push --set-upstream origin develop</code></li>
+<li><code>git push -u origin develop</code></li>
+</ul>
+<p>注意push.default = current可以在远程同名分支不存在的情况下自动创建同名分支，我就如此指定。</p>
+<h4 id="git-pull"><a href="#git-pull" class="headerlink" title="git pull"></a>git pull</h4><p>当我们执行<code>git pull</code>的时候，实际上是做了<code>git fetch + git merge</code>操作：</p>
+<ul>
+<li><p>fetch操作将会更新本地仓库的remote tracking，也就是refs/remotes中的代码，并不会对refs/heads中本地当前的代码造成影响。</p>
+</li>
+<li><p>当进行merge时，对git来说，如果我们没有设定当前分支的upstream，它并不知道我们要合并哪个分支到当前分支，所以我们需要通过下面的代码指定当前分支的upstream：</p>
+<pre><code class="sh">git branch --set-upstream-to=origin/&lt;branch&gt; develop
+</code></pre>
+</li>
+</ul>
+<p>实际上，如果我们没有指定upstream，git在merge时会访问git config中当前分支(develop)merge的默认配置</p>
+<pre><code class="sh">[branch &quot;develop&quot;]
+    remote = origin
+    merge = refs/heads/develop // [1]为什么不是refs/remotes/develop?
+
+git config branch.develop.merge refs/heads/develop
+</code></pre>
+<blockquote>
+<p>[1] 为什么merge = refs/heads/develop 而不是refs/remotes/develop?</p>
+<p>因为这里merge指代的是我们想要merge的远程分支，是remote上的refs/heads/develop，文中即是origin上的refs/heads/develop，这和我们在本地直接执行<code>git merge</code>是不同的(本地执行<code>git merge origin/develop</code>则是直接merge refs/remotes/develop)。</p>
+</blockquote>
+<hr>
+<p>回归问题，我遇到的问题其实是git push的默认行为不对。我的操作是通过修改.gitconfig 指定默认的push行为未current，对于pull操作，通过—track来指定pull的remote分支，我认为这样的一个好处是自由高，有一个场景：</p>
+<blockquote>
+<p>本地分支 需要 能push到远程并新建远程同名分支，只需要执行 <code>git push</code>；需要 pull 远程的master分支，只要执行<code>git pull</code> 。相当于做了一步默认分支指定。只需要在创建本地分支时候 —track 指定一下即可。</p>
+</blockquote>
+
+        
+                <blockquote style="margin: 2em 0 0;padding: 0.5em 1em;border-left: 3px solid #F44336;background-color: #F5F5F5;list-style: none;">
+                    <p><strong>
+                         
+                            本文采用 <a rel='nofollow noopener' href='https://creativecommons.org/licenses/by-nc-sa/3.0/deed.zh' target='_blank'>CC BY-NC-SA 3.0 Unported</a> 协议进行许可，阅读 <a href='/creativecommons.html' target='_blank'>相关说明</a>
+                        </strong>
+                        <br>
+                        <strong>本文链接：</strong><a href="http://janebt.github.io/2018/01/27/工具/Git/Git使用的一些理解/">http://janebt.github.io/2018/01/27/工具/Git/Git使用的一些理解/</a>
+                    </p>
+                </blockquote>
+        
+    
+
     
 </div>
+
+
+                
+
+                <!-- Post Comments -->
+                
+                    
+    <!-- 使用 gitcoment -->
+<div id="gitment-comment">
+    <!-- Gitment 评论框 -->
+<div id="container"></div>
+</div>
+<style>
+    #gitment-comment{
+        background-color: #eee;
+        padding: 2pc;
+    }
+</style>
+<link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
+<script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
+<script>
+    var gitment = new Gitment({
+        //id: '页面 ID', // 可选。默认为 location.href
+        owner: 'janebt',
+        repo: 'janebt.github.io',
+        oauth: {
+            client_id: 'adee389eb98ad460b2c7',
+            client_secret: '60592360bda99443a993f57ce1c3635f79fdbc65',
+        },
+    })
+    gitment.render('container')
+</script>
+
+                
+            </div>
+
+            <!-- Post Prev & Next Nav -->
+            <nav class="material-nav mdl-color-text--grey-50 mdl-cell mdl-cell--12-col">
+    <!-- Prev Nav -->
+    
+        <a href="/2117/11/01/前端/前端大纲/" id="post_nav-newer" class="prev-content">
+            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
+                <i class="material-icons">arrow_back</i>
+            </button>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            新篇
+        </a>
+    
+
+    <!-- Section Spacer -->
+    <div class="section-spacer"></div>
+
+    <!-- Next Nav -->
+    
+        <a href="/2018/01/20/项目/IPC项目Websocketd服务器总结/" id="post_nav-older" class="next-content">
+            旧篇
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
+                <i class="material-icons">arrow_forward</i>
+            </button>
+        </a>
+    
+</nav>
+
+        </div>
+    </div>
+
 
 
                     
@@ -901,6 +1190,10 @@ It will not impact the appearance and can give developers a lot of support :)
 <!-- Import prettify js  -->
 
     
+        
+            <script>lsloader.load("prettify_js","/js/prettify.min.js?WN07fivHQSMKWy7BmHBB6w==", true)</script>
+        
+    
 
 
 
@@ -913,6 +1206,11 @@ It will not impact the appearance and can give developers a lot of support :)
     });
 
     
+        
+            $(function() {
+                $('pre').addClass('prettyprint linenums').attr('style', 'overflow:auto;');
+                prettyPrint();
+                })
         
     
     
