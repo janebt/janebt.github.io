@@ -1159,6 +1159,678 @@ if (typeof window.addEventListener != &#39;undefined&#39;) {
     </entry>
     
     <entry>
+      <title><![CDATA[面试重点之ES6]]></title>
+      <url>/2018/01/01/%E9%9D%A2%E8%AF%95/%E5%89%8D%E7%AB%AF/%E9%9D%A2%E8%AF%95%E9%87%8D%E7%82%B9%E4%B9%8BES6/</url>
+      <content type="html"><![CDATA[<script src="/assets/js/APlayer.min.js"> </script><p>ES6问题在面试中是重中之重。我感觉是比较难的，如果仅仅是使用，那倒很轻松，但是其中会问实现、原理等，涉及的东西很多。</p>
+<p>面试的ES6部分，需要掌握：</p>
+<blockquote>
+<ul>
+<li>掌握每个概念存在的意义，是为了解决什么类型问题</li>
+<li>掌握每个概念的实现原理，ES5怎么写</li>
+<li>掌握每个概念的一些使用上的坑和技巧</li>
+</ul>
+</blockquote>
+<p>TODO：</p>
+<blockquote>
+<ul>
+<li>提到的概念深入细化</li>
+</ul>
+</blockquote>
+<a id="more"></a>
+<h1 id="面试重点之ES6"><a href="#面试重点之ES6" class="headerlink" title="面试重点之ES6"></a>面试重点之ES6</h1><h2 id="知识点"><a href="#知识点" class="headerlink" title="知识点"></a>知识点</h2><ul>
+<li>let/const</li>
+<li>立即执行函数</li>
+<li>箭头函数</li>
+<li>字符串拓展</li>
+<li>字符串模板字面量</li>
+<li>数组的拓展</li>
+<li>Maps</li>
+<li>Object</li>
+<li>for…of循环</li>
+<li>解构</li>
+<li>Modules</li>
+<li>参数默认值</li>
+<li>Class</li>
+<li>Object.assign()</li>
+<li>Symbol</li>
+<li>Promise</li>
+</ul>
+<h2 id="Promise"><a href="#Promise" class="headerlink" title="Promise"></a>Promise</h2><p>它的思想是，每一个异步任务返回一个Promise对象，该对象有一个then方法，允许指定回调函数。比如，f1的回调函数f2,可以写成：</p>
+<pre><code class="javascript">f1().then(f2);
+f1().then(f2).then(f3);
+f1().then(f2).fail(f3);
+</code></pre>
+<p>如果一个任务已经完成，再添加回调函数，该回调函数会立即执行。</p>
+<p>API:</p>
+<pre><code class="javascript">new Promise((resolve, reject) =&gt;
+    reject(new Error(&#39;Failed to fulfill Promise&#39;)))
+        .catch(reason =&gt; console.log(reason));
+</code></pre>
+<p>这里有两个处理函数，<strong>resolve</strong>（当Promise执行成功完毕时调用的回调函数） 和 <strong>reject</strong> （当Promise执行不接受时调用的回调函数）</p>
+<p><strong>Promises的好处</strong>：</p>
+<ul>
+<li>大量嵌套错误处理回调函数会使代码变得难以阅读理解。使用Promises，我们可以通过清晰的路径将错误事件让上传递，并且适当地处理它们。</li>
+</ul>
+<p>此外，Promise处理后的值，无论是解决（resolved）还是拒绝（rejected）的结果值，都是不可改变的。</p>
+<h3 id="1-什么是promise对象，它能干什么？"><a href="#1-什么是promise对象，它能干什么？" class="headerlink" title="1. 什么是promise对象，它能干什么？"></a>1. 什么是promise对象，它能干什么？</h3><p><strong>Promise</strong> 对象用于延迟(deferred) 计算和异步(asynchronous ) 计算.。一个Promise对象代表着一个还未完成，但预期将来会完成的操作。</p>
+<p><strong>Promise</strong> 对象是一个返回值的代理，这个返回值在promise对象创建时未必已知。它允许你为异步操作的成功或失败指定处理方法。 这使得异步方法可以像同步方法那样返回值：异步方法会返回一个包含了原返回值的 promise 对象来替代原返回值。</p>
+<p><strong>Promise</strong> 对象有以下几种状态:</p>
+<ul>
+<li><em>pending</em>: 表示一个初始状态, 非 fulfilled 或 rejected。</li>
+<li><em>fulfilled</em>: 成功的操作。</li>
+<li><em>rejected</em>: 失败的操作。</li>
+</ul>
+<p>每一个异步任务都会返回一个Promise对象，该对象有一个then方法，允许指定回调函数。可以根据Promise对象的状态相应的去执行对应的回调函数。</p>
+<h3 id="2-常用的API"><a href="#2-常用的API" class="headerlink" title="2. 常用的API"></a>2. 常用的API</h3><h4 id="1-Promise-prototype-then"><a href="#1-Promise-prototype-then" class="headerlink" title="1.Promise.prototype.then()"></a>1.Promise.prototype.then()</h4><p>它的作用是为promise实例添加状态改变时的回调函数。</p>
+<p>then()方法的第一个参数是resolved状态的回调函数，第二个参数（可选）是rejected状态的回调函数。then方法返回的是一个新的promise实例。</p>
+<p>then方法的第二个参数一般不推荐写。有以下两个原因：</p>
+<ul>
+<li>由于是链式操作，这个then方法之后还可能会有其他操作，如果此时把错误捕捉的函数放在后面方法前边的话，并且之后再无错误捕获方法，then之后的错误就会捕捉不到。</li>
+<li>在then方法里面，两个参数都是回调函数写了一大堆，这样结构看起来比较混乱。</li>
+</ul>
+<pre><code class="javascript">var p=new Promise(function(resolve, reject){
+    resolve(&quot;ok&quot;);    
+});
+p.then(function(value){console.log(val)},
+ function(err)(console.log(err))       
+);
+</code></pre>
+<h4 id="2-Promise-prototype-catch"><a href="#2-Promise-prototype-catch" class="headerlink" title="2.Promise.prototype.catch()"></a>2.Promise.prototype.catch()</h4><p>这个方法是.then(null,rejection)的别名，这也能看出这个方法是专门只能用来捕获错误信息，用于指定发生错误时的回调函数。</p>
+<p>要注意一下几点：</p>
+<ul>
+<li>当promise状态已经变成resolved的时候，再抛出错误时是无效的。</li>
+<li>尽量将catch方法写在链式操作的最后。<strong>错误会一直冒泡到最后，catch放在最后会捕捉到所有错误。</strong></li>
+<li>当没有使用catch方法指定错误处理函数的回调函数时，promise对象里面抛出的错误不会传递到外层的代码。</li>
+</ul>
+<h4 id="3-Promise-resolve"><a href="#3-Promise-resolve" class="headerlink" title="3. Promise.resolve()"></a>3. Promise.resolve()</h4><p>这个方法的作用就是将现有的对象转化为Promise对象，进而可以执行这些方法。</p>
+<pre><code class="javascript">Promise.resolve(&quot;foo&quot;);
+</code></pre>
+<h4 id="4-Promise-all"><a href="#4-Promise-all" class="headerlink" title="4. Promise.all()"></a>4. Promise.all()</h4><p>这个方法用于将多个promise实例，包装成一个新的promise实例。</p>
+<pre><code class="javascript">var p=Promise.all([p1,p2,p3]);
+</code></pre>
+<p>要注意一下两点：</p>
+<ul>
+<li>只有当p1,p2,p3状态都变为fulfilled之后，p的状态才会变为fulfilled。</li>
+<li>只要p1.p2,p3中有任意一个状态变为rejected，p的状态就会变为rejected。</li>
+</ul>
+<h3 id="3-实现异步编程的原理"><a href="#3-实现异步编程的原理" class="headerlink" title="3. 实现异步编程的原理"></a>3. 实现异步编程的原理</h3><p>Promise对象相当于是一个状态机，在其内部使用resolve方法，使其由初始状态变为成功时的fulfilled状态或者执行失败后的rejected状态。这时内部的工作就完成了，开始由外部监听其内部的状态的改变，调用then()方法（catch()方法相当于then内部的第二个参数方法）对应的状态调用对应的处理函数。</p>
+<h2 id="箭头函数需要注意的地方"><a href="#箭头函数需要注意的地方" class="headerlink" title="箭头函数需要注意的地方"></a>箭头函数需要注意的地方</h2><p>当要求动态上下文的时候，就不能够使用箭头函数。也就是this的固定化</p>
+<ol>
+<li>在使用=&gt;定义函数的时候，<strong>this的指向是定义时所在的对象</strong>，而不是使用时所在的对象</li>
+<li>不能够用作构造函数，这就是说，不能够使用new命令，否则就会抛出一个错误</li>
+<li>不能够使用arguments对象</li>
+<li>不能使用yield命令</li>
+</ol>
+<h2 id="Proxy"><a href="#Proxy" class="headerlink" title="Proxy"></a>Proxy</h2><p>使用 Proxy 的好处是：对象只需关注于核心逻辑，一些非核心的逻辑（如：读取或设置对象的某些属性前记录日志；设置对象的某些属性值前，需要验证；某些属性的访问控制等）可以让 Proxy 来做。从而达到关注点分离，降级对象复杂度的目的。</p>
+<p>Proxy用于修改某些操作的默认行为，用来代理有些行为。Proxy 可以理解成，在目标对象之前架设一层“拦截”，外界对该对象的访问，都必须先通过这层拦截，因此提供了一种机制，可以对外界的访问进行过滤和改写。</p>
+<pre><code class="javascript">var engineer = { name: &#39;Joe Sixpack&#39;, salary: 50 };
+
+var interceptor = {
+  set: function (receiver, property, value) {
+    console.log(property, &#39;is changed to&#39;, value);
+    receiver[property] = value;
+  }
+};
+
+engineer = Proxy(engineer, interceptor);
+engineer.salary = 60;    //会触发处理器
+</code></pre>
+<p><strong>（1）get(target, propKey, receiver)</strong></p>
+<p>拦截对象属性的读取，比如<code>proxy.foo</code>和<code>proxy[&#39;foo&#39;]</code>。</p>
+<p>最后一个参数<code>receiver</code>是一个对象，可选，参见下面<code>Reflect.get</code>的部分。</p>
+<p><strong>（2）set(target, propKey, value, receiver)</strong></p>
+<p>拦截对象属性的设置，比如<code>proxy.foo = v</code>或<code>proxy[&#39;foo&#39;] = v</code>，返回一个布尔值。</p>
+<p><strong>（3）has(target, propKey)</strong></p>
+<p>拦截<code>propKey in proxy</code>的操作，返回一个布尔值。</p>
+<p><strong>（4）deleteProperty(target, propKey)</strong></p>
+<p>拦截<code>delete proxy[propKey]</code>的操作，返回一个布尔值。</p>
+<p><strong>（5）ownKeys(target)</strong></p>
+<p>拦截<code>Object.getOwnPropertyNames(proxy)</code>、<code>Object.getOwnPropertySymbols(proxy)</code>、<code>Object.keys(proxy)</code>，返回一个数组。该方法返回目标对象所有自身的属性的属性名，而<code>Object.keys()</code>的返回结果仅包括目标对象自身的可遍历属性。</p>
+<p><strong>（6）getOwnPropertyDescriptor(target, propKey)</strong></p>
+<p>拦截<code>Object.getOwnPropertyDescriptor(proxy, propKey)</code>，返回属性的描述对象。</p>
+<p><strong>（7）defineProperty(target, propKey, propDesc)</strong></p>
+<p>拦截<code>Object.defineProperty(proxy, propKey, propDesc）</code>、<code>Object.defineProperties(proxy, propDescs)</code>，返回一个布尔值。</p>
+<p><strong>（8）preventExtensions(target)</strong></p>
+<p>拦截<code>Object.preventExtensions(proxy)</code>，返回一个布尔值。</p>
+<p><strong>（9）getPrototypeOf(target)</strong></p>
+<p>拦截<code>Object.getPrototypeOf(proxy)</code>，返回一个对象。</p>
+<p><strong>（10）isExtensible(target)</strong></p>
+<p>拦截<code>Object.isExtensible(proxy)</code>，返回一个布尔值。</p>
+<p><strong>（11）setPrototypeOf(target, proto)</strong></p>
+<p>拦截<code>Object.setPrototypeOf(proxy, proto)</code>，返回一个布尔值。</p>
+<p>如果目标对象是函数，那么还有两种额外操作可以拦截。</p>
+<p><strong>（12）apply(target, object, args)</strong></p>
+<p>拦截 Proxy 实例作为函数调用的操作，比如<code>proxy(...args)</code>、<code>proxy.call(object, ...args)</code>、<code>proxy.apply(...)</code>。</p>
+<p><strong>（13）construct(target, args)</strong></p>
+<p>拦截 Proxy 实例作为构造函数调用的操作，比如<code>new proxy(...args)</code>。</p>
+<h2 id="Generator-函数"><a href="#Generator-函数" class="headerlink" title="Generator 函数"></a>Generator 函数</h2><p>异步编程的方法</p>
+<ul>
+<li>回调函数</li>
+<li>事件监听</li>
+<li>发布/订阅</li>
+<li>Promise 对象</li>
+</ul>
+<p>Generator 函数是协程在 ES6 的实现，最大特点就是可以交出函数的执行权（即暂停执行）。异步操作需要暂停的地方，都用 yield 语句注明。</p>
+<p>Generator 函数不同于普通函数的另一个地方，即执行它不会返回结果，返回的是指针对象。</p>
+<pre><code class="javascript">function* gen(x){
+  var y = yield x + 2;
+  return y;
+}
+
+var g = gen(1);
+g.next() // { value: 3, done: false }
+g.next() // { value: undefined, done: true }
+</code></pre>
+<p><strong>Case</strong></p>
+<pre><code class="javascript">var fetch = require(&#39;node-fetch&#39;);
+
+function* gen(){
+  var url = &#39;https://api.github.com/users/github&#39;;
+  var result = yield fetch(url);
+  console.log(result.bio);
+}
+</code></pre>
+<pre><code class="javascript">var g = gen();
+var result = g.next();
+
+result.value.then(function(data){
+  return data.json();
+}).then(function(data){
+  g.next(data);
+});
+</code></pre>
+<p>一句话说，next方法参数的作用，是覆盖掉上一个yield语句的值。</p>
+<p>带参数跟不带参数的区别是，带参数的情况，首先第一步就是将上一个yield语句重置为参数值，然后再照常执行剩下的语句。<strong>总之，区别就是先有一步先重置值，接下来其他全都一样。</strong></p>
+<h2 id="ES7的Async-Await"><a href="#ES7的Async-Await" class="headerlink" title="ES7的Async/Await"></a>ES7的Async/Await</h2><pre><code class="javascript">var sleep = function (time) {
+    return new Promise(function (resolve, reject) {
+        setTimeout(function () {
+            resolve();
+        }, time);
+    })
+};
+
+var start = async function () {
+    // 在这里使用起来就像同步代码那样直观
+    console.log(&#39;start&#39;);
+    await sleep(3000);
+    console.log(&#39;end&#39;);
+};
+
+start();
+</code></pre>
+<ul>
+<li>async 表示<code>这是一个async函数</code>，<code>await只能用在这个函数里面</code>。</li>
+<li>await 表示在这里<code>等待promise返回结果</code>了，再继续执行。</li>
+<li>await 后面跟着的<code>应该是一个promise对象</code></li>
+</ul>
+<h3 id="特点"><a href="#特点" class="headerlink" title="特点"></a>特点</h3><p>await等待的虽然是promise对象，但不必写<code>.then(..)</code>，直接可以得到返回值。</p>
+<p>await看起来就像是同步代码，所以可以理所当然的写在<code>for</code>循环里，不必担心以往需要<code>闭包</code>才能解决的问题。</p>
+<p>值得注意的是，<code>await</code>必须在<code>async函数的上下文中</code>的。</p>
+]]></content>
+      
+        <categories>
+            
+            <category> 面试 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> 面试攻略 </tag>
+            
+            <tag> JavaScript </tag>
+            
+            <tag> ES6 </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[面试重点之AJAX]]></title>
+      <url>/2018/01/01/%E9%9D%A2%E8%AF%95/%E5%89%8D%E7%AB%AF/%E9%9D%A2%E8%AF%95%E9%87%8D%E7%82%B9%E4%B9%8BAJAX/</url>
+      <content type="html"><![CDATA[<script src="/assets/js/APlayer.min.js"> </script><p>AJAX问题在面试中必问。但其实又很简单。本文介绍一些手写代码。</p>
+<p>面试的AJAX部分，需要掌握：</p>
+<blockquote>
+<ul>
+<li>能手写，知道一些重要参数</li>
+</ul>
+</blockquote>
+<p>TODO：</p>
+<blockquote>
+<ul>
+<li>补充fetch等并对比</li>
+</ul>
+</blockquote>
+<a id="more"></a>
+<h1 id="面试重点之AJAX"><a href="#面试重点之AJAX" class="headerlink" title="面试重点之AJAX"></a>面试重点之AJAX</h1><h2 id="什么是AJAX"><a href="#什么是AJAX" class="headerlink" title="什么是AJAX"></a>什么是AJAX</h2><p>AJAX = 异步 JavaScript 和 XML（Asynchronous JavaScript and XML）。简短地说，在不重载整个网页的情况下，AJAX 通过后台加载数据，并在网页上进行显示。</p>
+<h2 id="XMLHttpRequest对象的常用方法和属性"><a href="#XMLHttpRequest对象的常用方法和属性" class="headerlink" title="XMLHttpRequest对象的常用方法和属性"></a>XMLHttpRequest对象的常用方法和属性</h2><p><strong>方法</strong></p>
+<p><code>open(“method”,”URL”)</code> 建立对服务器的调用，第一个参数是HTTP请求方式可以为GET，POST或任何服务器所支持的您想调用的方式。第二个参数是请求页面的URL。</p>
+<p><code>send()</code>方法，发送具体请求</p>
+<p><code>abort()</code>方法，停止当前请求</p>
+<p><strong>属性</strong></p>
+<p><code>readyState</code>属性：请求的状态，有5个可取值</p>
+<ul>
+<li>0=未初始化</li>
+<li>1=正在加载</li>
+<li>2=已加载</li>
+<li>3=交互中</li>
+<li>4=完成</li>
+</ul>
+<p><code>responseText</code>属性：服务器的响应，表示为一个串</p>
+<p><code>reponseXML</code> 属性：服务器的响应，表示为XML</p>
+<p><code>status</code>属性：服务器的HTTP状态码，200对应ok，400对应error</p>
+<h2 id="原生js-ajax实现"><a href="#原生js-ajax实现" class="headerlink" title="原生js ajax实现"></a>原生js ajax实现</h2><pre><code class="javascript">$(&#39;#send&#39;).click(function(){
+    //请求的5个阶段，对应readyState的值
+        //0: 未初始化，send方法未调用；
+        //1: 正在发送请求，send方法已调用；
+        //2: 请求发送完毕，send方法执行完毕；
+        //3: 正在解析响应内容；
+        //4: 响应内容解析完毕；
+    var data = &#39;name=yang&#39;;
+    var xhr = new XMLHttpRequest();   //创建一个ajax对象
+    xhr.onreadystatechange = function(event){    //对ajax对象进行监听
+        if(xhr.readyState == 4){    //4表示解析完毕
+            if(xhr.status == 200){    //200为正常返回
+                console.log(xhr)
+            }
+        }
+    };
+    xhr.open(&#39;POST&#39;,&#39;url&#39;,true);    //建立连接，参数一：发送方式，二：请求地址，三：是否异步，true为异步
+    xhr.setRequestHeader(&#39;Content-type&#39;,&#39;application/x-www-form-urlencoded&#39;);    //可有可无
+    xhr.send(data);        //发送
+});
+</code></pre>
+<h2 id="jquery-ajax实现"><a href="#jquery-ajax实现" class="headerlink" title="jquery ajax实现"></a>jquery ajax实现</h2><pre><code class="javascript">$.ajax({
+    url:&#39;/comm/test1.php&#39;,
+    type:&#39;POST&#39;, //GET
+    async:true,    //或false,是否异步
+    data:{
+        name:&#39;yang&#39;,age:25
+    },
+    timeout:5000,    //超时时间
+    dataType:&#39;json&#39;,    //返回的数据格式：json/xml/html/script/jsonp/text
+    beforeSend:function(xhr){
+        console.log(xhr)
+        console.log(&#39;发送前&#39;)
+    },
+    success:function(data,textStatus,jqXHR){
+        console.log(data)
+        console.log(textStatus)
+        console.log(jqXHR)
+    },
+    error:function(xhr,textStatus){
+        console.log(&#39;错误&#39;)
+        console.log(xhr)
+        console.log(textStatus)
+    },
+    complete:function(){
+        console.log(&#39;结束&#39;)
+    }
+})
+</code></pre>
+]]></content>
+      
+        <categories>
+            
+            <category> 面试 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> 面试攻略 </tag>
+            
+            <tag> AJAX </tag>
+            
+            <tag> JavaScript </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[面试重点之Vue]]></title>
+      <url>/2018/01/01/%E9%9D%A2%E8%AF%95/%E5%89%8D%E7%AB%AF/%E9%9D%A2%E8%AF%95%E9%87%8D%E7%82%B9%E4%B9%8BVue/</url>
+      <content type="html"><![CDATA[<script src="/assets/js/APlayer.min.js"> </script><p>本文是我为了应付面试的产物，针对性强不怕没的说，但如实说我一点皮毛还不懂。</p>
+<p>为自己加个TODO：</p>
+<ul>
+<li>阅读源码，实现一套双向绑定和渲染。</li>
+<li>补充本文的一些细节+渲染+Vuex部分，写的很乱，其实是自己不懂乱copy</li>
+</ul>
+<p>面试的框架部分，需要掌握以下：</p>
+<blockquote>
+<ul>
+<li>实现原理、源码</li>
+<li>对一些实现的思考</li>
+</ul>
+</blockquote>
+<a id="more"></a>
+<h1 id="面试重点之Vue"><a href="#面试重点之Vue" class="headerlink" title="面试重点之Vue"></a>面试重点之Vue</h1><h2 id="Vue通信"><a href="#Vue通信" class="headerlink" title="Vue通信"></a>Vue通信</h2><h3 id="vue父子组件通信"><a href="#vue父子组件通信" class="headerlink" title="vue父子组件通信"></a>vue父子组件通信</h3><h4 id="子-gt-父：-emit"><a href="#子-gt-父：-emit" class="headerlink" title="子 -&gt; 父：$emit"></a>子 -&gt; 父：$emit</h4><pre><code class="vue">// 父组件
+&lt;single-address @edit-address=&quot;editAddress&quot;&gt;&lt;/single-address&gt;
+
+// 子组件
+methods: {
+ editAddress () {
+  this.$emit(&#39;edit-address&#39;, false)
+ }
+}
+</code></pre>
+<h4 id="父-gt-子：props"><a href="#父-gt-子：props" class="headerlink" title="父 -&gt; 子：props"></a>父 -&gt; 子：props</h4><pre><code class="javascript">// 父组件
+&lt;one-address :addressitems=&quot;addressitems&quot;&gt;&lt;/one-address&gt;
+
+// 子组件
+&lt;div&gt;{{ addressitems.partment }}{{ addressitems.address }}&lt;/div&gt;
+export default {
+  props: {
+    addressitems: Object
+  }
+}
+</code></pre>
+<h3 id="非父子组件"><a href="#非父子组件" class="headerlink" title="非父子组件"></a>非父子组件</h3><pre><code class="javascript">var bus = new Vue()
+// 触发组件 A 中的事件
+bus.$emit(&#39;id-selected&#39;, 1)
+// 在组件 B 创建的钩子中监听事件
+bus.$on(&#39;id-selected&#39;, function (id) {
+ console.log(id)
+})
+</code></pre>
+<h2 id="事件处理"><a href="#事件处理" class="headerlink" title="事件处理"></a>事件处理</h2><p>Methods 并不是创建自定义函数的唯一方式。也可以使用 <code>watch</code> 。</p>
+<p>两者的区别是 methods 适合小的、同步的计算，而 <code>watch</code> 对于多任务、异步或者响应数据变化时的开销大的操作是有利的。我经常在动画中使用 watch 。</p>
+<h2 id="组件，Props，Slots"><a href="#组件，Props，Slots" class="headerlink" title="组件，Props，Slots"></a>组件，Props，Slots</h2><p>从父组件向子组件传递数据的方式称为 <strong>props</strong>。</p>
+<p>我们也可以向 props 中添加验证，这和 React 中的 <code>PropTypes</code> 类似。</p>
+<h3 id="Slots"><a href="#Slots" class="headerlink" title="Slots"></a>Slots</h3><p>重用组件，并用相同的数据或功能填充它们</p>
+<p>你也可以使用具名 slot 。如果一个组件中有两个 slot， 可以通过添加 name 属性区分它们</p>
+<h2 id="vue生命周期"><a href="#vue生命周期" class="headerlink" title="vue生命周期"></a>vue生命周期</h2><h3 id="1-什么是vue生命周期？"><a href="#1-什么是vue生命周期？" class="headerlink" title="1.什么是vue生命周期？"></a>1.什么是vue生命周期？</h3><p>答： Vue 实例从创建到销毁的过程，就是生命周期。也就是从开始创建、初始化数据、编译模板、挂载Dom→渲染、更新→渲染、卸载等一系列过程，我们称这是 Vue 的生命周期。2、vue生命周期的作用是什么？<br>答：它的生命周期中有多个事件钩子，让我们在控制整个Vue实例的过程时更容易形成好的逻辑。</p>
+<h3 id="2-vue生命周期总共有几个阶段？"><a href="#2-vue生命周期总共有几个阶段？" class="headerlink" title="2. vue生命周期总共有几个阶段？"></a>2. vue生命周期总共有几个阶段？</h3><p>答：它可以总共分为8个阶段：创建前/后, 载入前/后,更新前/后,销毁前/销毁后</p>
+<h3 id="3-第一次页面加载会触发哪几个钩子？"><a href="#3-第一次页面加载会触发哪几个钩子？" class="headerlink" title="3. 第一次页面加载会触发哪几个钩子？"></a>3. 第一次页面加载会触发哪几个钩子？</h3><p>答：第一次页面加载时会触发 beforeCreate, created, beforeMount, mounted 这几个钩子</p>
+<h3 id="4-DOM-渲染在-哪个周期中就已经完成？"><a href="#4-DOM-渲染在-哪个周期中就已经完成？" class="headerlink" title="4. DOM 渲染在 哪个周期中就已经完成？"></a>4. DOM 渲染在 哪个周期中就已经完成？</h3><p>答：DOM 渲染在 mounted 中就已经完成了。</p>
+<h3 id="5-简单描述每个周期具体适合哪些场景？"><a href="#5-简单描述每个周期具体适合哪些场景？" class="headerlink" title="5. 简单描述每个周期具体适合哪些场景？"></a>5. 简单描述每个周期具体适合哪些场景？</h3><p>答：生命周期钩子的一些使用方法： beforecreate : 可以在这加个loading事件，在加载实例时触发 created : 初始化完成时的事件写在这里，如在这结束loading事件，异步请求也适宜在这里调用 mounted : 挂载元素，获取到DOM节点 updated : 如果对数据统一处理，在这里写上相应函数 beforeDestroy : 可以做一个确认停止事件的确认框 nextTick : 更新数据后立即操作dom</p>
+<h3 id="5-生命周期钩子"><a href="#5-生命周期钩子" class="headerlink" title="5. 生命周期钩子"></a>5. 生命周期钩子</h3><p>可以使用的钩子有： <code>beforeCreate, created, beforeMount, mounted, beforeUpdate, updated, activated, deactivated, beforeDestroy</code>, <code>destroyed</code> 。</p>
+<h2 id="Vuex"><a href="#Vuex" class="headerlink" title="Vuex"></a>Vuex</h2><ul>
+<li><strong>Getters</strong> 可以在模板中静态的显示数据。换句话说，getters 可以读取数据，但不能改变状态。</li>
+<li><strong>Mutations</strong> 允许更新状态，但永远是同步的。Mutations 是 store 中改变状态数据的唯一方式。</li>
+<li><strong>Actions</strong> 允许异步更新状态，但是需要使用一个已经存在的 mutation 。如果你需要以特定的顺序同时执行不同的 mutations 会非常有用。</li>
+</ul>
+<p><code>store.js</code>：</p>
+<pre><code class="javascript">export const store = new Vuex.Store({
+  state: {
+    counter: 0
+  },
+  // 展示内容, 无法改变状态
+  getters: {
+    tripleCounter: state =&gt; {
+      return state.counter * 3;
+    }
+  },
+  // 改变状态
+  //mutations 永远是同步的
+  mutations: {
+    // 显示传递的载荷 payload, 用 num 表示
+    increment: (state, num) =&gt; {
+      state.counter += num;
+    }
+  }, 
+  // 提交 mutation, 这是异步的
+  actions: {
+    // 显示传递的载荷 payload, 用 asynchNum ( 一个对象 )表示
+    asyncDecrement: ({ commit }, asyncNum) =&gt; {
+      setTimeout(() =&gt; {
+        // asyncNum 对象可以是静态值
+        commit(&#39;decrement&#39;, asyncNum.by);
+      }, asyncNum.duration);
+    }
+  }
+});
+</code></pre>
+<h2 id="双向数据绑定原理是什么？"><a href="#双向数据绑定原理是什么？" class="headerlink" title="双向数据绑定原理是什么？"></a>双向数据绑定原理是什么？</h2><h3 id="基本原理"><a href="#基本原理" class="headerlink" title="基本原理"></a>基本原理</h3><p>这是 ES5 的特性，通过在 setter/getter，在属性被访问和修改时通知变化。比如 vue 就是用的这个特性。</p>
+<p>vue.js 是采用<strong>数据劫持结合发布者-订阅者模式</strong>的方式，通过<code>Object.defineProperty()</code>来劫持各个属性的<code>setter</code>，<code>getter</code>，在数据变动时发布消息给订阅者，触发相应的监听回调。</p>
+<pre><code class="javascript">function declar(obj){
+   var rwprop = 0;
+   Object.defineProperty(obj, &quot;rwprop&quot;, {
+        get : () =&gt; rwprop // getter
+   });
+   return obj
+}
+
+var a = {};
+
+a = declar(a);
+
+a.rwprop = 1 // 调用了setter
+console.log(a.rwprop) // 调用了getter
+</code></pre>
+<h3 id="具体步骤"><a href="#具体步骤" class="headerlink" title="具体步骤"></a>具体步骤</h3><p><strong>第一步：需要observe的数据对象进行递归遍历</strong>，包括子属性对象的属性，都加上 <code>setter</code>和<code>getter</code>。这样的话，给这个对象的某个值赋值，就会触发<code>setter</code>，那么就能监听到了数据变化</p>
+<p><strong>第二步：compile解析模板指令</strong>，将模板中的变量替换成数据，然后初始化渲染页面视图，并将每个指令对应的节点绑定更新函数，添加监听数据的订阅者，一旦数据有变动，收到通知，更新视图</p>
+<p><strong>第三步：Watcher订阅者是Observer和Compile之间通信的桥梁</strong>，主要做的事情是:<br>1、在自身实例化时往属性订阅器(dep)里面添加自己<br>2、自身必须有一个update()方法<br>3、待属性变动dep.notice()通知时，能调用自身的update()方法，并触发Compile中绑定的回调，则功成身退。</p>
+<p><strong>第四步：MVVM作为数据绑定的入口，整合Observer、Compile和Watcher三者</strong>，通过Observer来监听自己的model数据变化，通过Compile来解析编译模板指令，最终利用Watcher搭起Observer和Compile之间的通信桥梁，达到数据变化 -&gt; 视图更新；视图交互变化(input) -&gt; 数据model变更的双向绑定效果。</p>
+<h4 id="1-实现-observer"><a href="#1-实现-observer" class="headerlink" title="1. 实现 observer"></a>1. 实现 observer</h4><p>思路：我们知道Object.defineProperty的特性了，我们就利用它的set和get。。我们将要observe的对象，通过递归，将它所有的属性，包括子属性的属性，都给加上set和get，这样的话，给这个对象的某个属性赋值，就会触发set</p>
+<pre><code class="javascript">export default class  Observer{
+  constructor(value) {
+    this.value = value
+    this.walk(value)
+  }
+  //递归。。让每个字属性可以observe
+  walk(value){
+    Object.keys(value).forEach(key=&gt;this.convert(key,value[key]))
+  }
+  convert(key, val){
+    defineReactive(this.value, key, val)
+  }
+}
+
+export function defineReactive (obj, key, val) {
+  var childOb = observe(val)
+  Object.defineProperty(obj, key, {
+    enumerable: true,
+    configurable: true,
+    get: ()=&gt;val,
+    set:newVal=&gt; {      
+     childOb = observe(newVal)//如果新赋值的值是个复杂类型。再递归它，加上set/get。。
+     }
+  })
+}
+
+export function observe (value, vm) {
+  if (!value || typeof value !== &#39;object&#39;) {
+    return
+  }
+  return new Observer(value)
+}
+</code></pre>
+<p>所以，我们是不是应该写一个消息－订阅器呢？这样的话，一触发set方法，我们就发一个通知出来，然后，订阅这个消息的，就会怎样？。。。对咯。。收到消息。。。触发回调。</p>
+<h4 id="2-消息－订阅器"><a href="#2-消息－订阅器" class="headerlink" title="2. 消息－订阅器"></a>2. 消息－订阅器</h4><p>维护一个数组，这个数组，就放订阅着属性订阅器，一旦触发notify，订阅者就调用自己的update方法</p>
+<pre><code class="javascript">export function defineReactive (obj, key, val) {
+  var dep = new Dep()
+  var childOb = observe(val)
+
+  Object.defineProperty(obj, key, {
+    enumerable: true,
+    configurable: true,
+    get: ()=&gt;{
+      // 说明这是watch 引起的
+      if(Dep.target){
+        dep.addSub(Dep.target)
+      }
+      return val
+    },
+    set:newVal=&gt; {
+      var value =  val
+      if (newVal === value) {
+        return
+      }
+      val = newVal
+      childOb = observe(newVal)
+      dep.notify()
+    }
+  })
+}
+</code></pre>
+<p>谁是订阅者。。对，是Watcher。。一旦 <code>dep.notify()</code>就遍历订阅者，也就是Watcher，并调用他的<code>update()</code>方法</p>
+<h4 id="3-实现一个-Watcher"><a href="#3-实现一个-Watcher" class="headerlink" title="3. 实现一个 Watcher"></a>3. 实现一个 Watcher</h4><pre><code class="javascript">export default class Watcher {
+  constructor(vm, expOrFn, cb) {
+    this.cb = cb
+    this.vm = vm
+    //此处简化.要区分fuction还是expression,只考虑最简单的expression
+    this.expOrFn = expOrFn
+    this.value = this.get()
+  }
+  update(){
+    this.run()
+  }
+  run(){
+    const  value = this.get()
+    if(value !==this.value){
+      this.value = value
+      this.cb.call(this.vm)
+    }
+  }
+  get(){
+    Dep.target = this
+    //此处简化。。要区分fuction还是expression
+    const value = this.vm._data[this.expOrFn]
+    Dep.target = null
+    return value
+  }
+}
+</code></pre>
+<h4 id="4-实现一个-Vue"><a href="#4-实现一个-Vue" class="headerlink" title="4. 实现一个 Vue"></a>4. 实现一个 Vue</h4><pre><code class="javascript">export default class Vue {
+  constructor (options={}) {
+    //这里简化了。。其实要merge
+    this.$options=options
+    //这里简化了。。其实要区分的
+    let data = this._data=this.$options.data
+    Object.keys(data).forEach(key=&gt;this._proxy(key))
+    observe(data,this)
+  }
+
+
+  $watch(expOrFn, cb, options){
+    new Watcher(this, expOrFn, cb)
+  }
+
+  _proxy(key) {
+    var self = this
+    Object.defineProperty(self, key, {
+      configurable: true,
+      enumerable: true,
+      get: function proxyGetter () {
+        return self._data[key]
+      },
+      set: function proxySetter (val) {
+        self._data[key] = val
+      }
+    })
+  }
+}
+</code></pre>
+<h2 id="Vue2-原理浅谈"><a href="#Vue2-原理浅谈" class="headerlink" title="Vue2 原理浅谈"></a>Vue2 原理浅谈</h2><ul>
+<li>输入了数据状态，输出视图（我们不关心中间的过程，它们均由框架帮助我们实现）；</li>
+<li>数据变化侦测，从而re-render视图。</li>
+<li>数据变化侦测分为<code>系统不可感知数据变化</code>和<code>系统可感知数据变化</code></li>
+<li>系统不可感知数据变化：React就是通过setState发信号告诉系统有可能数据变了,然后通过virtual dom diff去渲染视图，angular则是有一个脏值检查流程，遍历比对</li>
+<li>系统可感知数据变化：通过观察者模式，使用Observable (可观察对象)，Observer (观察者)(或者是watcher)去订阅</li>
+</ul>
+<p>上者<code>系统不可感知数据变化</code>,粒度粗，有时候还得手动优化（比如pureComponet和shouldComponentUpdate)去跳过一些数据不会更新的视图从而提升性能</p>
+<p>下者<code>系统可感知数据变化</code>,粒度细，但是绑定大量观察者，有大量的依赖追踪的内存开销</p>
+<p><strong>Vue2</strong>，它采用了折中粒度的方式，粒度到组件级别上，由watcher订阅数据，当数据变化我们可以得知哪个组件数据变了，然后采用virtual dom diff的方式去更新相应组件。</p>
+<h3 id="数据响应原理"><a href="#数据响应原理" class="headerlink" title="数据响应原理"></a>数据响应原理</h3><h4 id="Object-defineProperty"><a href="#Object-defineProperty" class="headerlink" title="Object.defineProperty"></a>Object.defineProperty</h4><blockquote>
+<p>app.message如何拿到vue data中的message?</p>
+</blockquote>
+<p>其实也是跟<code>Object.defineProperty</code>有关，Vue在初始化数据的时候会遍历data代理这些数据，其实就是用<code>Object.defineProperty</code>多加了一层的访问</p>
+<h4 id="观察者模式（Observer-Watcher-Dep"><a href="#观察者模式（Observer-Watcher-Dep" class="headerlink" title="观察者模式（Observer, Watcher, Dep)"></a>观察者模式（Observer, Watcher, Dep)</h4><ul>
+<li>Observer类主要用于给Vue的数据<code>defineProperty</code>增加getter/setter方法，并且在getter/setter中收集依赖或者通知更新</li>
+<li>Watcher类来用于观察数据（或者表达式）变化然后执行回调函数（其中也有收集依赖的过程），主要用于$watch API和指令上</li>
+<li>Dep类就是一个可观察对象，可以有不同指令订阅它（它是多播的）</li>
+</ul>
+<p>观察者模式,跟发布／订阅模式有点像，区别是发布和订阅以及发布后调度订阅者的操作都是由中心统一完成，但是观察者模式则没有这样的中心</p>
+<h5 id="如何实现观察者模式呢？"><a href="#如何实现观察者模式呢？" class="headerlink" title="如何实现观察者模式呢？"></a>如何实现观察者模式呢？</h5><blockquote>
+<p>怎么实现订阅</p>
+</blockquote>
+<p>Dep由于是可以被多个Watcher所订阅的，所以它拥有着订阅者数组，订阅了它，就把Watcher放入数组即可</p>
+<pre><code class="javascript">class Dep {
+  constructor () {
+    this.subs = []
+  }
+  notify () {
+    const subs = this.subs.slice()
+    for (let i = 0; i &lt; subs.length; i++) {
+        subs[i].update()
+    }
+  }
+  addSub (sub) {
+    this.subs.push(sub)
+  }
+}
+
+class Watcher {
+  constructor () {
+  }
+  update () {
+  }
+}
+
+let dep = new Dep()
+dep.addSub(new Watcher()) // Watcher订阅了依赖
+</code></pre>
+<blockquote>
+<p>怎么通知notify</p>
+</blockquote>
+<p>把每一个数据当成一个Dep实例，然后setter的时候去notify就行了，所以我们可以在defineProperty中new Dep()，通过闭包setter就可以取到Dep实例</p>
+<blockquote>
+<p>怎么让我的Watcher实例订阅到这个Dep实例</p>
+</blockquote>
+<p>从get里面做手脚，在get中是可以取到这个Dep实例的，所以可以在执行watch操作的时候，执行获取数值，触发getter去收集依赖</p>
+<p>在new Watcher的时候会执行一个求值的操作，然后因为标记了这个Watcher触发的，所以收集了依赖，也就是观察者订阅了依赖</p>
+<blockquote>
+<p>case</p>
+</blockquote>
+<pre><code class="javascript">const vm = new Vue({
+  data: {
+    msg: 1,
+  }
+})
+vm.$watch(&quot;msg&quot;, () =&gt; console.log(&quot;msg变了&quot;));
+vm.msg = 2; //输出「变了」
+</code></pre>
+<ul>
+<li>首先是new Vue遍历了数据，给数据defineProperty加上了getter/setter方法</li>
+<li>我们<code>new Watcher(vm, &#39;msg&#39;, () =&gt; console.log(&quot;msg变了&quot;))</code>,首先标记了全局变量Dep.target = 该Watcher实例，然后执行msg的get操作，触发到了它的getter，然后dep成功获取到它的订阅者，放入它的订阅者数组，最后我们将Dep.target = null</li>
+<li>最后设置vm.msg = 2,触发到了setter,闭包中的dep.notify,遍历订阅者数组，执行相应的回调操作。</li>
+</ul>
+<h3 id="Render"><a href="#Render" class="headerlink" title="Render"></a>Render</h3><p>第一部分其实就是各种正则了，对左右开闭标签的匹配以及属性的收集，通过栈的形式，不断出栈入栈去匹配以及更换父节点，最后生成一个对象，包含children,children又包含children的对象</p>
+<p>第二部分则是以第一部分为基础，根据节点类型找出一些静态的节点并标记</p>
+<p>第三部分就是生成render函数代码了</p>
+<p>知道了<code>vm._render()</code>创建了vnode返回，接下来就是<code>vm._update</code>了</p>
+<h4 id="数据到视图的整体流程"><a href="#数据到视图的整体流程" class="headerlink" title="数据到视图的整体流程"></a>数据到视图的整体流程</h4><p>所以到这里我们就可以得出一个数据到视图的整体流程的结论了</p>
+<ul>
+<li>在组件级别，vue会执行一个new Watcher</li>
+<li>new Watcher首先会有一个求值的操作，它的求值就是执行一个函数，这个函数会执行render，其中可能会有编译模板成render函数的操作，然后生成vnode(virtual dom)，再将virtual dom应用到视图中</li>
+<li>其中将virtual dom应用到视图中（这里涉及到diff后文会讲），一定会对其中的表达式求值(比如,我们肯定会取到它的值再去渲染的），这里会触发到相应的getter操作完成依赖的收集</li>
+<li>当数据变化的时候，就会notify到这个组件级别的Watcher,然后它还会去求值，从而重新收集依赖，并且重新渲染视图</li>
+</ul>
+]]></content>
+      
+        <categories>
+            
+            <category> 面试 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> 面试攻略 </tag>
+            
+            <tag> Vue </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[前端面试重点]]></title>
       <url>/2018/01/01/%E9%9D%A2%E8%AF%95/%E5%89%8D%E7%AB%AF/%E5%89%8D%E7%AB%AF%E9%9D%A2%E8%AF%95%E9%87%8D%E7%82%B9/</url>
       <content type="html"><![CDATA[<script src="/assets/js/APlayer.min.js"> </script><p>前端面试一定要准备，准备不只是为了面试，让自己的知识线串成网才是重点，工作的技术可能很杂乱，由于大概率的定向工作导致技术点也会偏重一块而忽略一些东西。</p>
@@ -1522,678 +2194,6 @@ if (typeof window.addEventListener != &#39;undefined&#39;) {
             <tag> JavaScript </tag>
             
             <tag> 事件委托 </tag>
-            
-        </tags>
-        
-    </entry>
-    
-    <entry>
-      <title><![CDATA[面试重点之AJAX]]></title>
-      <url>/2018/01/01/%E9%9D%A2%E8%AF%95/%E5%89%8D%E7%AB%AF/%E9%9D%A2%E8%AF%95%E9%87%8D%E7%82%B9%E4%B9%8BAJAX/</url>
-      <content type="html"><![CDATA[<script src="/assets/js/APlayer.min.js"> </script><p>AJAX问题在面试中必问。但其实又很简单。本文介绍一些手写代码。</p>
-<p>面试的AJAX部分，需要掌握：</p>
-<blockquote>
-<ul>
-<li>能手写，知道一些重要参数</li>
-</ul>
-</blockquote>
-<p>TODO：</p>
-<blockquote>
-<ul>
-<li>补充fetch等并对比</li>
-</ul>
-</blockquote>
-<a id="more"></a>
-<h1 id="面试重点之AJAX"><a href="#面试重点之AJAX" class="headerlink" title="面试重点之AJAX"></a>面试重点之AJAX</h1><h2 id="什么是AJAX"><a href="#什么是AJAX" class="headerlink" title="什么是AJAX"></a>什么是AJAX</h2><p>AJAX = 异步 JavaScript 和 XML（Asynchronous JavaScript and XML）。简短地说，在不重载整个网页的情况下，AJAX 通过后台加载数据，并在网页上进行显示。</p>
-<h2 id="XMLHttpRequest对象的常用方法和属性"><a href="#XMLHttpRequest对象的常用方法和属性" class="headerlink" title="XMLHttpRequest对象的常用方法和属性"></a>XMLHttpRequest对象的常用方法和属性</h2><p><strong>方法</strong></p>
-<p><code>open(“method”,”URL”)</code> 建立对服务器的调用，第一个参数是HTTP请求方式可以为GET，POST或任何服务器所支持的您想调用的方式。第二个参数是请求页面的URL。</p>
-<p><code>send()</code>方法，发送具体请求</p>
-<p><code>abort()</code>方法，停止当前请求</p>
-<p><strong>属性</strong></p>
-<p><code>readyState</code>属性：请求的状态，有5个可取值</p>
-<ul>
-<li>0=未初始化</li>
-<li>1=正在加载</li>
-<li>2=已加载</li>
-<li>3=交互中</li>
-<li>4=完成</li>
-</ul>
-<p><code>responseText</code>属性：服务器的响应，表示为一个串</p>
-<p><code>reponseXML</code> 属性：服务器的响应，表示为XML</p>
-<p><code>status</code>属性：服务器的HTTP状态码，200对应ok，400对应error</p>
-<h2 id="原生js-ajax实现"><a href="#原生js-ajax实现" class="headerlink" title="原生js ajax实现"></a>原生js ajax实现</h2><pre><code class="javascript">$(&#39;#send&#39;).click(function(){
-    //请求的5个阶段，对应readyState的值
-        //0: 未初始化，send方法未调用；
-        //1: 正在发送请求，send方法已调用；
-        //2: 请求发送完毕，send方法执行完毕；
-        //3: 正在解析响应内容；
-        //4: 响应内容解析完毕；
-    var data = &#39;name=yang&#39;;
-    var xhr = new XMLHttpRequest();   //创建一个ajax对象
-    xhr.onreadystatechange = function(event){    //对ajax对象进行监听
-        if(xhr.readyState == 4){    //4表示解析完毕
-            if(xhr.status == 200){    //200为正常返回
-                console.log(xhr)
-            }
-        }
-    };
-    xhr.open(&#39;POST&#39;,&#39;url&#39;,true);    //建立连接，参数一：发送方式，二：请求地址，三：是否异步，true为异步
-    xhr.setRequestHeader(&#39;Content-type&#39;,&#39;application/x-www-form-urlencoded&#39;);    //可有可无
-    xhr.send(data);        //发送
-});
-</code></pre>
-<h2 id="jquery-ajax实现"><a href="#jquery-ajax实现" class="headerlink" title="jquery ajax实现"></a>jquery ajax实现</h2><pre><code class="javascript">$.ajax({
-    url:&#39;/comm/test1.php&#39;,
-    type:&#39;POST&#39;, //GET
-    async:true,    //或false,是否异步
-    data:{
-        name:&#39;yang&#39;,age:25
-    },
-    timeout:5000,    //超时时间
-    dataType:&#39;json&#39;,    //返回的数据格式：json/xml/html/script/jsonp/text
-    beforeSend:function(xhr){
-        console.log(xhr)
-        console.log(&#39;发送前&#39;)
-    },
-    success:function(data,textStatus,jqXHR){
-        console.log(data)
-        console.log(textStatus)
-        console.log(jqXHR)
-    },
-    error:function(xhr,textStatus){
-        console.log(&#39;错误&#39;)
-        console.log(xhr)
-        console.log(textStatus)
-    },
-    complete:function(){
-        console.log(&#39;结束&#39;)
-    }
-})
-</code></pre>
-]]></content>
-      
-        <categories>
-            
-            <category> 面试 </category>
-            
-        </categories>
-        
-        
-        <tags>
-            
-            <tag> 面试攻略 </tag>
-            
-            <tag> AJAX </tag>
-            
-            <tag> JavaScript </tag>
-            
-        </tags>
-        
-    </entry>
-    
-    <entry>
-      <title><![CDATA[面试重点之ES6]]></title>
-      <url>/2018/01/01/%E9%9D%A2%E8%AF%95/%E5%89%8D%E7%AB%AF/%E9%9D%A2%E8%AF%95%E9%87%8D%E7%82%B9%E4%B9%8BES6/</url>
-      <content type="html"><![CDATA[<script src="/assets/js/APlayer.min.js"> </script><p>ES6问题在面试中是重中之重。我感觉是比较难的，如果仅仅是使用，那倒很轻松，但是其中会问实现、原理等，涉及的东西很多。</p>
-<p>面试的ES6部分，需要掌握：</p>
-<blockquote>
-<ul>
-<li>掌握每个概念存在的意义，是为了解决什么类型问题</li>
-<li>掌握每个概念的实现原理，ES5怎么写</li>
-<li>掌握每个概念的一些使用上的坑和技巧</li>
-</ul>
-</blockquote>
-<p>TODO：</p>
-<blockquote>
-<ul>
-<li>提到的概念深入细化</li>
-</ul>
-</blockquote>
-<a id="more"></a>
-<h1 id="面试重点之ES6"><a href="#面试重点之ES6" class="headerlink" title="面试重点之ES6"></a>面试重点之ES6</h1><h2 id="知识点"><a href="#知识点" class="headerlink" title="知识点"></a>知识点</h2><ul>
-<li>let/const</li>
-<li>立即执行函数</li>
-<li>箭头函数</li>
-<li>字符串拓展</li>
-<li>字符串模板字面量</li>
-<li>数组的拓展</li>
-<li>Maps</li>
-<li>Object</li>
-<li>for…of循环</li>
-<li>解构</li>
-<li>Modules</li>
-<li>参数默认值</li>
-<li>Class</li>
-<li>Object.assign()</li>
-<li>Symbol</li>
-<li>Promise</li>
-</ul>
-<h2 id="Promise"><a href="#Promise" class="headerlink" title="Promise"></a>Promise</h2><p>它的思想是，每一个异步任务返回一个Promise对象，该对象有一个then方法，允许指定回调函数。比如，f1的回调函数f2,可以写成：</p>
-<pre><code class="javascript">f1().then(f2);
-f1().then(f2).then(f3);
-f1().then(f2).fail(f3);
-</code></pre>
-<p>如果一个任务已经完成，再添加回调函数，该回调函数会立即执行。</p>
-<p>API:</p>
-<pre><code class="javascript">new Promise((resolve, reject) =&gt;
-    reject(new Error(&#39;Failed to fulfill Promise&#39;)))
-        .catch(reason =&gt; console.log(reason));
-</code></pre>
-<p>这里有两个处理函数，<strong>resolve</strong>（当Promise执行成功完毕时调用的回调函数） 和 <strong>reject</strong> （当Promise执行不接受时调用的回调函数）</p>
-<p><strong>Promises的好处</strong>：</p>
-<ul>
-<li>大量嵌套错误处理回调函数会使代码变得难以阅读理解。使用Promises，我们可以通过清晰的路径将错误事件让上传递，并且适当地处理它们。</li>
-</ul>
-<p>此外，Promise处理后的值，无论是解决（resolved）还是拒绝（rejected）的结果值，都是不可改变的。</p>
-<h3 id="1-什么是promise对象，它能干什么？"><a href="#1-什么是promise对象，它能干什么？" class="headerlink" title="1. 什么是promise对象，它能干什么？"></a>1. 什么是promise对象，它能干什么？</h3><p><strong>Promise</strong> 对象用于延迟(deferred) 计算和异步(asynchronous ) 计算.。一个Promise对象代表着一个还未完成，但预期将来会完成的操作。</p>
-<p><strong>Promise</strong> 对象是一个返回值的代理，这个返回值在promise对象创建时未必已知。它允许你为异步操作的成功或失败指定处理方法。 这使得异步方法可以像同步方法那样返回值：异步方法会返回一个包含了原返回值的 promise 对象来替代原返回值。</p>
-<p><strong>Promise</strong> 对象有以下几种状态:</p>
-<ul>
-<li><em>pending</em>: 表示一个初始状态, 非 fulfilled 或 rejected。</li>
-<li><em>fulfilled</em>: 成功的操作。</li>
-<li><em>rejected</em>: 失败的操作。</li>
-</ul>
-<p>每一个异步任务都会返回一个Promise对象，该对象有一个then方法，允许指定回调函数。可以根据Promise对象的状态相应的去执行对应的回调函数。</p>
-<h3 id="2-常用的API"><a href="#2-常用的API" class="headerlink" title="2. 常用的API"></a>2. 常用的API</h3><h4 id="1-Promise-prototype-then"><a href="#1-Promise-prototype-then" class="headerlink" title="1.Promise.prototype.then()"></a>1.Promise.prototype.then()</h4><p>它的作用是为promise实例添加状态改变时的回调函数。</p>
-<p>then()方法的第一个参数是resolved状态的回调函数，第二个参数（可选）是rejected状态的回调函数。then方法返回的是一个新的promise实例。</p>
-<p>then方法的第二个参数一般不推荐写。有以下两个原因：</p>
-<ul>
-<li>由于是链式操作，这个then方法之后还可能会有其他操作，如果此时把错误捕捉的函数放在后面方法前边的话，并且之后再无错误捕获方法，then之后的错误就会捕捉不到。</li>
-<li>在then方法里面，两个参数都是回调函数写了一大堆，这样结构看起来比较混乱。</li>
-</ul>
-<pre><code class="javascript">var p=new Promise(function(resolve, reject){
-    resolve(&quot;ok&quot;);    
-});
-p.then(function(value){console.log(val)},
- function(err)(console.log(err))       
-);
-</code></pre>
-<h4 id="2-Promise-prototype-catch"><a href="#2-Promise-prototype-catch" class="headerlink" title="2.Promise.prototype.catch()"></a>2.Promise.prototype.catch()</h4><p>这个方法是.then(null,rejection)的别名，这也能看出这个方法是专门只能用来捕获错误信息，用于指定发生错误时的回调函数。</p>
-<p>要注意一下几点：</p>
-<ul>
-<li>当promise状态已经变成resolved的时候，再抛出错误时是无效的。</li>
-<li>尽量将catch方法写在链式操作的最后。<strong>错误会一直冒泡到最后，catch放在最后会捕捉到所有错误。</strong></li>
-<li>当没有使用catch方法指定错误处理函数的回调函数时，promise对象里面抛出的错误不会传递到外层的代码。</li>
-</ul>
-<h4 id="3-Promise-resolve"><a href="#3-Promise-resolve" class="headerlink" title="3. Promise.resolve()"></a>3. Promise.resolve()</h4><p>这个方法的作用就是将现有的对象转化为Promise对象，进而可以执行这些方法。</p>
-<pre><code class="javascript">Promise.resolve(&quot;foo&quot;);
-</code></pre>
-<h4 id="4-Promise-all"><a href="#4-Promise-all" class="headerlink" title="4. Promise.all()"></a>4. Promise.all()</h4><p>这个方法用于将多个promise实例，包装成一个新的promise实例。</p>
-<pre><code class="javascript">var p=Promise.all([p1,p2,p3]);
-</code></pre>
-<p>要注意一下两点：</p>
-<ul>
-<li>只有当p1,p2,p3状态都变为fulfilled之后，p的状态才会变为fulfilled。</li>
-<li>只要p1.p2,p3中有任意一个状态变为rejected，p的状态就会变为rejected。</li>
-</ul>
-<h3 id="3-实现异步编程的原理"><a href="#3-实现异步编程的原理" class="headerlink" title="3. 实现异步编程的原理"></a>3. 实现异步编程的原理</h3><p>Promise对象相当于是一个状态机，在其内部使用resolve方法，使其由初始状态变为成功时的fulfilled状态或者执行失败后的rejected状态。这时内部的工作就完成了，开始由外部监听其内部的状态的改变，调用then()方法（catch()方法相当于then内部的第二个参数方法）对应的状态调用对应的处理函数。</p>
-<h2 id="箭头函数需要注意的地方"><a href="#箭头函数需要注意的地方" class="headerlink" title="箭头函数需要注意的地方"></a>箭头函数需要注意的地方</h2><p>当要求动态上下文的时候，就不能够使用箭头函数。也就是this的固定化</p>
-<ol>
-<li>在使用=&gt;定义函数的时候，<strong>this的指向是定义时所在的对象</strong>，而不是使用时所在的对象</li>
-<li>不能够用作构造函数，这就是说，不能够使用new命令，否则就会抛出一个错误</li>
-<li>不能够使用arguments对象</li>
-<li>不能使用yield命令</li>
-</ol>
-<h2 id="Proxy"><a href="#Proxy" class="headerlink" title="Proxy"></a>Proxy</h2><p>使用 Proxy 的好处是：对象只需关注于核心逻辑，一些非核心的逻辑（如：读取或设置对象的某些属性前记录日志；设置对象的某些属性值前，需要验证；某些属性的访问控制等）可以让 Proxy 来做。从而达到关注点分离，降级对象复杂度的目的。</p>
-<p>Proxy用于修改某些操作的默认行为，用来代理有些行为。Proxy 可以理解成，在目标对象之前架设一层“拦截”，外界对该对象的访问，都必须先通过这层拦截，因此提供了一种机制，可以对外界的访问进行过滤和改写。</p>
-<pre><code class="javascript">var engineer = { name: &#39;Joe Sixpack&#39;, salary: 50 };
-
-var interceptor = {
-  set: function (receiver, property, value) {
-    console.log(property, &#39;is changed to&#39;, value);
-    receiver[property] = value;
-  }
-};
-
-engineer = Proxy(engineer, interceptor);
-engineer.salary = 60;    //会触发处理器
-</code></pre>
-<p><strong>（1）get(target, propKey, receiver)</strong></p>
-<p>拦截对象属性的读取，比如<code>proxy.foo</code>和<code>proxy[&#39;foo&#39;]</code>。</p>
-<p>最后一个参数<code>receiver</code>是一个对象，可选，参见下面<code>Reflect.get</code>的部分。</p>
-<p><strong>（2）set(target, propKey, value, receiver)</strong></p>
-<p>拦截对象属性的设置，比如<code>proxy.foo = v</code>或<code>proxy[&#39;foo&#39;] = v</code>，返回一个布尔值。</p>
-<p><strong>（3）has(target, propKey)</strong></p>
-<p>拦截<code>propKey in proxy</code>的操作，返回一个布尔值。</p>
-<p><strong>（4）deleteProperty(target, propKey)</strong></p>
-<p>拦截<code>delete proxy[propKey]</code>的操作，返回一个布尔值。</p>
-<p><strong>（5）ownKeys(target)</strong></p>
-<p>拦截<code>Object.getOwnPropertyNames(proxy)</code>、<code>Object.getOwnPropertySymbols(proxy)</code>、<code>Object.keys(proxy)</code>，返回一个数组。该方法返回目标对象所有自身的属性的属性名，而<code>Object.keys()</code>的返回结果仅包括目标对象自身的可遍历属性。</p>
-<p><strong>（6）getOwnPropertyDescriptor(target, propKey)</strong></p>
-<p>拦截<code>Object.getOwnPropertyDescriptor(proxy, propKey)</code>，返回属性的描述对象。</p>
-<p><strong>（7）defineProperty(target, propKey, propDesc)</strong></p>
-<p>拦截<code>Object.defineProperty(proxy, propKey, propDesc）</code>、<code>Object.defineProperties(proxy, propDescs)</code>，返回一个布尔值。</p>
-<p><strong>（8）preventExtensions(target)</strong></p>
-<p>拦截<code>Object.preventExtensions(proxy)</code>，返回一个布尔值。</p>
-<p><strong>（9）getPrototypeOf(target)</strong></p>
-<p>拦截<code>Object.getPrototypeOf(proxy)</code>，返回一个对象。</p>
-<p><strong>（10）isExtensible(target)</strong></p>
-<p>拦截<code>Object.isExtensible(proxy)</code>，返回一个布尔值。</p>
-<p><strong>（11）setPrototypeOf(target, proto)</strong></p>
-<p>拦截<code>Object.setPrototypeOf(proxy, proto)</code>，返回一个布尔值。</p>
-<p>如果目标对象是函数，那么还有两种额外操作可以拦截。</p>
-<p><strong>（12）apply(target, object, args)</strong></p>
-<p>拦截 Proxy 实例作为函数调用的操作，比如<code>proxy(...args)</code>、<code>proxy.call(object, ...args)</code>、<code>proxy.apply(...)</code>。</p>
-<p><strong>（13）construct(target, args)</strong></p>
-<p>拦截 Proxy 实例作为构造函数调用的操作，比如<code>new proxy(...args)</code>。</p>
-<h2 id="Generator-函数"><a href="#Generator-函数" class="headerlink" title="Generator 函数"></a>Generator 函数</h2><p>异步编程的方法</p>
-<ul>
-<li>回调函数</li>
-<li>事件监听</li>
-<li>发布/订阅</li>
-<li>Promise 对象</li>
-</ul>
-<p>Generator 函数是协程在 ES6 的实现，最大特点就是可以交出函数的执行权（即暂停执行）。异步操作需要暂停的地方，都用 yield 语句注明。</p>
-<p>Generator 函数不同于普通函数的另一个地方，即执行它不会返回结果，返回的是指针对象。</p>
-<pre><code class="javascript">function* gen(x){
-  var y = yield x + 2;
-  return y;
-}
-
-var g = gen(1);
-g.next() // { value: 3, done: false }
-g.next() // { value: undefined, done: true }
-</code></pre>
-<p><strong>Case</strong></p>
-<pre><code class="javascript">var fetch = require(&#39;node-fetch&#39;);
-
-function* gen(){
-  var url = &#39;https://api.github.com/users/github&#39;;
-  var result = yield fetch(url);
-  console.log(result.bio);
-}
-</code></pre>
-<pre><code class="javascript">var g = gen();
-var result = g.next();
-
-result.value.then(function(data){
-  return data.json();
-}).then(function(data){
-  g.next(data);
-});
-</code></pre>
-<p>一句话说，next方法参数的作用，是覆盖掉上一个yield语句的值。</p>
-<p>带参数跟不带参数的区别是，带参数的情况，首先第一步就是将上一个yield语句重置为参数值，然后再照常执行剩下的语句。<strong>总之，区别就是先有一步先重置值，接下来其他全都一样。</strong></p>
-<h2 id="ES7的Async-Await"><a href="#ES7的Async-Await" class="headerlink" title="ES7的Async/Await"></a>ES7的Async/Await</h2><pre><code class="javascript">var sleep = function (time) {
-    return new Promise(function (resolve, reject) {
-        setTimeout(function () {
-            resolve();
-        }, time);
-    })
-};
-
-var start = async function () {
-    // 在这里使用起来就像同步代码那样直观
-    console.log(&#39;start&#39;);
-    await sleep(3000);
-    console.log(&#39;end&#39;);
-};
-
-start();
-</code></pre>
-<ul>
-<li>async 表示<code>这是一个async函数</code>，<code>await只能用在这个函数里面</code>。</li>
-<li>await 表示在这里<code>等待promise返回结果</code>了，再继续执行。</li>
-<li>await 后面跟着的<code>应该是一个promise对象</code></li>
-</ul>
-<h3 id="特点"><a href="#特点" class="headerlink" title="特点"></a>特点</h3><p>await等待的虽然是promise对象，但不必写<code>.then(..)</code>，直接可以得到返回值。</p>
-<p>await看起来就像是同步代码，所以可以理所当然的写在<code>for</code>循环里，不必担心以往需要<code>闭包</code>才能解决的问题。</p>
-<p>值得注意的是，<code>await</code>必须在<code>async函数的上下文中</code>的。</p>
-]]></content>
-      
-        <categories>
-            
-            <category> 面试 </category>
-            
-        </categories>
-        
-        
-        <tags>
-            
-            <tag> 面试攻略 </tag>
-            
-            <tag> JavaScript </tag>
-            
-            <tag> ES6 </tag>
-            
-        </tags>
-        
-    </entry>
-    
-    <entry>
-      <title><![CDATA[面试重点之Vue]]></title>
-      <url>/2018/01/01/%E9%9D%A2%E8%AF%95/%E5%89%8D%E7%AB%AF/%E9%9D%A2%E8%AF%95%E9%87%8D%E7%82%B9%E4%B9%8BVue/</url>
-      <content type="html"><![CDATA[<script src="/assets/js/APlayer.min.js"> </script><p>本文是我为了应付面试的产物，针对性强不怕没的说，但如实说我一点皮毛还不懂。</p>
-<p>为自己加个TODO：</p>
-<ul>
-<li>阅读源码，实现一套双向绑定和渲染。</li>
-<li>补充本文的一些细节+渲染+Vuex部分，写的很乱，其实是自己不懂乱copy</li>
-</ul>
-<p>面试的框架部分，需要掌握以下：</p>
-<blockquote>
-<ul>
-<li>实现原理、源码</li>
-<li>对一些实现的思考</li>
-</ul>
-</blockquote>
-<a id="more"></a>
-<h1 id="面试重点之Vue"><a href="#面试重点之Vue" class="headerlink" title="面试重点之Vue"></a>面试重点之Vue</h1><h2 id="Vue通信"><a href="#Vue通信" class="headerlink" title="Vue通信"></a>Vue通信</h2><h3 id="vue父子组件通信"><a href="#vue父子组件通信" class="headerlink" title="vue父子组件通信"></a>vue父子组件通信</h3><h4 id="子-gt-父：-emit"><a href="#子-gt-父：-emit" class="headerlink" title="子 -&gt; 父：$emit"></a>子 -&gt; 父：$emit</h4><pre><code class="vue">// 父组件
-&lt;single-address @edit-address=&quot;editAddress&quot;&gt;&lt;/single-address&gt;
-
-// 子组件
-methods: {
- editAddress () {
-  this.$emit(&#39;edit-address&#39;, false)
- }
-}
-</code></pre>
-<h4 id="父-gt-子：props"><a href="#父-gt-子：props" class="headerlink" title="父 -&gt; 子：props"></a>父 -&gt; 子：props</h4><pre><code class="javascript">// 父组件
-&lt;one-address :addressitems=&quot;addressitems&quot;&gt;&lt;/one-address&gt;
-
-// 子组件
-&lt;div&gt;{{ addressitems.partment }}{{ addressitems.address }}&lt;/div&gt;
-export default {
-  props: {
-    addressitems: Object
-  }
-}
-</code></pre>
-<h3 id="非父子组件"><a href="#非父子组件" class="headerlink" title="非父子组件"></a>非父子组件</h3><pre><code class="javascript">var bus = new Vue()
-// 触发组件 A 中的事件
-bus.$emit(&#39;id-selected&#39;, 1)
-// 在组件 B 创建的钩子中监听事件
-bus.$on(&#39;id-selected&#39;, function (id) {
- console.log(id)
-})
-</code></pre>
-<h2 id="事件处理"><a href="#事件处理" class="headerlink" title="事件处理"></a>事件处理</h2><p>Methods 并不是创建自定义函数的唯一方式。也可以使用 <code>watch</code> 。</p>
-<p>两者的区别是 methods 适合小的、同步的计算，而 <code>watch</code> 对于多任务、异步或者响应数据变化时的开销大的操作是有利的。我经常在动画中使用 watch 。</p>
-<h2 id="组件，Props，Slots"><a href="#组件，Props，Slots" class="headerlink" title="组件，Props，Slots"></a>组件，Props，Slots</h2><p>从父组件向子组件传递数据的方式称为 <strong>props</strong>。</p>
-<p>我们也可以向 props 中添加验证，这和 React 中的 <code>PropTypes</code> 类似。</p>
-<h3 id="Slots"><a href="#Slots" class="headerlink" title="Slots"></a>Slots</h3><p>重用组件，并用相同的数据或功能填充它们</p>
-<p>你也可以使用具名 slot 。如果一个组件中有两个 slot， 可以通过添加 name 属性区分它们</p>
-<h2 id="vue生命周期"><a href="#vue生命周期" class="headerlink" title="vue生命周期"></a>vue生命周期</h2><h3 id="1-什么是vue生命周期？"><a href="#1-什么是vue生命周期？" class="headerlink" title="1.什么是vue生命周期？"></a>1.什么是vue生命周期？</h3><p>答： Vue 实例从创建到销毁的过程，就是生命周期。也就是从开始创建、初始化数据、编译模板、挂载Dom→渲染、更新→渲染、卸载等一系列过程，我们称这是 Vue 的生命周期。2、vue生命周期的作用是什么？<br>答：它的生命周期中有多个事件钩子，让我们在控制整个Vue实例的过程时更容易形成好的逻辑。</p>
-<h3 id="2-vue生命周期总共有几个阶段？"><a href="#2-vue生命周期总共有几个阶段？" class="headerlink" title="2. vue生命周期总共有几个阶段？"></a>2. vue生命周期总共有几个阶段？</h3><p>答：它可以总共分为8个阶段：创建前/后, 载入前/后,更新前/后,销毁前/销毁后</p>
-<h3 id="3-第一次页面加载会触发哪几个钩子？"><a href="#3-第一次页面加载会触发哪几个钩子？" class="headerlink" title="3. 第一次页面加载会触发哪几个钩子？"></a>3. 第一次页面加载会触发哪几个钩子？</h3><p>答：第一次页面加载时会触发 beforeCreate, created, beforeMount, mounted 这几个钩子</p>
-<h3 id="4-DOM-渲染在-哪个周期中就已经完成？"><a href="#4-DOM-渲染在-哪个周期中就已经完成？" class="headerlink" title="4. DOM 渲染在 哪个周期中就已经完成？"></a>4. DOM 渲染在 哪个周期中就已经完成？</h3><p>答：DOM 渲染在 mounted 中就已经完成了。</p>
-<h3 id="5-简单描述每个周期具体适合哪些场景？"><a href="#5-简单描述每个周期具体适合哪些场景？" class="headerlink" title="5. 简单描述每个周期具体适合哪些场景？"></a>5. 简单描述每个周期具体适合哪些场景？</h3><p>答：生命周期钩子的一些使用方法： beforecreate : 可以在这加个loading事件，在加载实例时触发 created : 初始化完成时的事件写在这里，如在这结束loading事件，异步请求也适宜在这里调用 mounted : 挂载元素，获取到DOM节点 updated : 如果对数据统一处理，在这里写上相应函数 beforeDestroy : 可以做一个确认停止事件的确认框 nextTick : 更新数据后立即操作dom</p>
-<h3 id="5-生命周期钩子"><a href="#5-生命周期钩子" class="headerlink" title="5. 生命周期钩子"></a>5. 生命周期钩子</h3><p>可以使用的钩子有： <code>beforeCreate, created, beforeMount, mounted, beforeUpdate, updated, activated, deactivated, beforeDestroy</code>, <code>destroyed</code> 。</p>
-<h2 id="Vuex"><a href="#Vuex" class="headerlink" title="Vuex"></a>Vuex</h2><ul>
-<li><strong>Getters</strong> 可以在模板中静态的显示数据。换句话说，getters 可以读取数据，但不能改变状态。</li>
-<li><strong>Mutations</strong> 允许更新状态，但永远是同步的。Mutations 是 store 中改变状态数据的唯一方式。</li>
-<li><strong>Actions</strong> 允许异步更新状态，但是需要使用一个已经存在的 mutation 。如果你需要以特定的顺序同时执行不同的 mutations 会非常有用。</li>
-</ul>
-<p><code>store.js</code>：</p>
-<pre><code class="javascript">export const store = new Vuex.Store({
-  state: {
-    counter: 0
-  },
-  // 展示内容, 无法改变状态
-  getters: {
-    tripleCounter: state =&gt; {
-      return state.counter * 3;
-    }
-  },
-  // 改变状态
-  //mutations 永远是同步的
-  mutations: {
-    // 显示传递的载荷 payload, 用 num 表示
-    increment: (state, num) =&gt; {
-      state.counter += num;
-    }
-  }, 
-  // 提交 mutation, 这是异步的
-  actions: {
-    // 显示传递的载荷 payload, 用 asynchNum ( 一个对象 )表示
-    asyncDecrement: ({ commit }, asyncNum) =&gt; {
-      setTimeout(() =&gt; {
-        // asyncNum 对象可以是静态值
-        commit(&#39;decrement&#39;, asyncNum.by);
-      }, asyncNum.duration);
-    }
-  }
-});
-</code></pre>
-<h2 id="双向数据绑定原理是什么？"><a href="#双向数据绑定原理是什么？" class="headerlink" title="双向数据绑定原理是什么？"></a>双向数据绑定原理是什么？</h2><h3 id="基本原理"><a href="#基本原理" class="headerlink" title="基本原理"></a>基本原理</h3><p>这是 ES5 的特性，通过在 setter/getter，在属性被访问和修改时通知变化。比如 vue 就是用的这个特性。</p>
-<p>vue.js 是采用<strong>数据劫持结合发布者-订阅者模式</strong>的方式，通过<code>Object.defineProperty()</code>来劫持各个属性的<code>setter</code>，<code>getter</code>，在数据变动时发布消息给订阅者，触发相应的监听回调。</p>
-<pre><code class="javascript">function declar(obj){
-   var rwprop = 0;
-   Object.defineProperty(obj, &quot;rwprop&quot;, {
-        get : () =&gt; rwprop // getter
-   });
-   return obj
-}
-
-var a = {};
-
-a = declar(a);
-
-a.rwprop = 1 // 调用了setter
-console.log(a.rwprop) // 调用了getter
-</code></pre>
-<h3 id="具体步骤"><a href="#具体步骤" class="headerlink" title="具体步骤"></a>具体步骤</h3><p><strong>第一步：需要observe的数据对象进行递归遍历</strong>，包括子属性对象的属性，都加上 <code>setter</code>和<code>getter</code>。这样的话，给这个对象的某个值赋值，就会触发<code>setter</code>，那么就能监听到了数据变化</p>
-<p><strong>第二步：compile解析模板指令</strong>，将模板中的变量替换成数据，然后初始化渲染页面视图，并将每个指令对应的节点绑定更新函数，添加监听数据的订阅者，一旦数据有变动，收到通知，更新视图</p>
-<p><strong>第三步：Watcher订阅者是Observer和Compile之间通信的桥梁</strong>，主要做的事情是:<br>1、在自身实例化时往属性订阅器(dep)里面添加自己<br>2、自身必须有一个update()方法<br>3、待属性变动dep.notice()通知时，能调用自身的update()方法，并触发Compile中绑定的回调，则功成身退。</p>
-<p><strong>第四步：MVVM作为数据绑定的入口，整合Observer、Compile和Watcher三者</strong>，通过Observer来监听自己的model数据变化，通过Compile来解析编译模板指令，最终利用Watcher搭起Observer和Compile之间的通信桥梁，达到数据变化 -&gt; 视图更新；视图交互变化(input) -&gt; 数据model变更的双向绑定效果。</p>
-<h4 id="1-实现-observer"><a href="#1-实现-observer" class="headerlink" title="1. 实现 observer"></a>1. 实现 observer</h4><p>思路：我们知道Object.defineProperty的特性了，我们就利用它的set和get。。我们将要observe的对象，通过递归，将它所有的属性，包括子属性的属性，都给加上set和get，这样的话，给这个对象的某个属性赋值，就会触发set</p>
-<pre><code class="javascript">export default class  Observer{
-  constructor(value) {
-    this.value = value
-    this.walk(value)
-  }
-  //递归。。让每个字属性可以observe
-  walk(value){
-    Object.keys(value).forEach(key=&gt;this.convert(key,value[key]))
-  }
-  convert(key, val){
-    defineReactive(this.value, key, val)
-  }
-}
-
-export function defineReactive (obj, key, val) {
-  var childOb = observe(val)
-  Object.defineProperty(obj, key, {
-    enumerable: true,
-    configurable: true,
-    get: ()=&gt;val,
-    set:newVal=&gt; {      
-     childOb = observe(newVal)//如果新赋值的值是个复杂类型。再递归它，加上set/get。。
-     }
-  })
-}
-
-export function observe (value, vm) {
-  if (!value || typeof value !== &#39;object&#39;) {
-    return
-  }
-  return new Observer(value)
-}
-</code></pre>
-<p>所以，我们是不是应该写一个消息－订阅器呢？这样的话，一触发set方法，我们就发一个通知出来，然后，订阅这个消息的，就会怎样？。。。对咯。。收到消息。。。触发回调。</p>
-<h4 id="2-消息－订阅器"><a href="#2-消息－订阅器" class="headerlink" title="2. 消息－订阅器"></a>2. 消息－订阅器</h4><p>维护一个数组，这个数组，就放订阅着属性订阅器，一旦触发notify，订阅者就调用自己的update方法</p>
-<pre><code class="javascript">export function defineReactive (obj, key, val) {
-  var dep = new Dep()
-  var childOb = observe(val)
-
-  Object.defineProperty(obj, key, {
-    enumerable: true,
-    configurable: true,
-    get: ()=&gt;{
-      // 说明这是watch 引起的
-      if(Dep.target){
-        dep.addSub(Dep.target)
-      }
-      return val
-    },
-    set:newVal=&gt; {
-      var value =  val
-      if (newVal === value) {
-        return
-      }
-      val = newVal
-      childOb = observe(newVal)
-      dep.notify()
-    }
-  })
-}
-</code></pre>
-<p>谁是订阅者。。对，是Watcher。。一旦 <code>dep.notify()</code>就遍历订阅者，也就是Watcher，并调用他的<code>update()</code>方法</p>
-<h4 id="3-实现一个-Watcher"><a href="#3-实现一个-Watcher" class="headerlink" title="3. 实现一个 Watcher"></a>3. 实现一个 Watcher</h4><pre><code class="javascript">export default class Watcher {
-  constructor(vm, expOrFn, cb) {
-    this.cb = cb
-    this.vm = vm
-    //此处简化.要区分fuction还是expression,只考虑最简单的expression
-    this.expOrFn = expOrFn
-    this.value = this.get()
-  }
-  update(){
-    this.run()
-  }
-  run(){
-    const  value = this.get()
-    if(value !==this.value){
-      this.value = value
-      this.cb.call(this.vm)
-    }
-  }
-  get(){
-    Dep.target = this
-    //此处简化。。要区分fuction还是expression
-    const value = this.vm._data[this.expOrFn]
-    Dep.target = null
-    return value
-  }
-}
-</code></pre>
-<h4 id="4-实现一个-Vue"><a href="#4-实现一个-Vue" class="headerlink" title="4. 实现一个 Vue"></a>4. 实现一个 Vue</h4><pre><code class="javascript">export default class Vue {
-  constructor (options={}) {
-    //这里简化了。。其实要merge
-    this.$options=options
-    //这里简化了。。其实要区分的
-    let data = this._data=this.$options.data
-    Object.keys(data).forEach(key=&gt;this._proxy(key))
-    observe(data,this)
-  }
-
-
-  $watch(expOrFn, cb, options){
-    new Watcher(this, expOrFn, cb)
-  }
-
-  _proxy(key) {
-    var self = this
-    Object.defineProperty(self, key, {
-      configurable: true,
-      enumerable: true,
-      get: function proxyGetter () {
-        return self._data[key]
-      },
-      set: function proxySetter (val) {
-        self._data[key] = val
-      }
-    })
-  }
-}
-</code></pre>
-<h2 id="Vue2-原理浅谈"><a href="#Vue2-原理浅谈" class="headerlink" title="Vue2 原理浅谈"></a>Vue2 原理浅谈</h2><ul>
-<li>输入了数据状态，输出视图（我们不关心中间的过程，它们均由框架帮助我们实现）；</li>
-<li>数据变化侦测，从而re-render视图。</li>
-<li>数据变化侦测分为<code>系统不可感知数据变化</code>和<code>系统可感知数据变化</code></li>
-<li>系统不可感知数据变化：React就是通过setState发信号告诉系统有可能数据变了,然后通过virtual dom diff去渲染视图，angular则是有一个脏值检查流程，遍历比对</li>
-<li>系统可感知数据变化：通过观察者模式，使用Observable (可观察对象)，Observer (观察者)(或者是watcher)去订阅</li>
-</ul>
-<p>上者<code>系统不可感知数据变化</code>,粒度粗，有时候还得手动优化（比如pureComponet和shouldComponentUpdate)去跳过一些数据不会更新的视图从而提升性能</p>
-<p>下者<code>系统可感知数据变化</code>,粒度细，但是绑定大量观察者，有大量的依赖追踪的内存开销</p>
-<p><strong>Vue2</strong>，它采用了折中粒度的方式，粒度到组件级别上，由watcher订阅数据，当数据变化我们可以得知哪个组件数据变了，然后采用virtual dom diff的方式去更新相应组件。</p>
-<h3 id="数据响应原理"><a href="#数据响应原理" class="headerlink" title="数据响应原理"></a>数据响应原理</h3><h4 id="Object-defineProperty"><a href="#Object-defineProperty" class="headerlink" title="Object.defineProperty"></a>Object.defineProperty</h4><blockquote>
-<p>app.message如何拿到vue data中的message?</p>
-</blockquote>
-<p>其实也是跟<code>Object.defineProperty</code>有关，Vue在初始化数据的时候会遍历data代理这些数据，其实就是用<code>Object.defineProperty</code>多加了一层的访问</p>
-<h4 id="观察者模式（Observer-Watcher-Dep"><a href="#观察者模式（Observer-Watcher-Dep" class="headerlink" title="观察者模式（Observer, Watcher, Dep)"></a>观察者模式（Observer, Watcher, Dep)</h4><ul>
-<li>Observer类主要用于给Vue的数据<code>defineProperty</code>增加getter/setter方法，并且在getter/setter中收集依赖或者通知更新</li>
-<li>Watcher类来用于观察数据（或者表达式）变化然后执行回调函数（其中也有收集依赖的过程），主要用于$watch API和指令上</li>
-<li>Dep类就是一个可观察对象，可以有不同指令订阅它（它是多播的）</li>
-</ul>
-<p>观察者模式,跟发布／订阅模式有点像，区别是发布和订阅以及发布后调度订阅者的操作都是由中心统一完成，但是观察者模式则没有这样的中心</p>
-<h5 id="如何实现观察者模式呢？"><a href="#如何实现观察者模式呢？" class="headerlink" title="如何实现观察者模式呢？"></a>如何实现观察者模式呢？</h5><blockquote>
-<p>怎么实现订阅</p>
-</blockquote>
-<p>Dep由于是可以被多个Watcher所订阅的，所以它拥有着订阅者数组，订阅了它，就把Watcher放入数组即可</p>
-<pre><code class="javascript">class Dep {
-  constructor () {
-    this.subs = []
-  }
-  notify () {
-    const subs = this.subs.slice()
-    for (let i = 0; i &lt; subs.length; i++) {
-        subs[i].update()
-    }
-  }
-  addSub (sub) {
-    this.subs.push(sub)
-  }
-}
-
-class Watcher {
-  constructor () {
-  }
-  update () {
-  }
-}
-
-let dep = new Dep()
-dep.addSub(new Watcher()) // Watcher订阅了依赖
-</code></pre>
-<blockquote>
-<p>怎么通知notify</p>
-</blockquote>
-<p>把每一个数据当成一个Dep实例，然后setter的时候去notify就行了，所以我们可以在defineProperty中new Dep()，通过闭包setter就可以取到Dep实例</p>
-<blockquote>
-<p>怎么让我的Watcher实例订阅到这个Dep实例</p>
-</blockquote>
-<p>从get里面做手脚，在get中是可以取到这个Dep实例的，所以可以在执行watch操作的时候，执行获取数值，触发getter去收集依赖</p>
-<p>在new Watcher的时候会执行一个求值的操作，然后因为标记了这个Watcher触发的，所以收集了依赖，也就是观察者订阅了依赖</p>
-<blockquote>
-<p>case</p>
-</blockquote>
-<pre><code class="javascript">const vm = new Vue({
-  data: {
-    msg: 1,
-  }
-})
-vm.$watch(&quot;msg&quot;, () =&gt; console.log(&quot;msg变了&quot;));
-vm.msg = 2; //输出「变了」
-</code></pre>
-<ul>
-<li>首先是new Vue遍历了数据，给数据defineProperty加上了getter/setter方法</li>
-<li>我们<code>new Watcher(vm, &#39;msg&#39;, () =&gt; console.log(&quot;msg变了&quot;))</code>,首先标记了全局变量Dep.target = 该Watcher实例，然后执行msg的get操作，触发到了它的getter，然后dep成功获取到它的订阅者，放入它的订阅者数组，最后我们将Dep.target = null</li>
-<li>最后设置vm.msg = 2,触发到了setter,闭包中的dep.notify,遍历订阅者数组，执行相应的回调操作。</li>
-</ul>
-<h3 id="Render"><a href="#Render" class="headerlink" title="Render"></a>Render</h3><p>第一部分其实就是各种正则了，对左右开闭标签的匹配以及属性的收集，通过栈的形式，不断出栈入栈去匹配以及更换父节点，最后生成一个对象，包含children,children又包含children的对象</p>
-<p>第二部分则是以第一部分为基础，根据节点类型找出一些静态的节点并标记</p>
-<p>第三部分就是生成render函数代码了</p>
-<p>知道了<code>vm._render()</code>创建了vnode返回，接下来就是<code>vm._update</code>了</p>
-<h4 id="数据到视图的整体流程"><a href="#数据到视图的整体流程" class="headerlink" title="数据到视图的整体流程"></a>数据到视图的整体流程</h4><p>所以到这里我们就可以得出一个数据到视图的整体流程的结论了</p>
-<ul>
-<li>在组件级别，vue会执行一个new Watcher</li>
-<li>new Watcher首先会有一个求值的操作，它的求值就是执行一个函数，这个函数会执行render，其中可能会有编译模板成render函数的操作，然后生成vnode(virtual dom)，再将virtual dom应用到视图中</li>
-<li>其中将virtual dom应用到视图中（这里涉及到diff后文会讲），一定会对其中的表达式求值(比如,我们肯定会取到它的值再去渲染的），这里会触发到相应的getter操作完成依赖的收集</li>
-<li>当数据变化的时候，就会notify到这个组件级别的Watcher,然后它还会去求值，从而重新收集依赖，并且重新渲染视图</li>
-</ul>
-]]></content>
-      
-        <categories>
-            
-            <category> 面试 </category>
-            
-        </categories>
-        
-        
-        <tags>
-            
-            <tag> 面试攻略 </tag>
-            
-            <tag> Vue </tag>
             
         </tags>
         
@@ -6877,177 +6877,6 @@ function concateAll() {
     </entry>
     
     <entry>
-      <title><![CDATA[webpack篇]]></title>
-      <url>/2017/10/02/%E5%89%8D%E7%AB%AF/%E6%9E%84%E5%BB%BA/Webpack/Webpack%E7%AF%87/</url>
-      <content type="html"><![CDATA[<script src="/assets/js/APlayer.min.js"> </script><p>本文介绍webpack结构</p>
-<a id="more"></a>
-<h1 id="webpack篇"><a href="#webpack篇" class="headerlink" title="webpack篇"></a>webpack篇</h1><h1 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h1><p>不像大多数的模块打包机，webpack是收把项目当作一个整体，通过一个给定的的主文件，webpack将从这个文件开始找到你的项目的所有依赖文件，使用loaders处理它们，最后打包成一个或多个浏览器可识别的js文件</p>
-<h1 id="install"><a href="#install" class="headerlink" title="install"></a>install</h1><p>webpack是我们需要的模块打包机，webpack-dev-server用来创建本地服务器，监听你的代码修改，并自动刷新修改后的结果。这些是有关<strong>devServer的配置</strong></p>
-<pre><code class="javascript">contentBase,  // 为文件提供本地服务器
-port, // 监听端口，默认8080
-inline, // 设置为true,源文件发生改变自动刷新页面
-historyApiFallback  // 依赖HTML5 history API,如果设置为true,所有的页面跳转指向index.html
-
-devServer:{
-    contentBase: &#39;./src&#39; // 本地服务器所加载的页面所在的目录
-    historyApiFallback: true, // 不跳转
-    inline: true // 实时刷新
-}
-</code></pre>
-<p>然后我们在根目录下创建一个’webpack.config.js’，在’package.json’添加两个命令用于本地开发和生产发布</p>
-<pre><code class="javascript">&quot;scripts&quot;: {
-      &quot;start&quot;: &quot;webpack-dev-server&quot;,
-    &quot;build&quot;: &quot;webpack&quot;
-}
-</code></pre>
-<h1 id="webpack-config-js"><a href="#webpack-config-js" class="headerlink" title="webpack.config.js"></a>webpack.config.js</h1><h2 id="entry"><a href="#entry" class="headerlink" title="entry"></a>entry</h2><p>entry: 用来写入口文件，它将是整个依赖关系的根，当我们需要多个入口文件的时候，可以把entry写成一个对象</p>
-<pre><code class="javascript">var baseConfig = {
-        entry: {
-            main: &#39;./src/index.js&#39;
-        }
-    }
-</code></pre>
-<h2 id="output"><a href="#output" class="headerlink" title="output"></a>output</h2><p>output: 即使入口文件有多个，但是只有一个输出配置</p>
-<pre><code class="javascript">var path = require(&#39;path&#39;)
-var baseConfig = {
-    entry: {
-        main: &#39;./src/index.js&#39;
-    },
-    output: {
-        filename: &#39;main.js&#39;,
-        path: path.resolve(&#39;./build&#39;)
-    }
-}
-module.exports = baseConfig
-</code></pre>
-<p>如果你定义的入口文件有多个，那么我们需要使用<strong>占位符</strong>来确保输出文件的唯一性</p>
-<pre><code class="javascript">output: {
-      filename: &#39;[name].js&#39;,
-    path: path.resolve(&#39;./build&#39;)
-}
-</code></pre>
-<p>注：filename应该比较好理解，就是对应于entry里面生成出来的文件名。</p>
-<h2 id="Loader"><a href="#Loader" class="headerlink" title="Loader"></a>Loader</h2><p><strong>loader的作用</strong>： </p>
-<ol>
-<li>实现对不同格式的文件的处理，比如说将scss转换为css，或者typescript转化为js</li>
-<li>转换这些文件，从而使其能够被添加到依赖图中</li>
-</ol>
-<p>loader是webpack最重要的部分之一，通过使用不同的Loader，我们能够调用外部的脚本或者工具，实现对不同格式文件的处理，loader需要在webpack.config.js里边单独用module进行配置，需要的loader需要通过npm 进行安装。配置如下：</p>
-<pre><code class="javascript">var baseConfig = {
-  // ...
-  module: {
-    rules: [
-      {
-        test: /*匹配文件后缀名的正则*/,
-        use: [
-        loader: /*loader名字*/,
-        query: /*额外配置*/
-        ]
-      }
-    ]
-  }
-}
-</code></pre>
-<p>几个常用的loader：</p>
-<ul>
-<li>babel-loader： 让下一代的js文件转换成现代浏览器能够支持的JS文件。babel有些复杂，所以大多数都会新建一个.babelrc进行配置</li>
-<li>css-loader,style-loader:两个建议配合使用，用来解析css文件，能够解释@import,url()如果需要解析less就在后面加一个less-loader</li>
-<li>file-loader: 生成的文件名就是文件内容的MD5哈希值并会保留所引用资源的原始扩展名</li>
-<li>url-loader: 功能类似 file-loader,但是文件大小低于指定的限制时，可以返回一个DataURL事实上，在使用less,scss,stylus这些的时候，npm会提示你差什么插件，差什么，你就安上就行了</li>
-</ul>
-<h2 id="Plugins"><a href="#Plugins" class="headerlink" title="Plugins"></a>Plugins</h2><p><strong>plugins和loader区别</strong></p>
-<p><strong>loaders负责的是处理源文件的如css、jsx，一次处理一个文件。而plugins并不是直接操作单个文件，</strong>它直接对整个构建过程起作用。下面列举了一些我们常用的plugins和他的用法</p>
-<ul>
-<li>ExtractTextWebpackPlugin: 它会将入口中引用css文件，都打包都独立的css文件中，而不是内嵌在js打包文件中。</li>
-<li>HtmlWebpackPlugin:它依据一个简单的index.html模版，生成一个自动引用你打包后的js文件的新index.html</li>
-<li>HotModuleReplacementPlugin: 它允许你在修改组件代码时，自动刷新实时预览修改后的结果注意永远不要在生产环境中使用HMR。这儿说一下一般情况分为开发环境，测试环境，生产环境。</li>
-</ul>
-<p>Case.webapck.config.js的全部内容:</p>
-<pre><code class="javascript">const webpack = require(&quot;webpack&quot;)
-const HtmlWebpackPlugin = require(&quot;html-webpack-plugin&quot;)
-var ExtractTextPlugin = require(&#39;extract-text-webpack-plugin&#39;)
-var lessRules = {
-  use: [
-    {loader: &#39;css-loader&#39;},
-    {loader: &#39;less-loader&#39;}
-  ]
-}
-module.exports = {
-  entry: {
-    main: &#39;./src/index.js&#39;
-  },
-  output: {
-    filename: &#39;[name].js&#39;,
-    path: path.resolve(&#39;./build&#39;)
-  },
-  devServer: {
-    contentBase: &#39;/src&#39;,
-    historyApiFallback: true,
-    inline: true,
-    hot: true
-  },
-  module: {
-    rules: [
-      {test: /\.less$/, use: ExtractTextPlugin.extract(lessRules)}
-    ]
-  },
-  plugins: [
-    new ExtractTextPlugin(&#39;main.css&#39;)
-  ]
-}
-</code></pre>
-<h1 id="产品阶段的构建"><a href="#产品阶段的构建" class="headerlink" title="产品阶段的构建"></a>产品阶段的构建</h1><p>在产品阶段，还需要对资源进行别的<br>处理，例如压缩，优化，缓存，分离css和js。首先我们来定义产品环境</p>
-<pre><code class="javascript">var ENV = process.env.NODE_ENV
-var baseConfig = {
-  // ... 
-  plugins: [
-    new webpack.DefinePlugin({
-      &#39;process.env.NODE_ENV&#39;: JSON.stringify(ENV)
-    })
-  ]
-}
-</code></pre>
-<p>然后还需要修改我们的script命令</p>
-<pre><code class="javascript">&quot;scripts&quot;: {
-    &quot;start&quot;: &quot;NODE_ENV=development webpack-dev-server&quot;,
-    &quot;build&quot;: &quot;NODE_ENV=production webpack&quot;
-}
-</code></pre>
-<p>process.env.NODE_ENV 将被一个字符串替代，它运行压缩器排除那些不可到达的开发代码分支。<br>当你引入那些不会进行生产的代码，下面这个代码将非常有用。</p>
-<pre><code class="javascript">if (process.env.NODE_ENV === &#39;development&#39;) {
-  console.warn(&#39;这个警告会在生产阶段消失&#39;)
-}
-</code></pre>
-<h1 id="优化插件"><a href="#优化插件" class="headerlink" title="优化插件"></a>优化插件</h1><ul>
-<li>OccurenceOrderPlugin: 为组件分配ID,通过这个插件webpack可以分析和优先考虑使用最多 的模块，然后为他们分配最小的ID</li>
-<li>UglifyJsPlugin: 压缩代码</li>
-</ul>
-<p>使用方法</p>
-<pre><code class="javascript">var baseConfig = {
-  // ...
-  new webpack.optimize.OccurenceOrderPlugin()
-  new webpack.optimize.UglifyJsPlugin()
-}
-</code></pre>
-<p>然后在我们使用npm run build会发现代码是压缩的</p>
-]]></content>
-      
-        <categories>
-            
-            <category> 构建 </category>
-            
-        </categories>
-        
-        
-        <tags>
-            
-            <tag> Webpack </tag>
-            
-        </tags>
-        
-    </entry>
-    
-    <entry>
       <title><![CDATA[Less语言特性]]></title>
       <url>/2017/10/02/%E5%89%8D%E7%AB%AF/%E6%9E%84%E5%BB%BA/Less/Less%E8%AF%AD%E8%A8%80%E7%89%B9%E6%80%A7/</url>
       <content type="html"><![CDATA[<script src="/assets/js/APlayer.min.js"> </script><p>本文介绍Less语言特性</p>
@@ -7661,6 +7490,177 @@ h1 { color: green; }
         <tags>
             
             <tag> Less </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[webpack篇]]></title>
+      <url>/2017/10/02/%E5%89%8D%E7%AB%AF/%E6%9E%84%E5%BB%BA/Webpack/Webpack%E7%AF%87/</url>
+      <content type="html"><![CDATA[<script src="/assets/js/APlayer.min.js"> </script><p>本文介绍webpack结构</p>
+<a id="more"></a>
+<h1 id="webpack篇"><a href="#webpack篇" class="headerlink" title="webpack篇"></a>webpack篇</h1><h1 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h1><p>不像大多数的模块打包机，webpack是收把项目当作一个整体，通过一个给定的的主文件，webpack将从这个文件开始找到你的项目的所有依赖文件，使用loaders处理它们，最后打包成一个或多个浏览器可识别的js文件</p>
+<h1 id="install"><a href="#install" class="headerlink" title="install"></a>install</h1><p>webpack是我们需要的模块打包机，webpack-dev-server用来创建本地服务器，监听你的代码修改，并自动刷新修改后的结果。这些是有关<strong>devServer的配置</strong></p>
+<pre><code class="javascript">contentBase,  // 为文件提供本地服务器
+port, // 监听端口，默认8080
+inline, // 设置为true,源文件发生改变自动刷新页面
+historyApiFallback  // 依赖HTML5 history API,如果设置为true,所有的页面跳转指向index.html
+
+devServer:{
+    contentBase: &#39;./src&#39; // 本地服务器所加载的页面所在的目录
+    historyApiFallback: true, // 不跳转
+    inline: true // 实时刷新
+}
+</code></pre>
+<p>然后我们在根目录下创建一个’webpack.config.js’，在’package.json’添加两个命令用于本地开发和生产发布</p>
+<pre><code class="javascript">&quot;scripts&quot;: {
+      &quot;start&quot;: &quot;webpack-dev-server&quot;,
+    &quot;build&quot;: &quot;webpack&quot;
+}
+</code></pre>
+<h1 id="webpack-config-js"><a href="#webpack-config-js" class="headerlink" title="webpack.config.js"></a>webpack.config.js</h1><h2 id="entry"><a href="#entry" class="headerlink" title="entry"></a>entry</h2><p>entry: 用来写入口文件，它将是整个依赖关系的根，当我们需要多个入口文件的时候，可以把entry写成一个对象</p>
+<pre><code class="javascript">var baseConfig = {
+        entry: {
+            main: &#39;./src/index.js&#39;
+        }
+    }
+</code></pre>
+<h2 id="output"><a href="#output" class="headerlink" title="output"></a>output</h2><p>output: 即使入口文件有多个，但是只有一个输出配置</p>
+<pre><code class="javascript">var path = require(&#39;path&#39;)
+var baseConfig = {
+    entry: {
+        main: &#39;./src/index.js&#39;
+    },
+    output: {
+        filename: &#39;main.js&#39;,
+        path: path.resolve(&#39;./build&#39;)
+    }
+}
+module.exports = baseConfig
+</code></pre>
+<p>如果你定义的入口文件有多个，那么我们需要使用<strong>占位符</strong>来确保输出文件的唯一性</p>
+<pre><code class="javascript">output: {
+      filename: &#39;[name].js&#39;,
+    path: path.resolve(&#39;./build&#39;)
+}
+</code></pre>
+<p>注：filename应该比较好理解，就是对应于entry里面生成出来的文件名。</p>
+<h2 id="Loader"><a href="#Loader" class="headerlink" title="Loader"></a>Loader</h2><p><strong>loader的作用</strong>： </p>
+<ol>
+<li>实现对不同格式的文件的处理，比如说将scss转换为css，或者typescript转化为js</li>
+<li>转换这些文件，从而使其能够被添加到依赖图中</li>
+</ol>
+<p>loader是webpack最重要的部分之一，通过使用不同的Loader，我们能够调用外部的脚本或者工具，实现对不同格式文件的处理，loader需要在webpack.config.js里边单独用module进行配置，需要的loader需要通过npm 进行安装。配置如下：</p>
+<pre><code class="javascript">var baseConfig = {
+  // ...
+  module: {
+    rules: [
+      {
+        test: /*匹配文件后缀名的正则*/,
+        use: [
+        loader: /*loader名字*/,
+        query: /*额外配置*/
+        ]
+      }
+    ]
+  }
+}
+</code></pre>
+<p>几个常用的loader：</p>
+<ul>
+<li>babel-loader： 让下一代的js文件转换成现代浏览器能够支持的JS文件。babel有些复杂，所以大多数都会新建一个.babelrc进行配置</li>
+<li>css-loader,style-loader:两个建议配合使用，用来解析css文件，能够解释@import,url()如果需要解析less就在后面加一个less-loader</li>
+<li>file-loader: 生成的文件名就是文件内容的MD5哈希值并会保留所引用资源的原始扩展名</li>
+<li>url-loader: 功能类似 file-loader,但是文件大小低于指定的限制时，可以返回一个DataURL事实上，在使用less,scss,stylus这些的时候，npm会提示你差什么插件，差什么，你就安上就行了</li>
+</ul>
+<h2 id="Plugins"><a href="#Plugins" class="headerlink" title="Plugins"></a>Plugins</h2><p><strong>plugins和loader区别</strong></p>
+<p><strong>loaders负责的是处理源文件的如css、jsx，一次处理一个文件。而plugins并不是直接操作单个文件，</strong>它直接对整个构建过程起作用。下面列举了一些我们常用的plugins和他的用法</p>
+<ul>
+<li>ExtractTextWebpackPlugin: 它会将入口中引用css文件，都打包都独立的css文件中，而不是内嵌在js打包文件中。</li>
+<li>HtmlWebpackPlugin:它依据一个简单的index.html模版，生成一个自动引用你打包后的js文件的新index.html</li>
+<li>HotModuleReplacementPlugin: 它允许你在修改组件代码时，自动刷新实时预览修改后的结果注意永远不要在生产环境中使用HMR。这儿说一下一般情况分为开发环境，测试环境，生产环境。</li>
+</ul>
+<p>Case.webapck.config.js的全部内容:</p>
+<pre><code class="javascript">const webpack = require(&quot;webpack&quot;)
+const HtmlWebpackPlugin = require(&quot;html-webpack-plugin&quot;)
+var ExtractTextPlugin = require(&#39;extract-text-webpack-plugin&#39;)
+var lessRules = {
+  use: [
+    {loader: &#39;css-loader&#39;},
+    {loader: &#39;less-loader&#39;}
+  ]
+}
+module.exports = {
+  entry: {
+    main: &#39;./src/index.js&#39;
+  },
+  output: {
+    filename: &#39;[name].js&#39;,
+    path: path.resolve(&#39;./build&#39;)
+  },
+  devServer: {
+    contentBase: &#39;/src&#39;,
+    historyApiFallback: true,
+    inline: true,
+    hot: true
+  },
+  module: {
+    rules: [
+      {test: /\.less$/, use: ExtractTextPlugin.extract(lessRules)}
+    ]
+  },
+  plugins: [
+    new ExtractTextPlugin(&#39;main.css&#39;)
+  ]
+}
+</code></pre>
+<h1 id="产品阶段的构建"><a href="#产品阶段的构建" class="headerlink" title="产品阶段的构建"></a>产品阶段的构建</h1><p>在产品阶段，还需要对资源进行别的<br>处理，例如压缩，优化，缓存，分离css和js。首先我们来定义产品环境</p>
+<pre><code class="javascript">var ENV = process.env.NODE_ENV
+var baseConfig = {
+  // ... 
+  plugins: [
+    new webpack.DefinePlugin({
+      &#39;process.env.NODE_ENV&#39;: JSON.stringify(ENV)
+    })
+  ]
+}
+</code></pre>
+<p>然后还需要修改我们的script命令</p>
+<pre><code class="javascript">&quot;scripts&quot;: {
+    &quot;start&quot;: &quot;NODE_ENV=development webpack-dev-server&quot;,
+    &quot;build&quot;: &quot;NODE_ENV=production webpack&quot;
+}
+</code></pre>
+<p>process.env.NODE_ENV 将被一个字符串替代，它运行压缩器排除那些不可到达的开发代码分支。<br>当你引入那些不会进行生产的代码，下面这个代码将非常有用。</p>
+<pre><code class="javascript">if (process.env.NODE_ENV === &#39;development&#39;) {
+  console.warn(&#39;这个警告会在生产阶段消失&#39;)
+}
+</code></pre>
+<h1 id="优化插件"><a href="#优化插件" class="headerlink" title="优化插件"></a>优化插件</h1><ul>
+<li>OccurenceOrderPlugin: 为组件分配ID,通过这个插件webpack可以分析和优先考虑使用最多 的模块，然后为他们分配最小的ID</li>
+<li>UglifyJsPlugin: 压缩代码</li>
+</ul>
+<p>使用方法</p>
+<pre><code class="javascript">var baseConfig = {
+  // ...
+  new webpack.optimize.OccurenceOrderPlugin()
+  new webpack.optimize.UglifyJsPlugin()
+}
+</code></pre>
+<p>然后在我们使用npm run build会发现代码是压缩的</p>
+]]></content>
+      
+        <categories>
+            
+            <category> 构建 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> Webpack </tag>
             
         </tags>
         
@@ -11337,6 +11337,241 @@ align-items: center;
     </entry>
     
     <entry>
+      <title><![CDATA[基础算法]]></title>
+      <url>/2017/01/02/%E9%9D%A2%E8%AF%95/%E7%AE%97%E6%B3%95/%E5%9F%BA%E7%A1%80%E7%AE%97%E6%B3%95/</url>
+      <content type="html"><![CDATA[<script src="/assets/js/APlayer.min.js"> </script><p>面试的基础算法整理总结</p>
+<a id="more"></a>
+<h1 id="算法"><a href="#算法" class="headerlink" title="算法"></a>算法</h1><h2 id="快排"><a href="#快排" class="headerlink" title="快排"></a>快排</h2><pre><code class="javascript">function quickSort(arr){
+  if(arr.length&lt;=1){return arr;}
+  var pivotIndex=Math.floor(arr.length/2);
+  //找基准，并把基准从原数组删除
+  var pivot=arr.splice(pivotIndex,1)[0];
+  //定义左右数组
+  var left=[];
+  var right=[];
+
+  //比基准小的放在left，比基准大的放在right
+  for(var i=0;i&lt;arr.length;i++){
+    if(arr[i]&lt;=pivot){
+      left.push(arr[i]);
+    }
+    else{
+      right.push(arr[i]);
+    }
+  }
+  //递归
+  return quickSort(left).concat([pivot],quickSort(right));
+}
+</code></pre>
+<h2 id="二叉树"><a href="#二叉树" class="headerlink" title="二叉树"></a>二叉树</h2><h3 id="节点个数"><a href="#节点个数" class="headerlink" title="节点个数"></a>节点个数</h3><p>递归解法：</p>
+<ol>
+<li>如果二叉树为空，节点个数为0</li>
+<li>如果二叉树不为空，二叉树节点个数 = 左子树节点个数 + 右子树节点个数 + 1</li>
+</ol>
+<pre><code class="c++">int GetNodeNum(BinaryTreeNode * pRoot)  
+{  
+    if(pRoot == NULL) // 递归出口  
+        return 0;  
+    return GetNodeNum(pRoot-&gt;m_pLeft) + GetNodeNum(pRoot-&gt;m_pRight) + 1;  
+}
+</code></pre>
+<h3 id="二叉树的深度"><a href="#二叉树的深度" class="headerlink" title="二叉树的深度"></a>二叉树的深度</h3><p>递归解法：</p>
+<ol>
+<li>如果二叉树为空，二叉树的深度为0</li>
+<li>如果二叉树不为空，二叉树的深度 = max(左子树深度， 右子树深度) + 1</li>
+</ol>
+<pre><code class="c++">int GetDepth(BinaryTreeNode * pRoot)  
+{  
+    if(pRoot == NULL) // 递归出口  
+        return 0;  
+    int depthLeft = GetDepth(pRoot-&gt;m_pLeft);  
+    int depthRight = GetDepth(pRoot-&gt;m_pRight);  
+    return depthLeft &gt; depthRight ? (depthLeft + 1) : (depthRight + 1);   
+}
+</code></pre>
+<h3 id="前序遍历，中序遍历，后序遍历"><a href="#前序遍历，中序遍历，后序遍历" class="headerlink" title="前序遍历，中序遍历，后序遍历"></a>前序遍历，中序遍历，后序遍历</h3><p>前序遍历递归解法：</p>
+<ol>
+<li>如果二叉树为空，空操作</li>
+<li>如果二叉树不为空，访问根节点，前序遍历左子树，前序遍历右子树</li>
+</ol>
+<pre><code class="javascript">void PreOrderTraverse(BinaryTreeNode * pRoot)  
+{  
+    if(pRoot == NULL)  
+        return;  
+    Visit(pRoot); // 访问根节点  
+    PreOrderTraverse(pRoot-&gt;m_pLeft); // 前序遍历左子树  
+    PreOrderTraverse(pRoot-&gt;m_pRight); // 前序遍历右子树  
+}
+</code></pre>
+<p>中序遍历递归解法</p>
+<ol>
+<li>如果二叉树为空，空操作。</li>
+<li>如果二叉树不为空，中序遍历左子树，访问根节点，中序遍历右子树</li>
+</ol>
+<pre><code class="javascript">void InOrderTraverse(BinaryTreeNode * pRoot)  
+{  
+    if(pRoot == NULL)  
+        return;  
+    InOrderTraverse(pRoot-&gt;m_pLeft); // 中序遍历左子树  
+    Visit(pRoot); // 访问根节点  
+    InOrderTraverse(pRoot-&gt;m_pRight); // 中序遍历右子树  
+}
+</code></pre>
+<p>后序遍历递归解法</p>
+<ol>
+<li>如果二叉树为空，空操作</li>
+<li>如果二叉树不为空，后序遍历左子树，后序遍历右子树，访问根节点</li>
+</ol>
+<pre><code class="javascript">void PostOrderTraverse(BinaryTreeNode * pRoot)  
+{  
+    if(pRoot == NULL)  
+        return;  
+    PostOrderTraverse(pRoot-&gt;m_pLeft); // 后序遍历左子树  
+    PostOrderTraverse(pRoot-&gt;m_pRight); // 后序遍历右子树  
+    Visit(pRoot); // 访问根节点  
+}
+</code></pre>
+<h3 id="分层遍历二叉树（按层次从上往下，从左往右）"><a href="#分层遍历二叉树（按层次从上往下，从左往右）" class="headerlink" title="分层遍历二叉树（按层次从上往下，从左往右）"></a>分层遍历二叉树（按层次从上往下，从左往右）</h3><p>相当于广度优先搜索，使用队列实现。队列初始化，将根节点压入队列。当队列不为空，进行如下操作：弹出一个节点，访问，若左子节点或右子节点不为空，将其压入队列。</p>
+<pre><code class="c++">void LevelTraverse(BinaryTreeNode * pRoot)  
+{  
+    if(pRoot == NULL)  
+        return;  
+    queue&lt;BinaryTreeNode *&gt; q;  
+    q.push(pRoot);  
+    while(!q.empty())  
+    {  
+        BinaryTreeNode * pNode = q.front();  
+        q.pop();  
+        Visit(pNode); // 访问节点  
+        if(pNode-&gt;m_pLeft != NULL)  
+            q.push(pNode-&gt;m_pLeft);  
+        if(pNode-&gt;m_pRight != NULL)  
+            q.push(pNode-&gt;m_pRight);  
+    }  
+    return;  
+}
+</code></pre>
+<h3 id="求二叉树第K层的节点个数"><a href="#求二叉树第K层的节点个数" class="headerlink" title="求二叉树第K层的节点个数"></a>求二叉树第K层的节点个数</h3><p>递归解法：</p>
+<ol>
+<li>如果二叉树为空或者k&lt;1返回0</li>
+</ol>
+<ol>
+<li>如果二叉树不为空并且k==1，返回1</li>
+<li>如果二叉树不为空且k&gt;1，返回左子树中k-1层的节点个数与右子树k-1层节点个数之和</li>
+</ol>
+<pre><code class="c++">int GetNodeNumKthLevel(BinaryTreeNode * pRoot, int k)  
+{  
+    if(pRoot == NULL || k &lt; 1)  
+        return 0;  
+    if(k == 1)  
+        return 1;  
+    int numLeft = GetNodeNumKthLevel(pRoot-&gt;m_pLeft, k-1); // 左子树中k-1层的节点个数  
+    int numRight = GetNodeNumKthLevel(pRoot-&gt;m_pRight, k-1); // 右子树中k-1层的节点个数  
+    return (numLeft + numRight);  
+}
+</code></pre>
+<h3 id="求二叉树中叶子节点的个数"><a href="#求二叉树中叶子节点的个数" class="headerlink" title="求二叉树中叶子节点的个数"></a>求二叉树中叶子节点的个数</h3><p>递归解法：</p>
+<ol>
+<li>如果二叉树为空，返回0</li>
+</ol>
+<ol>
+<li>如果二叉树不为空且左右子树为空，返回1</li>
+<li>如果二叉树不为空，且左右子树不同时为空，返回左子树中叶子节点个数加上右子树中叶子节点个数</li>
+</ol>
+<pre><code class="c++">int GetLeafNodeNum(BinaryTreeNode * pRoot)  
+{  
+    if(pRoot == NULL)  
+        return 0;  
+    if(pRoot-&gt;m_pLeft == NULL &amp;&amp; pRoot-&gt;m_pRight == NULL)  
+        return 1;  
+    int numLeft = GetLeafNodeNum(pRoot-&gt;m_pLeft); // 左子树中叶节点的个数  
+    int numRight = GetLeafNodeNum(pRoot-&gt;m_pRight); // 右子树中叶节点的个数  
+    return (numLeft + numRight);  
+}
+</code></pre>
+<h3 id="求二叉树的镜像"><a href="#求二叉树的镜像" class="headerlink" title="求二叉树的镜像"></a>求二叉树的镜像</h3><p>递归解法：</p>
+<ol>
+<li>如果二叉树为空，返回空</li>
+<li>如果二叉树不为空，求左子树和右子树的镜像，然后交换左子树和右子树</li>
+</ol>
+<pre><code class="c++">BinaryTreeNode * Mirror(BinaryTreeNode * pRoot)  
+{  
+    if(pRoot == NULL) // 返回NULL  
+        return NULL;  
+    BinaryTreeNode * pLeft = Mirror(pRoot-&gt;m_pLeft); // 求左子树镜像  
+    BinaryTreeNode * pRight = Mirror(pRoot-&gt;m_pRight); // 求右子树镜像  
+        // 交换左子树和右子树  
+    pRoot-&gt;m_pLeft = pRight;  
+    pRoot-&gt;m_pRight = pLeft;  
+    return pRoot;  
+}
+</code></pre>
+<h3 id="判断二叉树是不是平衡二叉树"><a href="#判断二叉树是不是平衡二叉树" class="headerlink" title="判断二叉树是不是平衡二叉树"></a>判断二叉树是不是平衡二叉树</h3><p>递归解法：</p>
+<ol>
+<li>如果二叉树为空，返回真</li>
+<li>如果二叉树不为空，如果左子树和右子树都是AVL树并且左子树和右子树高度相差不大于1，返回真，其他返回假</li>
+</ol>
+<pre><code class="c++">bool IsAVL(BinaryTreeNode * pRoot, int &amp; height)  
+{  
+    if(pRoot == NULL) // 空树，返回真  
+    {  
+        height = 0;  
+        return true;  
+    }  
+    int heightLeft;  
+    bool resultLeft = IsAVL(pRoot-&gt;m_pLeft, heightLeft);  
+    int heightRight;  
+    bool resultRight = IsAVL(pRoot-&gt;m_pRight, heightRight);  
+    if(resultLeft &amp;&amp; resultRight &amp;&amp; abs(heightLeft - heightRight) &lt;= 1) // 左子树和右子树都是AVL，并且高度相差不大于1，返回真  
+    {  
+        height = max(heightLeft, heightRight) + 1;  
+        return true;  
+    }  
+    else  
+    {  
+        height = max(heightLeft, heightRight) + 1;  
+        return false;  
+    }  
+}
+</code></pre>
+<h3 id="由前序遍历序列和中序遍历序列重建二叉树"><a href="#由前序遍历序列和中序遍历序列重建二叉树" class="headerlink" title="由前序遍历序列和中序遍历序列重建二叉树"></a>由前序遍历序列和中序遍历序列重建二叉树</h3><p>递归解法：</p>
+<ol>
+<li>如果前序遍历为空或中序遍历为空或节点个数小于等于0，返回NULL。</li>
+<li>创建根节点。前序遍历的第一个数据就是根节点的数据，在中序遍历中找到根节点的位置，可分别得知左子树和右子树的前序和中序遍历序列，重建左右子树。</li>
+</ol>
+<pre><code class="javascript">function reConstructBinaryTree(pre, vin)
+{
+    // write code here
+    if(pre.length==0 || vin.length==0) return null;
+    var index=vin.indexOf(pre[0]);
+    var left=vin.slice(0,index);//中序左子树
+    var right=vin.slice(index+1);//中序右子树
+    return {
+        val:pre[0],
+        //递归左右子树的前序，中序 
+        left:reConstructBinaryTree(pre.slice(1,index+1),left),
+        right:reConstructBinaryTree(pre.slice(index+1),right)
+     }; 
+}
+</code></pre>
+]]></content>
+      
+        <categories>
+            
+            <category> 面试 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> 算法题 </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[剑指offer]]></title>
       <url>/2017/01/02/%E9%9D%A2%E8%AF%95/%E7%AE%97%E6%B3%95/%E5%89%91%E6%8C%87offer/</url>
       <content type="html"><![CDATA[<script src="/assets/js/APlayer.min.js"> </script><p>剑指offer一刷留念</p>
@@ -12116,241 +12351,6 @@ function HasSubtree(pRoot1, pRoot2)
 }
 </code></pre>
 <h3 id="23-二叉搜索树的后序遍历-A-1"><a href="#23-二叉搜索树的后序遍历-A-1" class="headerlink" title="23.二叉搜索树的后序遍历(A)"></a>23.二叉搜索树的后序遍历(A)</h3><h3 id="24-二叉树中和为某一值的路径"><a href="#24-二叉树中和为某一值的路径" class="headerlink" title="24.二叉树中和为某一值的路径"></a>24.二叉树中和为某一值的路径</h3><h3 id="25-复杂链表的复制-B"><a href="#25-复杂链表的复制-B" class="headerlink" title="25.复杂链表的复制(B)"></a>25.复杂链表的复制(B)</h3><h3 id="26-二叉搜索树与双向链表-A-1"><a href="#26-二叉搜索树与双向链表-A-1" class="headerlink" title="26.二叉搜索树与双向链表(A)"></a>26.二叉搜索树与双向链表(A)</h3><h3 id="27-字符串排列-A"><a href="#27-字符串排列-A" class="headerlink" title="27.字符串排列(A)"></a>27.字符串排列(A)</h3><h3 id="32-把数组排成最小的数-C"><a href="#32-把数组排成最小的数-C" class="headerlink" title="32.把数组排成最小的数(C)"></a>32.把数组排成最小的数(C)</h3><h3 id="35-数组中的逆序对-A-1"><a href="#35-数组中的逆序对-A-1" class="headerlink" title="35.数组中的逆序对(A)"></a>35.数组中的逆序对(A)</h3><h3 id="56-删除链表中重复的结点-B-1"><a href="#56-删除链表中重复的结点-B-1" class="headerlink" title="56.删除链表中重复的结点(B)"></a>56.删除链表中重复的结点(B)</h3>]]></content>
-      
-        <categories>
-            
-            <category> 面试 </category>
-            
-        </categories>
-        
-        
-        <tags>
-            
-            <tag> 算法题 </tag>
-            
-        </tags>
-        
-    </entry>
-    
-    <entry>
-      <title><![CDATA[基础算法]]></title>
-      <url>/2017/01/02/%E9%9D%A2%E8%AF%95/%E7%AE%97%E6%B3%95/%E5%9F%BA%E7%A1%80%E7%AE%97%E6%B3%95/</url>
-      <content type="html"><![CDATA[<script src="/assets/js/APlayer.min.js"> </script><p>面试的基础算法整理总结</p>
-<a id="more"></a>
-<h1 id="算法"><a href="#算法" class="headerlink" title="算法"></a>算法</h1><h2 id="快排"><a href="#快排" class="headerlink" title="快排"></a>快排</h2><pre><code class="javascript">function quickSort(arr){
-  if(arr.length&lt;=1){return arr;}
-  var pivotIndex=Math.floor(arr.length/2);
-  //找基准，并把基准从原数组删除
-  var pivot=arr.splice(pivotIndex,1)[0];
-  //定义左右数组
-  var left=[];
-  var right=[];
-
-  //比基准小的放在left，比基准大的放在right
-  for(var i=0;i&lt;arr.length;i++){
-    if(arr[i]&lt;=pivot){
-      left.push(arr[i]);
-    }
-    else{
-      right.push(arr[i]);
-    }
-  }
-  //递归
-  return quickSort(left).concat([pivot],quickSort(right));
-}
-</code></pre>
-<h2 id="二叉树"><a href="#二叉树" class="headerlink" title="二叉树"></a>二叉树</h2><h3 id="节点个数"><a href="#节点个数" class="headerlink" title="节点个数"></a>节点个数</h3><p>递归解法：</p>
-<ol>
-<li>如果二叉树为空，节点个数为0</li>
-<li>如果二叉树不为空，二叉树节点个数 = 左子树节点个数 + 右子树节点个数 + 1</li>
-</ol>
-<pre><code class="c++">int GetNodeNum(BinaryTreeNode * pRoot)  
-{  
-    if(pRoot == NULL) // 递归出口  
-        return 0;  
-    return GetNodeNum(pRoot-&gt;m_pLeft) + GetNodeNum(pRoot-&gt;m_pRight) + 1;  
-}
-</code></pre>
-<h3 id="二叉树的深度"><a href="#二叉树的深度" class="headerlink" title="二叉树的深度"></a>二叉树的深度</h3><p>递归解法：</p>
-<ol>
-<li>如果二叉树为空，二叉树的深度为0</li>
-<li>如果二叉树不为空，二叉树的深度 = max(左子树深度， 右子树深度) + 1</li>
-</ol>
-<pre><code class="c++">int GetDepth(BinaryTreeNode * pRoot)  
-{  
-    if(pRoot == NULL) // 递归出口  
-        return 0;  
-    int depthLeft = GetDepth(pRoot-&gt;m_pLeft);  
-    int depthRight = GetDepth(pRoot-&gt;m_pRight);  
-    return depthLeft &gt; depthRight ? (depthLeft + 1) : (depthRight + 1);   
-}
-</code></pre>
-<h3 id="前序遍历，中序遍历，后序遍历"><a href="#前序遍历，中序遍历，后序遍历" class="headerlink" title="前序遍历，中序遍历，后序遍历"></a>前序遍历，中序遍历，后序遍历</h3><p>前序遍历递归解法：</p>
-<ol>
-<li>如果二叉树为空，空操作</li>
-<li>如果二叉树不为空，访问根节点，前序遍历左子树，前序遍历右子树</li>
-</ol>
-<pre><code class="javascript">void PreOrderTraverse(BinaryTreeNode * pRoot)  
-{  
-    if(pRoot == NULL)  
-        return;  
-    Visit(pRoot); // 访问根节点  
-    PreOrderTraverse(pRoot-&gt;m_pLeft); // 前序遍历左子树  
-    PreOrderTraverse(pRoot-&gt;m_pRight); // 前序遍历右子树  
-}
-</code></pre>
-<p>中序遍历递归解法</p>
-<ol>
-<li>如果二叉树为空，空操作。</li>
-<li>如果二叉树不为空，中序遍历左子树，访问根节点，中序遍历右子树</li>
-</ol>
-<pre><code class="javascript">void InOrderTraverse(BinaryTreeNode * pRoot)  
-{  
-    if(pRoot == NULL)  
-        return;  
-    InOrderTraverse(pRoot-&gt;m_pLeft); // 中序遍历左子树  
-    Visit(pRoot); // 访问根节点  
-    InOrderTraverse(pRoot-&gt;m_pRight); // 中序遍历右子树  
-}
-</code></pre>
-<p>后序遍历递归解法</p>
-<ol>
-<li>如果二叉树为空，空操作</li>
-<li>如果二叉树不为空，后序遍历左子树，后序遍历右子树，访问根节点</li>
-</ol>
-<pre><code class="javascript">void PostOrderTraverse(BinaryTreeNode * pRoot)  
-{  
-    if(pRoot == NULL)  
-        return;  
-    PostOrderTraverse(pRoot-&gt;m_pLeft); // 后序遍历左子树  
-    PostOrderTraverse(pRoot-&gt;m_pRight); // 后序遍历右子树  
-    Visit(pRoot); // 访问根节点  
-}
-</code></pre>
-<h3 id="分层遍历二叉树（按层次从上往下，从左往右）"><a href="#分层遍历二叉树（按层次从上往下，从左往右）" class="headerlink" title="分层遍历二叉树（按层次从上往下，从左往右）"></a>分层遍历二叉树（按层次从上往下，从左往右）</h3><p>相当于广度优先搜索，使用队列实现。队列初始化，将根节点压入队列。当队列不为空，进行如下操作：弹出一个节点，访问，若左子节点或右子节点不为空，将其压入队列。</p>
-<pre><code class="c++">void LevelTraverse(BinaryTreeNode * pRoot)  
-{  
-    if(pRoot == NULL)  
-        return;  
-    queue&lt;BinaryTreeNode *&gt; q;  
-    q.push(pRoot);  
-    while(!q.empty())  
-    {  
-        BinaryTreeNode * pNode = q.front();  
-        q.pop();  
-        Visit(pNode); // 访问节点  
-        if(pNode-&gt;m_pLeft != NULL)  
-            q.push(pNode-&gt;m_pLeft);  
-        if(pNode-&gt;m_pRight != NULL)  
-            q.push(pNode-&gt;m_pRight);  
-    }  
-    return;  
-}
-</code></pre>
-<h3 id="求二叉树第K层的节点个数"><a href="#求二叉树第K层的节点个数" class="headerlink" title="求二叉树第K层的节点个数"></a>求二叉树第K层的节点个数</h3><p>递归解法：</p>
-<ol>
-<li>如果二叉树为空或者k&lt;1返回0</li>
-</ol>
-<ol>
-<li>如果二叉树不为空并且k==1，返回1</li>
-<li>如果二叉树不为空且k&gt;1，返回左子树中k-1层的节点个数与右子树k-1层节点个数之和</li>
-</ol>
-<pre><code class="c++">int GetNodeNumKthLevel(BinaryTreeNode * pRoot, int k)  
-{  
-    if(pRoot == NULL || k &lt; 1)  
-        return 0;  
-    if(k == 1)  
-        return 1;  
-    int numLeft = GetNodeNumKthLevel(pRoot-&gt;m_pLeft, k-1); // 左子树中k-1层的节点个数  
-    int numRight = GetNodeNumKthLevel(pRoot-&gt;m_pRight, k-1); // 右子树中k-1层的节点个数  
-    return (numLeft + numRight);  
-}
-</code></pre>
-<h3 id="求二叉树中叶子节点的个数"><a href="#求二叉树中叶子节点的个数" class="headerlink" title="求二叉树中叶子节点的个数"></a>求二叉树中叶子节点的个数</h3><p>递归解法：</p>
-<ol>
-<li>如果二叉树为空，返回0</li>
-</ol>
-<ol>
-<li>如果二叉树不为空且左右子树为空，返回1</li>
-<li>如果二叉树不为空，且左右子树不同时为空，返回左子树中叶子节点个数加上右子树中叶子节点个数</li>
-</ol>
-<pre><code class="c++">int GetLeafNodeNum(BinaryTreeNode * pRoot)  
-{  
-    if(pRoot == NULL)  
-        return 0;  
-    if(pRoot-&gt;m_pLeft == NULL &amp;&amp; pRoot-&gt;m_pRight == NULL)  
-        return 1;  
-    int numLeft = GetLeafNodeNum(pRoot-&gt;m_pLeft); // 左子树中叶节点的个数  
-    int numRight = GetLeafNodeNum(pRoot-&gt;m_pRight); // 右子树中叶节点的个数  
-    return (numLeft + numRight);  
-}
-</code></pre>
-<h3 id="求二叉树的镜像"><a href="#求二叉树的镜像" class="headerlink" title="求二叉树的镜像"></a>求二叉树的镜像</h3><p>递归解法：</p>
-<ol>
-<li>如果二叉树为空，返回空</li>
-<li>如果二叉树不为空，求左子树和右子树的镜像，然后交换左子树和右子树</li>
-</ol>
-<pre><code class="c++">BinaryTreeNode * Mirror(BinaryTreeNode * pRoot)  
-{  
-    if(pRoot == NULL) // 返回NULL  
-        return NULL;  
-    BinaryTreeNode * pLeft = Mirror(pRoot-&gt;m_pLeft); // 求左子树镜像  
-    BinaryTreeNode * pRight = Mirror(pRoot-&gt;m_pRight); // 求右子树镜像  
-        // 交换左子树和右子树  
-    pRoot-&gt;m_pLeft = pRight;  
-    pRoot-&gt;m_pRight = pLeft;  
-    return pRoot;  
-}
-</code></pre>
-<h3 id="判断二叉树是不是平衡二叉树"><a href="#判断二叉树是不是平衡二叉树" class="headerlink" title="判断二叉树是不是平衡二叉树"></a>判断二叉树是不是平衡二叉树</h3><p>递归解法：</p>
-<ol>
-<li>如果二叉树为空，返回真</li>
-<li>如果二叉树不为空，如果左子树和右子树都是AVL树并且左子树和右子树高度相差不大于1，返回真，其他返回假</li>
-</ol>
-<pre><code class="c++">bool IsAVL(BinaryTreeNode * pRoot, int &amp; height)  
-{  
-    if(pRoot == NULL) // 空树，返回真  
-    {  
-        height = 0;  
-        return true;  
-    }  
-    int heightLeft;  
-    bool resultLeft = IsAVL(pRoot-&gt;m_pLeft, heightLeft);  
-    int heightRight;  
-    bool resultRight = IsAVL(pRoot-&gt;m_pRight, heightRight);  
-    if(resultLeft &amp;&amp; resultRight &amp;&amp; abs(heightLeft - heightRight) &lt;= 1) // 左子树和右子树都是AVL，并且高度相差不大于1，返回真  
-    {  
-        height = max(heightLeft, heightRight) + 1;  
-        return true;  
-    }  
-    else  
-    {  
-        height = max(heightLeft, heightRight) + 1;  
-        return false;  
-    }  
-}
-</code></pre>
-<h3 id="由前序遍历序列和中序遍历序列重建二叉树"><a href="#由前序遍历序列和中序遍历序列重建二叉树" class="headerlink" title="由前序遍历序列和中序遍历序列重建二叉树"></a>由前序遍历序列和中序遍历序列重建二叉树</h3><p>递归解法：</p>
-<ol>
-<li>如果前序遍历为空或中序遍历为空或节点个数小于等于0，返回NULL。</li>
-<li>创建根节点。前序遍历的第一个数据就是根节点的数据，在中序遍历中找到根节点的位置，可分别得知左子树和右子树的前序和中序遍历序列，重建左右子树。</li>
-</ol>
-<pre><code class="javascript">function reConstructBinaryTree(pre, vin)
-{
-    // write code here
-    if(pre.length==0 || vin.length==0) return null;
-    var index=vin.indexOf(pre[0]);
-    var left=vin.slice(0,index);//中序左子树
-    var right=vin.slice(index+1);//中序右子树
-    return {
-        val:pre[0],
-        //递归左右子树的前序，中序 
-        left:reConstructBinaryTree(pre.slice(1,index+1),left),
-        right:reConstructBinaryTree(pre.slice(index+1),right)
-     }; 
-}
-</code></pre>
-]]></content>
       
         <categories>
             
